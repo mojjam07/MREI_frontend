@@ -128,13 +128,13 @@ const HeroSection = () => {
           }
         `}
       </style>
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 h-full">
         <Slider {...sliderSettings}>
           {slides.map((slide, index) => (
             <div key={index} className="w-full h-full relative">
               {slide.type === 'video' ? (
                 <video
-                  className="w-full hero-slider-slide object-cover"
+                  className="w-full h-full object-cover"
                   autoPlay
                   muted
                   loop
@@ -147,14 +147,14 @@ const HeroSection = () => {
                 <img
                   src={slide.src}
                   alt={`Slide ${index + 1}`}
-                  className="w-full hero-slider-slide object-cover"
+                  className="w-full h-full object-cover"
                 />
               )}
-              {/* <div className="absolute inset-0 bg-black bg-opacity-50"></div> */}
             </div>
           ))}
         </Slider>
       </div>
+      <div className="absolute inset-0 z-0 bg-black bg-opacity-50"></div>
       <div className="relative z-10 max-w-7xl mx-auto text-center flex flex-col justify-center min-h-[60vh] sm:min-h-[75vh] md:min-h-[85vh]">
         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 sm:mb-6 animate-fade-in-up px-2">
           {t('home.hero')}
