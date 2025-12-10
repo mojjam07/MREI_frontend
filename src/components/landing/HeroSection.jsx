@@ -27,33 +27,47 @@ const HeroSection = () => {
   const slides = [
     {
       type: 'video',
-      src: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4', // Placeholder video URL
+      src: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4',
     },
     {
       type: 'image',
-      src: banner_2, // Placeholder image
+      src: banner_2,
     },
     {
       type: 'video',
-      src: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4', // Placeholder video URL
+      src: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4',
     },
     {
       type: 'image',
-      src: banner, // Placeholder image
+      src: banner,
     },
   ];
 
   return (
-    <section className="bg-tertiary relative py-20 px-4 sm:px-6 lg:px-8 min-h-screen overflow-hidden">
+    <section className="relative py-12 sm:py-16 md:py-20 px-4 sm:px-6 lg:px-8 min-h-[70vh] sm:min-h-[85vh] md:min-h-screen overflow-hidden">
       <style>
         {`
           .slick-dots {
             z-index: 20;
-            bottom: 20px;
+            bottom: 15px;
+          }
+          @media (min-width: 640px) {
+            .slick-dots {
+              bottom: 20px;
+            }
+          }
+          .slick-dots li {
+            margin: 0 3px;
           }
           .slick-dots li button:before {
             color: white;
             opacity: 0.7;
+            font-size: 8px;
+          }
+          @media (min-width: 640px) {
+            .slick-dots li button:before {
+              font-size: 10px;
+            }
           }
           .slick-dots li.slick-active button:before {
             opacity: 1;
@@ -63,13 +77,54 @@ const HeroSection = () => {
             z-index: 20;
             background: rgba(0, 0, 0, 0.5);
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 32px;
+            height: 32px;
+          }
+          @media (min-width: 640px) {
+            .slick-arrow {
+              width: 40px;
+              height: 40px;
+            }
+          }
+          .slick-prev {
+            left: 10px;
+          }
+          @media (min-width: 640px) {
+            .slick-prev {
+              left: 25px;
+            }
+          }
+          .slick-next {
+            right: 10px;
+          }
+          @media (min-width: 640px) {
+            .slick-next {
+              right: 25px;
+            }
           }
           .slick-prev:before,
           .slick-next:before {
             color: white;
-            font-size: 20px;
+            font-size: 18px;
+          }
+          @media (min-width: 640px) {
+            .slick-prev:before,
+            .slick-next:before {
+              font-size: 20px;
+            }
+          }
+          .hero-slider-slide {
+            height: 70vh;
+          }
+          @media (min-width: 640px) {
+            .hero-slider-slide {
+              height: 85vh;
+            }
+          }
+          @media (min-width: 768px) {
+            .hero-slider-slide {
+              height: 100vh;
+            }
           }
         `}
       </style>
@@ -79,7 +134,7 @@ const HeroSection = () => {
             <div key={index} className="w-full h-full relative">
               {slide.type === 'video' ? (
                 <video
-                  className="w-full h-full object-cover"
+                  className="w-full hero-slider-slide object-cover"
                   autoPlay
                   muted
                   loop
@@ -92,26 +147,26 @@ const HeroSection = () => {
                 <img
                   src={slide.src}
                   alt={`Slide ${index + 1}`}
-                  className="w-full h-full object-cover"
+                  className="w-full hero-slider-slide object-cover"
                 />
               )}
-              <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+              {/* <div className="absolute inset-0 bg-black bg-opacity-50"></div> */}
             </div>
           ))}
         </Slider>
       </div>
-      <div className="relative z-10 max-w-7xl mx-auto text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-primary mb-6 animate-fade-in-up">
+      <div className="relative z-10 max-w-7xl mx-auto text-center flex flex-col justify-center min-h-[60vh] sm:min-h-[75vh] md:min-h-[85vh]">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 sm:mb-6 animate-fade-in-up px-2">
           {t('home.hero')}
         </h1>
-        <p className="text-xl text-text mb-8 max-w-3xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+        <p className="text-base sm:text-lg md:text-xl text-text mb-6 sm:mb-8 max-w-full sm:max-w-2xl md:max-w-3xl mx-auto animate-fade-in-up px-4" style={{ animationDelay: '0.5s' }}>
           {t('home.heroDesc')}
         </p>
-        <div className={`flex flex-col sm:flex-row gap-4 justify-center ${language === 'ar' ? 'sm:flex-row-reverse' : ''} animate-scale-in`} style={{ animationDelay: '0.4s' }}>
-          <Button size="xl" as={Link} to="/login">
+        <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center ${language === 'ar' ? 'sm:flex-row-reverse' : ''} animate-scale-in px-4`} style={{ animationDelay: '0.4s' }}>
+          <Button size="xl" as={Link} to="/login" className="w-full sm:w-auto max-w-xs">
             {t('home.cta')}
           </Button>
-          <Button variant="outline" size="xl" as={Link} to="#features">
+          <Button variant="outline" size="xl" as={Link} to="#features" className="w-full sm:w-auto max-w-xs">
             {t('home.learnMore')}
           </Button>
         </div>

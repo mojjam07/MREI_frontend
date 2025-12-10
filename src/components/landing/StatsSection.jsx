@@ -30,20 +30,20 @@ const StatsSection = () => {
   }, [t]);
 
   return (
-    <section className="py-20 bg-primary">
+    <section className="py-12 sm:py-16 md:py-20 bg-primary">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-light-text mb-4">
+        <div className="text-center mb-8 sm:mb-12 md:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-light-text mb-3 sm:mb-4 px-4">
             {t('home.stats')}
           </h2>
         </div>
-        <div className="grid md:grid-cols-4 gap-8">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-4xl font-bold text-light-text mb-2">
+            <div key={index} className="text-center p-3 sm:p-4">
+              <div className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-light-text mb-1 sm:mb-2">
                 {stat.label}
               </div>
-              <div className="text-accent">
+              <div className="text-xs sm:text-sm md:text-base text-accent">
                 {stat.value}
               </div>
             </div>
