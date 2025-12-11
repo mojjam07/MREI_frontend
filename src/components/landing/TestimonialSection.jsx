@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { API } from '../../config';
 
 const TestimonialSection = () => {
   const { t, language } = useLanguage();
@@ -8,7 +9,7 @@ const TestimonialSection = () => {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const response = await fetch('/api/testimonials/');
+        const response = await fetch(`${API}/api/announncement/`);
         const data = await response.json();
         const testimonials = data.filter(item => item.type === 'testimonial');
         if (testimonials.length > 0) {

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
+import { API } from '../../config';
 
 const StatsSection = () => {
   const { t } = useLanguage();
@@ -8,7 +9,7 @@ const StatsSection = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch('/api/stats/');
+        const response = await fetch(`{API}/api/stats/`);
         const data = await response.json();
         setStats([
           { value: t('home.activeStudents'), label: `${data.active_students}+` },

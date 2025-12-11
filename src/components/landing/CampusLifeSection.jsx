@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import Button from '../ui/Button';
+import { API } from '../../config';
 
 const CampusLifeSection = () => {
   const { t } = useLanguage();
@@ -9,7 +10,7 @@ const CampusLifeSection = () => {
   useEffect(() => {
     const fetchCampusPhotos = async () => {
       try {
-        const response = await fetch('/api/announcements/');
+        const response = await fetch(`${API}/api/announcements/`);
         const data = await response.json();
         const photos = data.filter(item => item.type === 'campus_life').map(item => item.image || '/api/placeholder/300/180');
         setCampusPhotos(photos.length > 0 ? photos : [
