@@ -129,7 +129,7 @@ const MainNav = ({ className = '' }) => {
                       <li key={subIndex}>
                         <a
                           href={subItem.href}
-                          className="block px-6 py-2 text-xs text-text hover:bg-white/10 hover:text-link transition-colors"
+                          className="block px-6 py-2 text-xs text-warning hover:bg-white/10 hover:text-link transition-colors"
                         >
                           {subItem.title}
                         </a>

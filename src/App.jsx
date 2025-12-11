@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
+// import AdminDashboard_ from "./pages/AdminDashboard_";
 import ProtectedRoute from "./route/ProtectedRoute";
 
 const DashboardRouter = () => {
