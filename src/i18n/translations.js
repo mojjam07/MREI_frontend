@@ -98,7 +98,7 @@ const translations = {
       footerAcademicsTitle: 'Academics',
       footerAdmissionsTitle: 'Admissions',
       footerConnectTitle: 'Connect With Us',
-      footerCopyright: '© 2025 Mahdu Rahmah El-Islaamiy. All Rights Reserved.',
+      footerCopyright: '© 2025 Mahdu Rahma El-Islaamiy. All Rights Reserved.',
       footerPrivacy: 'Privacy Policy',
       footerTerms: 'Terms of Use',
       footerAccessibility: 'Accessibility',
@@ -404,7 +404,7 @@ const translations = {
       graduated: 'تخرج في'
     },
     common: {
-      search: 'بحث',
+      search: '  بحث',
       filter: 'تصفية',
       export: 'تصدير',
       save: 'حفظ',

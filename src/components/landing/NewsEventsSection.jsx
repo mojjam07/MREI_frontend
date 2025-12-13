@@ -9,20 +9,18 @@ const NewsEventsSection = () => {
   const [eventsItems, setEventsItems] = useState([]);
 
   useEffect(() => {
-    const fetchAnnouncements = async () => {
+    const fetchHomeContent = async () => {
       try {
-        const response = await fetch(`${API}/api/announcements/`);
+        const response = await fetch(`${API}/api/home-content/`);
         const data = await response.json();
-        const news = data.filter(item => item.type === 'news' || !item.type);
-        const events = data.filter(item => item.type === 'event');
-        setNewsItems(news.map(item => ({
+        setNewsItems(data.news.map(item => ({
           date: new Date(item.created_at).toLocaleDateString(),
           title: item.title,
           description: item.content,
           image: item.image || '/api/placeholder/400/250'
         })));
-        setEventsItems(events.map(item => ({
-          date: new Date(item.created_at).toLocaleDateString(),
+        setEventsItems(data.events.map(item => ({
+          date: new Date(item.event_date).toLocaleDateString(),
           title: item.title,
           details: item.content,
           videoId: item.video_id || 'dQw4w9WgXcQ'
@@ -71,7 +69,7 @@ const NewsEventsSection = () => {
         ]);
       }
     };
-    fetchAnnouncements();
+    fetchHomeContent();
   }, []);
 
   return (

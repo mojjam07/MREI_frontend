@@ -9,7 +9,7 @@ const TestimonialSection = () => {
   useEffect(() => {
     const fetchTestimonial = async () => {
       try {
-        const response = await fetch(`${API}/api/announncement/`);
+        const response = await fetch(`${API}/api/home-content/`);
         const data = await response.json();
         const testimonials = data.filter(item => item.type === 'testimonial');
         if (testimonials.length > 0) {

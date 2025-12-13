@@ -1,3 +1,4 @@
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Landing from "./pages/Landing";
@@ -5,21 +6,24 @@ import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
-// import AdminDashboard_ from "./pages/AdminDashboard_";
+import TutorDashboard from "./pages/TutorDashboard";
 import ProtectedRoute from "./route/ProtectedRoute";
 
-const DashboardRouter = () => {
+// Generic dashboard component that renders the correct dashboard based on user role
+const RoleBasedDashboard = () => {
   const { user } = useAuth();
 
   if (!user) return <Navigate to="/login" />;
 
   switch (user.role) {
-    case 'student':
-      return <StudentDashboard />;
     case 'admin':
       return <AdminDashboard />;
+    case 'student':
+      return <StudentDashboard />;
     case 'tutor':
-      return <StudentDashboard />; // For now, use student dashboard
+      return <TutorDashboard />;
+    case 'alumni':
+      return <StudentDashboard />; // Using student dashboard for alumni
     default:
       return <Navigate to="/login" />;
   }
@@ -31,11 +35,55 @@ export default function App() {
       <Route path="/" element={<Landing />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
+      
+      {/* Role-based dashboard routes */}
+      <Route
+        path="/student/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['student']}>
+            <StudentDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/tutor/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['tutor']}>
+            <TutorDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/alumni/dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['alumni']}>
+            <StudentDashboard />
+          </ProtectedRoute>
+        }
+      />
+      
+      {/* Generic dashboard route for backward compatibility */}
       <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <DashboardRouter />
+            <RoleBasedDashboard />
           </ProtectedRoute>
         }
       />

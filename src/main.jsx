@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { AuthProvider } from "../context/AuthContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { DashboardProvider } from "./context/DashboardContext";
 
 
 const client = new QueryClient();
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <BrowserRouter>
         <LanguageProvider>
           <AuthProvider>
-            <App />
+            <DashboardProvider>
+              <App />
+            </DashboardProvider>
           </AuthProvider>
         </LanguageProvider>
       </BrowserRouter>
