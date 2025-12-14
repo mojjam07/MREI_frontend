@@ -94,7 +94,7 @@ const CampusLifeSection = () => {
 
         <div className="text-center">
           <Button variant="onblue" size="lg" className="w-full sm:w-auto">
-            View Campus Gallery
+            {t('home.campusGalleryBtn')}
           </Button>
         </div>
       </div>

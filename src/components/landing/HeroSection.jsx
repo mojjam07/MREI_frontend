@@ -141,10 +141,10 @@ const HeroSection = () => {
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
       </div>
       <div className="relative z-10 max-w-7xl mx-auto text-center flex flex-col justify-center min-h-[60vh] sm:min-h-[75vh] md:min-h-[85vh] px-4 sm:px-6 lg:px-8">
-        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-primary mb-4 sm:mb-6 animate-fade-in-up px-2">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-light-text mb-4 sm:mb-6 animate-fade-in-up px-2">
           {t('home.hero')}
         </h1>
-        <p className="text-base sm:text-lg md:text-xl text-text mb-6 sm:mb-8 max-w-full sm:max-w-2xl md:max-w-3xl mx-auto animate-fade-in-up px-4" style={{ animationDelay: '0.5s' }}>
+        <p className="text-base sm:text-lg md:text-xl text-light-text mb-6 sm:mb-8 max-w-full sm:max-w-2xl md:max-w-3xl mx-auto animate-fade-in-up px-4" style={{ animationDelay: '0.5s' }}>
           {t('home.heroDesc')}
         </p>
         <div className={`flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center ${language === 'ar' ? 'sm:flex-row-reverse' : ''} animate-scale-in px-4`} style={{ animationDelay: '0.4s' }}>

@@ -87,7 +87,7 @@ const UniversityHeader = () => {
                 alt={t.header.logoAlt}
                 className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12"
               />
-              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-tertiary">{t.header.universityName}</h1>
+              <h1 className="text-lg sm:text-2md md:text-3xl font-bold text-tertiary">{t.header.universityName}</h1>
             </div>
 
             {/* Mobile actions */}
