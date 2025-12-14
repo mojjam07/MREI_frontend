@@ -203,6 +203,7 @@ const translations = {
       loading: 'Loading...',
       noData: 'No data available'
     },
+
     header: {
       currentStudents: 'Current Students',
       adminStaff: 'Admin & Staff',
@@ -210,8 +211,65 @@ const translations = {
       partnersSponsors: 'Partners & Sponsors',
       searchPlaceholder: 'Search...',
       login: 'Login',
-      universityName: 'Mahdu Rahmat El-Islaamiy',
+      universityName: 'Rahmat El-Islaamiy',
       logoAlt: 'mahdu-logo'
+    },
+    auth: {
+      login: {
+        title: 'Welcome Back',
+        subtitle: 'Sign in to your Dashboard',
+        email: 'Email',
+        emailPlaceholder: 'your@email.com',
+        password: 'Password',
+        passwordPlaceholder: '••••••••',
+        signIn: 'Sign In',
+        signingIn: 'Signing In...',
+        noAccount: "Don't have an account?",
+        signUp: 'Sign up',
+        error: {
+          invalidCredentials: 'Invalid email or password',
+          networkError: 'Network error. Please try again.',
+          serverError: 'Server error. Please try again later.',
+          unknown: 'An unexpected error occurred'
+        }
+      },
+      signup: {
+        title: 'Create Account',
+        subtitle: 'Join Rahmat El-Islaamiy today',
+        firstName: 'First Name',
+        firstNamePlaceholder: 'Ahmad',
+        lastName: 'Last Name',
+        lastNamePlaceholder: 'Musa',
+        email: 'Email',
+        emailPlaceholder: 'your@email.com',
+        password: 'Password',
+        passwordPlaceholder: '••••••••',
+        confirmPassword: 'Confirm Password',
+        confirmPasswordPlaceholder: '••••••••',
+        role: 'Role',
+        roles: {
+          student: 'Student',
+          tutor: 'Tutor',
+          admin: 'Admin',
+          alumni: 'Alumni'
+        },
+        createAccount: 'Create Account',
+        hasAccount: 'Already have an account?',
+        signIn: 'Sign in',
+        error: {
+          passwordMismatch: 'Passwords do not match',
+          invalidEmail: 'Please enter a valid email address',
+          passwordTooShort: 'Password must be at least 6 characters long',
+          requiredFields: 'Please fill in all required fields',
+          networkError: 'Network error. Please try again.',
+          serverError: 'Server error. Please try again later.',
+          emailExists: 'An account with this email already exists',
+          unknown: 'An unexpected error occurred'
+        },
+        success: {
+          accountCreated: 'Account created successfully! Please sign in.'
+        }
+      }
     }
   },
   ar: {
@@ -258,8 +316,8 @@ const translations = {
         "alumniStories": "قصص الخريجين"
     },
     home: {
-      hero: 'حوّل مستقبلك بتعليم عالي الجودة',
-      heroDesc: 'انضم إلى آلاف الطلاب الذين يحققون أهدافهم الأكاديمية من خلال منصتنا التعليمية المبتكرة',
+      hero: 'مرحباً بك!',
+      heroDesc: 'فبما رحمة من الله لنت لهم ولو كنت فظاً غليظ القلب لانفضوا من حولك...ق:3آية159',
       cta: 'ابدأ الآن',
       learnMore: 'اعرف المزيد',
       whyChoose: 'لماذا تختارنا',
@@ -416,15 +474,73 @@ const translations = {
       loading: 'جاري التحميل...',
       noData: 'لا توجد بيانات'
     },
+
     header: {
       currentStudents: 'الطلاب الحاليون',
       adminStaff: 'الإدارة والموظفون',
       alumni: 'الخريجون',
       partnersSponsors: 'الشركاء والرعاة',
-      searchPlaceholder: 'بحث...',
+      searchPlaceholder: '   بحث...',
       login: 'تسجيل الدخول',
       universityName: 'معهد الرحمة الإسلامي',
       logoAlt: 'شعار مهعد'
+    },
+    auth: {
+      login: {
+        title: 'مرحباً بعودتك',
+        subtitle: 'سجل الدخول للمتابعة إلى لوحة التحكم الخاصة بك',
+        email: 'البريد الإلكتروني',
+        emailPlaceholder: 'your@email.com',
+        password: 'كلمة المرور',
+        passwordPlaceholder: '••••••••',
+        signIn: 'تسجيل الدخول',
+        signingIn: 'جاري تسجيل الدخول...',
+        noAccount: 'ليس لديك حساب؟',
+        signUp: 'إنشاء حساب',
+        error: {
+          invalidCredentials: 'بريد إلكتروني أو كلمة مرور غير صحيحة',
+          networkError: 'خطأ في الشبكة. يرجى المحاولة مرة أخرى.',
+          serverError: 'خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.',
+          unknown: 'حدث خطأ غير متوقع'
+        }
+      },
+      signup: {
+        title: 'إنشاء حساب',
+        subtitle: 'انضم إلى معهد الرحمة الإسلامي في اليوم',
+        firstName: 'الاسم الأول',
+        firstNamePlaceholder: 'أحمد',
+        lastName: 'اسم العائلة',
+        lastNamePlaceholder: 'موسى',
+        email: 'البريد الإلكتروني',
+        emailPlaceholder: 'your@email.com',
+        password: 'كلمة المرور',
+        passwordPlaceholder: '••••••••',
+        confirmPassword: 'تأكيد كلمة المرور',
+        confirmPasswordPlaceholder: '••••••••',
+        role: 'الدور',
+        roles: {
+          student: 'طالب',
+          tutor: 'مدرس',
+          admin: 'مدير',
+          alumni: 'خريج'
+        },
+        createAccount: 'إنشاء حساب',
+        hasAccount: 'لديك حساب بالفعل؟',
+        signIn: 'تسجيل الدخول',
+        error: {
+          passwordMismatch: 'كلمات المرور غير متطابقة',
+          invalidEmail: 'يرجى إدخال بريد إلكتروني صحيح',
+          passwordTooShort: 'يجب أن تكون كلمة المرور 6 أحرف على الأقل',
+          requiredFields: 'يرجى ملء جميع الحقول المطلوبة',
+          networkError: 'خطأ في الشبكة. يرجى المحاولة مرة أخرى.',
+          serverError: 'خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.',
+          emailExists: 'حساب بهذا البريد الإلكتروني موجود بالفعل',
+          unknown: 'حدث خطأ غير متوقع'
+        },
+        success: {
+          accountCreated: 'تم إنشاء الحساب بنجاح! يرجى تسجيل الدخول.'
+        }
+      }
     }
   }
 };

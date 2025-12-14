@@ -4,6 +4,7 @@
     "dashboard": "لوحة التحكم",
     "logout": "تسجيل الخروج",
     "language": "اللغة",
+
     "nav": {
         "home": "الرئيسية",
         "dashboard": "لوحة التحكم",
@@ -45,5 +46,62 @@
         "giveBack": "العطاء",
         "alumniResources": "موارد الخريجين",
         "alumniStories": "قصص الخريجين"
+    },
+    "auth": {
+        "login": {
+            "title": "مرحباً بعودتك",
+            "subtitle": "سجل الدخول للمتابعة إلى EduPlatform",
+            "email": "البريد الإلكتروني",
+            "emailPlaceholder": "your@email.com",
+            "password": "كلمة المرور",
+            "passwordPlaceholder": "••••••••",
+            "signIn": "تسجيل الدخول",
+            "signingIn": "جاري تسجيل الدخول...",
+            "noAccount": "ليس لديك حساب؟",
+            "signUp": "إنشاء حساب",
+            "error": {
+                "invalidCredentials": "بريد إلكتروني أو كلمة مرور غير صحيحة",
+                "networkError": "خطأ في الشبكة. يرجى المحاولة مرة أخرى.",
+                "serverError": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.",
+                "unknown": "حدث خطأ غير متوقع"
+            }
+        },
+        "signup": {
+            "title": "إنشاء حساب",
+            "subtitle": "انضم إلى EduPlatform اليوم",
+            "firstName": "الاسم الأول",
+            "firstNamePlaceholder": "أحمد",
+            "lastName": "اسم العائلة",
+            "lastNamePlaceholder": "محمد",
+            "email": "البريد الإلكتروني",
+            "emailPlaceholder": "your@email.com",
+            "password": "كلمة المرور",
+            "passwordPlaceholder": "••••••••",
+            "confirmPassword": "تأكيد كلمة المرور",
+            "confirmPasswordPlaceholder": "••••••••",
+            "role": "الدور",
+            "roles": {
+                "student": "طالب",
+                "tutor": "مدرس",
+                "admin": "مدير",
+                "alumni": "خريج"
+            },
+            "createAccount": "إنشاء حساب",
+            "hasAccount": "لديك حساب بالفعل؟",
+            "signIn": "تسجيل الدخول",
+            "error": {
+                "passwordMismatch": "كلمات المرور غير متطابقة",
+                "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح",
+                "passwordTooShort": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+                "requiredFields": "يرجى ملء جميع الحقول المطلوبة",
+                "networkError": "خطأ في الشبكة. يرجى المحاولة مرة أخرى.",
+                "serverError": "خطأ في الخادم. يرجى المحاولة مرة أخرى لاحقاً.",
+                "emailExists": "حساب بهذا البريد الإلكتروني موجود بالفعل",
+                "unknown": "حدث خطأ غير متوقع"
+            },
+            "success": {
+                "accountCreated": "تم إنشاء الحساب بنجاح! يرجى تسجيل الدخول."
+            }
+        }
     }
 }
