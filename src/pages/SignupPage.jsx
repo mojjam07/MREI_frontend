@@ -87,11 +87,23 @@ const SignupPage = () => {
         backgroundRepeat: 'no-repeat'
       }}
     >
+      {/* Home Link */}
+      <div className="absolute top-4 left-4 z-10">
+        <button
+          onClick={() => navigate('/')}
+          className="bg-primary bg-opacity-20 backdrop-blur-sm text-white px-3 py-2 rounded-lg hover:bg-opacity-30 transition-all duration-200 flex items-center gap-2"
+        >
+          <span className="text-sm font-medium">
+            {t('nav.home')}
+          </span>
+        </button>
+      </div>
+
       {/* Language Switcher */}
       <div className="absolute top-4 right-4 z-10">
         <button
           onClick={() => setLanguage(language === 'en' ? 'ar' : 'en')}
-          className="bg-white bg-opacity-20 backdrop-blur-sm text-white px-3 py-2 rounded-lg hover:bg-opacity-30 transition-all duration-200 flex items-center gap-2"
+          className="bg-primary bg-opacity-20 backdrop-blur-sm text-white px-3 py-2 rounded-lg hover:bg-opacity-30 transition-all duration-200 flex items-center gap-2"
         >
           <span className="text-sm font-medium">
             {language === 'en' ? 'عربي' : 'English'}
