@@ -1,6 +1,8 @@
 
 export const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
 
+
+
 export const API_ENDPOINTS = {
   AUTH: {
     LOGIN: '/auth/login/',
@@ -9,12 +11,21 @@ export const API_ENDPOINTS = {
     USER: '/auth/user/'
   },
   USERS: '/users/',
-  STUDENTS: '/students/',
+  STUDENTS: {
+    PROFILES: '/students/',
+    LIST: '/students/'
+  },
+  TUTORS: {
+    PROFILES: '/tutors/',
+    LIST: '/tutors/'
+  },
   ACADEMICS: {
     COURSES: '/courses/',
     ENROLLMENTS: '/enrollments/',
     ASSIGNMENTS: '/assignments/',
-    SUBMISSIONS: '/submissions/'
+    SUBMISSIONS: '/submissions/',
+    CLASS_SCHEDULES: '/class-schedules/',
+    ATTENDANCE: '/attendance/'
   },
   COMMUNICATION: {
     STATISTICS: '/statistics/',
@@ -25,6 +36,11 @@ export const API_ENDPOINTS = {
     CONTACT: '/contact/',
     DASHBOARD_STATS: '/dashboard-stats/',
     HOME_CONTENT: '/home-content/'
+  },
+  DASHBOARD: {
+    STUDENT: '/dashboard/student/',
+    TUTOR: '/dashboard/tutor/',
+    ADMIN: '/dashboard/admin/'
   }
 };
 

@@ -1,10 +1,13 @@
+
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { GraduationCap } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import logo from '../assets/logo.png';
+import bgImage from '../assets/banner.png';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -43,11 +46,21 @@ const LoginPage = () => {
     }
   };
 
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center px-6">
-      <Card className="w-full max-w-md">
+    <div 
+      className="min-h-screen flex items-center justify-center px-6 relative"
+      style={{ 
+        backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      <Card className="w-full max-w-md bg-white bg-opacity-90 shadow-lg">
+
         <div className="text-center mb-8">
-          <GraduationCap className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+          <img src={logo} alt="EduPlatform Logo" className="w-16 h-16 mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-gray-800">Welcome Back</h2>
           <p className="text-gray-600">Sign in to continue to EduPlatform</p>
         </div>

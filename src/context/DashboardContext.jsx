@@ -1,4 +1,6 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+
+
+import React, { createContext, useContext } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import apiClient from '../services/apiClient';
 import { API_ENDPOINTS } from '../config';
@@ -30,6 +32,20 @@ export const DashboardProvider = ({ children }) => {
   );
 
 
+
+  // Student Dashboard Analytics (Student role only)
+  const { data: studentDashboard, isLoading: studentDashboardLoading } = useQuery(
+    'student-dashboard',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.STUDENT);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'student',
+      staleTime: 2 * 60 * 1000, // 2 minutes for student dashboard
+    }
+  );
+
   // Courses Query (role-based)
   const { data: courses, isLoading: coursesLoading } = useQuery(
     'courses',
@@ -45,6 +61,32 @@ export const DashboardProvider = ({ children }) => {
     },
     {
       enabled: !!user,
+      staleTime: 5 * 60 * 1000,
+    }
+  );
+
+  // Class Schedules Query (Student role only)
+  const { data: classSchedules, isLoading: classSchedulesLoading } = useQuery(
+    'class-schedules',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'student',
+      staleTime: 10 * 60 * 1000,
+    }
+  );
+
+  // Attendance Query (Student role only)
+  const { data: attendance, isLoading: attendanceLoading } = useQuery(
+    'attendance',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.ATTENDANCE);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'student',
       staleTime: 5 * 60 * 1000,
     }
   );
@@ -80,29 +122,70 @@ export const DashboardProvider = ({ children }) => {
   );
 
 
-  // Announcements Query
-  const { data: announcements, isLoading: announcementsLoading } = useQuery(
-    'announcements',
-    async () => {
-      const [news, events, testimonials, campusLife] = await Promise.all([
-        apiClient.get(API_ENDPOINTS.COMMUNICATION.NEWS),
-        apiClient.get(API_ENDPOINTS.COMMUNICATION.EVENTS),
-        apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}?approved=true`),
-        apiClient.get(API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE)
-      ]);
 
-      return [
-        ...news.data.map(item => ({ ...item, type: 'news' })),
-        ...events.data.map(item => ({ ...item, type: 'event' })),
-        ...testimonials.data.map(item => ({ ...item, type: 'testimonial' })),
-        ...campusLife.data.map(item => ({ ...item, type: 'campus_life' }))
-      ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  // Separate content type queries
+  const { data: news, isLoading: newsLoading } = useQuery(
+    'news',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.NEWS);
+      return response.data;
     },
     {
       enabled: !!user,
-      staleTime: 10 * 60 * 1000, // 10 minutes
+      staleTime: 10 * 60 * 1000,
     }
   );
+
+  const { data: events, isLoading: eventsLoading } = useQuery(
+    'events',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.EVENTS);
+      return response.data;
+    },
+    {
+      enabled: !!user,
+      staleTime: 10 * 60 * 1000,
+    }
+  );
+
+  const { data: testimonials, isLoading: testimonialsLoading } = useQuery(
+    'testimonials',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.TESTIMONIALS);
+      return response.data;
+    },
+    {
+      enabled: !!user,
+      staleTime: 10 * 60 * 1000,
+    }
+  );
+
+  const { data: campusLife, isLoading: campusLifeLoading } = useQuery(
+    'campus-life',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE);
+      return response.data;
+    },
+    {
+      enabled: !!user,
+      staleTime: 10 * 60 * 1000,
+    }
+  );
+
+  // Legacy combined announcements for backward compatibility
+  const announcements = React.useMemo(() => {
+    if (!news || !events || !testimonials || !campusLife) return [];
+    
+    return [
+      ...news.map(item => ({ ...item, type: 'news' })),
+      ...events.map(item => ({ ...item, type: 'event' })),
+      ...testimonials.map(item => ({ ...item, type: 'testimonial' })),
+      ...campusLife.map(item => ({ ...item, type: 'campus_life' }))
+    ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  }, [news, events, testimonials, campusLife]);
+
+  const announcementsLoading = newsLoading || eventsLoading || testimonialsLoading || campusLifeLoading;
+
 
 
   // Users Query (admin only)
@@ -110,6 +193,32 @@ export const DashboardProvider = ({ children }) => {
     'users',
     async () => {
       const response = await apiClient.get(API_ENDPOINTS.USERS);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 5 * 60 * 1000,
+    }
+  );
+
+  // Student Profiles Query (admin only)
+  const { data: studentProfiles, isLoading: studentProfilesLoading } = useQuery(
+    'student-profiles',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.STUDENTS.PROFILES);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 5 * 60 * 1000,
+    }
+  );
+
+  // Tutor Profiles Query (admin only)
+  const { data: tutorProfiles, isLoading: tutorProfilesLoading } = useQuery(
+    'tutor-profiles',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.TUTORS.PROFILES);
       return response.data;
     },
     {
@@ -221,6 +330,147 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
+
+
+
+  // Tutor Dashboard Analytics Query
+  const { data: tutorDashboard, isLoading: tutorDashboardLoading } = useQuery(
+    'tutor-dashboard',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.TUTOR);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'tutor',
+      staleTime: 2 * 60 * 1000,
+    }
+  );
+
+  // Pending Submissions Query  
+  const { data: pendingSubmissions, isLoading: pendingSubmissionsLoading } = useQuery(
+    'pending-submissions',
+    async () => {
+      const response = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.SUBMISSIONS}?grade__isnull=true`);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'tutor',
+      staleTime: 1 * 60 * 1000,
+    }
+  );
+
+  // Grade Submission Mutation
+  const gradeSubmissionMutation = useMutation(
+    async ({ submissionId, grade, feedback }) => {
+      const response = await apiClient.post(`${API_ENDPOINTS.ACADEMICS.SUBMISSIONS}${submissionId}/grade/`, {
+        grade,
+        feedback
+      });
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('pending-submissions');
+        queryClient.invalidateQueries('submissions');
+        queryClient.invalidateQueries('tutor-dashboard');
+      },
+    }
+  );
+
+
+  // Class Schedules Query (Tutor role only)
+  const { data: tutorClassSchedules, isLoading: tutorClassSchedulesLoading } = useQuery(
+    'class-schedules-tutor',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'tutor',
+      staleTime: 10 * 60 * 1000,
+    }
+  );
+
+  // Student mutations
+  const createStudentMutation = useMutation(
+    async (studentData) => {
+      const response = await apiClient.post(API_ENDPOINTS.STUDENTS.PROFILES, studentData);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('student-profiles');
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+  const updateStudentMutation = useMutation(
+    async ({ id, data }) => {
+      const response = await apiClient.put(`${API_ENDPOINTS.STUDENTS.PROFILES}${id}/`, data);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('student-profiles');
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+  const deleteStudentMutation = useMutation(
+    async (id) => {
+      await apiClient.delete(`${API_ENDPOINTS.STUDENTS.PROFILES}${id}/`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('student-profiles');
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+  // Tutor mutations
+  const createTutorMutation = useMutation(
+    async (tutorData) => {
+      const response = await apiClient.post(API_ENDPOINTS.TUTORS.PROFILES, tutorData);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('tutor-profiles');
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+  const updateTutorMutation = useMutation(
+    async ({ id, data }) => {
+      const response = await apiClient.put(`${API_ENDPOINTS.TUTORS.PROFILES}${id}/`, data);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('tutor-profiles');
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+  const deleteTutorMutation = useMutation(
+    async (id) => {
+      await apiClient.delete(`${API_ENDPOINTS.TUTORS.PROFILES}${id}/`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('tutor-profiles');
+        queryClient.invalidateQueries('users');
+      },
+    }
+  );
+
+
+
   const value = {
     // Data
     stats,
@@ -228,6 +478,26 @@ export const DashboardProvider = ({ children }) => {
     assignments,
     announcements,
     users,
+    
+    // Student Dashboard Analytics
+    studentDashboard,
+    classSchedules,
+    attendance,
+    
+    // Separate content data
+    news,
+    events,
+    testimonials,
+    campusLife,
+
+    // Student and Tutor data
+    studentProfiles,
+    tutorProfiles,
+
+    // Tutor-specific data
+    tutorDashboard,
+    pendingSubmissions,
+    tutorClassSchedules,
 
     // Loading states
     statsLoading,
@@ -235,18 +505,48 @@ export const DashboardProvider = ({ children }) => {
     assignmentsLoading,
     announcementsLoading,
     usersLoading,
+    newsLoading,
+    eventsLoading,
+    testimonialsLoading,
+    campusLifeLoading,
+    studentProfilesLoading,
+    tutorProfilesLoading,
+    studentDashboardLoading,
+    classSchedulesLoading,
+    attendanceLoading,
+    tutorDashboardLoading,
+    pendingSubmissionsLoading,
+    tutorClassSchedulesLoading,
 
     // Mutations
     updateStats: updateStatsMutation.mutateAsync,
     createAnnouncement: createAnnouncementMutation.mutateAsync,
     updateAnnouncement: updateAnnouncementMutation.mutateAsync,
     deleteAnnouncement: deleteAnnouncementMutation.mutateAsync,
+    
+    // Student mutations
+    createStudent: createStudentMutation.mutateAsync,
+    updateStudent: updateStudentMutation.mutateAsync,
+    deleteStudent: deleteStudentMutation.mutateAsync,
+    
+    // Tutor mutations
+    createTutor: createTutorMutation.mutateAsync,
+    updateTutor: updateTutorMutation.mutateAsync,
+    deleteTutor: deleteTutorMutation.mutateAsync,
+    gradeSubmission: gradeSubmissionMutation.mutateAsync,
 
     // Mutation states
     updatingStats: updateStatsMutation.isLoading,
     creatingAnnouncement: createAnnouncementMutation.isLoading,
     updatingAnnouncement: updateAnnouncementMutation.isLoading,
     deletingAnnouncement: deleteAnnouncementMutation.isLoading,
+    creatingStudent: createStudentMutation.isLoading,
+    updatingStudent: updateStudentMutation.isLoading,
+    deletingStudent: deleteStudentMutation.isLoading,
+    creatingTutor: createTutorMutation.isLoading,
+    updatingTutor: updateTutorMutation.isLoading,
+    deletingTutor: deleteTutorMutation.isLoading,
+    gradingSubmission: gradeSubmissionMutation.isLoading,
   };
 
   return (
