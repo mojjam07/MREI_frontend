@@ -3,6 +3,9 @@ import { useLanguage } from '../../context/LanguageContext';
 
 const Footer = () => {
   const { t } = useLanguage();
+
+  const currentYear = new Date().getFullYear();
+
   return (
     <footer className="bg-primary text-light-text py-8 sm:py-10 md:py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -72,7 +75,7 @@ const Footer = () => {
       <div className="bottom-footer border-t border-accent pt-6 sm:pt-8 mt-6 sm:mt-8 animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <p className="text-center text-accent text-xs sm:text-sm">
-            {t('home.footerCopyright')}
+            {t('home.footerCopyright').replace('{year}', currentYear)}
           </p>
           <div className="flex flex-wrap justify-center items-center gap-x-2 sm:gap-x-3 gap-y-1 text-accent mt-2 text-xs sm:text-sm">
             <a href="#" className="hover:text-light-text transition-colors hover-lift">{t('home.footerPrivacy')}</a>

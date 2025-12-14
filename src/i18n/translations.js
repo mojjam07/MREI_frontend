@@ -99,7 +99,7 @@ const translations = {
       footerAcademicsTitle: 'Academics',
       footerAdmissionsTitle: 'Admissions',
       footerConnectTitle: 'Connect With Us',
-      footerCopyright: '© 2025 Mahdu Rahma El-Islaamiy. All Rights Reserved.',
+      footerCopyright: '© {year} Mahdu Rahma El-Islaamiy. All Rights Reserved.',
       footerPrivacy: 'Privacy Policy',
       footerTerms: 'Terms of Use',
       footerAccessibility: 'Accessibility',
@@ -342,9 +342,9 @@ const translations = {
 
     dashboardFooter: {
       university: {
-        name: 'University Portal',
+        name: 'Rahmat El-Islaamiy Institute',
         description: 'Empowering students and educators with comprehensive academic management solutions.',
-        campus: 'University Campus'
+        campus: 'Mahdu Rahmah Garden'
       },
       quickLinks: {
         title: 'Quick Links',
@@ -361,7 +361,7 @@ const translations = {
       },
       support: {
         title: 'Support',
-        email: 'support@university.edu',
+        email: 'support@mahdurahmah.edu',
         phone: '+1 (555) 123-4567',
         helpCenter: 'Help Center'
       },
@@ -369,7 +369,7 @@ const translations = {
         privacyPolicy: 'Privacy Policy',
         termsOfService: 'Terms of Service'
       },
-      copyright: '© {year} University Portal. All rights reserved.',
+      copyright: '© {year} Rahmat El-Islaamiy Institute. All rights reserved.',
 
       user: {
         welcome: 'Welcome',
@@ -449,6 +449,7 @@ const translations = {
       testimonialImage: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
       campusLife: 'الحياة الجامعية',
       campusLifeDesc: 'استمتع بحياة جامعية نابضة بالحياة مع أنشطة متنوعة وفعاليات ومرافق مصممة لإثراء تجربتك الجامعية',
+      campusGalleryBtn: 'اطلع على معرضنا',
       newsEventsTitle: 'الأخبار والفعاليات',
       newsEventsDesc: 'ابقَ على اتصال مع آخر الأحداث في معهد الرحمة',
       newsTab: 'الأخبار',
@@ -479,7 +480,7 @@ const translations = {
       footerAcademicsTitle: 'الأكاديميات',
       footerAdmissionsTitle: 'القبول',
       footerConnectTitle: 'تواصل معنا',
-      footerCopyright: '© 2025 معهد الرحمة الإسلامي. جميع الحقوق محفوظة.',
+      footerCopyright: '© {year} معهد الرحمة الإسلامي. جميع الحقوق محفوظة.',
       footerPrivacy: 'سياسة الخصوصية',
       footerTerms: 'شروط الاستخدام',
       footerAccessibility: 'إمكانية الوصول',
@@ -656,7 +657,7 @@ const translations = {
       adminStaff: 'الإدارة والموظفون',
       alumni: 'الخريجون',
       partnersSponsors: 'الشركاء والرعاة',
-      searchPlaceholder: 'بحث...',
+      searchPlaceholder: '   بحث...',
       login: 'تسجيل الدخول',
       universityName: 'معهد الرحمة الإسلامي',
       logoAlt: 'شعار معهد'
@@ -722,9 +723,9 @@ const translations = {
 
     dashboardFooter: {
       university: {
-        name: 'بوابة الجامعة',
+        name: 'معهد الرحمة الإسلامي',
         description: 'تمكين الطلاب والمعلمين بحلول شاملة لإدارة الحياة الأكاديمية.',
-        campus: 'حرم الجامعة'
+        campus: 'حرم المعد'
       },
       quickLinks: {
         title: 'روابط سريعة',
@@ -741,7 +742,7 @@ const translations = {
       },
       support: {
         title: 'الدعم',
-        email: 'support@university.edu',
+        email: 'support@mahdurahmah.edu',
         phone: '+1 (555) 123-4567',
         helpCenter: 'مركز المساعدة'
       },
@@ -749,7 +750,7 @@ const translations = {
         privacyPolicy: 'سياسة الخصوصية',
         termsOfService: 'شروط الخدمة'
       },
-      copyright: '© {year} بوابة الجامعة. جميع الحقوق محفوظة.',
+      copyright: '© {year} معهد الرحمة الإسلامي. جميع الحقوق محفوظة.',
 
       user: {
         welcome: 'مرحباً',
