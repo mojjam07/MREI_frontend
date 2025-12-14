@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -5,6 +6,7 @@ import { useLanguage } from '../context/LanguageContext';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 import logo from '../assets/logo.png';
 import bgImage from '../assets/banner.png';
 
@@ -53,6 +55,7 @@ const LoginPage = () => {
     }
   };
 
+
   return (
     <div 
       className="min-h-screen flex items-center justify-center px-6 relative"
@@ -89,7 +92,15 @@ const LoginPage = () => {
         </button>
       </div>
 
-      <Card className="w-full max-w-md bg-white bg-opacity-90 shadow-lg">
+
+      <LoadingOverlay 
+        isLoading={loading}
+        loadingText={t('auth.login.signingIn')}
+        overlayColor="rgba(0, 0, 0, 0.8)"
+        spinnerColor="var(--primary-color)"
+        textColor="white"
+      >
+        <Card className="w-full max-w-md bg-white bg-opacity-90 shadow-lg">
 
         <div className="text-center mb-8">
           <img src={logo} alt="EduPlatform Logo" className="w-16 h-16 mx-auto mb-4" />
@@ -128,8 +139,10 @@ const LoginPage = () => {
           <p className="text-center text-sm text-gray-600">
             {t('auth.login.noAccount')} <span onClick={() => navigate('/signup')} className="text-blue-600 hover:underline cursor-pointer">{t('auth.login.signUp')}</span>
           </p>
+
         </form>
       </Card>
+      </LoadingOverlay>
     </div>
   );
 };

@@ -1,13 +1,15 @@
-
 import React from 'react';
 import { Home, LogOut, Settings, User, HelpCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
+import { useLanguage } from '../../context/LanguageContext';
 
 const DashboardFooter = () => {
   const { user, logout } = useAuth();
+  const { t } = useLanguage();
 
   const handleLogout = async () => {
-    if (window.confirm('Are you sure you want to logout?')) {
+
+    if (window.confirm(t('dashboardFooter.confirm.logout') || 'Are you sure you want to logout?')) {
       try {
         await logout();
       } catch (error) {
@@ -19,7 +21,7 @@ const DashboardFooter = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="shadow-sm border-t mt-auto" style={{backgroundColor: 'var(--light-text)'}}>
+    <footer className="shadow-sm border-t mt-auto animate-gradient">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* University Info */}
@@ -28,52 +30,51 @@ const DashboardFooter = () => {
               <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{backgroundColor: 'var(--primary-color)'}}>
                 <span className="text-white font-bold text-sm">U</span>
               </div>
-              <h3 className="font-semibold text-lg" style={{color: 'var(--primary-color)'}}>University Portal</h3>
+              <h3 className="font-semibold text-lg" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.university.name')}</h3>
             </div>
-            <p className="text-sm" style={{color: 'var(--text-color)'}}>
-              Empowering students and educators with comprehensive academic management solutions.
-            </p>
+            <p className="text-sm" style={{color: 'var(--light-text)'}}>
+              {t('dashboardFooter.university.description')}</p>
             <div className="flex gap-2">
-              <div className="flex items-center gap-1 text-xs" style={{color: 'var(--text-color)'}}>
+              <div className="flex items-center gap-1 text-xs" style={{color: 'var(--light-text)'}}>
                 <MapPin className="w-3 h-3" />
-                <span>University Campus</span>
+                <span>{t('dashboardFooter.university.campus')}</span>
               </div>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h4 className="font-semibold" style={{color: 'var(--primary-color)'}}>Quick Links</h4>
+            <h4 className="font-semibold" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.quickLinks.title')}</h4>
             <nav className="space-y-2">
               <a
                 href="/"
                 className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
-                style={{color: 'var(--text-color)'}}
+                style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <Home className="w-4 h-4" />
-                Home
+                {t('dashboardFooter.quickLinks.home')}
               </a>
               <a
                 href="/dashboard"
                 className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
-                style={{color: 'var(--text-color)'}}
+                style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <User className="w-4 h-4" />
-                Dashboard
+                {t('dashboardFooter.quickLinks.dashboard')}
               </a>
               <a
                 href="/profile"
                 className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
-                style={{color: 'var(--text-color)'}}
+                style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <Settings className="w-4 h-4" />
-                Profile
+                {t('dashboardFooter.quickLinks.profile')}
               </a>
             </nav>
           </div>
@@ -81,43 +82,43 @@ const DashboardFooter = () => {
           {/* Admin Links */}
           {user?.role === 'admin' && (
             <div className="space-y-4">
-              <h4 className="font-semibold" style={{color: 'var(--primary-color)'}}>Admin Panel</h4>
+              <h4 className="font-semibold" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.admin.title')}</h4>
               <nav className="space-y-2">
                 <a
                   href="/admin/statistics"
                   className="block text-sm hover:scale-105 transition-all"
-                  style={{color: 'var(--text-color)'}}
+                  style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                  onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
-                  Statistics
+                  {t('dashboardFooter.admin.statistics')}
                 </a>
                 <a
                   href="/admin/students"
                   className="block text-sm hover:scale-105 transition-all"
-                  style={{color: 'var(--text-color)'}}
+                  style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                  onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
-                  Manage Students
+                  {t('dashboardFooter.admin.manageStudents')}
                 </a>
                 <a
                   href="/admin/tutors"
                   className="block text-sm hover:scale-105 transition-all"
-                  style={{color: 'var(--text-color)'}}
+                  style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                  onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
-                  Manage Tutors
+                  {t('dashboardFooter.admin.manageTutors')}
                 </a>
                 <a
                   href="/admin/content"
                   className="block text-sm hover:scale-105 transition-all"
-                  style={{color: 'var(--text-color)'}}
+                  style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                  onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                  onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
-                  Content Management
+                  {t('dashboardFooter.admin.contentManagement')}
                 </a>
               </nav>
             </div>
@@ -125,25 +126,25 @@ const DashboardFooter = () => {
 
           {/* Contact & Support */}
           <div className="space-y-4">
-            <h4 className="font-semibold" style={{color: 'var(--primary-color)'}}>Support</h4>
+            <h4 className="font-semibold" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.support.title')}</h4>
             <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm" style={{color: 'var(--text-color)'}}>
+              <div className="flex items-center gap-2 text-sm" style={{color: 'var(--light-text)'}}>
                 <Mail className="w-4 h-4" />
-                <span>support@university.edu</span>
+                <span>{t('dashboardFooter.support.email')}</span>
               </div>
-              <div className="flex items-center gap-2 text-sm" style={{color: 'var(--text-color)'}}>
+              <div className="flex items-center gap-2 text-sm" style={{color: 'var(--light-text)'}}>
                 <Phone className="w-4 h-4" />
-                <span>+1 (555) 123-4567</span>
+                <span>{t('dashboardFooter.support.phone')}</span>
               </div>
               <a
                 href="/help"
                 className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
-                style={{color: 'var(--text-color)'}}
+                style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <HelpCircle className="w-4 h-4" />
-                Help Center
+                {t('dashboardFooter.support.helpCenter')}
               </a>
             </div>
           </div>
@@ -152,27 +153,27 @@ const DashboardFooter = () => {
         {/* Bottom Section */}
         <div className="border-t mt-8 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4">
-            <p className="text-sm" style={{color: 'var(--text-color)'}}>
-              © {currentYear} University Portal. All rights reserved.
+            <p className="text-sm" style={{color: 'var(--light-text)'}}>
+              {t('dashboardFooter.copyright').replace('{year}', currentYear)}
             </p>
             <div className="flex gap-4 text-xs">
               <a
                 href="/privacy"
                 className="hover:scale-105 transition-all"
-                style={{color: 'var(--text-color)'}}
+                style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
-                Privacy Policy
+                {t('dashboardFooter.legal.privacyPolicy')}
               </a>
               <a
                 href="/terms"
                 className="hover:scale-105 transition-all"
-                style={{color: 'var(--text-color)'}}
+                style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--text-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
-                Terms of Service
+                {t('dashboardFooter.legal.termsOfService')}
               </a>
             </div>
           </div>
@@ -180,14 +181,14 @@ const DashboardFooter = () => {
           {/* User Info & Logout */}
           <div className="flex items-center gap-4">
             {user && (
-              <div className="flex items-center gap-2 text-sm" style={{color: 'var(--text-color)'}}>
+              <div className="flex items-center gap-2 text-sm" style={{color: 'var(--light-text)'}}>
                 <div className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-semibold" style={{backgroundColor: 'var(--primary-color)'}}>
                   {user.first_name?.charAt(0) || 'U'}
                 </div>
-                <span>{user.first_name} {user.last_name}</span>
+                <span>{t('dashboardFooter.user.welcome')}, {user.first_name} {user.last_name}</span>
                 <span className="px-2 py-1 text-xs rounded" style={{
-                  backgroundColor: 'var(--tertiary-color)',
-                  color: 'var(--primary-color)'
+                  backgroundColor: 'rgba(255,255,255,0.2)',
+                  color: 'var(--light-text)'
                 }}>
                   {user.role}
                 </span>
@@ -199,7 +200,7 @@ const DashboardFooter = () => {
               style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}
             >
               <LogOut className="w-4 h-4" />
-              <span className="text-sm">Logout</span>
+              <span className="text-sm">{t('dashboardFooter.user.logout')}</span>
             </button>
           </div>
         </div>

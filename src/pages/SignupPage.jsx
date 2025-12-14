@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -5,8 +6,10 @@ import { useLanguage } from '../context/LanguageContext';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 import logo from '../assets/logo.png';
 import bgImage from '../assets/banner.png';
+
 
 const SignupPage = () => {
   const { signup } = useAuth();
@@ -21,6 +24,7 @@ const SignupPage = () => {
     lastName: ''
   });
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setFormData({
@@ -29,24 +33,29 @@ const SignupPage = () => {
     });
   };
 
+
   const handleSignup = async () => {
+    setLoading(true);
     setError('');
 
     // Validate passwords match
     if (formData.password !== formData.confirmPassword) {
       setError(t('auth.signup.error.passwordMismatch'));
+      setLoading(false);
       return;
     }
 
     // Validate password length
     if (formData.password.length < 6) {
       setError(t('auth.signup.error.passwordTooShort'));
+      setLoading(false);
       return;
     }
 
     // Validate required fields
     if (!formData.email || !formData.firstName || !formData.lastName || !formData.password) {
       setError(t('auth.signup.error.requiredFields'));
+      setLoading(false);
       return;
     }
 
@@ -58,6 +67,8 @@ const SignupPage = () => {
       last_name: formData.lastName,
       role
     });
+
+    setLoading(false);
 
     if (result.success) {
       // Show success message
@@ -76,6 +87,7 @@ const SignupPage = () => {
       setError(t(errorKey));
     }
   };
+
 
   return (
     <div 
@@ -113,7 +125,15 @@ const SignupPage = () => {
         </button>
       </div>
 
-      <Card className="w-full max-w-md bg-white bg-opacity-90 shadow-lg">
+
+      <LoadingOverlay 
+        isLoading={loading}
+        loadingText={t('auth.signup.creatingAccount')}
+        overlayColor="rgba(0, 0, 0, 0.8)"
+        spinnerColor="var(--primary-color)"
+        textColor="white"
+      >
+        <Card className="w-full max-w-md bg-white bg-opacity-90 shadow-lg">
 
         <div className="text-center mb-8">
           <img src={logo} alt="EduPlatform Logo" className="w-16 h-16 mx-auto mb-4" />
@@ -189,8 +209,10 @@ const SignupPage = () => {
           <p className="text-center text-sm text-gray-600">
             {t('auth.signup.hasAccount')} <a href="#" onClick={() => navigate('/login')} className="text-blue-600 hover:underline">{t('auth.signup.signIn')}</a>
           </p>
+
         </div>
       </Card>
+      </LoadingOverlay>
     </div>
   );
 };

@@ -3,12 +3,14 @@ import { BookOpen, Users, FileText, TrendingUp, Calendar, Award, LayoutDashboard
 import { useTranslation } from 'react-i18next';
 import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
+
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import StatCard from '../components/ui/StatCard';
 import ProgressBar from '../components/ui/ProgressBar';
 import SubmissionCard from '../components/tutor/SubmissionCard';
 import DashboardFooter from '../components/layout/DashboardFooter';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const TutorDashboard = () => {
   const { t } = useTranslation();
@@ -94,17 +96,9 @@ const TutorDashboard = () => {
     };
   };
 
-  // Add loading check
-  if (coursesLoading || assignmentsLoading || tutorDashboardLoading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{backgroundColor: 'var(--accent-color)'}}>
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto" style={{borderColor: 'var(--primary-color)'}}></div>
-          <p className="mt-2" style={{color: 'var(--text-color)'}}>Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
+
+  // Main loading state with dark masking
+  const isMainLoading = coursesLoading || assignmentsLoading || tutorDashboardLoading;
 
   return (
     <div className="min-h-screen" style={{backgroundColor: 'var(--accent-color)'}}>
@@ -123,8 +117,16 @@ const TutorDashboard = () => {
         </div>
       </header>
 
+
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <LoadingOverlay 
+        isLoading={isMainLoading}
+        loadingText="Loading dashboard..."
+        overlayColor="rgba(0, 0, 0, 0.8)"
+        spinnerColor="var(--primary-color)"
+        textColor="white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation Tabs */}
         <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
           <button
@@ -640,8 +642,10 @@ const TutorDashboard = () => {
               )}
             </div>
           </div>
+
         )}
-      </div>
+        </div>
+      </LoadingOverlay>
 
       {/* Footer */}
       <DashboardFooter />

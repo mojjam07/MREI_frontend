@@ -50,7 +50,7 @@ const translations = {
       learnMore: 'Learn More',
       whyChoose: 'Why Choose Us',
       expertTutors: 'Expert Tutors',
-      expertDesc: 'Learn from qualified tutorss with years of teaching experience',
+      expertDesc: 'Learn from qualified tutors with years of teaching experience',
       flexibleSchedule: 'Flexible Schedule',
       flexibleDesc: 'Study at your own pace with 24/7 access to course materials',
       proven: 'Proven Results',
@@ -111,7 +111,7 @@ const translations = {
       footerAccreditation: 'Accreditation',
       footerEmployment: 'Employment',
       footerCampusMap: 'Institute Map',
-      footerCollegesSchools: 'Goploma & Univeristy',
+      footerCollegesSchools: 'Diploma & University',
       footerUndergraduatePrograms: 'Junior Sec. Programs',
       footerGraduatePrograms: 'Senior Sec. Programs',
       footerOnlineLearning: 'Online Learning',
@@ -132,22 +132,89 @@ const translations = {
       footerLinkedIn: 'LinkedIn',
       footerYouTube: 'YouTube'
     },
+
     student: {
-      dashboard: 'Student -',
+      dashboard: 'Student Dashboard',
       welcome: 'Welcome back',
-      courses: 'My Courses',
-      upcoming: 'Upcoming Classes',
-      progress: 'Course Progress',
+      courses: 'Courses',
       assignments: 'Assignments',
-      grades: 'Grades',
-      schedule: 'Schedule',
-      viewAll: 'View All',
-      continue: 'Continue Learning',
-      dueDate: 'Due Date',
-      status: 'Status',
-      completed: 'Completed',
+      attendance: 'Attendance',
+      overview: 'Overview',
       pending: 'Pending',
-      inProgress: 'In Progress'
+      completed: 'Completed',
+      inProgress: 'In Progress',
+      viewAll: 'View All',
+      viewAllCourses: 'View All Courses',
+      viewAllAssignments: 'View All Assignments',
+      viewSchedule: 'View Schedule',
+      viewAllNews: 'View All News',
+      dueDate: 'Due Date',
+      progress: 'Progress',
+      upcoming: 'Upcoming',
+      grade: 'Grade',
+      feedback: 'Feedback',
+      courseProgress: 'Course Progress',
+      assignmentStatus: 'Assignment Status',
+      upcomingClasses: 'Upcoming Classes',
+      newsUpdates: 'News & Updates',
+      attendanceRate: 'Attendance Rate',
+      overallAttendanceRate: 'Overall Attendance Rate',
+      attendanceSummary: 'Attendance Summary',
+      averageGrade: 'Average Grade',
+      enrolledCourses: 'Enrolled Courses',
+      completedCourses: 'Completed Courses',
+      overallProgress: 'Overall Progress',
+      pendingAssignments: 'Pending Assignments',
+      classSchedule: 'Class Schedule',
+      assignmentManagement: 'Assignment Management',
+      submitAssignment: 'Submit Assignment',
+      recentSubmissions: 'Recent Submissions',
+      attendanceOverview: 'Attendance Overview',
+      totalClasses: 'Total Classes',
+      present: 'Present',
+      late: 'Late',
+      absent: 'Absent',
+      recentAttendance: 'Recent Attendance',
+      upcomingClassesCount: 'Next 7 days',
+      completedTasks: 'Completed Tasks',
+      thisMonth: 'This month',
+      loadingCourses: 'Loading courses...',
+      loadingAssignments: 'Loading assignments...',
+      loadingSchedule: 'Loading schedule...',
+      loadingAttendance: 'Loading attendance...',
+      loadingDashboard: 'Loading dashboard...',
+      noCoursesEnrolled: 'No courses enrolled',
+      noAssignmentsFound: 'No assignments found',
+      noUpcomingClasses: 'No upcoming classes',
+      noRecentUpdates: 'No recent updates',
+      allAssignmentsCompleted: 'All assignments completed!',
+      noSubmissionsYet: 'No submissions yet',
+      noAttendanceRecords: 'No attendance records',
+      next7Days: 'Next 7 days',
+      dueThisWeek: 'Due this week',
+      courseCompletion: 'Course completion',
+      assignmentAverage: 'Assignment average',
+      classAttendance: 'Class attendance',
+      status: 'Status',
+      type: 'Type',
+      submit: 'Submit',
+      due: 'Due:',
+      course: 'Course',
+      time: 'Time',
+      room: 'Room',
+      date: 'Date',
+      day: 'Day',
+      tabs: {
+        overview: 'Overview',
+        assignments: 'Assignments',
+        attendance: 'Attendance'
+      },
+      fallbacks: {
+        course: 'Course',
+        toBeDetermined: 'TBD',
+        general: 'General',
+        notAvailable: 'N/A'
+      }
     },
     tutor: {
       dashboard: 'Tutor -',
@@ -214,6 +281,7 @@ const translations = {
       universityName: 'Rahmat El-Islaamiy',
       logoAlt: 'mahdu-logo'
     },
+
     auth: {
       login: {
         title: 'Welcome Back',
@@ -270,50 +338,91 @@ const translations = {
           accountCreated: 'Account created successfully! Please sign in.'
         }
       }
+    },
+
+    dashboardFooter: {
+      university: {
+        name: 'University Portal',
+        description: 'Empowering students and educators with comprehensive academic management solutions.',
+        campus: 'University Campus'
+      },
+      quickLinks: {
+        title: 'Quick Links',
+        home: 'Home',
+        dashboard: 'Dashboard',
+        profile: 'Profile'
+      },
+      admin: {
+        title: 'Admin Panel',
+        statistics: 'Statistics',
+        manageStudents: 'Manage Students',
+        manageTutors: 'Manage Tutors',
+        contentManagement: 'Content Management'
+      },
+      support: {
+        title: 'Support',
+        email: 'support@university.edu',
+        phone: '+1 (555) 123-4567',
+        helpCenter: 'Help Center'
+      },
+      legal: {
+        privacyPolicy: 'Privacy Policy',
+        termsOfService: 'Terms of Service'
+      },
+      copyright: '© {year} University Portal. All rights reserved.',
+
+      user: {
+        welcome: 'Welcome',
+        logout: 'Logout'
+      },
+      confirm: {
+        logout: 'Are you sure you want to logout?'
+      }
     }
   },
+
   ar: {
     nav: {
-        "home": "الرئيسية",
-        "dashboard": "لوحة التحكم",
-        "alumni": "الخريجون",
-        "login": "تسجيل الدخول",
-        "logout": "تسجيل الخروج",
-        "about": "حول",
-        "missionVision": "الرؤية والرسالة",
-        "history": "التاريخ",
-        "leadership": "القيادة",
-        "campusMap": "خريطة الحرم الجامعي",
-        "diversity": "التنوع والشمول",
-        "academics": "الأكاديميات",
-        "undergraduate": "برامج البكالوريوس",
-        "graduate": "برامج الدراسات العليا",
-        "colleges": "الكليات والمدارس",
-        "academicCalendar": "التقويم الأكاديمي",
-        "library": "المكتبة",
-        "admissions": "القبول",
-        "undergraduateAdmission": "قبول البكالوريوس",
-        "graduateAdmission": "قبول الدراسات العليا",
-        "tuition": "الرسوم والمساعدات",
-        "visitCampus": "زيارة الحرم الجامعي",
-        "applyNow": "تقدم الآن",
-        "research": "البحث",
-        "researchCenters": "مراكز البحث",
-        "facultyResearch": "بحث الأساتذة",
-        "studentResearch": "بحث الطلاب",
-        "publications": "المنشورات",
-        "researchSupport": "دعم البحث",
-        "studentLife": "الحياة الطلابية",
-        "housing": "السكن",
-        "dining": "الطعام",
-        "organizations": "المنظمات الطلابية",
-        "athletics": "الرياضة",
-        "health": "الصحة والعافية",
-        "alumniAssociation": "جمعية الخريجين",
-        "alumniEvents": "الفعاليات",
-        "giveBack": "العطاء",
-        "alumniResources": "موارد الخريجين",
-        "alumniStories": "قصص الخريجين"
+      "home": "الرئيسية",
+      "dashboard": "لوحة التحكم",
+      "alumni": "الخريجون",
+      "login": "تسجيل الدخول",
+      "logout": "تسجيل الخروج",
+      "about": "حول",
+      "missionVision": "الرؤية والرسالة",
+      "history": "التاريخ",
+      "leadership": "القيادة",
+      "campusMap": "خريطة الحرم الجامعي",
+      "diversity": "التنوع والشمول",
+      "academics": "الأكاديميات",
+      "undergraduate": "برامج البكالوريوس",
+      "graduate": "برامج الدراسات العليا",
+      "colleges": "الكليات والمدارس",
+      "academicCalendar": "التقويم الأكاديمي",
+      "library": "المكتبة",
+      "admissions": "القبول",
+      "undergraduateAdmission": "قبول البكالوريوس",
+      "graduateAdmission": "قبول الدراسات العليا",
+      "tuition": "الرسوم والمساعدات",
+      "visitCampus": "زيارة الحرم الجامعي",
+      "applyNow": "تقدم الآن",
+      "research": "البحث",
+      "researchCenters": "مراكز البحث",
+      "facultyResearch": "بحث الأساتذة",
+      "studentResearch": "بحث الطلاب",
+      "publications": "المنشورات",
+      "researchSupport": "دعم البحث",
+      "studentLife": "الحياة الطلابية",
+      "housing": "السكن",
+      "dining": "الطعام",
+      "organizations": "المنظمات الطلابية",
+      "athletics": "الرياضة",
+      "health": "الصحة والعافية",
+      "alumniAssociation": "جمعية الخريجين",
+      "alumniEvents": "الفعاليات",
+      "giveBack": "العطاء",
+      "alumniResources": "موارد الخريجين",
+      "alumniStories": "قصص الخريجين"
     },
     home: {
       hero: 'مرحباً بك!',
@@ -341,20 +450,20 @@ const translations = {
       campusLife: 'الحياة الجامعية',
       campusLifeDesc: 'استمتع بحياة جامعية نابضة بالحياة مع أنشطة متنوعة وفعاليات ومرافق مصممة لإثراء تجربتك الجامعية',
       newsEventsTitle: 'الأخبار والفعاليات',
-      newsEventsDesc: 'ابقَ على اتصال مع آخر الأحداث في هيلزايد',
+      newsEventsDesc: 'ابقَ على اتصال مع آخر الأحداث في معهد الرحمة',
       newsTab: 'الأخبار',
       eventsTab: 'الفعاليات',
       viewAllNews: 'عرض جميع الأخبار ←',
       viewAllEvents: 'عرض جميع الفعاليات ←',
       recentEventsTitle: 'الفعاليات الأخيرة',
-      recentEventsDesc: 'تحقق من بعض أحدث فعالياتنا وأنشطتنا الجامعية.',
+      recentEventsDesc: 'تحقق من بعض أحدث فعالياتنا وأنشطتنا.',
       event1Title: 'معرض العلوم السنوي',
       event1Desc: 'عرض الطلاب مشاريع مبتكرة في العلوم والتكنولوجيا.',
       event2Title: 'المهرجان الثقافي',
       event2Desc: 'احتفال بالثقافات المتنوعة مع العروض وأكشاك الطعام.',
       event3Title: 'سلسلة محاضرات الضيوف',
       event3Desc: 'شارك خبراء مشهورون رؤاهم حول الاتجاهات الناشئة في مجالات مختلفة.',
-      contactTitle: "تواصل معنا من هنا",
+      contactTitle: "تواصل معنا",
       contactDesc: "يمكنك التواصل معنا من خلال هذه التفاصيل أو استخدام النموذج لإرسال رسالة",
       contactInfo: "معلومات الاتصال",
       address: "العنوان",
@@ -366,7 +475,7 @@ const translations = {
       subject: "الموضوع",
       message: "الرسالة",
       send: "إرسال",
-      footerAboutTitle: 'حول هيلزايد',
+      footerAboutTitle: 'حول معهد الرحمة',
       footerAcademicsTitle: 'الأكاديميات',
       footerAdmissionsTitle: 'القبول',
       footerConnectTitle: 'تواصل معنا',
@@ -382,7 +491,7 @@ const translations = {
       footerAccreditation: 'الاعتماد',
       footerEmployment: 'التوظيف',
       footerCampusMap: 'خريطة الحرم الجامعي',
-      footerCollegesSchools: 'الكليات والمدارس',
+      footerCollegesSchools: 'الكليات والمعاهد',
       footerUndergraduatePrograms: 'برامج البكالوريوس',
       footerGraduatePrograms: 'برامج الدراسات العليا',
       footerOnlineLearning: 'التعلم عبر الإنترنت',
@@ -403,22 +512,89 @@ const translations = {
       footerLinkedIn: 'لينكد إن',
       footerYouTube: 'يوتيوب'
     },
+
     student: {
       dashboard: 'لوحة تحكم الطالب',
       welcome: 'مرحباً بعودتك',
-      courses: 'دوراتي',
-      upcoming: 'الحصص القادمة',
-      progress: 'تقدم الدورات',
+      courses: 'الدورات',
       assignments: 'الواجبات',
-      grades: 'الدرجات',
-      schedule: 'الجدول',
-      viewAll: 'عرض الكل',
-      continue: 'متابعة التعلم',
-      dueDate: 'تاريخ التسليم',
-      status: 'الحالة',
-      completed: 'مكتمل',
+      attendance: 'الحضور',
+      overview: 'نظرة عامة',
       pending: 'معلق',
-      inProgress: 'قيد التنفيذ'
+      completed: 'مكتمل',
+      inProgress: 'قيد التنفيذ',
+      viewAll: 'عرض الكل',
+      viewAllCourses: 'عرض جميع الدورات',
+      viewAllAssignments: 'عرض جميع الواجبات',
+      viewSchedule: 'عرض الجدول',
+      viewAllNews: 'عرض جميع الأخبار',
+      dueDate: 'تاريخ التسليم',
+      progress: 'التقدم',
+      upcoming: 'قادم',
+      grade: 'الدرجة',
+      feedback: 'التعليق',
+      courseProgress: 'تقدم الدورة',
+      assignmentStatus: 'حالة الواجب',
+      upcomingClasses: 'الحصص القادمة',
+      newsUpdates: 'الأخبار والتحديثات',
+      attendanceRate: 'معدل الحضور',
+      overallAttendanceRate: 'معدل الحضور الإجمالي',
+      attendanceSummary: 'ملخص الحضور',
+      averageGrade: 'متوسط الدرجات',
+      enrolledCourses: 'الدورات المسجلة',
+      completedCourses: 'الدورات المكتملة',
+      overallProgress: 'التقدم الإجمالي',
+      pendingAssignments: 'الواجبات المعلقة',
+      classSchedule: 'جدول الحصص',
+      assignmentManagement: 'إدارة الواجبات',
+      submitAssignment: 'تسليم الواجب',
+      recentSubmissions: 'التسليمات الأخيرة',
+      attendanceOverview: 'نظرة عامة على الحضور',
+      totalClasses: 'إجمالي الحصص',
+      present: 'حاضر',
+      late: 'متأخر',
+      absent: 'غائب',
+      recentAttendance: 'الحضور الأخير',
+      upcomingClassesCount: 'الـ 7 أيام القادمة',
+      completedTasks: 'المهام المكتملة',
+      thisMonth: 'هذا الشهر',
+      loadingCourses: 'جاري تحميل الدورات...',
+      loadingAssignments: 'جاري تحميل الواجبات...',
+      loadingSchedule: 'جاري تحميل الجدول...',
+      loadingAttendance: 'جاري تحميل الحضور...',
+      loadingDashboard: 'جاري تحميل لوحة التحكم...',
+      noCoursesEnrolled: 'لا توجد دورات مسجلة',
+      noAssignmentsFound: 'لا توجد واجبات',
+      noUpcomingClasses: 'لا توجد حصص قادمة',
+      noRecentUpdates: 'لا توجد تحديثات حديثة',
+      allAssignmentsCompleted: 'تم إكمال جميع الواجبات!',
+      noSubmissionsYet: 'لا توجد تسليمات بعد',
+      noAttendanceRecords: 'لا توجد سجلات حضور',
+      next7Days: 'الـ 7 أيام القادمة',
+      dueThisWeek: 'مستحق هذا الأسبوع',
+      courseCompletion: 'إكمال الدورة',
+      assignmentAverage: 'متوسط الواجبات',
+      classAttendance: 'حضور الحصص',
+      status: 'الحالة',
+      type: 'النوع',
+      submit: 'تسليم',
+      due: 'مستحق:',
+      course: 'الدورة',
+      time: 'الوقت',
+      room: 'القاعة',
+      date: 'التاريخ',
+      day: 'اليوم',
+      tabs: {
+        overview: 'نظرة عامة',
+        assignments: 'الواجبات',
+        attendance: 'الحضور'
+      },
+      fallbacks: {
+        course: 'الدورة',
+        toBeDetermined: 'سيتم تحديده',
+        general: 'عام',
+        notAvailable: 'غير متاح'
+      }
     },
     tutor: {
       dashboard: 'لوحة تحكم المعلم',
@@ -463,7 +639,7 @@ const translations = {
       graduated: 'تخرج في'
     },
     common: {
-      search: '  بحث',
+      search: 'بحث',
       filter: 'تصفية',
       export: 'تصدير',
       save: 'حفظ',
@@ -480,11 +656,12 @@ const translations = {
       adminStaff: 'الإدارة والموظفون',
       alumni: 'الخريجون',
       partnersSponsors: 'الشركاء والرعاة',
-      searchPlaceholder: '   بحث...',
+      searchPlaceholder: 'بحث...',
       login: 'تسجيل الدخول',
       universityName: 'معهد الرحمة الإسلامي',
-      logoAlt: 'شعار مهعد'
+      logoAlt: 'شعار معهد'
     },
+
     auth: {
       login: {
         title: 'مرحباً بعودتك',
@@ -506,7 +683,7 @@ const translations = {
       },
       signup: {
         title: 'إنشاء حساب',
-        subtitle: 'انضم إلى معهد الرحمة الإسلامي في اليوم',
+        subtitle: 'انضم إلى معهد الرحمة الإسلامي اليوم',
         firstName: 'الاسم الأول',
         firstNamePlaceholder: 'أحمد',
         lastName: 'اسم العائلة',
@@ -540,6 +717,46 @@ const translations = {
         success: {
           accountCreated: 'تم إنشاء الحساب بنجاح! يرجى تسجيل الدخول.'
         }
+      }
+    },
+
+    dashboardFooter: {
+      university: {
+        name: 'بوابة الجامعة',
+        description: 'تمكين الطلاب والمعلمين بحلول شاملة لإدارة الحياة الأكاديمية.',
+        campus: 'حرم الجامعة'
+      },
+      quickLinks: {
+        title: 'روابط سريعة',
+        home: 'الرئيسية',
+        dashboard: 'لوحة التحكم',
+        profile: 'الملف الشخصي'
+      },
+      admin: {
+        title: 'لوحة الإدارة',
+        statistics: 'الإحصائيات',
+        manageStudents: 'إدارة الطلاب',
+        manageTutors: 'إدارة المعلمين',
+        contentManagement: 'إدارة المحتوى'
+      },
+      support: {
+        title: 'الدعم',
+        email: 'support@university.edu',
+        phone: '+1 (555) 123-4567',
+        helpCenter: 'مركز المساعدة'
+      },
+      legal: {
+        privacyPolicy: 'سياسة الخصوصية',
+        termsOfService: 'شروط الخدمة'
+      },
+      copyright: '© {year} بوابة الجامعة. جميع الحقوق محفوظة.',
+
+      user: {
+        welcome: 'مرحباً',
+        logout: 'تسجيل الخروج'
+      },
+      confirm: {
+        logout: 'هل أنت متأكد أنك تريد تسجيل الخروج؟'
       }
     }
   }

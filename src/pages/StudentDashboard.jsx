@@ -19,18 +19,22 @@ import {
   LayoutDashboard,
   Settings
 } from 'lucide-react';
+
 import { useLanguage } from '../context/LanguageContext';
-import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
+
+
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import StatCard from '../components/ui/StatCard';
 import ProgressBar from '../components/ui/ProgressBar';
 import DashboardFooter from '../components/layout/DashboardFooter';
+import LanguageSwitcher from '../components/layout/LanguageSwitcher';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const StudentDashboard = () => {
+
   const { t } = useLanguage();
-  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState('overview');
   
   const { 
@@ -51,24 +55,28 @@ const StudentDashboard = () => {
   // Transform backend data to component format
   const courses = enrollments?.map(enrollment => ({
     id: enrollment.course?.id || enrollment.id,
-    name: enrollment.course?.title || 'Course',
+
+    name: enrollment.course?.title || t('student.fallbacks.course'),
     code: enrollment.course?.code || '',
     progress: enrollment.progress || 0,
     grade: enrollment.grade || null,
     status: enrollment.status || 'enrolled',
-    nextClass: classSchedules?.find(cs => cs.course === enrollment.course?.id)?.scheduled_date || 'TBD'
+
+    nextClass: classSchedules?.find(cs => cs.course === enrollment.course?.id)?.scheduled_date || t('student.fallbacks.toBeDetermined')
   })) || [];
 
   const transformedAssignments = assignments?.map(assignment => ({
     id: assignment.id,
     title: assignment.title,
-    course: assignment.course?.title || 'Course',
+
+    course: assignment.course?.title || t('student.fallbacks.course'),
     due: assignment.due_date,
     status: assignment.submissions?.[0]?.grade ? 'completed' : 
             assignment.submissions?.[0] ? 'inProgress' : 'pending',
     grade: assignment.submissions?.[0]?.grade || null,
     feedback: assignment.submissions?.[0]?.feedback || null,
-    type: assignment.assignment_type || 'general'
+
+    type: assignment.assignment_type || t('student.fallbacks.general')
   })) || [];
 
   const upcomingClasses = classSchedules?.filter(cs => {
@@ -107,76 +115,81 @@ const StudentDashboard = () => {
     <div className="space-y-6">
       {/* Quick Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
         <StatCard
           icon={BookOpen}
-          title="Enrolled Courses"
+          title={t('student.enrolledCourses')}
           value={totalCourses.toString()}
-          change={`${completedCourses} completed`}
+          change={`${completedCourses} ${t('student.completedCourses').toLowerCase()}`}
           color="blue"
         />
         <StatCard
           icon={FileText}
-          title="Pending Assignments"
+          title={t('student.pendingAssignments')}
           value={pendingAssignments.toString()}
-          change="Due this week"
+          change={t('student.dueThisWeek')}
           color="orange"
         />
         <StatCard
           icon={Target}
-          title="Overall Progress"
+          title={t('student.overallProgress')}
           value={`${overallProgress}%`}
-          change="Course completion"
+          change={t('student.courseCompletion')}
           color="green"
         />
         <StatCard
           icon={Award}
-          title="Average Grade"
-          value={avgGrade > 0 ? `${avgGrade}%` : 'N/A'}
-          change="Assignment average"
+          title={t('student.averageGrade')}
+
+          value={avgGrade > 0 ? `${avgGrade}%` : t('student.fallbacks.notAvailable')}
+          change={t('student.assignmentAverage')}
           color="purple"
         />
       </div>
+
 
       {/* Secondary Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <StatCard
           icon={Clock}
-          title="Attendance Rate"
+          title={t('student.attendanceRate')}
           value={`${attendanceRate}%`}
-          change="Class attendance"
+          change={t('student.classAttendance')}
           color="indigo"
         />
         <StatCard
           icon={Calendar}
-          title="Upcoming Classes"
+          title={t('student.upcomingClasses')}
           value={upcomingClasses.length.toString()}
-          change="Next 7 days"
+          change={t('student.next7Days')}
           color="cyan"
         />
         <StatCard
           icon={CheckCircle}
-          title="Completed Tasks"
+          title={t('student.completedTasks')}
           value={recentSubmissions.length.toString()}
-          change="This month"
+          change={t('student.thisMonth')}
           color="emerald"
         />
       </div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
         {/* Course Progress */}
         <Card 
-          title="Course Progress" 
+          title={t('student.courseProgress')} 
           action={
             <Button variant="outline" size="sm">
-              View All <ChevronRight className="w-4 h-4 ml-1" />
+              {t('student.viewAll')} <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           }
         >
+
           {coursesLoading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="text-gray-600 mt-2">Loading courses...</p>
+              <p className="text-gray-600 mt-2">{t('student.loadingCourses')}</p>
             </div>
           ) : courses.length > 0 ? (
             <div className="space-y-4">
@@ -194,9 +207,10 @@ const StudentDashboard = () => {
                     className="mb-2"
                     color={course.status === 'completed' ? 'green' : 'blue'}
                   />
+
                   <div className="flex justify-between text-sm text-gray-600">
-                    <span>Status: {course.status}</span>
-                    {course.grade && <span>Grade: {course.grade}%</span>}
+                    <span>{t('student.status')}: {course.status}</span>
+                    {course.grade && <span>{t('student.grade')}: {course.grade}%</span>}
                   </div>
                 </div>
               ))}
@@ -204,41 +218,45 @@ const StudentDashboard = () => {
           ) : (
             <div className="text-center py-8 text-gray-500">
               <BookOpen className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No courses enrolled</p>
+              <p>{t('student.noCoursesEnrolled')}</p>
             </div>
           )}
         </Card>
 
+
         {/* Recent Assignments */}
         <Card 
-          title="Assignment Status" 
+          title={t('student.assignmentStatus')} 
           action={
             <Button variant="outline" size="sm">
-              View All <ChevronRight className="w-4 h-4 ml-1" />
+              {t('student.viewAll')} <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           }
         >
+
           {assignmentsLoading ? (
             <div className="text-center py-8">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="text-gray-600 mt-2">Loading assignments...</p>
+              <p className="text-gray-600 mt-2">{t('student.loadingAssignments')}</p>
             </div>
           ) : transformedAssignments.length > 0 ? (
             <div className="space-y-3">
               {transformedAssignments.slice(0, 5).map(assignment => (
                 <div key={assignment.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+
                   <div className="flex-1">
                     <h4 className="font-medium text-gray-800">{assignment.title}</h4>
                     <p className="text-sm text-gray-600">{assignment.course}</p>
-                    <p className="text-xs text-gray-500">Due: {new Date(assignment.due).toLocaleDateString()}</p>
+                    <p className="text-xs text-gray-500">{t('student.due')}: {new Date(assignment.due).toLocaleDateString()}</p>
                   </div>
                   <div className="text-right">
+
                     <span className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${
                       assignment.status === 'completed' ? 'bg-green-100 text-green-700' :
                       assignment.status === 'inProgress' ? 'bg-blue-100 text-blue-700' :
                       'bg-orange-100 text-orange-700'
                     }`}>
-                      {assignment.status}
+                      {t(`student.${assignment.status}`)}
                     </span>
                     {assignment.grade && (
                       <p className="text-sm font-medium text-gray-700 mt-1">{assignment.grade}%</p>
@@ -247,30 +265,33 @@ const StudentDashboard = () => {
                 </div>
               ))}
             </div>
+
           ) : (
             <div className="text-center py-8 text-gray-500">
               <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No assignments found</p>
+              <p>{t('student.noAssignmentsFound')}</p>
             </div>
           )}
         </Card>
       </div>
 
+
       {/* Bottom Row */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Upcoming Classes */}
         <Card 
-          title="Upcoming Classes"
+          title={t('student.upcomingClasses')}
           action={
             <Button variant="outline" size="sm">
-              View Schedule <ChevronRight className="w-4 h-4 ml-1" />
+              {t('student.viewSchedule')} <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           }
         >
+
           {classSchedulesLoading ? (
             <div className="text-center py-6">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="text-gray-600 mt-2">Loading schedule...</p>
+              <p className="text-gray-600 mt-2">{t('student.loadingSchedule')}</p>
             </div>
           ) : upcomingClasses.length > 0 ? (
             <div className="space-y-3">
@@ -278,7 +299,8 @@ const StudentDashboard = () => {
                 <div key={index} className="flex items-center p-3 bg-blue-50 rounded-lg">
                   <Calendar className="w-5 h-5 text-blue-600 mr-3" />
                   <div className="flex-1">
-                    <p className="font-medium text-gray-800">{cls.course_title || 'Course'}</p>
+
+                    <p className="font-medium text-gray-800">{cls.course_title || t('student.fallbacks.course')}</p>
                     <p className="text-sm text-gray-600">{new Date(cls.scheduled_date).toLocaleDateString()}</p>
                   </div>
                   <span className="text-sm text-blue-600 font-medium">
@@ -287,20 +309,21 @@ const StudentDashboard = () => {
                 </div>
               ))}
             </div>
+
           ) : (
             <div className="text-center py-6 text-gray-500">
               <Calendar className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No upcoming classes</p>
+              <p>{t('student.noUpcomingClasses')}</p>
             </div>
           )}
         </Card>
 
         {/* News & Updates */}
         <Card 
-          title="News & Updates"
+          title={t('student.newsUpdates')}
           action={
             <Button variant="outline" size="sm">
-              View All <ChevronRight className="w-4 h-4 ml-1" />
+              {t('student.viewAll')} <ChevronRight className="w-4 h-4 ml-1" />
             </Button>
           }
         >
@@ -331,10 +354,11 @@ const StudentDashboard = () => {
                 </div>
               ))}
             </div>
+
           ) : (
             <div className="text-center py-6 text-gray-500">
               <Bell className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No recent updates</p>
+              <p>{t('student.noRecentUpdates')}</p>
             </div>
           )}
         </Card>
@@ -342,21 +366,23 @@ const StudentDashboard = () => {
     </div>
   );
 
+
   const renderAssignmentsTab = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Assignment Management</h2>
+        <h2 className="text-2xl font-bold text-gray-800">{t('student.assignmentManagement')}</h2>
         <div className="flex space-x-2">
           <Button variant="outline" size="sm">
             <Upload className="w-4 h-4 mr-2" />
-            Submit Assignment
+            {t('student.submitAssignment')}
           </Button>
         </div>
       </div>
 
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Pending Assignments */}
-        <Card title="Pending Assignments">
+        <Card title={t('student.pendingAssignments')}>
           {upcomingAssignments.length > 0 ? (
             <div className="space-y-4">
               {upcomingAssignments.map(assignment => (
@@ -368,36 +394,40 @@ const StudentDashboard = () => {
                     </span>
                   </div>
                   <p className="text-sm text-gray-600 mb-2">{assignment.course}</p>
+
                   <div className="flex justify-between items-center">
                     <span className="text-sm text-gray-500">
-                      Due: {new Date(assignment.due).toLocaleDateString()}
+                      {t('student.due')}: {new Date(assignment.due).toLocaleDateString()}
                     </span>
                     <Button size="sm">
-                      Submit
+                      {t('student.submit')}
                     </Button>
                   </div>
                 </div>
               ))}
             </div>
+
           ) : (
             <div className="text-center py-8 text-gray-500">
               <CheckCircle className="w-12 h-12 mx-auto mb-4 text-green-300" />
-              <p>All assignments completed!</p>
+              <p>{t('student.allAssignmentsCompleted')}</p>
             </div>
           )}
         </Card>
 
+
         {/* Recent Submissions */}
-        <Card title="Recent Submissions">
+        <Card title={t('student.recentSubmissions')}>
           {recentSubmissions.length > 0 ? (
             <div className="space-y-4">
               {recentSubmissions.map(assignment => (
                 <div key={assignment.id} className="border border-green-200 bg-green-50 p-4 rounded-lg">
                   <div className="flex justify-between items-start mb-2">
                     <h4 className="font-semibold text-gray-800">{assignment.title}</h4>
+
                     {assignment.grade && (
                       <span className="text-sm font-medium text-green-700">
-                        Grade: {assignment.grade}%
+                        {t('student.grade')}: {assignment.grade}%
                       </span>
                     )}
                   </div>
@@ -406,15 +436,16 @@ const StudentDashboard = () => {
                     <p className="text-sm text-gray-600 italic">"{assignment.feedback}"</p>
                   )}
                   <span className="inline-flex mt-2 px-2 py-1 bg-green-100 text-green-700 text-xs rounded">
-                    Completed
+                    {t('student.completed')}
                   </span>
                 </div>
               ))}
             </div>
           ) : (
+
             <div className="text-center py-8 text-gray-500">
               <FileText className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No submissions yet</p>
+              <p>{t('student.noSubmissionsYet')}</p>
             </div>
           )}
         </Card>
@@ -422,37 +453,39 @@ const StudentDashboard = () => {
     </div>
   );
 
+
   const renderAttendanceTab = () => (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold text-gray-800">Attendance Overview</h2>
+        <h2 className="text-2xl font-bold text-gray-800">{t('student.attendanceOverview')}</h2>
         <div className="text-right">
-          <p className="text-sm text-gray-600">Overall Attendance Rate</p>
+          <p className="text-sm text-gray-600">{t('student.overallAttendanceRate')}</p>
           <p className="text-2xl font-bold text-blue-600">{attendanceRate}%</p>
         </div>
       </div>
 
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <Card title="Attendance Summary">
+        <Card title={t('student.attendanceSummary')}>
           <div className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Total Classes</span>
+              <span className="text-gray-600">{t('student.totalClasses')}</span>
               <span className="font-semibold">{attendance?.length || 0}</span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Present</span>
+              <span className="text-gray-600">{t('student.present')}</span>
               <span className="font-semibold text-green-600">
                 {attendance?.filter(a => a.status === 'present').length || 0}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Late</span>
+              <span className="text-gray-600">{t('student.late')}</span>
               <span className="font-semibold text-yellow-600">
                 {attendance?.filter(a => a.status === 'late').length || 0}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Absent</span>
+              <span className="text-gray-600">{t('student.absent')}</span>
               <span className="font-semibold text-red-600">
                 {attendance?.filter(a => a.status === 'absent').length || 0}
               </span>
@@ -460,11 +493,12 @@ const StudentDashboard = () => {
           </div>
         </Card>
 
-        <Card title="Recent Attendance">
+
+        <Card title={t('student.recentAttendance')}>
           {attendanceLoading ? (
             <div className="text-center py-6">
               <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600 mx-auto"></div>
-              <p className="text-gray-600 mt-2">Loading attendance...</p>
+              <p className="text-gray-600 mt-2">{t('student.loadingAttendance')}</p>
             </div>
           ) : attendance && attendance.length > 0 ? (
             <div className="space-y-3">
@@ -472,26 +506,29 @@ const StudentDashboard = () => {
                 <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                   <div>
                     <p className="font-medium text-gray-800">
-                      {record.class_schedule?.course_title || 'Course'}
+
+                      {record.class_schedule?.course_title || t('student.fallbacks.course')}
                     </p>
                     <p className="text-sm text-gray-600">
                       {new Date(record.date).toLocaleDateString()}
                     </p>
                   </div>
+
                   <span className={`px-3 py-1 rounded-full text-xs font-medium ${
                     record.status === 'present' ? 'bg-green-100 text-green-700' :
                     record.status === 'late' ? 'bg-yellow-100 text-yellow-700' :
                     'bg-red-100 text-red-700'
                   }`}>
-                    {record.status}
+                    {t(`student.${record.status}`)}
                   </span>
                 </div>
               ))}
             </div>
+
           ) : (
             <div className="text-center py-8 text-gray-500">
               <Users className="w-12 h-12 mx-auto mb-4 text-gray-300" />
-              <p>No attendance records</p>
+              <p>{t('student.noAttendanceRecords')}</p>
             </div>
           )}
         </Card>
@@ -499,36 +536,41 @@ const StudentDashboard = () => {
     </div>
   );
 
-  if (studentDashboardLoading) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="text-gray-600 mt-4">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
+
+  // Main loading state with dark masking
+  const isMainLoading = studentDashboardLoading;
 
   return (
     <div className="min-h-screen" style={{backgroundColor: 'var(--accent-color)'}}>
       {/* Header */}
       <header className="shadow-sm border-b" style={{backgroundColor: 'var(--primary-color)'}}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <LayoutDashboard className="w-8 h-8" style={{color: 'var(--tertiary-color)'}} />
-              <h1 className="text-2xl font-bold" style={{color: 'var(--light-text)'}}>Student Dashboard</h1>
+              <h1 className="text-2xl font-bold" style={{color: 'var(--light-text)'}}>{t('student.dashboard')}</h1>
             </div>
-            <button className="p-2 rounded-lg transition-all hover:scale-105 hover-glow" style={{color: 'var(--tertiary-color)'}}>
-              <Settings className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3">
+              <LanguageSwitcher />
+              <button className="p-2 rounded-lg transition-all hover:scale-105 hover-glow" style={{color: 'var(--tertiary-color)'}}>
+                <Settings className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
+
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <LoadingOverlay 
+        isLoading={isMainLoading}
+        loadingText={t('student.loadingDashboard')}
+        overlayColor="rgba(0, 0, 0, 0.8)"
+        spinnerColor="var(--primary-color)"
+        textColor="white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation Tabs */}
         <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
           <button
@@ -552,9 +594,10 @@ const StudentDashboard = () => {
                 e.target.style.color = 'var(--text-color)';
               }
             }}
+
           >
             <TrendingUp className="w-4 h-4" />
-            Overview
+            {t('student.tabs.overview')}
           </button>
 
           <button
@@ -578,9 +621,10 @@ const StudentDashboard = () => {
                 e.target.style.color = 'var(--text-color)';
               }
             }}
+
           >
             <FileText className="w-4 h-4" />
-            Assignments
+            {t('student.tabs.assignments')}
           </button>
 
           <button
@@ -604,17 +648,20 @@ const StudentDashboard = () => {
                 e.target.style.color = 'var(--text-color)';
               }
             }}
+
           >
             <Users className="w-4 h-4" />
-            Attendance
+            {t('student.tabs.attendance')}
           </button>
         </div>
+
 
         {/* Content Area */}
         {activeTab === 'overview' && renderOverviewTab()}
         {activeTab === 'assignments' && renderAssignmentsTab()}
         {activeTab === 'attendance' && renderAttendanceTab()}
-      </div>
+        </div>
+      </LoadingOverlay>
 
       {/* Footer */}
       <DashboardFooter />

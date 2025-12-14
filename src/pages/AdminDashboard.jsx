@@ -1,9 +1,11 @@
 
+
 import React, { useState } from 'react';
 import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera } from 'lucide-react';
 import { useDashboard } from '../context/DashboardContext';
 import DataTable from '../components/ui/DataTable';
 import DashboardFooter from '../components/layout/DashboardFooter';
+import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const AdminDashboard = () => {
 
@@ -820,6 +822,10 @@ const AdminDashboard = () => {
   };
 
 
+
+  // Main loading state with dark masking
+  const isMainLoading = statsLoading || usersLoading || newsLoading || eventsLoading || testimonialsLoading || campusLifeLoading || studentProfilesLoading || tutorProfilesLoading;
+
   return (
     <div className="min-h-screen" style={{backgroundColor: 'var(--accent-color)'}}>
       {/* Header */}
@@ -837,9 +843,15 @@ const AdminDashboard = () => {
         </div>
       </header>
 
-
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <LoadingOverlay 
+        isLoading={isMainLoading}
+        loadingText="Loading admin dashboard..."
+        overlayColor="rgba(0, 0, 0, 0.8)"
+        spinnerColor="var(--primary-color)"
+        textColor="white"
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation Tabs */}
         <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
           <button
@@ -1201,7 +1213,9 @@ const AdminDashboard = () => {
           </div>
 
         )}
-      </div>
+
+        </div>
+      </LoadingOverlay>
 
       {/* Footer */}
       <DashboardFooter />
