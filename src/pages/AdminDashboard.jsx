@@ -38,6 +38,7 @@ const AdminDashboard = () => {
     subjects: ''
   });
 
+
   const {
     stats,
     users,
@@ -47,6 +48,9 @@ const AdminDashboard = () => {
     campusLife,
     studentProfiles,
     tutorProfiles,
+    pendingTestimonials,
+    contactMessages,
+    unreadMessages,
     statsLoading,
     usersLoading,
     newsLoading,
@@ -55,6 +59,9 @@ const AdminDashboard = () => {
     campusLifeLoading,
     studentProfilesLoading,
     tutorProfilesLoading,
+    pendingTestimonialsLoading,
+    contactMessagesLoading,
+    unreadMessagesLoading,
     updateStats,
     createAnnouncement,
     updateAnnouncement,
@@ -65,6 +72,12 @@ const AdminDashboard = () => {
     createTutor,
     updateTutor,
     deleteTutor,
+    approveTestimonial,
+    unapproveTestimonial,
+    toggleTestimonialApproval,
+    markMessageRead,
+    markMessageReplied,
+    deleteContactMessage,
     updatingStats,
     creatingAnnouncement,
     updatingAnnouncement,
@@ -74,7 +87,13 @@ const AdminDashboard = () => {
     deletingStudent,
     creatingTutor,
     updatingTutor,
-    deletingTutor
+    deletingTutor,
+    approvingTestimonial,
+    unapprovingTestimonial,
+    togglingTestimonialApproval,
+    markingMessageRead,
+    markingMessageReplied,
+    deletingContactMessage
   } = useDashboard();
 
   // Handle stats update
@@ -310,7 +329,114 @@ const AdminDashboard = () => {
     </div>
   );
 
-  // Common form component for all content types
+
+
+  // Separate form components for news and events (like landing page structure)
+  const renderNewsForm = (item, isNew = false) => {
+    const updateItem = (updates) => {
+      if (isNew) {
+        setNewItem({...item, ...updates});
+      } else {
+        setEditingItem({...item, ...updates});
+      }
+    };
+
+    return (
+      <>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <input
+            type="text"
+            value={item.title || ''}
+            onChange={(e) => updateItem({title: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <textarea
+            value={item.content || ''}
+            onChange={(e) => updateItem({content: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            rows="3"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+          <input
+            type="text"
+            value={item.image || ''}
+            onChange={(e) => updateItem({image: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="/api/placeholder/400/250"
+          />
+        </div>
+      </>
+    );
+  };
+
+  const renderEventForm = (item, isNew = false) => {
+    const updateItem = (updates) => {
+      if (isNew) {
+        setNewItem({...item, ...updates});
+      } else {
+        setEditingItem({...item, ...updates});
+      }
+    };
+
+    return (
+      <>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <input
+            type="text"
+            value={item.title || ''}
+            onChange={(e) => updateItem({title: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Details</label>
+          <textarea
+            value={item.content || ''}
+            onChange={(e) => updateItem({content: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            rows="3"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
+          <input
+            type="datetime-local"
+            value={item.event_date || ''}
+            onChange={(e) => updateItem({event_date: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+          <input
+            type="text"
+            value={item.location || ''}
+            onChange={(e) => updateItem({location: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">YouTube Video ID</label>
+          <input
+            type="text"
+            value={item.video_id || ''}
+            onChange={(e) => updateItem({video_id: e.target.value})}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            placeholder="dQw4w9WgXcQ"
+          />
+        </div>
+      </>
+    );
+  };
+
+  // Common form component for other content types (testimonials, campus_life)
   const renderContentForm = (type, item, isNew = false) => {
     const commonFields = (
       <>
@@ -368,39 +494,6 @@ const AdminDashboard = () => {
                 value={item.author_title || ''}
                 onChange={(e) => isNew ? setNewItem({...item, author_title: e.target.value}) : setEditingItem({...item, author_title: e.target.value})}
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-          </>
-        )}
-
-        {item.type === 'event' && (
-          <>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
-              <input
-                type="datetime-local"
-                value={item.event_date || ''}
-                onChange={(e) => isNew ? setNewItem({...item, event_date: e.target.value}) : setEditingItem({...item, event_date: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
-              <input
-                type="text"
-                value={item.location || ''}
-                onChange={(e) => isNew ? setNewItem({...item, location: e.target.value}) : setEditingItem({...item, location: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">YouTube Video ID</label>
-              <input
-                type="text"
-                value={item.video_id || ''}
-                onChange={(e) => isNew ? setNewItem({...item, video_id: e.target.value}) : setEditingItem({...item, video_id: e.target.value})}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-                placeholder="dQw4w9WgXcQ"
               />
             </div>
           </>
@@ -739,7 +832,37 @@ const AdminDashboard = () => {
           </button>
         </div>
 
-        {isAddingNew && renderContentForm(type, newItem, true)}
+
+        {isAddingNew && (
+          <div className="bg-gray-50 rounded-lg p-4 mb-4 border-2 border-blue-200">
+            <div className="grid grid-cols-1 gap-4">
+              {type === 'news' && renderNewsForm(newItem, true)}
+              {type === 'event' && renderEventForm(newItem, true)}
+              {type !== 'news' && type !== 'event' && renderContentForm(type, newItem, true)}
+              <div className="flex gap-2">
+                <button
+                  onClick={() => handleAnnouncementSave(type, newItem)}
+                  disabled={creatingAnnouncement || updatingAnnouncement}
+                  className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+                >
+                  <Save className="w-4 h-4" />
+                  {(creatingAnnouncement || updatingAnnouncement) ? 'Saving...' : 'Save'}
+                </button>
+                <button
+                  onClick={() => {
+                    setEditingItem(null);
+                    setIsAddingNew(false);
+                    setNewItem({});
+                  }}
+                  className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
+                >
+                  <X className="w-4 h-4" />
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {loading ? (
           <div className="text-center py-8">
@@ -750,8 +873,36 @@ const AdminDashboard = () => {
           <div className="space-y-4">
             {data && data.map((item) => (
               <div key={item.id}>
+
                 {editingItem?.id === item.id ? (
-                  renderContentForm(type, editingItem)
+                  <div className="bg-gray-50 rounded-lg p-4 mb-4 border-2 border-blue-200">
+                    <div className="grid grid-cols-1 gap-4">
+                      {type === 'news' && renderNewsForm(editingItem)}
+                      {type === 'event' && renderEventForm(editingItem)}
+                      {type !== 'news' && type !== 'event' && renderContentForm(type, editingItem)}
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleAnnouncementSave(type, editingItem)}
+                          disabled={creatingAnnouncement || updatingAnnouncement}
+                          className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
+                        >
+                          <Save className="w-4 h-4" />
+                          {(creatingAnnouncement || updatingAnnouncement) ? 'Saving...' : 'Save'}
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditingItem(null);
+                            setIsAddingNew(false);
+                            setNewItem({});
+                          }}
+                          className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
+                        >
+                          <X className="w-4 h-4" />
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  </div>
                 ) : (
 
                   <div className="border rounded-lg p-4 hover:shadow-md transition-all hover-lift" style={{borderColor: 'var(--primary-color)'}}>
@@ -773,7 +924,7 @@ const AdminDashboard = () => {
                         )}
                         {item.author && (
                           <p className="text-sm" style={{color: 'var(--text-color)'}}>
-                            <strong>{item.author}</strong> - {item.author_title}
+                            <strong>Author:</strong> {item.author}
                           </p>
                         )}
                         {item.event_date && (
@@ -784,6 +935,11 @@ const AdminDashboard = () => {
                         {item.location && (
                           <p className="text-sm" style={{color: 'var(--text-color)'}}>
                             <strong>Location:</strong> {item.location}
+                          </p>
+                        )}
+                        {item.video_id && (
+                          <p className="text-sm" style={{color: 'var(--text-color)'}}>
+                            <strong>Video ID:</strong> {item.video_id}
                           </p>
                         )}
                       </div>
@@ -1005,6 +1161,7 @@ const AdminDashboard = () => {
             <Users className="w-4 h-4" />
             Students
           </button>
+
           <button
             onClick={() => setActiveTab('tutors')}
             className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
@@ -1030,6 +1187,66 @@ const AdminDashboard = () => {
             <GraduationCap className="w-4 h-4" />
             Tutors
           </button>
+          <button
+            onClick={() => setActiveTab('testimonial-approval')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 relative ${
+              activeTab === 'testimonial-approval' ? 'text-white' : ''
+            }`}
+            style={{
+              backgroundColor: activeTab === 'testimonial-approval' ? 'var(--primary-color)' : 'transparent',
+              color: activeTab === 'testimonial-approval' ? 'var(--light-text)' : 'var(--text-color)'
+            }}
+            onMouseEnter={(e) => {
+              if (activeTab !== 'testimonial-approval') {
+                e.target.style.backgroundColor = 'var(--accent-color)';
+                e.target.style.color = 'var(--primary-color)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeTab !== 'testimonial-approval') {
+                e.target.style.backgroundColor = 'transparent';
+                e.target.style.color = 'var(--text-color)';
+              }
+            }}
+          >
+            <Award className="w-4 h-4" />
+            Testimonial Approval
+            {pendingTestimonials && pendingTestimonials.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {pendingTestimonials.length}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setActiveTab('contact-messages')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 relative ${
+              activeTab === 'contact-messages' ? 'text-white' : ''
+            }`}
+            style={{
+              backgroundColor: activeTab === 'contact-messages' ? 'var(--primary-color)' : 'transparent',
+              color: activeTab === 'contact-messages' ? 'var(--light-text)' : 'var(--text-color)'
+            }}
+            onMouseEnter={(e) => {
+              if (activeTab !== 'contact-messages') {
+                e.target.style.backgroundColor = 'var(--accent-color)';
+                e.target.style.color = 'var(--primary-color)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeTab !== 'contact-messages') {
+                e.target.style.backgroundColor = 'transparent';
+                e.target.style.color = 'var(--text-color)';
+              }
+            }}
+          >
+            <MessageSquare className="w-4 h-4" />
+            Contact Messages
+            {unreadMessages && unreadMessages.length > 0 && (
+              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {unreadMessages.length}
+              </span>
+            )}
+          </button>
         </div>
 
         {/* Content Area */}
@@ -1037,8 +1254,249 @@ const AdminDashboard = () => {
 
         {activeTab === 'news' && renderContentManager('news', news, newsLoading, <Newspaper className="w-6 h-6" style={{color: 'var(--primary-color)'}} />, 'bg-blue-100 text-blue-800')}
         {activeTab === 'events' && renderContentManager('event', events, eventsLoading, <Calendar className="w-6 h-6" style={{color: 'var(--primary-color)'}} />, 'bg-green-100 text-green-800')}
+
+
         {activeTab === 'testimonials' && renderContentManager('testimonial', testimonials, testimonialsLoading, <MessageSquare className="w-6 h-6" style={{color: 'var(--primary-color)'}} />, 'bg-purple-100 text-purple-800')}
         {activeTab === 'campus-life' && renderContentManager('campus_life', campusLife, campusLifeLoading, <Camera className="w-6 h-6" style={{color: 'var(--primary-color)'}} />, 'bg-orange-100 text-orange-800')}
+
+        {/* Testimonial Approval Tab */}
+        {activeTab === 'testimonial-approval' && (
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Testimonial Approval</h2>
+              {pendingTestimonials && pendingTestimonials.length > 0 && (
+                <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}>
+                  {pendingTestimonials.length} pending approval{pendingTestimonials.length !== 1 ? 's' : ''}
+                </span>
+              )}
+            </div>
+
+            {pendingTestimonialsLoading ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading pending testimonials...</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {pendingTestimonials && pendingTestimonials.length > 0 ? (
+                  pendingTestimonials.map((testimonial) => (
+                    <div key={testimonial.id} className="border rounded-lg p-6 hover:shadow-md transition-all hover-lift" style={{borderColor: 'var(--primary-color)'}}>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="px-2 py-1 text-xs font-semibold rounded" style={{backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)'}}>
+                              Pending
+                            </span>
+                            <span className="text-xs" style={{color: 'var(--text-color)'}}>
+                              {new Date(testimonial.created_at).toLocaleDateString()}
+                            </span>
+                          </div>
+                          <h3 className="font-semibold mb-2" style={{color: 'var(--primary-color)'}}>{testimonial.title}</h3>
+                          <p className="text-sm mb-3" style={{color: 'var(--text-color)'}}>{testimonial.content}</p>
+                          {testimonial.author && (
+                            <p className="text-sm mb-1" style={{color: 'var(--text-color)'}}>
+                              <strong>Author:</strong> {testimonial.author} - {testimonial.author_title}
+                            </p>
+                          )}
+                          {testimonial.image && (
+                            <p className="text-sm mb-1" style={{color: 'var(--text-color)'}}>
+                              <strong>Image:</strong> {testimonial.image}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        <button
+                          onClick={async () => {
+                            try {
+                              await approveTestimonial(testimonial.id);
+                              alert('Testimonial approved successfully!');
+                            } catch (error) {
+                              console.error('Error approving testimonial:', error);
+                              alert('Failed to approve testimonial');
+                            }
+                          }}
+                          disabled={approvingTestimonial}
+                          className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                          style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}
+                        >
+                          <Award className="w-4 h-4" />
+                          {approvingTestimonial ? 'Approving...' : 'Approve'}
+                        </button>
+                        <button
+                          onClick={async () => {
+                            try {
+                              await unapproveTestimonial(testimonial.id);
+                              alert('Testimonial unapproved successfully!');
+                            } catch (error) {
+                              console.error('Error unapproving testimonial:', error);
+                              alert('Failed to unapprove testimonial');
+                            }
+                          }}
+                          disabled={unapprovingTestimonial}
+                          className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                          style={{backgroundColor: 'var(--secondary-color)', color: 'var(--light-text)'}}
+                        >
+                          <X className="w-4 h-4" />
+                          {unapprovingTestimonial ? 'Unapproving...' : 'Unapprove'}
+                        </button>
+                        <button
+                          onClick={async () => {
+                            try {
+                              await toggleTestimonialApproval(testimonial.id);
+                              alert('Testimonial approval toggled successfully!');
+                            } catch (error) {
+                              console.error('Error toggling testimonial approval:', error);
+                              alert('Failed to toggle testimonial approval');
+                            }
+                          }}
+                          disabled={togglingTestimonialApproval}
+                          className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                          style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
+                        >
+                          <Edit2 className="w-4 h-4" />
+                          {togglingTestimonialApproval ? 'Toggling...' : 'Toggle'}
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-12">
+                    <Award className="w-16 h-16 mx-auto mb-4" style={{color: 'var(--text-color)'}} />
+                    <h3 className="text-lg font-semibold mb-2" style={{color: 'var(--primary-color)'}}>All Caught Up!</h3>
+                    <p className="text-gray-500">No testimonials pending approval at this time.</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Contact Messages Tab */}
+        {activeTab === 'contact-messages' && (
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Contact Messages</h2>
+              {unreadMessages && unreadMessages.length > 0 && (
+                <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}>
+                  {unreadMessages.length} unread message{unreadMessages.length !== 1 ? 's' : ''}
+                </span>
+              )}
+            </div>
+
+            {contactMessagesLoading ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading contact messages...</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {contactMessages && contactMessages.length > 0 ? (
+                  contactMessages.map((message) => (
+                    <div key={message.id} className={`border rounded-lg p-6 hover:shadow-md transition-all hover-lift ${!message.read ? 'ring-2' : ''}`} style={{
+                      borderColor: message.read ? 'var(--primary-color)' : 'var(--error-color)',
+                      backgroundColor: message.read ? 'var(--light-text)' : 'var(--accent-color)'
+                    }}>
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className={`px-2 py-1 text-xs font-semibold rounded ${!message.read ? 'text-white' : ''}`} style={{
+                              backgroundColor: !message.read ? 'var(--error-color)' : 'var(--tertiary-color)',
+                              color: !message.read ? 'var(--light-text)' : 'var(--primary-color)'
+                            }}>
+                              {!message.read ? 'Unread' : 'Read'}
+                            </span>
+                            <span className="text-xs" style={{color: 'var(--text-color)'}}>
+                              {new Date(message.created_at).toLocaleDateString()}
+                            </span>
+                            {message.replied && (
+                              <span className="px-2 py-1 text-xs font-semibold rounded" style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}>
+                                Replied
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="font-semibold mb-2" style={{color: 'var(--primary-color)'}}>
+                            {message.subject || 'No Subject'}
+                          </h3>
+                          <p className="text-sm mb-3" style={{color: 'var(--text-color)'}}>{message.message}</p>
+                          <div className="text-sm" style={{color: 'var(--text-color)'}}>
+                            <p><strong>From:</strong> {message.name} ({message.email})</p>
+                            {message.phone && <p><strong>Phone:</strong> {message.phone}</p>}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="flex gap-3">
+                        {!message.read && (
+                          <button
+                            onClick={async () => {
+                              try {
+                                await markMessageRead(message.id);
+                                alert('Message marked as read!');
+                              } catch (error) {
+                                console.error('Error marking message as read:', error);
+                                alert('Failed to mark message as read');
+                              }
+                            }}
+                            disabled={markingMessageRead}
+                            className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                            style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
+                          >
+                            <Edit2 className="w-4 h-4" />
+                            {markingMessageRead ? 'Marking...' : 'Mark Read'}
+                          </button>
+                        )}
+                        {!message.replied && (
+                          <button
+                            onClick={async () => {
+                              try {
+                                await markMessageReplied(message.id);
+                                alert('Message marked as replied!');
+                              } catch (error) {
+                                console.error('Error marking message as replied:', error);
+                                alert('Failed to mark message as replied');
+                              }
+                            }}
+                            disabled={markingMessageReplied}
+                            className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                            style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}
+                          >
+                            <MessageSquare className="w-4 h-4" />
+                            {markingMessageReplied ? 'Marking...' : 'Mark Replied'}
+                          </button>
+                        )}
+                        <button
+                          onClick={async () => {
+                            if (window.confirm('Are you sure you want to delete this message?')) {
+                              try {
+                                await deleteContactMessage(message.id);
+                                alert('Message deleted successfully!');
+                              } catch (error) {
+                                console.error('Error deleting message:', error);
+                                alert('Failed to delete message');
+                              }
+                            }
+                          }}
+                          disabled={deletingContactMessage}
+                          className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                          style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                          {deletingContactMessage ? 'Deleting...' : 'Delete'}
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-12">
+                    <MessageSquare className="w-16 h-16 mx-auto mb-4" style={{color: 'var(--text-color)'}} />
+                    <h3 className="text-lg font-semibold mb-2" style={{color: 'var(--primary-color)'}}>No Messages</h3>
+                    <p className="text-gray-500">No contact messages have been received yet.</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        )}
 
 
         {activeTab === 'students' && (

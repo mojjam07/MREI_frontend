@@ -271,15 +271,28 @@ const translations = {
       noData: 'No data available'
     },
 
+
     header: {
       currentStudents: 'Current Students',
       adminStaff: 'Admin & Staff',
       alumni: 'Alumni',
       partnersSponsors: 'Partners & Sponsors',
-      searchPlaceholder: 'Search...',
+      searchPlaceholder: 'Search courses, news, events...',
+      searchPlaceholderShort: 'Search...',
       login: 'Login',
       universityName: 'Rahmat El-Islaamiy',
-      logoAlt: 'mahdu-logo'
+      logoAlt: 'mahdu-logo',
+      searchResults: 'Search Results',
+      noResults: 'No results found',
+      showingResults: 'Showing results for',
+      courses: 'Courses',
+      assignments: 'Assignments',
+      news: 'News',
+      events: 'Events',
+      users: 'Users',
+      announcements: 'Announcements',
+      viewAll: 'View All',
+      suggestions: 'Suggestions'
     },
 
     auth: {
@@ -652,15 +665,28 @@ const translations = {
       noData: 'لا توجد بيانات'
     },
 
+
     header: {
       currentStudents: 'الطلاب الحاليون',
       adminStaff: 'الإدارة والموظفون',
       alumni: 'الخريجون',
       partnersSponsors: 'الشركاء والرعاة',
-      searchPlaceholder: '   بحث...',
+      searchPlaceholder: 'ابحث عن الدورات، الأخبار، الفعاليات...',
+      searchPlaceholderShort: 'بحث...',
       login: 'تسجيل الدخول',
       universityName: 'معهد الرحمة الإسلامي',
-      logoAlt: 'شعار معهد'
+      logoAlt: 'شعار معهد',
+      searchResults: 'نتائج البحث',
+      noResults: 'لم يتم العثور على نتائج',
+      showingResults: 'عرض النتائج لـ',
+      courses: 'الدورات',
+      assignments: 'الواجبات',
+      news: 'الأخبار',
+      events: 'الفعاليات',
+      users: 'المستخدمون',
+      announcements: 'الإعلانات',
+      viewAll: 'عرض الكل',
+      suggestions: 'اقتراحات'
     },
 
     auth: {

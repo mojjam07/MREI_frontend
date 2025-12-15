@@ -14,8 +14,9 @@ import OurContact from '../components/landing/OurContact';
 const Landing = () => {
   const { t } = useLanguage();
 
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-accent to-light-text">
+    <div className="min-h-screen bg-gradient-to-br from-accent to-light-text relative">
       {/* University Header */}
       <UniversityHeader />
 
@@ -23,23 +24,35 @@ const Landing = () => {
       <HeroSection />
 
       {/* Features Section */}
-      <FeaturesSection />
+      <section id="why-us" style={{ scrollMarginTop: '200px' }}>
+        <FeaturesSection />
+      </section>
 
       {/* Stats Section */}
-      <StatsSection />
+      <section id="our-impact" style={{ scrollMarginTop: '200px' }}>
+        <StatsSection />
+      </section>
 
       {/* Testimonial Section */}
-      <TestimonialSection />
+      <section id="testimonials" style={{ scrollMarginTop: '200px' }}>
+        <TestimonialSection />
+      </section>
 
       {/* News & Events Section */}
-      <NewsEventsSection />
+      <section id="news-events" style={{ scrollMarginTop: '200px' }}>
+        <NewsEventsSection />
+      </section>
 
       {/* Campus Life Section */}
-      <CampusLifeSection />
+      <section id="school-life" style={{ scrollMarginTop: '200px' }}>
+        <CampusLifeSection />
+      </section>
 
       {/* Recent Events Gallery */}
       {/*<RecentEventsGallery />*/}
-      <OurContact />
+      <section id="our-contact" style={{ scrollMarginTop: '200px' }}>
+        <OurContact />
+      </section>
 
       {/* Footer */}
       <Footer />

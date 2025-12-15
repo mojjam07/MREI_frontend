@@ -151,7 +151,7 @@ const HeroSection = () => {
           <Button size="lg" as={Link} to="/login" className="w-full sm:w-auto max-w-xs sm:max-w-none text-sm sm:text-base py-2 sm:py-3">
             {t('home.cta')}
           </Button>
-          <Button variant="outline" size="lg" as={Link} to="#features" className="w-full sm:w-auto max-w-xs sm:max-w-none text-sm sm:text-base py-2 sm:py-3">
+          <Button size="lg" as={Link} to="#features" className="w-full sm:w-auto max-w-xs sm:max-w-none text-sm sm:text-base py-2 sm:py-3 bg-tertiary hover text-primary hover:text-light-text">
             {t('home.learnMore')}
           </Button>
         </div>

@@ -1,5 +1,3 @@
-
-
 import React, { createContext, useContext } from 'react';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import apiClient from '../services/apiClient';
@@ -11,7 +9,6 @@ const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
-
 
   // Statistics Query
   const { data: stats, isLoading: statsLoading } = useQuery(
@@ -30,8 +27,6 @@ export const DashboardProvider = ({ children }) => {
       staleTime: 5 * 60 * 1000, // 5 minutes
     }
   );
-
-
 
   // Student Dashboard Analytics (Student role only)
   const { data: studentDashboard, isLoading: studentDashboardLoading } = useQuery(
@@ -91,7 +86,6 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
-
   // Assignments Query (role-based)
   const { data: assignments, isLoading: assignmentsLoading } = useQuery(
     'assignments',
@@ -120,8 +114,6 @@ export const DashboardProvider = ({ children }) => {
       staleTime: 2 * 60 * 1000, // 2 minutes
     }
   );
-
-
 
   // Separate content type queries
   const { data: news, isLoading: newsLoading } = useQuery(
@@ -160,6 +152,32 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
+  // All testimonials for admin (including pending)
+  const { data: allTestimonials, isLoading: allTestimonialsLoading } = useQuery(
+    'all-testimonials',
+    async () => {
+      const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}`);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 2 * 60 * 1000,
+    }
+  );
+
+  // Pending testimonials for admin approval
+  const { data: pendingTestimonials, isLoading: pendingTestimonialsLoading } = useQuery(
+    'pending-testimonials',
+    async () => {
+      const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}?approved=false`);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 1 * 60 * 1000,
+    }
+  );
+
   const { data: campusLife, isLoading: campusLifeLoading } = useQuery(
     'campus-life',
     async () => {
@@ -185,8 +203,6 @@ export const DashboardProvider = ({ children }) => {
   }, [news, events, testimonials, campusLife]);
 
   const announcementsLoading = newsLoading || eventsLoading || testimonialsLoading || campusLifeLoading;
-
-
 
   // Users Query (admin only)
   const { data: users, isLoading: usersLoading } = useQuery(
@@ -227,7 +243,6 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
-
   // Mutations
   const updateStatsMutation = useMutation(
     async (newStats) => {
@@ -240,7 +255,6 @@ export const DashboardProvider = ({ children }) => {
       },
     }
   );
-
 
   const createAnnouncementMutation = useMutation(
     async ({ type, data }) => {
@@ -271,7 +285,6 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
-
   const updateAnnouncementMutation = useMutation(
     async ({ type, id, data }) => {
       let endpoint = '';
@@ -301,7 +314,6 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
-
   const deleteAnnouncementMutation = useMutation(
     async ({ type, id }) => {
       let endpoint = '';
@@ -329,9 +341,6 @@ export const DashboardProvider = ({ children }) => {
       },
     }
   );
-
-
-
 
   // Tutor Dashboard Analytics Query
   const { data: tutorDashboard, isLoading: tutorDashboardLoading } = useQuery(
@@ -376,7 +385,6 @@ export const DashboardProvider = ({ children }) => {
       },
     }
   );
-
 
   // Class Schedules Query (Tutor role only)
   const { data: tutorClassSchedules, isLoading: tutorClassSchedulesLoading } = useQuery(
@@ -469,7 +477,112 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
+  // Testimonial approval mutations
+  const approveTestimonialMutation = useMutation(
+    async (id) => {
+      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/approve/`);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('testimonials');
+        queryClient.invalidateQueries('pending-testimonials');
+        queryClient.invalidateQueries('all-testimonials');
+      },
+    }
+  );
 
+  const unapproveTestimonialMutation = useMutation(
+    async (id) => {
+      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/unapprove/`);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('testimonials');
+        queryClient.invalidateQueries('pending-testimonials');
+        queryClient.invalidateQueries('all-testimonials');
+      },
+    }
+  );
+
+  const toggleTestimonialApprovalMutation = useMutation(
+    async (id) => {
+      const response = await apiClient.patch(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/toggle_approval/`);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('testimonials');
+        queryClient.invalidateQueries('pending-testimonials');
+        queryClient.invalidateQueries('all-testimonials');
+      },
+    }
+  );
+
+  // Contact messages management (for admin)
+  const { data: contactMessages, isLoading: contactMessagesLoading } = useQuery(
+    'contact-messages',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CONTACT);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 2 * 60 * 1000,
+    }
+  );
+
+  const { data: unreadMessages, isLoading: unreadMessagesLoading } = useQuery(
+    'unread-messages',
+    async () => {
+      const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.CONTACT}?read=false`);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 1 * 60 * 1000,
+    }
+  );
+
+  // Contact message mutations
+  const markMessageReadMutation = useMutation(
+    async (id) => {
+      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/mark_read/`);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('contact-messages');
+        queryClient.invalidateQueries('unread-messages');
+      },
+    }
+  );
+
+  const markMessageRepliedMutation = useMutation(
+    async (id) => {
+      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/mark_replied/`);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('contact-messages');
+        queryClient.invalidateQueries('unread-messages');
+      },
+    }
+  );
+
+  const deleteContactMessageMutation = useMutation(
+    async (id) => {
+      await apiClient.delete(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('contact-messages');
+        queryClient.invalidateQueries('unread-messages');
+      },
+    }
+  );
 
   const value = {
     // Data
@@ -499,6 +612,12 @@ export const DashboardProvider = ({ children }) => {
     pendingSubmissions,
     tutorClassSchedules,
 
+    // Admin-specific data
+    allTestimonials,
+    pendingTestimonials,
+    contactMessages,
+    unreadMessages,
+
     // Loading states
     statsLoading,
     coursesLoading,
@@ -517,6 +636,10 @@ export const DashboardProvider = ({ children }) => {
     tutorDashboardLoading,
     pendingSubmissionsLoading,
     tutorClassSchedulesLoading,
+    allTestimonialsLoading,
+    pendingTestimonialsLoading,
+    contactMessagesLoading,
+    unreadMessagesLoading,
 
     // Mutations
     updateStats: updateStatsMutation.mutateAsync,
@@ -535,6 +658,16 @@ export const DashboardProvider = ({ children }) => {
     deleteTutor: deleteTutorMutation.mutateAsync,
     gradeSubmission: gradeSubmissionMutation.mutateAsync,
 
+    // Testimonial approval mutations
+    approveTestimonial: approveTestimonialMutation.mutateAsync,
+    unapproveTestimonial: unapproveTestimonialMutation.mutateAsync,
+    toggleTestimonialApproval: toggleTestimonialApprovalMutation.mutateAsync,
+
+    // Contact message mutations
+    markMessageRead: markMessageReadMutation.mutateAsync,
+    markMessageReplied: markMessageRepliedMutation.mutateAsync,
+    deleteContactMessage: deleteContactMessageMutation.mutateAsync,
+
     // Mutation states
     updatingStats: updateStatsMutation.isLoading,
     creatingAnnouncement: createAnnouncementMutation.isLoading,
@@ -547,6 +680,12 @@ export const DashboardProvider = ({ children }) => {
     updatingTutor: updateTutorMutation.isLoading,
     deletingTutor: deleteTutorMutation.isLoading,
     gradingSubmission: gradeSubmissionMutation.isLoading,
+    approvingTestimonial: approveTestimonialMutation.isLoading,
+    unapprovingTestimonial: unapproveTestimonialMutation.isLoading,
+    togglingTestimonialApproval: toggleTestimonialApprovalMutation.isLoading,
+    markingMessageRead: markMessageReadMutation.isLoading,
+    markingMessageReplied: markMessageRepliedMutation.isLoading,
+    deletingContactMessage: deleteContactMessageMutation.isLoading,
   };
 
   return (

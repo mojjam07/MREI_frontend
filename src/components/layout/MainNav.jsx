@@ -7,61 +7,12 @@ const MainNav = ({ className = '' }) => {
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
 
   const menuItems = [
-    {
-      title: t('nav.about') || 'About',
-      href: '#',
-      submenu: [
-        { title: t('nav.missionVision') || 'Mission & Vision', href: '#' },
-        { title: t('nav.history') || 'History', href: '#' },
-        { title: t('nav.leadership') || 'Leadership', href: '#' },
-        { title: t('nav.campusMap') || 'Campus Map', href: '#' },
-        { title: t('nav.diversity') || 'Diversity & Inclusion', href: '#' }
-      ]
-    },
-    {
-      title: t('nav.academics') || 'Academics',
-      href: '#',
-      submenu: [
-        { title: t('nav.undergraduate') || 'Undergraduate Programs', href: '#' },
-        { title: t('nav.graduate') || 'Graduate Programs', href: '#' },
-        { title: t('nav.colleges') || 'Colleges & Schools', href: '#' },
-        { title: t('nav.academicCalendar') || 'Academic Calendar', href: '#' },
-        { title: t('nav.library') || 'Library', href: '#' }
-      ]
-    },
-    {
-      title: t('nav.admissions') || 'Admissions',
-      href: '#',
-      submenu: [
-        { title: t('nav.undergraduateAdmission') || 'Undergraduate Admission', href: '#' },
-        { title: t('nav.graduateAdmission') || 'Graduate Admission', href: '#' },
-        { title: t('nav.tuition') || 'Tuition & Aid', href: '#' },
-        { title: t('nav.visitCampus') || 'Visit Campus', href: '#' },
-        { title: t('nav.applyNow') || 'Apply Now', href: '#' }
-      ]
-    },
-    {
-      title: t('nav.studentLife') || 'Student Life',
-      href: '#',
-      submenu: [
-        { title: t('nav.housing') || 'Housing', href: '#' },
-        { title: t('nav.dining') || 'Dining', href: '#' },
-        { title: t('nav.organizations') || 'Student Organizations', href: '#' },
-        { title: t('nav.athletics') || 'Athletics', href: '#' },
-        { title: t('nav.health') || 'Health & Wellness', href: '#' }
-      ]
-    },
-    {
-      title: t('nav.alumni') || 'Alumni',
-      href: '#',
-      submenu: [
-        { title: t('nav.alumniAssociation') || 'Alumni Association', href: '#' },
-        { title: t('nav.alumniEvents') || 'Events', href: '#' },
-        { title: t('nav.giveBack') || 'Give Back', href: '#' },
-        { title: t('nav.alumniResources') || 'Alumni Resources', href: '#' },
-        { title: t('nav.alumniStories') || 'Alumni Stories', href: '#' }
-      ]
-    }
+    { title: 'Why Us?', href: '#why-us' },
+    { title: 'Our Impact', href: '#our-impact' },
+    { title: 'Testimonials', href: '#testimonials' },
+    { title: 'News & Events', href: '#news-events' },
+    { title: 'School life', href: '#school-life' },
+    { title: 'Our Contact', href: '#our-contact' }
   ];
 
   const toggleMobileDropdown = (index) => {

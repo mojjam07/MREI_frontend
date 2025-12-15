@@ -1,4 +1,5 @@
 
+
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Landing from "./pages/Landing";
@@ -7,6 +8,7 @@ import SignupPage from "./pages/SignupPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import TutorDashboard from "./pages/TutorDashboard";
+import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./route/ProtectedRoute";
 
 // Generic dashboard component that renders the correct dashboard based on user role
@@ -78,6 +80,7 @@ export default function App() {
         }
       />
       
+
       {/* Generic dashboard route for backward compatibility */}
       <Route
         path="/dashboard"
@@ -87,6 +90,9 @@ export default function App() {
           </ProtectedRoute>
         }
       />
+      
+      {/* 404 Not Found route - must be last */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
