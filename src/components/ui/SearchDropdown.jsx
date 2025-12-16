@@ -177,9 +177,12 @@ const SearchDropdown = ({
   const showRecent = recentSearches.length > 0 && !query && !searchResults;
 
   return (
-    <div 
+
+    <div
       ref={dropdownRef}
-      className={`absolute top-full left-0 right-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-hidden ${className}`}
+      className={`absolute top-full mt-2 bg-white border border-gray-200 rounded-lg shadow-lg z-50 max-h-96 overflow-hidden ${
+        className.includes('w-') ? 'right-0' : 'left-0'
+      } ${className}`}
     >
       {/* Search Form */}
       <form onSubmit={handleSubmit} className="p-4 border-b border-gray-100">
@@ -210,8 +213,10 @@ const SearchDropdown = ({
         {/* Loading State */}
         {isLoading && (
           <div className="p-4 text-center text-gray-500">
+
             <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mx-auto"></div>
-            <div className="mt-2">Searching...</div>
+
+            <div className="mt-2">{t.header.searchPlaceholderShort}</div>
           </div>
         )}
 
@@ -292,8 +297,9 @@ const SearchDropdown = ({
         {/* Recent Searches */}
         {showRecent && !isLoading && (
           <div className="p-2">
+
             <div className="px-2 py-1 text-xs font-medium text-gray-500 uppercase tracking-wide">
-              Recent
+              {t.header.recent}
             </div>
             {recentSearches.map((search, index) => (
               <div
@@ -317,8 +323,10 @@ const SearchDropdown = ({
         {searchResults && !isLoading && searchResults.total_results === 0 && (
           <div className="p-4 text-center text-gray-500">
             <Search className="w-8 h-8 mx-auto mb-2 text-gray-300" />
+
             <div className="font-medium">{t.header.noResults}</div>
-            <div className="text-sm mt-1">Try searching for courses, news, events, or users</div>
+
+            <div className="text-sm mt-1">{t.header.searchPlaceholder}</div>
           </div>
         )}
 
@@ -326,8 +334,10 @@ const SearchDropdown = ({
         {!hasResults && !showSuggestions && !showRecent && !isLoading && (
           <div className="p-4 text-center text-gray-500">
             <Search className="w-8 h-8 mx-auto mb-2 text-gray-300" />
-            <div className="font-medium">Start typing to search</div>
-            <div className="text-sm mt-1">Search for courses, assignments, news, events, and more</div>
+
+
+            <div className="font-medium">{t.header.searchPlaceholderShort}</div>
+            <div className="text-sm mt-1">{t.header.searchPlaceholder}</div>
           </div>
         )}
       </div>

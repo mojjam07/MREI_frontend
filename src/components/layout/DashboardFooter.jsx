@@ -1,11 +1,14 @@
+
 import React from 'react';
 import { Home, LogOut, Settings, User, HelpCircle, Mail, Phone, MapPin } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { useNavigate } from 'react-router-dom';
 
 const DashboardFooter = () => {
   const { user, logout } = useAuth();
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
 
@@ -18,7 +21,22 @@ const DashboardFooter = () => {
     }
   };
 
+
   const currentYear = new Date().getFullYear();
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Handle navigation with scroll to top
+  const handleNavClick = (path) => {
+    navigate(path);
+    scrollToTop();
+  };
 
   return (
     <footer className="shadow-sm border-t mt-auto animate-gradient">
@@ -45,37 +63,38 @@ const DashboardFooter = () => {
           {/* Quick Links */}
           <div className="space-y-4">
             <h4 className="font-semibold" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.quickLinks.title')}</h4>
+
             <nav className="space-y-2">
-              <a
-                href="/"
-                className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
+              <button
+                onClick={() => handleNavClick('/')}
+                className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
                 style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                 onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <Home className="w-4 h-4" />
                 {t('dashboardFooter.quickLinks.home')}
-              </a>
-              <a
-                href="/dashboard"
-                className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
+              </button>
+              <button
+                onClick={() => handleNavClick('/dashboard')}
+                className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
                 style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                 onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <User className="w-4 h-4" />
                 {t('dashboardFooter.quickLinks.dashboard')}
-              </a>
-              <a
-                href="/profile"
-                className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
+              </button>
+              <button
+                onClick={() => handleNavClick('/profile')}
+                className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
                 style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                 onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <Settings className="w-4 h-4" />
                 {t('dashboardFooter.quickLinks.profile')}
-              </a>
+              </button>
             </nav>
           </div>
 
@@ -83,43 +102,44 @@ const DashboardFooter = () => {
           {user?.role === 'admin' && (
             <div className="space-y-4">
               <h4 className="font-semibold" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.admin.title')}</h4>
+
               <nav className="space-y-2">
-                <a
-                  href="/admin/statistics"
-                  className="block text-sm hover:scale-105 transition-all"
+                <button
+                  onClick={() => handleNavClick('/admin/statistics')}
+                  className="block text-sm hover:scale-105 transition-all w-full text-left"
                   style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                   onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
                   {t('dashboardFooter.admin.statistics')}
-                </a>
-                <a
-                  href="/admin/students"
-                  className="block text-sm hover:scale-105 transition-all"
+                </button>
+                <button
+                  onClick={() => handleNavClick('/admin/students')}
+                  className="block text-sm hover:scale-105 transition-all w-full text-left"
                   style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                   onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
                   {t('dashboardFooter.admin.manageStudents')}
-                </a>
-                <a
-                  href="/admin/tutors"
-                  className="block text-sm hover:scale-105 transition-all"
+                </button>
+                <button
+                  onClick={() => handleNavClick('/admin/tutors')}
+                  className="block text-sm hover:scale-105 transition-all w-full text-left"
                   style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                   onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
                   {t('dashboardFooter.admin.manageTutors')}
-                </a>
-                <a
-                  href="/admin/content"
-                  className="block text-sm hover:scale-105 transition-all"
+                </button>
+                <button
+                  onClick={() => handleNavClick('/admin/content')}
+                  className="block text-sm hover:scale-105 transition-all w-full text-left"
                   style={{color: 'var(--light-text)'}}
                   onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                   onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
                 >
                   {t('dashboardFooter.admin.contentManagement')}
-                </a>
+                </button>
               </nav>
             </div>
           )}
@@ -136,16 +156,17 @@ const DashboardFooter = () => {
                 <Phone className="w-4 h-4" />
                 <span>{t('dashboardFooter.support.phone')}</span>
               </div>
-              <a
-                href="/help"
-                className="flex items-center gap-2 text-sm hover:scale-105 transition-all"
+
+              <button
+                onClick={() => handleNavClick('/help')}
+                className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
                 style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                 onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 <HelpCircle className="w-4 h-4" />
                 {t('dashboardFooter.support.helpCenter')}
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -156,25 +177,26 @@ const DashboardFooter = () => {
             <p className="text-sm" style={{color: 'var(--light-text)'}}>
               {t('dashboardFooter.copyright').replace('{year}', currentYear)}
             </p>
+
             <div className="flex gap-4 text-xs">
-              <a
-                href="/privacy"
-                className="hover:scale-105 transition-all"
+              <button
+                onClick={() => handleNavClick('/privacy')}
+                className="hover:scale-105 transition-all text-left"
                 style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                 onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 {t('dashboardFooter.legal.privacyPolicy')}
-              </a>
-              <a
-                href="/terms"
-                className="hover:scale-105 transition-all"
+              </button>
+              <button
+                onClick={() => handleNavClick('/terms')}
+                className="hover:scale-105 transition-all text-left"
                 style={{color: 'var(--light-text)'}}
                 onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
                 onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
               >
                 {t('dashboardFooter.legal.termsOfService')}
-              </a>
+              </button>
             </div>
           </div>
 

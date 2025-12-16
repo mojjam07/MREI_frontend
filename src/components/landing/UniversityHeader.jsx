@@ -54,11 +54,13 @@ const UniversityHeader = () => {
                   <Search className="w-4 h-4" />
                   <span className="text-tertiary">{t.header.searchPlaceholderShort}</span>
                 </button>
+
+
                 <SearchDropdown
                   isOpen={isSearchOpen}
                   onClose={() => setIsSearchOpen(false)}
                   placeholder={t.header.searchPlaceholder}
-                  className="top-full left-0 w-80"
+                  className="w-80"
                   onSearchResultClick={(result) => {
                     console.log('Search result clicked:', result);
                     setIsSearchOpen(false);

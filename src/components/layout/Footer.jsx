@@ -1,10 +1,29 @@
+
+
+
 import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 
 const Footer = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
+
+  // Scroll to top function
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  };
+
+  // Handle navigation with scroll to top
+  const handleNavClick = (path) => {
+    navigate(path);
+    scrollToTop();
+  };
 
   return (
     <footer className="bg-primary text-light-text py-8 sm:py-10 md:py-12">
@@ -14,13 +33,15 @@ const Footer = () => {
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               {t('home.footerAboutTitle')}
             </h3>
+
+
             <ul className="footer-links space-y-1.5 sm:space-y-2">
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerMissionVision')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerHistory')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerLeadership')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerAccreditation')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerEmployment')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerCampusMap')}</a></li>
+              <li><button onClick={() => handleNavClick('/about')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerMissionVision')}</button></li>
+              <li><button onClick={() => handleNavClick('/about')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerHistory')}</button></li>
+              <li><button onClick={() => handleNavClick('/about')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerLeadership')}</button></li>
+              <li><button onClick={() => handleNavClick('/about')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerAccreditation')}</button></li>
+              <li><button onClick={() => handleNavClick('/about')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerEmployment')}</button></li>
+              <li><button onClick={() => handleNavClick('/about')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerCampusMap')}</button></li>
             </ul>
           </div>
 
@@ -28,13 +49,15 @@ const Footer = () => {
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               {t('home.footerAcademicsTitle')}
             </h3>
+
+
             <ul className="footer-links space-y-1.5 sm:space-y-2">
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerCollegesSchools')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerUndergraduatePrograms')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerGraduatePrograms')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerOnlineLearning')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerAcademicCalendar')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerLibrary')}</a></li>
+              <li><button onClick={() => handleNavClick('/academics')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerCollegesSchools')}</button></li>
+              <li><button onClick={() => handleNavClick('/academics')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerUndergraduatePrograms')}</button></li>
+              <li><button onClick={() => handleNavClick('/academics')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerGraduatePrograms')}</button></li>
+              <li><button onClick={() => handleNavClick('/academics')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerOnlineLearning')}</button></li>
+              <li><button onClick={() => handleNavClick('/academics')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerAcademicCalendar')}</button></li>
+              <li><button onClick={() => handleNavClick('/academics')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerLibrary')}</button></li>
             </ul>
           </div>
 
@@ -42,13 +65,15 @@ const Footer = () => {
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               {t('home.footerAdmissionsTitle')}
             </h3>
+
+
             <ul className="footer-links space-y-1.5 sm:space-y-2">
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerUndergraduateAdmission')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerGraduateAdmission')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerFinancialAid')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerScholarships')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerVisitCampus')}</a></li>
-              <li><a href="#" className="text-accent hover:text-light-text transition-colors text-sm sm:text-base">{t('home.footerApplyNow')}</a></li>
+              <li><button onClick={() => handleNavClick('/admissions')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerUndergraduateAdmission')}</button></li>
+              <li><button onClick={() => handleNavClick('/admissions')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerGraduateAdmission')}</button></li>
+              <li><button onClick={() => handleNavClick('/admissions')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerFinancialAid')}</button></li>
+              <li><button onClick={() => handleNavClick('/admissions')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerScholarships')}</button></li>
+              <li><button onClick={() => handleNavClick('/admissions')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerVisitCampus')}</button></li>
+              <li><button onClick={() => handleNavClick('/admissions')} className="text-accent hover:text-light-text transition-colors text-sm sm:text-base text-left">{t('home.footerApplyNow')}</button></li>
             </ul>
           </div>
 
@@ -77,16 +102,17 @@ const Footer = () => {
           <p className="text-center text-accent text-xs sm:text-sm">
             {t('home.footerCopyright').replace('{year}', currentYear)}
           </p>
+
           <div className="flex flex-wrap justify-center items-center gap-x-2 sm:gap-x-3 gap-y-1 text-accent mt-2 text-xs sm:text-sm">
-            <a href="#" className="hover:text-light-text transition-colors hover-lift">{t('home.footerPrivacy')}</a>
+            <button onClick={() => handleNavClick('/')} className="hover:text-light-text transition-colors hover-lift text-left">{t('home.footerPrivacy')}</button>
             <span className="hidden sm:inline">|</span>
-            <a href="#" className="hover:text-light-text transition-colors hover-lift">{t('home.footerTerms')}</a>
+            <button onClick={() => handleNavClick('/')} className="hover:text-light-text transition-colors hover-lift text-left">{t('home.footerTerms')}</button>
             <span className="hidden sm:inline">|</span>
-            <a href="#" className="hover:text-light-text transition-colors hover-lift">{t('home.footerAccessibility')}</a>
+            <button onClick={() => handleNavClick('/')} className="hover:text-light-text transition-colors hover-lift text-left">{t('home.footerAccessibility')}</button>
             <span className="hidden sm:inline">|</span>
-            <a href="#" className="hover:text-light-text transition-colors hover-lift">{t('home.footerConsumer')}</a>
+            <button onClick={() => handleNavClick('/')} className="hover:text-light-text transition-colors hover-lift text-left">{t('home.footerConsumer')}</button>
             <span className="hidden sm:inline">|</span>
-            <a href="#" className="hover:text-light-text transition-colors hover-lift">{t('home.footerEmergency')}</a>
+            <button onClick={() => handleNavClick('/')} className="hover:text-light-text transition-colors hover-lift text-left">{t('home.footerEmergency')}</button>
           </div>
         </div>
       </div>
