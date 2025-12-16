@@ -27,6 +27,7 @@ export const API_ENDPOINTS = {
     CLASS_SCHEDULES: '/class-schedules/',
     ATTENDANCE: '/attendance/'
   },
+
   COMMUNICATION: {
     STATISTICS: '/statistics/',
     NEWS: '/news/',
@@ -35,7 +36,8 @@ export const API_ENDPOINTS = {
     CAMPUS_LIFE: '/campus-life/',
     CONTACT: '/contact/',
     DASHBOARD_STATS: '/dashboard-stats/',
-    HOME_CONTENT: '/home-content/'
+    HOME_CONTENT: '/home-content/',
+    BOOKS: '/books/'
   },
   DASHBOARD: {
     STUDENT: '/dashboard/student/',

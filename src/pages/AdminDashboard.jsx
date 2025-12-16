@@ -1,5 +1,4 @@
 
-
 import React, { useState } from 'react';
 import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera } from 'lucide-react';
 import { useDashboard } from '../context/DashboardContext';
@@ -27,6 +26,7 @@ const AdminDashboard = () => {
     status: 'active'
   });
 
+
   // Tutor management states
   const [editingTutor, setEditingTutor] = useState(null);
   const [addingTutor, setAddingTutor] = useState(false);
@@ -37,6 +37,285 @@ const AdminDashboard = () => {
     bio: '',
     subjects: ''
   });
+
+
+
+  // Book management states
+  const [editingBook, setEditingBook] = useState(null);
+  const [addingBook, setAddingBook] = useState(false);
+
+  const [bookForm, setBookForm] = useState({
+    title: '',
+    author: '',
+    description: '',
+    genre: '',
+    cover_image: null,
+    pdf_file: null,
+    publication_year: ''
+  });
+
+  const [notification, setNotification] = useState(null);
+
+
+
+
+
+
+  // Book management functions
+  const handleBookSave = async (bookData, formFiles = null) => {
+    try {
+      // Check if we have files to upload
+      if (formFiles && (formFiles.cover_image || formFiles.pdf_file)) {
+        const formData = new FormData();
+        
+        // Append text fields
+        formData.append('title', bookData.title || '');
+        formData.append('author', bookData.author || '');
+        formData.append('description', bookData.description || '');
+        formData.append('genre', bookData.genre || '');
+        formData.append('publication_year', bookData.publication_year || '');
+        
+        // Append files if they exist
+        if (formFiles.cover_image) {
+          formData.append('cover_image', formFiles.cover_image);
+        }
+        if (formFiles.pdf_file) {
+          formData.append('pdf_file', formFiles.pdf_file);
+        }
+        
+        if (bookData.id) {
+          await updateBook({ id: bookData.id, data: formData });
+          // Show success notification
+          setNotification({ message: 'Book updated successfully!', type: 'success' });
+        } else {
+          await createBook(formData);
+          // Show success notification
+          setNotification({ message: 'Book created successfully!', type: 'success' });
+        }
+      } else {
+        // Handle text-only updates (no file changes)
+        if (bookData.id) {
+          await updateBook({ id: bookData.id, data: bookData });
+          // Show success notification
+          setNotification({ message: 'Book updated successfully!', type: 'success' });
+        } else {
+          await createBook(bookData);
+          // Show success notification
+          setNotification({ message: 'Book created successfully!', type: 'success' });
+        }
+      }
+      
+      setEditingBook(null);
+      setAddingBook(false);
+      setBookForm({
+        title: '',
+        author: '',
+        description: '',
+        genre: '',
+        cover_image: null,
+        pdf_file: null,
+        publication_year: ''
+      });
+    } catch (error) {
+      console.error('Error saving book:', error);
+      setNotification({ message: 'Failed to save book. Please try again.', type: 'error' });
+    }
+  };
+
+
+  const handleBookDelete = async (book) => {
+    if (window.confirm(`Are you sure you want to delete book "${book.title}"?`)) {
+      try {
+        await deleteBook(book.id);
+        // Show success notification
+        setNotification({ message: 'Book deleted successfully!', type: 'success' });
+      } catch (error) {
+        console.error('Error deleting book:', error);
+        setNotification({ message: 'Failed to delete book. Please try again.', type: 'error' });
+      }
+    }
+  };
+
+
+
+  // Book Form Component - Simplified to match DigitalBookshelf
+  const renderBookForm = (book = null) => {
+    const isEditing = !!book;
+    const currentForm = isEditing ? book : {};
+    
+    return (
+      <div className="bg-gray-50 rounded-lg p-6 mb-6">
+        <h3 className="text-xl font-semibold mb-4">
+          {isEditing ? 'Edit Book' : 'Add New Book'}
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label className="block text-sm font-medium mb-2">Title</label>
+            <input
+              type="text"
+              value={isEditing ? currentForm.title : bookForm.title}
+              onChange={(e) => {
+                if (isEditing) {
+                  setEditingBook({...currentForm, title: e.target.value});
+                } else {
+                  setBookForm({...bookForm, title: e.target.value});
+                }
+              }}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+              placeholder="Enter book title"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Author</label>
+            <input
+              type="text"
+              value={isEditing ? currentForm.author : bookForm.author}
+              onChange={(e) => {
+                if (isEditing) {
+                  setEditingBook({...currentForm, author: e.target.value});
+                } else {
+                  setBookForm({...bookForm, author: e.target.value});
+                }
+              }}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+              placeholder="Enter author name"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Genre</label>
+            <input
+              type="text"
+              value={isEditing ? currentForm.genre : bookForm.genre}
+              onChange={(e) => {
+                if (isEditing) {
+                  setEditingBook({...currentForm, genre: e.target.value});
+                } else {
+                  setBookForm({...bookForm, genre: e.target.value});
+                }
+              }}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+              placeholder="Enter genre"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">Publication Year</label>
+            <input
+              type="number"
+              value={isEditing ? currentForm.publication_year : bookForm.publication_year}
+              onChange={(e) => {
+                const value = parseInt(e.target.value) || '';
+                if (isEditing) {
+                  setEditingBook({...currentForm, publication_year: value});
+                } else {
+                  setBookForm({...bookForm, publication_year: value});
+                }
+              }}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+              placeholder="2024"
+              min="1000"
+              max="2030"
+            />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium mb-2">Cover Image</label>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (isEditing) {
+                  setEditingBook({...currentForm, cover_image: file});
+                } else {
+                  setBookForm({...bookForm, cover_image: file});
+                }
+              }}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+            />
+            {((isEditing ? currentForm.cover_image : bookForm.cover_image)) && 
+             typeof ((isEditing ? currentForm.cover_image : bookForm.cover_image)) === 'object' && (
+              <p className="text-sm mt-1 text-gray-600">
+                Selected: {(isEditing ? currentForm.cover_image : bookForm.cover_image).name}
+              </p>
+            )}
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-2">PDF File</label>
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                if (isEditing) {
+                  setEditingBook({...currentForm, pdf_file: file});
+                } else {
+                  setBookForm({...bookForm, pdf_file: file});
+                }
+              }}
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+            />
+            {((isEditing ? currentForm.pdf_file : bookForm.pdf_file)) && 
+             typeof ((isEditing ? currentForm.pdf_file : bookForm.pdf_file)) === 'object' && (
+              <p className="text-sm mt-1 text-gray-600">
+                Selected: {(isEditing ? currentForm.pdf_file : bookForm.pdf_file).name}
+              </p>
+            )}
+          </div>
+          <div className="md:col-span-2">
+            <label className="block text-sm font-medium mb-2">Description</label>
+            <textarea
+              value={isEditing ? currentForm.description : bookForm.description}
+              onChange={(e) => {
+                if (isEditing) {
+                  setEditingBook({...currentForm, description: e.target.value});
+                } else {
+                  setBookForm({...bookForm, description: e.target.value});
+                }
+              }}
+              rows="3"
+              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+              placeholder="Enter book description"
+            ></textarea>
+          </div>
+        </div>
+        <div className="flex gap-2 mt-4">
+          <button
+            onClick={() => {
+              if (isEditing) {
+                handleBookSave(currentForm, currentForm);
+              } else {
+                handleBookSave(bookForm, bookForm);
+              }
+            }}
+            disabled={creatingBook || updatingBook}
+            className="bg-success text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2"
+          >
+            <Save className="w-4 h-4" />
+            {(creatingBook || updatingBook) ? 'Saving...' : 'Save Book'}
+          </button>
+          <button
+            onClick={() => {
+              setEditingBook(null);
+              setAddingBook(false);
+              setBookForm({
+                title: '',
+                author: '',
+                description: '',
+                genre: '',
+                cover_image: null,
+                pdf_file: null,
+                publication_year: ''
+              });
+            }}
+            className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2"
+          >
+            <X className="w-4 h-4" />
+            Cancel
+          </button>
+        </div>
+      </div>
+    );
+  };
 
 
   const {
@@ -90,10 +369,19 @@ const AdminDashboard = () => {
     deletingTutor,
     approvingTestimonial,
     unapprovingTestimonial,
+
     togglingTestimonialApproval,
     markingMessageRead,
     markingMessageReplied,
-    deletingContactMessage
+
+    deletingContactMessage,
+    books,
+    booksLoading,
+    createBook,
+    updateBook,
+    deleteBook,
+    creatingBook,
+    updatingBook
   } = useDashboard();
 
   // Handle stats update
@@ -502,33 +790,11 @@ const AdminDashboard = () => {
     );
 
 
+
     return (
-      <div className="bg-gray-50 rounded-lg p-4 mb-4 border-2 border-blue-200">
-        <div className="grid grid-cols-1 gap-4">
-          {commonFields}
-          <div className="flex gap-2">
-            <button
-              onClick={() => handleAnnouncementSave(item.type || type, isNew ? newItem : item)}
-              disabled={creatingAnnouncement || updatingAnnouncement}
-              className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
-            >
-              <Save className="w-4 h-4" />
-              {(creatingAnnouncement || updatingAnnouncement) ? 'Saving...' : 'Save'}
-            </button>
-            <button
-              onClick={() => {
-                setEditingItem(null);
-                setIsAddingNew(false);
-                setNewItem({});
-              }}
-              className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
-            >
-              <X className="w-4 h-4" />
-              Cancel
-            </button>
-          </div>
-        </div>
-      </div>
+      <>
+        {commonFields}
+      </>
     );
   };
 
@@ -1162,6 +1428,7 @@ const AdminDashboard = () => {
             Students
           </button>
 
+
           <button
             onClick={() => setActiveTab('tutors')}
             className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
@@ -1186,6 +1453,31 @@ const AdminDashboard = () => {
           >
             <GraduationCap className="w-4 h-4" />
             Tutors
+          </button>
+          <button
+            onClick={() => setActiveTab('books')}
+            className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
+              activeTab === 'books' ? 'text-white' : ''
+            }`}
+            style={{
+              backgroundColor: activeTab === 'books' ? 'var(--primary-color)' : 'transparent',
+              color: activeTab === 'books' ? 'var(--light-text)' : 'var(--text-color)'
+            }}
+            onMouseEnter={(e) => {
+              if (activeTab !== 'books') {
+                e.target.style.backgroundColor = 'var(--accent-color)';
+                e.target.style.color = 'var(--primary-color)';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeTab !== 'books') {
+                e.target.style.backgroundColor = 'transparent';
+                e.target.style.color = 'var(--text-color)';
+              }
+            }}
+          >
+            <Camera className="w-4 h-4" />
+            Books
           </button>
           <button
             onClick={() => setActiveTab('testimonial-approval')}
@@ -1670,6 +1962,141 @@ const AdminDashboard = () => {
             )}
           </div>
 
+
+        )}
+
+
+
+
+        {/* Books Management Tab */}
+        {activeTab === 'books' && (
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Digital Bookshelf Management</h2>
+
+
+              {!addingBook && !editingBook && (
+                <button
+                  onClick={() => {
+                    console.error('error');
+                    setAddingBook(true);
+                  }}
+                  className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
+                  style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
+                >
+                  <Plus className="w-4 h-4" />
+                  Add New Book
+                </button>
+              )}
+            </div>
+
+            {/* Notification */}
+            {notification && (
+              <div className={`mb-4 p-4 rounded-lg flex items-center justify-between ${
+                notification.type === 'success' 
+                  ? 'bg-green-100 border border-green-400 text-green-700' 
+                  : 'bg-red-100 border border-red-400 text-red-700'
+              }`}>
+                <span>{notification.message}</span>
+                <button 
+                  onClick={() => setNotification(null)}
+                  className="ml-4 text-sm underline hover:no-underline"
+                >
+                  Dismiss
+                </button>
+              </div>
+            )}
+
+            {/* Book Form - Only show when adding or editing */}
+            {(addingBook || editingBook) && renderBookForm(editingBook)}
+
+            {booksLoading ? (
+              <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading books...</p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {books && books.length > 0 ? (
+                  books.map((book) => (
+                    <div key={book.id} className="border rounded-lg p-6 hover:shadow-md transition-all hover-lift" style={{borderColor: 'var(--primary-color)'}}>
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-3">
+                            <span className="px-2 py-1 text-xs font-semibold rounded" style={{backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)'}}>
+                              Book
+                            </span>
+                            {book.genre && (
+                              <span className="px-2 py-1 text-xs font-semibold rounded" style={{backgroundColor: 'var(--accent-color)', color: 'var(--primary-color)'}}>
+                                {book.genre}
+                              </span>
+                            )}
+                          </div>
+                          <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--primary-color)'}}>
+                            {book.title}
+                          </h3>
+                          <p className="mb-3" style={{color: 'var(--text-color)'}}>
+                            <strong>Author:</strong> {book.author}
+                          </p>
+                          {book.description && (
+                            <p className="mb-3 line-clamp-2" style={{color: 'var(--text-color)'}}>
+                              {book.description}
+                            </p>
+                          )}
+                          <div className="flex items-center gap-4 text-sm" style={{color: 'var(--text-color)'}}>
+                            {book.publication_year && (
+                              <span>
+                                <strong>Published:</strong> {book.publication_year}
+                              </span>
+                            )}
+                            {book.pdf_file && (
+                              <a 
+                                href={book.pdf_file} 
+                                target="_blank" 
+                                rel="noopener noreferrer"
+                                className="hover:underline"
+                                style={{color: 'var(--primary-color)'}}
+                              >
+                                View PDF
+                              </a>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex gap-2 ml-4">
+                          <button
+                            onClick={() => setEditingBook(book)}
+                            className="p-2 rounded-lg transition-all hover:scale-110 hover-glow"
+                            style={{color: 'var(--primary-color)'}}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--accent-color)'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                          >
+                            <Edit2 className="w-4 h-4" />
+                          </button>
+                          <button
+                            onClick={() => handleBookDelete(book)}
+                            className="p-2 rounded-lg transition-all hover:scale-110 hover-glow"
+                            style={{color: 'var(--error-color)'}}
+                            onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--accent-color)'}
+                            onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <div className="text-center py-12">
+                    <div className="w-24 h-24 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+                      <Camera className="w-12 h-12 text-gray-400" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-2" style={{color: 'var(--primary-color)'}}>No Books Yet</h3>
+                    <p className="text-gray-500 mb-6">Start building your digital bookshelf by adding your first book!</p>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         )}
 
         </div>

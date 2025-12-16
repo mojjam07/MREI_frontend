@@ -4,18 +4,38 @@ import { API_BASE_URL } from '../config';
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   timeout: 10000,
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  // Remove default Content-Type to allow multipart/form-data for file uploads
 });
 
-// Request interceptor for authentication
+// Helper function to check if data contains files
+const hasFileData = (data) => {
+  if (data instanceof FormData) return true;
+  if (typeof data === 'object' && data !== null) {
+    return Object.values(data).some(value => 
+      value instanceof File || 
+      (Array.isArray(value) && value.some(item => item instanceof File))
+    );
+  }
+  return false;
+};
+
+// Request interceptor for authentication and content type detection
 apiClient.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('access_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // Auto-detect content type for file uploads
+    if (hasFileData(config.data)) {
+      // Don't set Content-Type for FormData, let browser set it with boundary
+      delete config.headers['Content-Type'];
+    } else {
+      // Set JSON content-type for regular data
+      config.headers['Content-Type'] = 'application/json';
+    }
+
     return config;
   },
   (error) => Promise.reject(error)

@@ -533,6 +533,7 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
+
   const { data: unreadMessages, isLoading: unreadMessagesLoading } = useQuery(
     'unread-messages',
     async () => {
@@ -542,6 +543,19 @@ export const DashboardProvider = ({ children }) => {
     {
       enabled: user?.role === 'admin',
       staleTime: 1 * 60 * 1000,
+    }
+  );
+
+  // Books Query (for admin book management)
+  const { data: books, isLoading: booksLoading } = useQuery(
+    'books',
+    async () => {
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.BOOKS);
+      return response.data;
+    },
+    {
+      enabled: user?.role === 'admin',
+      staleTime: 5 * 60 * 1000,
     }
   );
 
@@ -572,6 +586,7 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
+
   const deleteContactMessageMutation = useMutation(
     async (id) => {
       await apiClient.delete(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/`);
@@ -580,6 +595,42 @@ export const DashboardProvider = ({ children }) => {
       onSuccess: () => {
         queryClient.invalidateQueries('contact-messages');
         queryClient.invalidateQueries('unread-messages');
+      },
+    }
+  );
+
+  // Book mutations
+  const createBookMutation = useMutation(
+    async (bookData) => {
+      const response = await apiClient.post(API_ENDPOINTS.COMMUNICATION.BOOKS, bookData);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('books');
+      },
+    }
+  );
+
+  const updateBookMutation = useMutation(
+    async ({ id, data }) => {
+      const response = await apiClient.put(`${API_ENDPOINTS.COMMUNICATION.BOOKS}${id}/`, data);
+      return response.data;
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('books');
+      },
+    }
+  );
+
+  const deleteBookMutation = useMutation(
+    async (id) => {
+      await apiClient.delete(`${API_ENDPOINTS.COMMUNICATION.BOOKS}${id}/`);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('books');
       },
     }
   );
@@ -612,11 +663,13 @@ export const DashboardProvider = ({ children }) => {
     pendingSubmissions,
     tutorClassSchedules,
 
+
     // Admin-specific data
     allTestimonials,
     pendingTestimonials,
     contactMessages,
     unreadMessages,
+    books,
 
     // Loading states
     statsLoading,
@@ -639,7 +692,9 @@ export const DashboardProvider = ({ children }) => {
     allTestimonialsLoading,
     pendingTestimonialsLoading,
     contactMessagesLoading,
+
     unreadMessagesLoading,
+    booksLoading,
 
     // Mutations
     updateStats: updateStatsMutation.mutateAsync,
@@ -663,10 +718,17 @@ export const DashboardProvider = ({ children }) => {
     unapproveTestimonial: unapproveTestimonialMutation.mutateAsync,
     toggleTestimonialApproval: toggleTestimonialApprovalMutation.mutateAsync,
 
+
     // Contact message mutations
     markMessageRead: markMessageReadMutation.mutateAsync,
     markMessageReplied: markMessageRepliedMutation.mutateAsync,
     deleteContactMessage: deleteContactMessageMutation.mutateAsync,
+
+    // Book mutations
+    createBook: createBookMutation.mutateAsync,
+    updateBook: updateBookMutation.mutateAsync,
+    deleteBook: deleteBookMutation.mutateAsync,
+
 
     // Mutation states
     updatingStats: updateStatsMutation.isLoading,
@@ -686,6 +748,9 @@ export const DashboardProvider = ({ children }) => {
     markingMessageRead: markMessageReadMutation.isLoading,
     markingMessageReplied: markMessageRepliedMutation.isLoading,
     deletingContactMessage: deleteContactMessageMutation.isLoading,
+    creatingBook: createBookMutation.isLoading,
+    updatingBook: updateBookMutation.isLoading,
+    deletingBook: deleteBookMutation.isLoading,
   };
 
   return (
