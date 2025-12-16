@@ -383,6 +383,7 @@
         "scheduleVisit": "جدولة زيارتك"
     },
 
+
     "digitalBookshelf": {
         "title": "رف الكتب الرقمي",
         "subtitle": "استكشف مجموعتنا من الكتب الرقمية. انقر على أي غلاف لمعرفة المزيد والبدء في القراءة.",
@@ -391,6 +392,11 @@
         "closeModal": "×",
         "previous": "السابق",
         "next": "التالي",
-        "pageIndicator": "صفحة {current} من {total}"
+        "pageIndicator": "صفحة {current} من {total}",
+        "uploadTitle": "اقرأ ملف PDF الخاص بك",
+        "uploadSubtitle": "اختر ملف PDF من جهازك لقراءته هنا.",
+        "selectFile": "اختر ملف PDF",
+        "noFileSelected": "لم يتم اختيار ملف",
+        "readNow": "اقرأ الآن"
     }
 }

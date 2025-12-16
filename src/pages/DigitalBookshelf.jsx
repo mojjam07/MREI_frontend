@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
+
 import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
 import PageHeader from '../components/layout/PageHeader';
@@ -10,14 +11,26 @@ import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import { API_BASE_URL, API_ENDPOINTS } from '../config';
-import { Plus, Edit, Save, X } from 'lucide-react';
 
+import { Plus, Edit, Save, X, Upload } from 'lucide-react';
+
+
+
+
+
+import { pdfjs } from 'react-pdf';
+
+
+// Configure PDF.js worker for local file support
+pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
   const { user } = useAuth();
-  const { createBook, updateBook, deleteBook, books: dashboardBooks, creatingBook, updatingBook, deletingBook } = useDashboard();
-  const [books, setBooks] = useState([]);
+
+  const { createBook, updateBook, deleteBook, books: dashboardBooks, creatingBook, updatingBook } = useDashboard();
+  const [publicBooks, setPublicBooks] = useState([]);
+  const books = dashboardBooks || publicBooks;
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReading, setIsReading] = useState(false);
@@ -39,14 +52,13 @@ const DigitalBookshelf = () => {
 
 
 
+
   useEffect(() => {
     // Use books from DashboardContext if available (for admin), otherwise fetch directly
-    if (dashboardBooks) {
-      setBooks(dashboardBooks);
-    } else {
+    if (!dashboardBooks) {
       fetch(API_BASE_URL + API_ENDPOINTS.COMMUNICATION.BOOKS)
         .then(response => response.json())
-        .then(data => setBooks(data))
+        .then(data => setPublicBooks(data))
         .catch(error => console.error('Error fetching books:', error));
     }
   }, [dashboardBooks]);
@@ -125,6 +137,8 @@ const DigitalBookshelf = () => {
     setIsModalOpen(true);
   };
 
+
+
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedBook(null);
@@ -136,20 +150,70 @@ const DigitalBookshelf = () => {
     setIsReading(true);
   };
 
+
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+  };
+
+
+
+  const onDocumentLoadError = (error) => {
+    console.error('Error loading PDF:', error);
+    alert('Failed to load PDF file. Please try again.');
+  };
+
+
+  // Function to get the correct file format for react-pdf
+  const getPdfFile = (book) => {
+    if (book.id === 'local-temp') {
+      // For local files, pass the File object directly
+      return book.pdf_file;
+    } else if (typeof book.pdf_file === 'string') {
+      // For server URLs, pass the string URL
+      return book.pdf_file;
+    } else if (book.pdf_file && typeof book.pdf_file === 'object') {
+      // Handle File objects
+      return book.pdf_file;
+    }
+    return null;
   };
 
   const changePage = (offset) => {
     setPageNumber(prevPageNumber => prevPageNumber + offset);
   };
 
+
   const previousPage = () => changePage(-1);
   const nextPage = () => changePage(1);
+
+
+
+
+
+
+  const handleLocalFileChange = (event) => {
+    const file = event.target.files[0];
+    if (file && file.type === 'application/pdf') {
+      setSelectedBook({
+        id: 'local-temp',
+        title: file.name.replace('.pdf', ''),
+        author: 'Local Document',
+        description: t('digitalBookshelf.uploadSubtitle'),
+        pdf_file: file, // Pass File object directly
+        cover_image: null,
+        fileName: file.name
+      });
+      setIsReading(true);
+      setIsModalOpen(true);
+      setPageNumber(1);
+      setNumPages(null); // Reset pages
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50">
       <PageHeader />
+
 
 
       {/* Hero Section */}
@@ -162,6 +226,30 @@ const DigitalBookshelf = () => {
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 max-w-2xl mx-auto">
             {t('digitalBookshelf.subtitle')}
           </p>
+        </div>
+      </section>
+
+      {/* Local PDF Reader Section */}
+      <section className="py-8 bg-white border-b">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="bg-gray-50 rounded-xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm border border-gray-100">
+                <div>
+                    <h2 className="text-2xl font-bold text-gray-800 mb-2">{t('digitalBookshelf.uploadTitle')}</h2>
+                    <p className="text-gray-600">{t('digitalBookshelf.uploadSubtitle')}</p>
+                </div>
+                <div>
+                     <label className="flex items-center gap-2 bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary-dark transition-colors cursor-pointer shadow-md">
+                        <Upload className="w-5 h-5" />
+                        <span className="font-medium">{t('digitalBookshelf.selectFile')}</span>
+                        <input
+                            type="file"
+                            accept="application/pdf"
+                            onChange={handleLocalFileChange}
+                            className="hidden"
+                        />
+                    </label>
+                </div>
+            </div>
         </div>
       </section>
 
@@ -478,8 +566,9 @@ const DigitalBookshelf = () => {
                     {t('digitalBookshelf.previous')}
                   </button>
 
+
                   <span className="px-4 py-2">
-                    {t('digitalBookshelf.pageIndicator', { current: pageNumber, total: numPages })}
+                    {t('digitalBookshelf.pageIndicator', { current: pageNumber, total: numPages || 0 })}
                   </span>
 
                   <button
@@ -490,11 +579,13 @@ const DigitalBookshelf = () => {
                     {t('digitalBookshelf.next')}
                   </button>
                 </div>
+
                 <div className="flex justify-center">
 
                   <Document
-                    file={selectedBook.pdf_file}
+                    file={getPdfFile(selectedBook)}
                     onLoadSuccess={onDocumentLoadSuccess}
+                    onLoadError={onDocumentLoadError}
                     className="border"
                   >
                     <Page pageNumber={pageNumber} />

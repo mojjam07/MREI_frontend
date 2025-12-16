@@ -410,6 +410,7 @@
         "scheduleVisit": "Schedule Your Visit"
     },
 
+
     "digitalBookshelf": {
         "title": "Digital Bookshelf",
         "subtitle": "Explore our collection of digital books. Click on any cover to learn more and start reading.",
@@ -418,6 +419,11 @@
         "closeModal": "×",
         "previous": "Previous",
         "next": "Next",
-        "pageIndicator": "Page {current} of {total}"
+        "pageIndicator": "Page {current} of {total}",
+        "uploadTitle": "Read Your Own PDF",
+        "uploadSubtitle": "Select a PDF file from your device to read it here.",
+        "selectFile": "Select PDF File",
+        "noFileSelected": "No file selected",
+        "readNow": "Read Now"
     }
 }

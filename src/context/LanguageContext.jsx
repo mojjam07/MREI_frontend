@@ -12,13 +12,22 @@ export const LanguageProvider = ({ children }) => {
     document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
   }, [language]);
 
-  const t = (key) => {
+
+  const t = (key, params = {}) => {
     const keys = key.split('.');
     let value = translations[language];
     for (const k of keys) {
       value = value?.[k];
     }
-    return value || key;
+    
+    let result = value || key;
+    
+    // Replace parameters
+    Object.keys(params).forEach(param => {
+      result = result.replace(`{${param}}`, params[param]);
+    });
+    
+    return result;
   };
 
   return (

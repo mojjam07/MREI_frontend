@@ -274,6 +274,7 @@ const translations = {
 
     },
 
+
     digitalBookshelf: {
       title: 'Digital Bookshelf',
       subtitle: 'Explore our collection of digital books. Click on any cover to learn more and start reading.',
@@ -282,7 +283,12 @@ const translations = {
       closeModal: '×',
       previous: 'Previous',
       next: 'Next',
-      pageIndicator: 'Page {current} of {total}'
+      pageIndicator: 'Page {current} of {total}',
+      uploadTitle: 'Read Your Own PDF',
+      uploadSubtitle: 'Select a PDF file from your device to read it here.',
+      selectFile: 'Select PDF File',
+      noFileSelected: 'No file selected',
+      readNow: 'Read Now'
     },
 
     about: {
@@ -846,6 +852,7 @@ const translations = {
 
     },
 
+
     digitalBookshelf: {
       title: 'رف الكتب الرقمي',
       subtitle: 'استكشف مجموعتنا من الكتب الرقمية. انقر على أي غلاف لمعرفة المزيد والبدء في القراءة.',
@@ -854,7 +861,12 @@ const translations = {
       closeModal: '×',
       previous: 'السابق',
       next: 'التالي',
-      pageIndicator: 'صفحة {current} من {total}'
+      pageIndicator: 'صفحة {current} من {total}',
+      uploadTitle: 'اقرأ ملف PDF الخاص بك',
+      uploadSubtitle: 'اختر ملف PDF من جهازك لقراءته هنا.',
+      selectFile: 'اختر ملف PDF',
+      noFileSelected: 'لم يتم اختيار ملف',
+      readNow: 'اقرأ الآن'
     },
 
     about: {
