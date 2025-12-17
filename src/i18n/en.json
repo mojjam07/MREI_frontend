@@ -411,6 +411,7 @@
     },
 
 
+
     "digitalBookshelf": {
         "title": "Digital Bookshelf",
         "subtitle": "Explore our collection of digital books. Click on any cover to learn more and start reading.",
@@ -425,5 +426,89 @@
         "selectFile": "Select PDF File",
         "noFileSelected": "No file selected",
         "readNow": "Read Now"
+    },
+
+    "calendar": {
+        "title": "Academic Calendar",
+        "subtitle": "View important dates and events for both Islamic and Gregorian calendars",
+        "islamicSpecialDays": "Islamic Special Days",
+        "islamicSpecialDaysDesc": "Important dates in the Islamic calendar including Ramadan, Eid, and other religious observances",
+        "instituteScheduleDays": "Institute Schedule Days",
+        "instituteScheduleDaysDesc": "Academic deadlines, holidays, and important institutional events",
+        "hijriCalendar": "Hijri Calendar",
+        "gregorianCalendar": "Gregorian Calendar",
+        "islamicEvents": {
+            "ramadan": "Ramadan",
+            "eidAlFitr": "Eid al-Fitr",
+            "eidAlAdha": "Eid al-Adha",
+            "mawlid": "Mawlid an-Nabi",
+            "hijriNewYear": "Hijri New Year",
+            "ashura": "Ashura",
+            "laylatAlQadr": "Laylat al-Qadr",
+            "eidAlFitri": "Eid al-Fitr",
+            "eidAlAdha": "Eid al-Adha"
+        },
+        "academicEvents": {
+            "semesterStart": "Semester Start",
+            "semesterEnd": "Semester End",
+            "finalExams": "Final Examinations",
+            "midtermExams": "Midterm Examinations",
+            "registrationPeriod": "Registration Period",
+            "addDropPeriod": "Add/Drop Period",
+            "graduation": "Graduation Ceremony",
+            "orientation": "New Student Orientation",
+            "springBreak": "Spring Break",
+            "winterBreak": "Winter Break",
+            "summerSession": "Summer Session"
+        },
+        "calendarTabs": {
+            "hijri": "Hijri",
+            "gregorian": "Gregorian"
+        },
+        "months": {
+            "hijri": {
+                "muharram": "Muharram",
+                "safar": "Safar",
+                "rabiAlAwwal": "Rabi' al-awwal",
+                "rabiAlThani": "Rabi' al-thani",
+                "jumadaAlAwwala": "Jumada al-awwal",
+                "jumadaAlThaniya": "Jumada al-thaniyah",
+                "rajab": "Rajab",
+                "shaaban": "Sha'ban",
+                "ramadan": "Ramadan",
+                "shawwal": "Shawwal",
+                "dhuAlQiidah": "Dhu al-Qi'dah",
+                "dhuAlHijjah": "Dhu al-Hijjah"
+            },
+            "gregorian": {
+                "january": "January",
+                "february": "February",
+                "march": "March",
+                "april": "April",
+                "may": "May",
+                "june": "June",
+                "july": "July",
+                "august": "August",
+                "september": "September",
+                "october": "October",
+                "november": "November",
+                "december": "December"
+            }
+        },
+        "daysOfWeek": {
+            "saturday": "Saturday",
+            "sunday": "Sunday",
+            "monday": "Monday",
+            "tuesday": "Tuesday",
+            "wednesday": "Wednesday",
+            "thursday": "Thursday",
+            "friday": "Friday"
+        },
+        "loading": "Loading calendar...",
+        "error": "Failed to load calendar data",
+        "today": "Today",
+        "currentMonth": "Current Month",
+        "selectMonth": "Select Month",
+        "selectYear": "Select Year"
     }
 }

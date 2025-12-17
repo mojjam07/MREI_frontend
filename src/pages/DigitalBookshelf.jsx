@@ -22,31 +22,14 @@ import { Plus, Edit, Save, X, Upload } from 'lucide-react';
 
 import { pdfjs } from 'react-pdf';
 
-// Simplified and reliable PDF.js worker configuration
-const configurePDFWorker = () => {
-  console.log('Configuring PDF.js worker for react-pdf version:', pdfjs.version);
+// Configure PDF.js worker using the standard react-pdf approach
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
 
-  // Use the local worker file which is most reliable
-  const workerSrc = '/pdf.worker.min.js';
-  console.log('Setting PDF.js worker source to:', workerSrc);
-
-  try {
-    pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
-    console.log('PDF.js worker configured successfully');
-  } catch (error) {
-    console.error('Failed to configure PDF.js worker:', error);
-    // Fallback: try to use a CDN version
-    try {
-      pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-      console.log('Fallback PDF.js worker configured from CDN');
-    } catch (fallbackError) {
-      console.error('Fallback PDF.js worker configuration also failed:', fallbackError);
-    }
-  }
-};
-
-// Initialize PDF worker configuration
-configurePDFWorker();
+console.log('PDF.js worker configured with:', pdfjs.GlobalWorkerOptions.workerSrc);
+console.log('React-PDF version:', pdfjs.version);
 
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
@@ -62,6 +45,7 @@ const DigitalBookshelf = () => {
   const [pageNumber, setPageNumber] = useState(1);
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfError, setPdfError] = useState(null);
+  const [showDebugInfo, setShowDebugInfo] = useState(false);
 
   // Admin book management states
   const [editingBook, setEditingBook] = useState(null);
@@ -178,6 +162,20 @@ const DigitalBookshelf = () => {
     setPdfError(null);
     setPageNumber(1);
     setNumPages(null);
+
+    // Add timeout for loading state to prevent infinite loading
+    const loadingTimeout = setTimeout(() => {
+      if (pdfLoading) {
+        console.warn('PDF loading timeout reached, checking worker status...');
+        console.warn('Worker source:', pdfjs.GlobalWorkerOptions.workerSrc);
+        console.warn('React-PDF version:', pdfjs.version);
+        setPdfError('PDF loading timed out. This may be due to worker configuration issues. Check console for details.');
+        setPdfLoading(false);
+      }
+    }, 15000); // Reduced to 15 seconds for faster feedback
+
+    // Store timeout ID for cleanup
+    setTimeout(() => clearTimeout(loadingTimeout), 16000);
   };
 
 
@@ -203,14 +201,16 @@ const DigitalBookshelf = () => {
       fileType: selectedBook?.pdf_file?.type || 'unknown',
       fileSize: selectedBook?.pdf_file?.size || 'unknown',
       workerSrc: pdfjs.GlobalWorkerOptions.workerSrc,
-      reactPdfVersion: pdfjs.version
+      reactPdfVersion: pdfjs.version,
+      pdfjsDistVersion: pdfjs.version
     });
     console.groupEnd();
 
+    setPdfLoading(false);
     let errorMessage = 'Failed to load PDF file. ';
     let shouldRetry = false;
-    
-    // Provide specific error messages based on error type
+
+    // Enhanced error detection and messaging
     if (error?.name === 'InvalidPDFException') {
       errorMessage += 'The file appears to be corrupted or is not a valid PDF. Please check if the file is not password-protected or corrupted.';
     } else if (error?.name === 'MissingPDFException') {
@@ -222,26 +222,37 @@ const DigitalBookshelf = () => {
       errorMessage += 'Cross-origin access is blocked. This might be due to server CORS settings or an inaccessible URL.';
     } else if (error?.message?.includes('404')) {
       errorMessage += 'The PDF file could not be found. Please check if the URL is correct.';
-    } else if (error?.message?.includes('Worker')) {
-      errorMessage += 'There seems to be an issue with the PDF processing worker. This might be a temporary issue.';
+    } else if (error?.message?.includes('Worker') || error?.message?.includes('worker')) {
+      errorMessage += 'There seems to be an issue with the PDF processing worker. This might be due to version incompatibility or network issues.';
       shouldRetry = true;
     } else if (error?.message?.includes('Failed to fetch') || error?.message?.includes('Network Error')) {
       errorMessage += 'Network error occurred while loading the PDF. Please check your internet connection.';
+      shouldRetry = true;
+    } else if (error?.message?.includes('Loading chunk') || error?.message?.includes('Loading PDF')) {
+      errorMessage += 'The PDF is taking too long to load. This may be due to file size or network issues.';
       shouldRetry = true;
     } else if (selectedBook?.pdf_file?.type && selectedBook?.pdf_file?.type !== 'application/pdf') {
       errorMessage += `Invalid file type: ${selectedBook.pdf_file.type}. Please ensure you have selected a valid PDF file.`;
     } else if (selectedBook?.pdf_file?.size > 50 * 1024 * 1024) {
       errorMessage += 'The PDF file is too large. Maximum size allowed is 50MB.';
+    } else if (selectedBook?.id === 'local-temp' && selectedBook?.pdf_file instanceof File) {
+      // Special handling for local files
+      errorMessage += 'Local PDF file could not be processed. This may be due to browser security restrictions or file corruption.';
+      shouldRetry = true;
     } else {
-      errorMessage += 'Please try again or contact support if the problem persists.';
+      errorMessage += 'An unexpected error occurred while loading the PDF. Please try again or contact support if the problem persists.';
       shouldRetry = true;
     }
+
+    setPdfError(errorMessage);
 
     // Add retry option for recoverable errors
     if (shouldRetry && selectedBook) {
       const retryConfirmed = window.confirm(errorMessage + '\n\nWould you like to try loading the PDF again?');
       if (retryConfirmed) {
         console.log('Retrying PDF load for book:', selectedBook.title);
+        setPdfLoading(true);
+        setPdfError(null);
         // Small delay before retry
         setTimeout(() => {
           // Force re-render by updating page number
@@ -249,8 +260,6 @@ const DigitalBookshelf = () => {
         }, 500);
         return;
       }
-    } else {
-      alert(errorMessage);
     }
   };
 
@@ -260,27 +269,56 @@ const DigitalBookshelf = () => {
 
 
 
-  // Simplified function to get the correct file format for react-pdf
+  // Enhanced function to get the correct file format for react-pdf with better validation
   const getPdfFile = (book) => {
     console.log('Getting PDF file for book:', book.title, 'ID:', book.id);
+    console.log('Book PDF file details:', {
+      type: typeof book.pdf_file,
+      isFile: book.pdf_file instanceof File,
+      fileName: book.pdf_file?.name,
+      fileSize: book.pdf_file?.size,
+      fileType: book.pdf_file?.type,
+      url: book.pdf_file?.url
+    });
 
     try {
       if (book.id === 'local-temp') {
         // For local files, return the File object directly
         const file = book.pdf_file;
-        console.log('Local file detected:', file?.name, file?.size, file?.type);
+        console.log('Local file detected:', {
+          name: file?.name,
+          size: file?.size,
+          type: file?.type,
+          lastModified: file?.lastModified
+        });
 
         if (!file) {
-          console.error('No local file provided');
+          console.error('No local file provided for local-temp book');
           return null;
         }
 
-        // Basic validation
+        if (!(file instanceof File)) {
+          console.error('Local file is not a File object:', typeof file);
+          return null;
+        }
+
+        // Enhanced validation for local files
         if (file.type !== 'application/pdf' && !file.name?.toLowerCase().endsWith('.pdf')) {
-          console.error('Invalid file type for local PDF');
+          console.error('Invalid file type for local PDF:', {
+            type: file.type,
+            name: file.name,
+            endsWithPdf: file.name?.toLowerCase().endsWith('.pdf')
+          });
           return null;
         }
 
+        // Check file size
+        if (file.size > 50 * 1024 * 1024) {
+          console.error('File too large for local PDF:', file.size);
+          return null;
+        }
+
+        console.log('Returning local File object for PDF rendering');
         return file;
       } else if (typeof book.pdf_file === 'string') {
         // For server URLs, return the string URL
@@ -288,29 +326,40 @@ const DigitalBookshelf = () => {
         console.log('Remote URL detected:', url);
 
         if (!url) {
-          console.error('Empty URL provided');
+          console.error('Empty URL provided for remote PDF');
           return null;
         }
 
+        // Basic URL validation
+        if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('/')) {
+          console.error('Invalid URL format for remote PDF:', url);
+          return null;
+        }
+
+        console.log('Returning URL string for PDF rendering');
         return url;
       } else if (book.pdf_file && typeof book.pdf_file === 'object') {
-        // Handle File objects
+        // Handle File objects from other sources
         if (book.pdf_file instanceof File) {
-          console.log('File object detected');
+          console.log('File object detected from other source');
           return book.pdf_file;
         }
 
         // Check for URL property
         if (book.pdf_file.url && typeof book.pdf_file.url === 'string') {
-          console.log('URL property found:', book.pdf_file.url);
+          console.log('URL property found in object:', book.pdf_file.url);
           return book.pdf_file.url;
         }
+
+        console.error('Object PDF file does not have valid File or URL property');
+        return null;
       }
 
-      console.error('No valid PDF file found in book object');
+      console.error('No valid PDF file found in book object - invalid structure');
       return null;
     } catch (error) {
       console.error('Error in getPdfFile:', error);
+      console.error('Error stack:', error.stack);
       return null;
     }
   };
@@ -723,13 +772,54 @@ const DigitalBookshelf = () => {
 
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-bold">{selectedBook.title}</h2>
-                  <button
-                    onClick={closeModal}
-                    className="text-gray-500 hover:text-gray-700 text-2xl"
-                  >
-                    {t('digitalBookshelf.closeModal')}
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setShowDebugInfo(!showDebugInfo)}
+                      className="text-xs bg-gray-200 text-gray-700 px-2 py-1 rounded hover:bg-gray-300 transition-colors"
+                      title="Toggle Debug Info"
+                    >
+                      Debug
+                    </button>
+                    <button
+                      onClick={closeModal}
+                      className="text-gray-500 hover:text-gray-700 text-2xl"
+                    >
+                      {t('digitalBookshelf.closeModal')}
+                    </button>
+                  </div>
                 </div>
+
+                {/* Debug Information Panel */}
+                {showDebugInfo && (
+                  <div className="mb-4 p-3 bg-gray-100 rounded-lg text-xs font-mono">
+                    <h3 className="font-bold mb-2">PDF Debug Information</h3>
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>Worker Source: {pdfjs.GlobalWorkerOptions.workerSrc}</div>
+                      <div>React-PDF Version: {pdfjs.version}</div>
+                      <div>Book ID: {selectedBook.id}</div>
+                      <div>File Type: {selectedBook.pdf_file?.type || 'unknown'}</div>
+                      <div>File Size: {selectedBook.pdf_file?.size ? `${(selectedBook.pdf_file.size / 1024 / 1024).toFixed(2)}MB` : 'unknown'}</div>
+                      <div>Is Local File: {selectedBook.id === 'local-temp'}</div>
+                      <div>Loading State: {pdfLoading ? 'Loading' : 'Not Loading'}</div>
+                      <div>Has Error: {pdfError ? 'Yes' : 'No'}</div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        console.log('Manual PDF Debug Info:', {
+                          selectedBook,
+                          pdfjsWorker: pdfjs.GlobalWorkerOptions.workerSrc,
+                          pdfjsVersion: pdfjs.version,
+                          pdfLoading,
+                          pdfError
+                        });
+                        alert('Debug info logged to console');
+                      }}
+                      className="mt-2 bg-blue-500 text-white px-2 py-1 rounded text-xs hover:bg-blue-600"
+                    >
+                      Log to Console
+                    </button>
+                  </div>
+                )}
                 <div className="flex justify-center mb-4">
 
                   <button

@@ -575,6 +575,88 @@ const translations = {
       confirm: {
         logout: 'Are you sure you want to logout?'
       }
+    },
+
+    calendar: {
+      title: 'Academic Calendar',
+      subtitle: 'View important dates and events for both Islamic and Gregorian calendars',
+      islamicSpecialDays: 'Islamic Special Days',
+      islamicSpecialDaysDesc: 'Important dates in the Islamic calendar including Ramadan, Eid, and other religious observances',
+      instituteScheduleDays: 'Institute Schedule Days',
+      instituteScheduleDaysDesc: 'Academic deadlines, holidays, and important institutional events',
+      hijriCalendar: 'Hijri Calendar',
+      gregorianCalendar: 'Gregorian Calendar',
+      islamicEvents: {
+        ramadan: 'Ramadan',
+        eidAlFitr: 'Eid al-Fitr',
+        eidAlAdha: 'Eid al-Adha',
+        mawlid: 'Mawlid an-Nabi',
+        hijriNewYear: 'Hijri New Year',
+        ashura: 'Ashura',
+        laylatAlQadr: 'Laylat al-Qadr'
+      },
+      academicEvents: {
+        semesterStart: 'Semester Start',
+        semesterEnd: 'Semester End',
+        finalExams: 'Final Examinations',
+        midtermExams: 'Midterm Examinations',
+        registrationPeriod: 'Registration Period',
+        addDropPeriod: 'Add/Drop Period',
+        graduation: 'Graduation Ceremony',
+        orientation: 'New Student Orientation',
+        springBreak: 'Spring Break',
+        winterBreak: 'Winter Break',
+        summerSession: 'Summer Session'
+      },
+      calendarTabs: {
+        hijri: 'Hijri',
+        gregorian: 'Gregorian'
+      },
+      months: {
+        hijri: {
+          muharram: 'Muharram',
+          safar: 'Safar',
+          rabiAlAwwal: 'Rabi\' al-awwal',
+          rabiAlThani: 'Rabi\' al-thani',
+          jumadaAlAwwala: 'Jumada al-awwal',
+          jumadaAlThaniya: 'Jumada al-thaniyah',
+          rajab: 'Rajab',
+          shaaban: 'Sha\'ban',
+          ramadan: 'Ramadan',
+          shawwal: 'Shawwal',
+          dhuAlQiidah: 'Dhu al-Qi\'dah',
+          dhuAlHijjah: 'Dhu al-Hijjah'
+        },
+        gregorian: {
+          january: 'January',
+          february: 'February',
+          march: 'March',
+          april: 'April',
+          may: 'May',
+          june: 'June',
+          july: 'July',
+          august: 'August',
+          september: 'September',
+          october: 'October',
+          november: 'November',
+          december: 'December'
+        }
+      },
+      daysOfWeek: {
+        saturday: 'Saturday',
+        sunday: 'Sunday',
+        monday: 'Monday',
+        tuesday: 'Tuesday',
+        wednesday: 'Wednesday',
+        thursday: 'Thursday',
+        friday: 'Friday'
+      },
+      loading: 'Loading calendar...',
+      error: 'Failed to load calendar data',
+      today: 'Today',
+      currentMonth: 'Current Month',
+      selectMonth: 'Select Month',
+      selectYear: 'Select Year'
     }
   },
 
@@ -1153,6 +1235,88 @@ const translations = {
       confirm: {
         logout: 'هل أنت متأكد أنك تريد تسجيل الخروج؟'
       }
+    },
+
+    calendar: {
+      title: 'التقويم الأكاديمي',
+      subtitle: 'عرض التواريخ والأحداث المهمة لكلا من التقويم الهجري والميلادي',
+      islamicSpecialDays: 'الأيام الإسلامية الخاصة',
+      islamicSpecialDaysDesc: 'تواريخ مهمة في التقويم الإسلامي بما في ذلك رمضان والعيد وغيرها من المناسبات الدينية',
+      instituteScheduleDays: 'أيام جدول المعهد',
+      instituteScheduleDaysDesc: 'المواعيد النهائية الأكاديمية والعطل والأحداث المؤسسية المهمة',
+      hijriCalendar: 'التقويم الهجري',
+      gregorianCalendar: 'التقويم الميلادي',
+      islamicEvents: {
+        ramadan: 'رمضان',
+        eidAlFitr: 'عيد الفطر',
+        eidAlAdha: 'عيد الأضحى',
+        mawlid: 'المولد النبوي',
+        hijriNewYear: 'رأس السنة الهجرية',
+        ashura: 'عاشوراء',
+        laylatAlQadr: 'ليلة القدر'
+      },
+      academicEvents: {
+        semesterStart: 'بداية الفصل الدراسي',
+        semesterEnd: 'نهاية الفصل الدراسي',
+        finalExams: 'الامتحانات النهائية',
+        midtermExams: 'امتحانات منتصف الفصل',
+        registrationPeriod: 'فترة التسجيل',
+        addDropPeriod: 'فترة الإضافة والحذف',
+        graduation: 'حفل التخرج',
+        orientation: 'توجيه الطلاب الجدد',
+        springBreak: 'عطلة الربيع',
+        winterBreak: 'عطلة الشتاء',
+        summerSession: 'الجلسة الصيفية'
+      },
+      calendarTabs: {
+        hijri: 'هجري',
+        gregorian: 'ميلادي'
+      },
+      months: {
+        hijri: {
+          muharram: 'محرم',
+          safar: 'صفر',
+          rabiAlAwwal: 'ربيع الأول',
+          rabiAlThani: 'ربيع الثاني',
+          jumadaAlAwwala: 'جمادى الأولى',
+          jumadaAlThaniya: 'جمادى الثانية',
+          rajab: 'رجب',
+          shaaban: 'شعبان',
+          ramadan: 'رمضان',
+          shawwal: 'شوال',
+          dhuAlQiidah: 'ذو القعدة',
+          dhuAlHijjah: 'ذو الحجة'
+        },
+        gregorian: {
+          january: 'يناير',
+          february: 'فبراير',
+          march: 'مارس',
+          april: 'أبريل',
+          may: 'مايو',
+          june: 'يونيو',
+          july: 'يوليو',
+          august: 'أغسطس',
+          september: 'سبتمبر',
+          october: 'أكتوبر',
+          november: 'نوفمبر',
+          december: 'ديسمبر'
+        }
+      },
+      daysOfWeek: {
+        saturday: 'السبت',
+        sunday: 'الأحد',
+        monday: 'الاثنين',
+        tuesday: 'الثلاثاء',
+        wednesday: 'الأربعاء',
+        thursday: 'الخميس',
+        friday: 'الجمعة'
+      },
+      loading: 'جاري تحميل التقويم...',
+      error: 'فشل في تحميل بيانات التقويم',
+      today: 'اليوم',
+      currentMonth: 'الشهر الحالي',
+      selectMonth: 'اختر الشهر',
+      selectYear: 'اختر السنة'
     }
   }
 };

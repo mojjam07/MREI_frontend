@@ -274,7 +274,8 @@ const Academics = () => {
                 {t('academics.researchDesc')}
               </p>
             </div>
-            <div className="text-center p-3 sm:p-4 lg:p-6 hover-lift hover-scale animate-fade-in-up animate-stagger-4">
+
+            <div className="text-center p-3 sm:p-4 lg:p-6 hover-lift hover-scale animate-fade-in-up animate-stagger-4 cursor-pointer" onClick={() => window.location.href = '/calendar'}>
               <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 transition-transform duration-300 hover:rotate-12 animate-pulse-gentle">
                 <span className="text-white text-lg sm:text-xl lg:text-2xl">📅</span>
               </div>

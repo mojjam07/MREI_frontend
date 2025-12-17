@@ -11,10 +11,12 @@ import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import TutorDashboard from "./pages/TutorDashboard";
 import NotFound from "./pages/NotFound";
+
 import AboutUs from "./pages/AboutUs";
 import Academics from "./pages/Academics";
 import Admissions from "./pages/Admissions";
 import DigitalBookshelf from "./pages/DigitalBookshelf";
+import Calendar from "./pages/Calendar";
 import ProtectedRoute from "./route/ProtectedRoute";
 
 // Generic dashboard component that renders the correct dashboard based on user role
@@ -41,11 +43,13 @@ export default function App() {
   return (
 
     <Routes>
+
       <Route path="/" element={<Landing />} />
       <Route path="/about" element={<AboutUs />} />
       <Route path="/academics" element={<Academics />} />
       <Route path="/admissions" element={<Admissions />} />
       <Route path="/library" element={<DigitalBookshelf />} />
+      <Route path="/calendar" element={<Calendar />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />
       
