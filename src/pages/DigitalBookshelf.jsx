@@ -18,11 +18,35 @@ import { Plus, Edit, Save, X, Upload } from 'lucide-react';
 
 
 
+
+
 import { pdfjs } from 'react-pdf';
 
+// Simplified and reliable PDF.js worker configuration
+const configurePDFWorker = () => {
+  console.log('Configuring PDF.js worker for react-pdf version:', pdfjs.version);
 
-// Configure PDF.js worker for local file support
-pdfjs.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  // Use the local worker file which is most reliable
+  const workerSrc = '/pdf.worker.min.js';
+  console.log('Setting PDF.js worker source to:', workerSrc);
+
+  try {
+    pdfjs.GlobalWorkerOptions.workerSrc = workerSrc;
+    console.log('PDF.js worker configured successfully');
+  } catch (error) {
+    console.error('Failed to configure PDF.js worker:', error);
+    // Fallback: try to use a CDN version
+    try {
+      pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+      console.log('Fallback PDF.js worker configured from CDN');
+    } catch (fallbackError) {
+      console.error('Fallback PDF.js worker configuration also failed:', fallbackError);
+    }
+  }
+};
+
+// Initialize PDF worker configuration
+configurePDFWorker();
 
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
@@ -36,6 +60,8 @@ const DigitalBookshelf = () => {
   const [isReading, setIsReading] = useState(false);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [pdfLoading, setPdfLoading] = useState(false);
+  const [pdfError, setPdfError] = useState(null);
 
   // Admin book management states
   const [editingBook, setEditingBook] = useState(null);
@@ -148,34 +174,145 @@ const DigitalBookshelf = () => {
 
   const startReading = () => {
     setIsReading(true);
+    setPdfLoading(true);
+    setPdfError(null);
+    setPageNumber(1);
+    setNumPages(null);
   };
 
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+    setPdfLoading(false);
+    setPdfError(null);
+    console.log('PDF loaded successfully with', numPages, 'pages');
   };
+
+
 
 
 
   const onDocumentLoadError = (error) => {
-    console.error('Error loading PDF:', error);
-    alert('Failed to load PDF file. Please try again.');
+    console.group('PDF Loading Error Analysis');
+    console.error('Error details:', {
+      error,
+      message: error?.message,
+      name: error?.name,
+      stack: error?.stack,
+      selectedBook: selectedBook,
+      fileType: selectedBook?.pdf_file?.type || 'unknown',
+      fileSize: selectedBook?.pdf_file?.size || 'unknown',
+      workerSrc: pdfjs.GlobalWorkerOptions.workerSrc,
+      reactPdfVersion: pdfjs.version
+    });
+    console.groupEnd();
+
+    let errorMessage = 'Failed to load PDF file. ';
+    let shouldRetry = false;
+    
+    // Provide specific error messages based on error type
+    if (error?.name === 'InvalidPDFException') {
+      errorMessage += 'The file appears to be corrupted or is not a valid PDF. Please check if the file is not password-protected or corrupted.';
+    } else if (error?.name === 'MissingPDFException') {
+      errorMessage += 'PDF content could not be found in the file. The file may be incomplete or corrupted.';
+    } else if (error?.name === 'UnexpectedServerResponse') {
+      errorMessage += 'Server returned an unexpected response. Please check if the file exists and the server is accessible.';
+      shouldRetry = true;
+    } else if (error?.message?.includes('CORS')) {
+      errorMessage += 'Cross-origin access is blocked. This might be due to server CORS settings or an inaccessible URL.';
+    } else if (error?.message?.includes('404')) {
+      errorMessage += 'The PDF file could not be found. Please check if the URL is correct.';
+    } else if (error?.message?.includes('Worker')) {
+      errorMessage += 'There seems to be an issue with the PDF processing worker. This might be a temporary issue.';
+      shouldRetry = true;
+    } else if (error?.message?.includes('Failed to fetch') || error?.message?.includes('Network Error')) {
+      errorMessage += 'Network error occurred while loading the PDF. Please check your internet connection.';
+      shouldRetry = true;
+    } else if (selectedBook?.pdf_file?.type && selectedBook?.pdf_file?.type !== 'application/pdf') {
+      errorMessage += `Invalid file type: ${selectedBook.pdf_file.type}. Please ensure you have selected a valid PDF file.`;
+    } else if (selectedBook?.pdf_file?.size > 50 * 1024 * 1024) {
+      errorMessage += 'The PDF file is too large. Maximum size allowed is 50MB.';
+    } else {
+      errorMessage += 'Please try again or contact support if the problem persists.';
+      shouldRetry = true;
+    }
+
+    // Add retry option for recoverable errors
+    if (shouldRetry && selectedBook) {
+      const retryConfirmed = window.confirm(errorMessage + '\n\nWould you like to try loading the PDF again?');
+      if (retryConfirmed) {
+        console.log('Retrying PDF load for book:', selectedBook.title);
+        // Small delay before retry
+        setTimeout(() => {
+          // Force re-render by updating page number
+          setPageNumber(1);
+        }, 500);
+        return;
+      }
+    } else {
+      alert(errorMessage);
+    }
   };
 
 
-  // Function to get the correct file format for react-pdf
+
+
+
+
+
+  // Simplified function to get the correct file format for react-pdf
   const getPdfFile = (book) => {
-    if (book.id === 'local-temp') {
-      // For local files, pass the File object directly
-      return book.pdf_file;
-    } else if (typeof book.pdf_file === 'string') {
-      // For server URLs, pass the string URL
-      return book.pdf_file;
-    } else if (book.pdf_file && typeof book.pdf_file === 'object') {
-      // Handle File objects
-      return book.pdf_file;
+    console.log('Getting PDF file for book:', book.title, 'ID:', book.id);
+
+    try {
+      if (book.id === 'local-temp') {
+        // For local files, return the File object directly
+        const file = book.pdf_file;
+        console.log('Local file detected:', file?.name, file?.size, file?.type);
+
+        if (!file) {
+          console.error('No local file provided');
+          return null;
+        }
+
+        // Basic validation
+        if (file.type !== 'application/pdf' && !file.name?.toLowerCase().endsWith('.pdf')) {
+          console.error('Invalid file type for local PDF');
+          return null;
+        }
+
+        return file;
+      } else if (typeof book.pdf_file === 'string') {
+        // For server URLs, return the string URL
+        const url = book.pdf_file.trim();
+        console.log('Remote URL detected:', url);
+
+        if (!url) {
+          console.error('Empty URL provided');
+          return null;
+        }
+
+        return url;
+      } else if (book.pdf_file && typeof book.pdf_file === 'object') {
+        // Handle File objects
+        if (book.pdf_file instanceof File) {
+          console.log('File object detected');
+          return book.pdf_file;
+        }
+
+        // Check for URL property
+        if (book.pdf_file.url && typeof book.pdf_file.url === 'string') {
+          console.log('URL property found:', book.pdf_file.url);
+          return book.pdf_file.url;
+        }
+      }
+
+      console.error('No valid PDF file found in book object');
+      return null;
+    } catch (error) {
+      console.error('Error in getPdfFile:', error);
+      return null;
     }
-    return null;
   };
 
   const changePage = (offset) => {
@@ -191,23 +328,60 @@ const DigitalBookshelf = () => {
 
 
 
+
   const handleLocalFileChange = (event) => {
     const file = event.target.files[0];
-    if (file && file.type === 'application/pdf') {
-      setSelectedBook({
-        id: 'local-temp',
-        title: file.name.replace('.pdf', ''),
-        author: 'Local Document',
-        description: t('digitalBookshelf.uploadSubtitle'),
-        pdf_file: file, // Pass File object directly
-        cover_image: null,
-        fileName: file.name
-      });
-      setIsReading(true);
-      setIsModalOpen(true);
-      setPageNumber(1);
-      setNumPages(null); // Reset pages
+    
+    if (!file) {
+      alert('Please select a file.');
+      return;
     }
+
+    // Enhanced file validation
+    if (file.type !== 'application/pdf') {
+      alert('Please select a valid PDF file. Current file type: ' + file.type);
+      return;
+    }
+
+    // File size validation (max 50MB)
+    const maxSize = 50 * 1024 * 1024; // 50MB
+    if (file.size > maxSize) {
+      alert(`File is too large. Maximum size allowed is 50MB. Current file size: ${(file.size / 1024 / 1024).toFixed(2)}MB`);
+      return;
+    }
+
+    // File name validation
+    if (!file.name.toLowerCase().endsWith('.pdf')) {
+      alert('File must have a .pdf extension.');
+      return;
+    }
+
+    console.log('Processing local PDF file:', {
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      lastModified: file.lastModified
+    });
+
+    setSelectedBook({
+      id: 'local-temp',
+      title: file.name.replace('.pdf', ''),
+      author: 'Local Document',
+      description: t('digitalBookshelf.uploadSubtitle'),
+      pdf_file: file, // Pass File object directly
+      cover_image: null,
+      fileName: file.name,
+      fileSize: file.size
+    });
+    setIsReading(true);
+    setIsModalOpen(true);
+    setPageNumber(1);
+    setNumPages(null); // Reset pages
+    setPdfLoading(true);
+    setPdfError(null);
+    
+    // Clear the input for future uploads
+    event.target.value = '';
   };
 
   return (
@@ -581,15 +755,46 @@ const DigitalBookshelf = () => {
                 </div>
 
                 <div className="flex justify-center">
+                  {pdfLoading && (
+                    <div className="flex flex-col items-center justify-center py-8">
+                      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mb-4"></div>
+                      <p className="text-gray-600">Loading PDF...</p>
+                    </div>
+                  )}
 
-                  <Document
-                    file={getPdfFile(selectedBook)}
-                    onLoadSuccess={onDocumentLoadSuccess}
-                    onLoadError={onDocumentLoadError}
-                    className="border"
-                  >
-                    <Page pageNumber={pageNumber} />
-                  </Document>
+                  {pdfError && (
+                    <div className="flex flex-col items-center justify-center py-8 text-center">
+                      <div className="text-red-500 mb-4">
+                        <svg className="w-12 h-12 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                        </svg>
+                      </div>
+                      <p className="text-red-600 font-medium mb-2">Failed to load PDF</p>
+                      <p className="text-gray-600 text-sm max-w-md">{pdfError}</p>
+                      <button
+                        onClick={() => {
+                          setPdfLoading(true);
+                          setPdfError(null);
+                          // Force re-render by updating page number
+                          setPageNumber(1);
+                        }}
+                        className="mt-4 bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark transition-colors"
+                      >
+                        Try Again
+                      </button>
+                    </div>
+                  )}
+
+                  {!pdfLoading && !pdfError && (
+                    <Document
+                      file={getPdfFile(selectedBook)}
+                      onLoadSuccess={onDocumentLoadSuccess}
+                      onLoadError={onDocumentLoadError}
+                      className="border"
+                    >
+                      <Page pageNumber={pageNumber} />
+                    </Document>
+                  )}
                 </div>
               </div>
             )}
