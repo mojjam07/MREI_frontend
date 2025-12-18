@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 
@@ -10,7 +10,7 @@ import Footer from '../components/layout/Footer';
 import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import { API_BASE_URL, API_ENDPOINTS } from '../config';
+
 
 import { Plus, Edit, Save, X, Upload } from 'lucide-react';
 
@@ -36,8 +36,7 @@ const DigitalBookshelf = () => {
   const { user } = useAuth();
 
   const { createBook, updateBook, deleteBook, books: dashboardBooks, creatingBook, updatingBook } = useDashboard();
-  const [publicBooks, setPublicBooks] = useState([]);
-  const books = dashboardBooks || publicBooks;
+  const books = dashboardBooks || [];
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReading, setIsReading] = useState(false);
@@ -63,15 +62,7 @@ const DigitalBookshelf = () => {
 
 
 
-  useEffect(() => {
-    // Use books from DashboardContext if available (for admin), otherwise fetch directly
-    if (!dashboardBooks) {
-      fetch(API_BASE_URL + API_ENDPOINTS.COMMUNICATION.BOOKS)
-        .then(response => response.json())
-        .then(data => setPublicBooks(data))
-        .catch(error => console.error('Error fetching books:', error));
-    }
-  }, [dashboardBooks]);
+
 
   // Book management functions
   const handleBookSave = async (bookData, formFiles = null) => {
@@ -126,7 +117,23 @@ const DigitalBookshelf = () => {
       });
     } catch (error) {
       console.error('Error saving book:', error);
-      alert('Failed to save book');
+      // Show more specific error message
+      let errorMessage = 'Failed to save book. Please try again.';
+      if (error.response?.data) {
+        // If there's a response from the server, show the server error
+        const serverErrors = error.response.data;
+        if (typeof serverErrors === 'object') {
+          const errorDetails = Object.entries(serverErrors)
+            .map(([field, messages]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+            .join('\n');
+          errorMessage = `Failed to save book:\n${errorDetails}`;
+        } else if (typeof serverErrors === 'string') {
+          errorMessage = `Failed to save book: ${serverErrors}`;
+        }
+      } else if (error.message) {
+        errorMessage = `Failed to save book: ${error.message}`;
+      }
+      alert(errorMessage);
     }
   };
 
@@ -630,9 +637,15 @@ const DigitalBookshelf = () => {
                   <button
                     onClick={() => {
                       if (editingBook) {
-                        handleBookSave(editingBook, editingBook);
+                        // For editing, separate book data from files
+                        const { cover_image, pdf_file, ...bookData } = editingBook;
+                        const files = { cover_image, pdf_file };
+                        handleBookSave(bookData, files);
                       } else {
-                        handleBookSave(bookForm, bookForm);
+                        // For new books, bookForm contains both data and files
+                        const { cover_image, pdf_file, ...bookData } = bookForm;
+                        const files = { cover_image, pdf_file };
+                        handleBookSave(bookData, files);
                       }
                     }}
                     disabled={creatingBook || updatingBook}

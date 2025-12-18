@@ -9,7 +9,7 @@ const StatsSection = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await fetch(`${API}/api/stats/`);
+        const response = await fetch(`${API}/stats/`);
         const data = await response.json();
         setStats([
           { value: t('home.activeStudents'), label: `${data.active_students}+` },

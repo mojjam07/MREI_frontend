@@ -546,7 +546,7 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
-  // Books Query (for admin book management)
+  // Books Query (for all authenticated users to ensure DigitalBookshelf sync)
   const { data: books, isLoading: booksLoading } = useQuery(
     'books',
     async () => {
@@ -554,7 +554,7 @@ export const DashboardProvider = ({ children }) => {
       return response.data;
     },
     {
-      enabled: user?.role === 'admin',
+      enabled: !!user,  // Enable for all authenticated users
       staleTime: 5 * 60 * 1000,
     }
   );

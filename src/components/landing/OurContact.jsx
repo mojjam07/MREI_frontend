@@ -30,7 +30,7 @@ const OurContact = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch(`${API}/api/contact/`, {
+      const response = await fetch(`${API}/contact/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

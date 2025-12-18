@@ -11,13 +11,13 @@ const NewsEventsSection = () => {
   useEffect(() => {
     const fetchHomeContent = async () => {
       try {
-        const response = await fetch(`${API}/api/home-content/`);
+        const response = await fetch(`${API}/home-content/`);
         const data = await response.json();
         setNewsItems(data.news.map(item => ({
           date: new Date(item.created_at).toLocaleDateString(),
           title: item.title,
           description: item.content,
-          image: item.image || '/api/placeholder/400/250'
+          image: item.image || '/placeholder/400/250'
         })));
         setEventsItems(data.events.map(item => ({
           date: new Date(item.event_date).toLocaleDateString(),
@@ -32,19 +32,19 @@ const NewsEventsSection = () => {
             date: 'May 10, 2025',
             title: 'Hillside University Receives $5M Grant for Renewable Energy Research',
             description: 'The Department of Energy awarded the grant to support innovative solar technology development.',
-            image: '/api/placeholder/400/250'
+            image: '/placeholder/400/250'
           },
           {
             date: 'May 7, 2025',
             title: 'Professor Jane Smith Named National Academy Member',
             description: 'The distinguished faculty member was recognized for his pioneering work in quantum physics.',
-            image: '/api/placeholder/400/250'
+            image: '/placeholder/400/250'
           },
           {
             date: 'May 3, 2025',
             title: 'Hillside Launches New Community Partnership Initiative',
             description: 'The program will connect students with local organizations for service-learning opportunities.',
-            image: '/api/placeholder/400/250'
+            image: '/placeholder/400/250'
           }
         ]);
         setEventsItems([

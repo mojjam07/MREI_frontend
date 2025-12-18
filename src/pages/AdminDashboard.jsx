@@ -232,8 +232,8 @@ const AdminDashboard = () => {
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
             />
-            {((isEditing ? currentForm.cover_image : bookForm.cover_image)) && 
-             typeof ((isEditing ? currentForm.cover_image : bookForm.cover_image)) === 'object' && (
+            {(isEditing ? currentForm.cover_image : bookForm.cover_image) &&
+             typeof (isEditing ? currentForm.cover_image : bookForm.cover_image) === 'object' && (
               <p className="text-sm mt-1 text-gray-600">
                 Selected: {(isEditing ? currentForm.cover_image : bookForm.cover_image).name}
               </p>
@@ -254,8 +254,8 @@ const AdminDashboard = () => {
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
             />
-            {((isEditing ? currentForm.pdf_file : bookForm.pdf_file)) && 
-             typeof ((isEditing ? currentForm.pdf_file : bookForm.pdf_file)) === 'object' && (
+            {(isEditing ? currentForm.pdf_file : bookForm.pdf_file) &&
+             typeof (isEditing ? currentForm.pdf_file : bookForm.pdf_file) === 'object' && (
               <p className="text-sm mt-1 text-gray-600">
                 Selected: {(isEditing ? currentForm.pdf_file : bookForm.pdf_file).name}
               </p>
@@ -282,9 +282,15 @@ const AdminDashboard = () => {
           <button
             onClick={() => {
               if (isEditing) {
-                handleBookSave(currentForm, currentForm);
+                // For editing, separate book data from files
+                const { cover_image, pdf_file, ...bookData } = currentForm;
+                const files = { cover_image, pdf_file };
+                handleBookSave(bookData, files);
               } else {
-                handleBookSave(bookForm, bookForm);
+                // For new books, bookForm contains both data and files
+                const { cover_image, pdf_file, ...bookData } = bookForm;
+                const files = { cover_image, pdf_file };
+                handleBookSave(bookData, files);
               }
             }}
             disabled={creatingBook || updatingBook}
@@ -410,11 +416,40 @@ const AdminDashboard = () => {
   // Handle announcement save
   const handleAnnouncementSave = async (type, item) => {
     try {
-      if (item.id) {
-        await updateAnnouncement({ type, id: item.id, data: item });
+      // Check if we have files to upload
+      const hasImageFile = item.image && typeof item.image === 'object';
+
+      if (hasImageFile) {
+        const formData = new FormData();
+
+        // Append text fields
+        formData.append('title', item.title || '');
+        formData.append('content', item.content || '');
+        formData.append('author', item.author || '');
+        formData.append('author_title', item.author_title || '');
+        formData.append('event_date', item.event_date || '');
+        formData.append('location', item.location || '');
+        formData.append('video_id', item.video_id || '');
+
+        // Append file if it exists
+        if (item.image) {
+          formData.append('image', item.image);
+        }
+
+        if (item.id) {
+          await updateAnnouncement({ type, id: item.id, data: formData });
+        } else {
+          await createAnnouncement({ type, data: formData });
+        }
       } else {
-        await createAnnouncement({ type, data: item });
+        // Handle text-only updates (no file changes)
+        if (item.id) {
+          await updateAnnouncement({ type, id: item.id, data: item });
+        } else {
+          await createAnnouncement({ type, data: item });
+        }
       }
+
       setEditingItem(null);
       setIsAddingNew(false);
       setNewItem({});
@@ -650,14 +685,21 @@ const AdminDashboard = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">Image File</label>
           <input
-            type="text"
-            value={item.image || ''}
-            onChange={(e) => updateItem({image: e.target.value})}
+            type="file"
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files[0];
+              updateItem({image: file});
+            }}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="/api/placeholder/400/250"
           />
+          {item.image && typeof item.image === 'object' && (
+            <p className="text-sm mt-1 text-gray-600">
+              Selected: {item.image.name}
+            </p>
+          )}
         </div>
       </>
     );
@@ -727,7 +769,7 @@ const AdminDashboard = () => {
   // Common form component for other content types (testimonials, campus_life)
   const renderContentForm = (type, item, isNew = false) => {
     const commonFields = (
-      <>
+      <div>
         {type !== 'campus_life' && (
           <>
             <div>
@@ -753,14 +795,21 @@ const AdminDashboard = () => {
 
         {(item.type === 'news' || item.type === 'testimonial' || item.type === 'campus_life') && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Image URL</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">Image File</label>
             <input
-              type="text"
-              value={item.image || ''}
-              onChange={(e) => isNew ? setNewItem({...item, image: e.target.value}) : setEditingItem({...item, image: e.target.value})}
+              type="file"
+              accept="image/*"
+              onChange={(e) => {
+                const file = e.target.files[0];
+                isNew ? setNewItem({...item, image: file}) : setEditingItem({...item, image: file});
+              }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              placeholder="/api/placeholder/400/250"
             />
+            {item.image && typeof item.image === 'object' && (
+              <p className="text-sm mt-1 text-gray-600">
+                Selected: {item.image.name}
+              </p>
+            )}
           </div>
         )}
 
@@ -786,16 +835,12 @@ const AdminDashboard = () => {
             </div>
           </>
         )}
-      </>
+      </div>
     );
 
 
 
-    return (
-      <>
-        {commonFields}
-      </>
-    );
+    return commonFields;
   };
 
 

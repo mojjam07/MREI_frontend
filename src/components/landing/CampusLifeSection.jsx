@@ -10,7 +10,7 @@ const CampusLifeSection = () => {
   useEffect(() => {
     const fetchCampusPhotos = async () => {
       try {
-        const response = await fetch(`${API}/api/home-content/`);
+        const response = await fetch(`${API}/home-content/`);
         const data = await response.json();
         const photos = data.campus_life.map(item => item.image || '/api/placeholder/300/180');
         setCampusPhotos(photos.length > 0 ? photos : [
