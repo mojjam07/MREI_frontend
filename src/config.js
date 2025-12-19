@@ -1,49 +1,48 @@
 
-const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-export const API_BASE_URL = baseUrl.endsWith('/api') ? baseUrl : `${baseUrl}/api`;
 
-
+const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+export const API_BASE_URL = baseUrl;
 
 export const API_ENDPOINTS = {
   AUTH: {
-    LOGIN: '/auth/login/',
-    REGISTER: '/auth/register/',
-    REFRESH: '/auth/refresh/',
-    USER: '/auth/user/'
+    LOGIN: '/auth/login',
+    REGISTER: '/auth/register',
+    REFRESH: '/auth/refresh',
+    USER: '/auth/user'
   },
-  USERS: '/users/',
+  USERS: '/users',
   STUDENTS: {
-    PROFILES: '/students/',
-    LIST: '/students/'
+    PROFILES: '/students',
+    LIST: '/students'
   },
   TUTORS: {
-    PROFILES: '/tutors/',
-    LIST: '/tutors/'
+    PROFILES: '/tutors',
+    LIST: '/tutors'
   },
   ACADEMICS: {
-    COURSES: '/courses/',
-    ENROLLMENTS: '/enrollments/',
-    ASSIGNMENTS: '/assignments/',
-    SUBMISSIONS: '/submissions/',
-    CLASS_SCHEDULES: '/class-schedules/',
-    ATTENDANCE: '/attendance/'
+    COURSES: '/courses',
+    ENROLLMENTS: '/enrollments',
+    ASSIGNMENTS: '/assignments',
+    SUBMISSIONS: '/submissions',
+    CLASS_SCHEDULES: '/class-schedules',
+    ATTENDANCE: '/attendance'
   },
 
   COMMUNICATION: {
-    STATISTICS: '/statistics/',
-    NEWS: '/news/',
-    EVENTS: '/events/',
-    TESTIMONIALS: '/testimonials/',
-    CAMPUS_LIFE: '/campus-life/',
-    CONTACT: '/contact/',
-    DASHBOARD_STATS: '/dashboard-stats/',
-    HOME_CONTENT: '/home-content/',
-    BOOKS: '/books/'
+    STATISTICS: '/statistics',
+    NEWS: '/news',
+    EVENTS: '/events',
+    TESTIMONIALS: '/testimonials',
+    CAMPUS_LIFE: '/campus-life',
+    CONTACT: '/contact',
+    DASHBOARD_STATS: '/dashboard-stats',
+    HOME_CONTENT: '/home-content',
+    BOOKS: '/books'
   },
   DASHBOARD: {
-    STUDENT: '/dashboard/student/',
-    TUTOR: '/dashboard/tutor/',
-    ADMIN: '/dashboard/admin/'
+    STUDENT: '/dashboard/student',
+    TUTOR: '/dashboard/tutor',
+    ADMIN: '/dashboard/admin'
   }
 };
 

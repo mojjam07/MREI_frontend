@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 
 
+
 import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
 import PageHeader from '../components/layout/PageHeader';
@@ -12,7 +13,8 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 
 
-import { Plus, Edit, Save, X, Upload } from 'lucide-react';
+
+import { Plus, Edit, Save, X, Upload, LogOut, User } from 'lucide-react';
 
 
 
@@ -33,7 +35,8 @@ console.log('React-PDF version:', pdfjs.version);
 
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
-  const { user } = useAuth();
+
+  const { user, logout } = useAuth();
 
   const { createBook, updateBook, deleteBook, books: dashboardBooks, creatingBook, updatingBook } = useDashboard();
   const books = dashboardBooks || [];
@@ -446,16 +449,40 @@ const DigitalBookshelf = () => {
 
 
 
+
       {/* Hero Section */}
       <section className="bg-primary text-white py-12 sm:py-16 lg:py-20">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-          <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            {t('digitalBookshelf.title')}
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 max-w-2xl mx-auto">
-            {t('digitalBookshelf.subtitle')}
-          </p>
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              {t('digitalBookshelf.title')}
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-200 max-w-2xl mx-auto">
+              {t('digitalBookshelf.subtitle')}
+            </p>
+          </div>
+          
+          {/* Authentication Status */}
+          {user && (
+            <div className="flex justify-center">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg px-6 py-3 flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <User className="w-5 h-5 text-white" />
+                  <span className="text-white">
+                    Logged in as: <span className="font-semibold">{user.username || user.email || 'User'}</span>
+                    <span className="ml-2 text-gray-200">({user.role || 'student'})</span>
+                  </span>
+                </div>
+                <button
+                  onClick={logout}
+                  className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors duration-200"
+                >
+                  <LogOut className="w-4 h-4" />
+                  Logout
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 

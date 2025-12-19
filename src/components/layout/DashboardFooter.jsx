@@ -1,6 +1,8 @@
 
+
+
 import React from 'react';
-import { Home, LogOut, Settings, User, HelpCircle, Mail, Phone, MapPin } from 'lucide-react';
+import { Home, LogOut, Settings, User, HelpCircle, Mail, Phone, MapPin, BookOpen } from 'lucide-react';
 import { useAuth } from '../../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
@@ -75,6 +77,7 @@ const DashboardFooter = () => {
                 <Home className="w-4 h-4" />
                 {t('dashboardFooter.quickLinks.home')}
               </button>
+
               <button
                 onClick={() => handleNavClick('/dashboard')}
                 className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
@@ -84,6 +87,16 @@ const DashboardFooter = () => {
               >
                 <User className="w-4 h-4" />
                 {t('dashboardFooter.quickLinks.dashboard')}
+              </button>
+              <button
+                onClick={() => handleNavClick('/library')}
+                className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
+                style={{color: 'var(--light-text)'}}
+                onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
+                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
+              >
+                <BookOpen className="w-4 h-4" />
+                {t('dashboardFooter.quickLinks.library')}
               </button>
               <button
                 onClick={() => handleNavClick('/profile')}

@@ -48,7 +48,14 @@ export default function App() {
       <Route path="/about" element={<AboutUs />} />
       <Route path="/academics" element={<Academics />} />
       <Route path="/admissions" element={<Admissions />} />
-      <Route path="/library" element={<DigitalBookshelf />} />
+      <Route
+        path="/library"
+        element={
+          <ProtectedRoute>
+            <DigitalBookshelf />
+          </ProtectedRoute>
+        }
+      />
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/signup" element={<SignupPage />} />

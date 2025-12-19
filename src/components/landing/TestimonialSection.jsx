@@ -1,47 +1,83 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { API } from '../../config';
+import { API_ENDPOINTS } from '../../config';
+import apiClient from '../../services/apiClient';
 
 const TestimonialSection = () => {
   const { t, language } = useLanguage();
   const [testimonial, setTestimonial] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchTestimonial = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.HOME_CONTENT);
+      const data = response.data.data;
+      const testimonials = data.testimonials;
+      
+      if (testimonials.length > 0) {
+        const item = testimonials[0];
+        setTestimonial({
+          quote: item.content,
+          name: item.author || 'Anonymous',
+          title: item.author_title || 'Student',
+          image: item.image || '/placeholder/150/150'
+        });
+      } else {
+        setTestimonial(null);
+      }
+    } catch (error) {
+      console.error('Error fetching testimonial:', error);
+      setError('Failed to load testimonial. Please try again.');
+      setTestimonial(null);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchTestimonial = async () => {
-      try {
-        const response = await fetch(`${API}/home-content/`);
-        const data = await response.json();
-        const testimonials = data.filter(item => item.type === 'testimonial');
-        if (testimonials.length > 0) {
-          const item = testimonials[0];
-          setTestimonial({
-            quote: item.content,
-            name: item.author || t('home.testimonialName'),
-            title: item.author_title || t('home.testimonialTitle'),
-            image: item.image || t('home.testimonialImage')
-          });
-        } else {
-          setTestimonial({
-            quote: t('home.testimonialQuote'),
-            name: t('home.testimonialName'),
-            title: t('home.testimonialTitle'),
-            image: t('home.testimonialImage')
-          });
-        }
-      } catch (error) {
-        console.error('Error fetching testimonial:', error);
-        setTestimonial({
-          quote: t('home.testimonialQuote'),
-          name: t('home.testimonialName'),
-          title: t('home.testimonialTitle'),
-          image: t('home.testimonialImage')
-        });
-      }
-    };
     fetchTestimonial();
   }, [t]);
 
-  if (!testimonial) return null;
+
+  if (loading) {
+    return (
+      <section className="py-12 sm:py-16 md:py-20 bg-light-text">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <p className="text-text mt-4">Loading testimonial...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-12 sm:py-16 md:py-20 bg-light-text">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-text mb-4">{error}</p>
+            <button 
+              onClick={fetchTestimonial}
+              className="bg-primary text-light-text px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (!testimonial) {
+    return null;
+  }
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-light-text">

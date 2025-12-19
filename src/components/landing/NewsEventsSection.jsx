@@ -1,76 +1,83 @@
+
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { API } from '../../config';
+import { API_ENDPOINTS } from '../../config';
+import apiClient from '../../services/apiClient';
 
 const NewsEventsSection = () => {
   const { t, language } = useLanguage();
   const [activeTab, setActiveTab] = useState('news');
   const [newsItems, setNewsItems] = useState([]);
   const [eventsItems, setEventsItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const fetchHomeContent = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      
+      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.HOME_CONTENT);
+      const data = response.data.data;
+      
+      setNewsItems(data.news.map(item => ({
+        date: new Date(item.created_at).toLocaleDateString(),
+        title: item.title,
+        description: item.content,
+        image: item.image || '/placeholder/400/250'
+      })));
+      
+      setEventsItems(data.events.map(item => ({
+        date: new Date(item.event_date).toLocaleDateString(),
+        title: item.title,
+        details: item.content,
+        videoId: item.video_id || 'dQw4w9WgXcQ'
+      })));
+    } catch (error) {
+      console.error('Error fetching home content:', error);
+      setError('Failed to load news and events. Please try again.');
+      setNewsItems([]);
+      setEventsItems([]);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    const fetchHomeContent = async () => {
-      try {
-        const response = await fetch(`${API}/home-content/`);
-        const data = await response.json();
-        setNewsItems(data.news.map(item => ({
-          date: new Date(item.created_at).toLocaleDateString(),
-          title: item.title,
-          description: item.content,
-          image: item.image || '/placeholder/400/250'
-        })));
-        setEventsItems(data.events.map(item => ({
-          date: new Date(item.event_date).toLocaleDateString(),
-          title: item.title,
-          details: item.content,
-          videoId: item.video_id || 'dQw4w9WgXcQ'
-        })));
-      } catch (error) {
-        console.error('Error fetching announcements:', error);
-        setNewsItems([
-          {
-            date: 'May 10, 2025',
-            title: 'Hillside University Receives $5M Grant for Renewable Energy Research',
-            description: 'The Department of Energy awarded the grant to support innovative solar technology development.',
-            image: '/placeholder/400/250'
-          },
-          {
-            date: 'May 7, 2025',
-            title: 'Professor Jane Smith Named National Academy Member',
-            description: 'The distinguished faculty member was recognized for his pioneering work in quantum physics.',
-            image: '/placeholder/400/250'
-          },
-          {
-            date: 'May 3, 2025',
-            title: 'Hillside Launches New Community Partnership Initiative',
-            description: 'The program will connect students with local organizations for service-learning opportunities.',
-            image: '/placeholder/400/250'
-          }
-        ]);
-        setEventsItems([
-          {
-            date: 'May 15, 2025',
-            title: 'Spring Commencement Ceremony',
-            details: '10:00 AM - Main Campus Stadium',
-            videoId: 'dQw4w9WgXcQ'
-          },
-          {
-            date: 'May 20, 2025',
-            title: 'Faculty Research Symposium',
-            details: '1:00 PM - Science Center Auditorium',
-            videoId: 'dQw4w9WgXcQ'
-          },
-          {
-            date: 'May 25, 2025',
-            title: 'Alumni Weekend',
-            details: 'Various locations across campus',
-            videoId: 'dQw4w9WgXcQ'
-          }
-        ]);
-      }
-    };
     fetchHomeContent();
   }, []);
+
+
+  if (loading) {
+    return (
+      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+            <p className="text-text mt-4">Loading news and events...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (error) {
+    return (
+      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <p className="text-text mb-4">{error}</p>
+            <button 
+              onClick={fetchHomeContent}
+              className="bg-primary text-light-text px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-gray-50">

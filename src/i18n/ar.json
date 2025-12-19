@@ -477,11 +477,52 @@
             "thursday": "الخميس",
             "friday": "الجمعة"
         },
+
         "loading": "جاري تحميل التقويم...",
         "error": "فشل في تحميل بيانات التقويم",
         "today": "اليوم",
         "currentMonth": "الشهر الحالي",
         "selectMonth": "اختر الشهر",
         "selectYear": "اختر السنة"
+    },
+
+    "dashboardFooter": {
+        "confirm": {
+            "logout": "هل أنت متأكد من رغبتك في تسجيل الخروج؟"
+        },
+        "university": {
+            "name": "اسم الجامعة",
+            "description": "التميز في التعليم والبحث منذ عام 1900",
+            "campus": "الحرم الرئيسي"
+        },
+        "quickLinks": {
+            "title": "روابط سريعة",
+            "home": "الرئيسية",
+            "dashboard": "لوحة التحكم",
+            "library": "المكتبة",
+            "profile": "الملف الشخصي"
+        },
+        "admin": {
+            "title": "الإدارة",
+            "statistics": "الإحصائيات",
+            "manageStudents": "إدارة الطلاب",
+            "manageTutors": "إدارة المدرسين",
+            "contentManagement": "إدارة المحتوى"
+        },
+        "support": {
+            "title": "الدعم والمساعدة",
+            "email": "support@university.edu",
+            "phone": "+1 (555) 123-4567",
+            "helpCenter": "مركز المساعدة"
+        },
+        "copyright": "© {year} اسم الجامعة. جميع الحقوق محفوظة.",
+        "legal": {
+            "privacyPolicy": "سياسة الخصوصية",
+            "termsOfService": "شروط الخدمة"
+        },
+        "user": {
+            "welcome": "مرحباً",
+            "logout": "تسجيل الخروج"
+        }
     }
 }

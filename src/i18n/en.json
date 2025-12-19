@@ -424,6 +424,7 @@
         "uploadTitle": "Read Your Own PDF",
         "uploadSubtitle": "Select a PDF file from your device to read it here.",
         "selectFile": "Select PDF File",
+
         "noFileSelected": "No file selected",
         "readNow": "Read Now"
     },
@@ -445,8 +446,8 @@
             "hijriNewYear": "Hijri New Year",
             "ashura": "Ashura",
             "laylatAlQadr": "Laylat al-Qadr",
-            "eidAlFitri": "Eid al-Fitr",
-            "eidAlAdha": "Eid al-Adha"
+            "eidAlFitri": "Eid al-Fitr"
+            }
         },
         "academicEvents": {
             "semesterStart": "Semester Start",
@@ -510,5 +511,45 @@
         "currentMonth": "Current Month",
         "selectMonth": "Select Month",
         "selectYear": "Select Year"
+    },
+
+    "dashboardFooter": {
+        "confirm": {
+            "logout": "Are you sure you want to logout?"
+        },
+        "university": {
+            "name": "University Name",
+            "description": "Excellence in education and research since 1900",
+            "campus": "Main Campus"
+        },
+        "quickLinks": {
+            "title": "Quick Links",
+            "home": "Home",
+            "dashboard": "Dashboard",
+            "library": "Library",
+            "profile": "Profile"
+        },
+        "admin": {
+            "title": "Administration",
+            "statistics": "Statistics",
+            "manageStudents": "Manage Students",
+            "manageTutors": "Manage Tutors",
+            "contentManagement": "Content Management"
+        },
+        "support": {
+            "title": "Support & Help",
+            "email": "support@university.edu",
+            "phone": "+1 (555) 123-4567",
+            "helpCenter": "Help Center"
+        },
+        "copyright": "© {year} University Name. All rights reserved.",
+        "legal": {
+            "privacyPolicy": "Privacy Policy",
+            "termsOfService": "Terms of Service"
+        },
+        "user": {
+            "welcome": "Welcome",
+            "logout": "Logout"
+        }
     }
 }

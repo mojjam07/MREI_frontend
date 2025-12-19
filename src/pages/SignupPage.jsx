@@ -16,12 +16,14 @@ const SignupPage = () => {
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const [role, setRole] = useState('student');
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
     confirmPassword: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    username: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -45,6 +47,7 @@ const SignupPage = () => {
       return;
     }
 
+
     // Validate password length
     if (formData.password.length < 6) {
       setError(t('auth.signup.error.passwordTooShort'));
@@ -52,17 +55,52 @@ const SignupPage = () => {
       return;
     }
 
+    // Validate password strength
+    if (!/(?=.*[a-z])/.test(formData.password)) {
+      setError('Password must contain at least one lowercase letter');
+      setLoading(false);
+      return;
+    }
+
+    if (!/(?=.*[A-Z])/.test(formData.password)) {
+      setError('Password must contain at least one uppercase letter');
+      setLoading(false);
+      return;
+    }
+
+    if (!/(?=.*\d)/.test(formData.password)) {
+      setError('Password must contain at least one number');
+      setLoading(false);
+      return;
+    }
+
+
     // Validate required fields
-    if (!formData.email || !formData.firstName || !formData.lastName || !formData.password) {
+    if (!formData.email || !formData.firstName || !formData.lastName || !formData.password || !formData.username) {
       setError(t('auth.signup.error.requiredFields'));
       setLoading(false);
       return;
     }
 
+    // Validate username
+    if (formData.username.length < 3 || formData.username.length > 30) {
+      setError('Username must be between 3 and 30 characters');
+      setLoading(false);
+      return;
+    }
+
+    // Validate username format (alphanumeric + underscore only)
+    if (!/^[a-zA-Z0-9_]+$/.test(formData.username)) {
+      setError('Username can only contain letters, numbers, and underscores');
+      setLoading(false);
+      return;
+    }
+
+
     const result = await signup({
+      username: formData.username,
       email: formData.email,
       password: formData.password,
-      password_confirm: formData.confirmPassword,
       first_name: formData.firstName,
       last_name: formData.lastName,
       role
@@ -147,6 +185,7 @@ const SignupPage = () => {
           </div>
         )}
 
+
         <div className="space-y-4">
           <Input
             label={t('auth.signup.firstName')}
@@ -162,6 +201,14 @@ const SignupPage = () => {
             type="text"
             placeholder={t('auth.signup.lastNamePlaceholder')}
             value={formData.lastName}
+            onChange={handleChange}
+          />
+          <Input
+            label="Username"
+            name="username"
+            type="text"
+            placeholder="Enter your username"
+            value={formData.username}
             onChange={handleChange}
           />
           <Input
