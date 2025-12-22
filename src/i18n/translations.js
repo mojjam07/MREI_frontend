@@ -131,7 +131,13 @@ const translations = {
       footerTwitter: 'Twitter',
       footerInstagram: 'Instagram',
       footerLinkedIn: 'LinkedIn',
-      footerYouTube: 'YouTube'
+      footerYouTube: 'YouTube',
+      whyUs: 'Why Us?',
+      ourImpact: 'Our Impact',
+      testimonials: 'Testimonials',
+      newsEvents: 'News & Events',
+      schoolLife: 'School Life',
+      ourContact: 'Our Contact'
     },
 
     student: {
@@ -218,19 +224,101 @@ const translations = {
       }
     },
     tutor: {
-      dashboard: 'Tutor -',
-      overview: 'Overview',
-      myStudents: 'My Students',
-      classes: 'Classes Today',
-      attendance: 'Attendance Rate',
-      avgGrade: 'Average Grade',
-      students: 'Total Students',
-      schedule: 'Today\'s Schedule',
-      recentActivity: 'Recent Activity',
-      performance: 'Student Performance',
-      course: 'Course',
-      time: 'Time',
-      room: 'Room'
+      dashboard: 'Tutor Dashboard',
+      loadingDashboard: 'Loading dashboard...',
+      welcome: {
+        title: 'Welcome back, {name}!',
+        description: 'Here\'s an overview of your teaching activities and student progress.'
+      },
+      statChanges: {
+        coursesTeaching: 'courses teaching',
+        totalEnrolled: 'total enrolled',
+        submissionsToGrade: 'submissions to grade',
+        classesScheduled: 'classes scheduled'
+      },
+      pendingGrading: 'Pending Grading',
+      upcomingClasses: 'Upcoming Classes',
+      quickActions: {
+        title: 'Quick Actions',
+        createAssignment: 'Create Assignment',
+        gradeSubmissions: 'Grade Submissions',
+        scheduleClass: 'Schedule Class'
+      },
+      courses: {
+        title: 'My Courses',
+        manageCourses: 'Manage Courses',
+        loading: 'Loading courses...',
+        noCourses: 'No courses assigned yet',
+        viewDetails: 'View Details',
+        edit: 'Edit',
+        enrolledStudents: 'Enrolled Students: {count}',
+        course: 'Course'
+      },
+      assignments: {
+        title: 'Assignments',
+        createAssignment: 'Create Assignment',
+        loading: 'Loading assignments...',
+        noAssignments: 'No assignments created yet',
+        view: 'View',
+        edit: 'Edit',
+        course: 'Course',
+        due: 'Due',
+        submissions: 'Submissions',
+        graded: 'Graded'
+      },
+      submissions: {
+        title: 'Submissions',
+        loading: 'Loading submissions...',
+        noPending: 'No pending submissions',
+        allCaughtUp: 'You\'re all caught up!',
+        course: 'Course',
+        time: 'Time',
+        room: 'Room'
+      },
+      schedule: {
+        title: 'Class Schedule',
+        scheduleClass: 'Schedule Class',
+        loading: 'Loading schedule...',
+        noUpcoming: 'No upcoming classes',
+        scheduleSome: 'Schedule some classes to get started',
+        viewDetails: 'View Details',
+        course: 'Course',
+        time: 'Time',
+        room: 'Room'
+      },
+      students: {
+        management: 'Student Management',
+        enrolledStudents: 'Enrolled Students: {count}',
+        more: '+{count} more',
+        noStudents: 'No students enrolled',
+        quickActions: 'Quick Actions',
+        viewAll: 'View All',
+        sendMessage: 'Send Message',
+        noCourses: 'No courses assigned',
+        course: 'Course',
+        time: 'Time',
+        room: 'Room'
+      },
+      analytics: {
+        title: 'Student Analytics',
+        averageGrade: 'Average Grade',
+        completionRate: 'Completion Rate',
+        graded: 'Graded',
+        assignmentProgress: 'Assignment Progress',
+        noData: 'No analytics data available',
+        course: 'Course',
+        time: 'Time',
+        room: 'Room'
+      },
+      tabs: {
+        overview: 'Overview',
+        courses: 'Courses',
+        assignments: 'Assignments',
+        submissions: 'Submissions',
+        schedule: 'Schedule',
+        students: 'Students',
+        analytics: 'Analytics'
+      }
     },
     admin: {
       dashboard: 'Admin -',
@@ -791,7 +879,13 @@ const translations = {
       footerTwitter: 'تويتر',
       footerInstagram: 'إنستغرام',
       footerLinkedIn: 'لينكد إن',
-      footerYouTube: 'يوتيوب'
+      footerYouTube: 'يوتيوب',
+      whyUs: 'لماذا نحن؟',
+      ourImpact: 'تأثيرنا',
+      testimonials: 'الشهادات',
+      newsEvents: 'الأخبار والفعاليات',
+      schoolLife: 'الحياة المهعدية',
+      ourContact: 'تواصل معنا'
     },
 
     student: {
@@ -879,18 +973,100 @@ const translations = {
     },
     tutor: {
       dashboard: 'لوحة تحكم المعلم',
-      overview: 'نظرة عامة',
-      myStudents: 'طلابي',
-      classes: 'حصص اليوم',
-      attendance: 'نسبة الحضور',
-      avgGrade: 'متوسط الدرجات',
-      students: 'إجمالي الطلاب',
-      schedule: 'جدول اليوم',
-      recentActivity: 'النشاط الأخير',
-      performance: 'أداء الطلاب',
-      course: 'الدورة',
-      time: 'الوقت',
-      room: 'القاعة'
+      loadingDashboard: 'جاري تحميل لوحة التحكم...',
+      welcome: {
+        title: 'مرحباً بعودتك، {name}!',
+        description: 'إليك نظرة عامة على أنشطتك التدريسية وتقدم الطلاب.'
+      },
+      statChanges: {
+        coursesTeaching: 'دورات تدريس',
+        totalEnrolled: 'إجمالي المسجلين',
+        submissionsToGrade: 'تسليمات للتصحيح',
+        classesScheduled: 'حصص مجدولة'
+      },
+      pendingGrading: 'تصحيح معلق',
+      upcomingClasses: 'الحصص القادمة',
+      quickActions: {
+        title: 'إجراءات سريعة',
+        createAssignment: 'إنشاء واجب',
+        gradeSubmissions: 'تصحيح التسليمات',
+        scheduleClass: 'جدولة حصة'
+      },
+      courses: {
+        title: 'دوراتي',
+        manageCourses: 'إدارة الدورات',
+        loading: 'جاري تحميل الدورات...',
+        noCourses: 'لم يتم تعيين دورات بعد',
+        viewDetails: 'عرض التفاصيل',
+        edit: 'تعديل',
+        enrolledStudents: 'الطلاب المسجلون: {count}',
+        course: 'الدورة'
+      },
+      assignments: {
+        title: 'الواجبات',
+        createAssignment: 'إنشاء واجب',
+        loading: 'جاري تحميل الواجبات...',
+        noAssignments: 'لم يتم إنشاء واجبات بعد',
+        view: 'عرض',
+        edit: 'تعديل',
+        course: 'الدورة',
+        due: 'مستحق',
+        submissions: 'التسليمات',
+        graded: 'مصحح'
+      },
+      submissions: {
+        title: 'التسليمات',
+        loading: 'جاري تحميل التسليمات...',
+        noPending: 'لا توجد تسليمات معلقة',
+        allCaughtUp: 'أنت على اطلاع بكل شيء!',
+        course: 'الدورة',
+        time: 'الوقت',
+        room: 'القاعة'
+      },
+      schedule: {
+        title: 'جدول الحصص',
+        scheduleClass: 'جدولة حصة',
+        loading: 'جاري تحميل الجدول...',
+        noUpcoming: 'لا توجد حصص قادمة',
+        scheduleSome: 'جدول بعض الحصص للبدء',
+        viewDetails: 'عرض التفاصيل',
+        course: 'الدورة',
+        time: 'الوقت',
+        room: 'القاعة'
+      },
+      students: {
+        management: 'إدارة الطلاب',
+        enrolledStudents: 'الطلاب المسجلون: {count}',
+        more: '+{count} المزيد',
+        noStudents: 'لا يوجد طلاب مسجلون',
+        quickActions: 'إجراءات سريعة',
+        viewAll: 'عرض الكل',
+        sendMessage: 'إرسال رسالة',
+        noCourses: 'لم يتم تعيين دورات',
+        course: 'الدورة',
+        time: 'الوقت',
+        room: 'القاعة'
+      },
+      analytics: {
+        title: 'تحليلات الطلاب',
+        averageGrade: 'متوسط الدرجات',
+        completionRate: 'معدل الإكمال',
+        graded: 'مصحح',
+        assignmentProgress: 'تقدم الواجبات',
+        noData: 'لا توجد بيانات تحليلية',
+        course: 'الدورة',
+        time: 'الوقت',
+        room: 'القاعة'
+      },
+      tabs: {
+        overview: 'نظرة عامة',
+        courses: 'الدورات',
+        assignments: 'الواجبات',
+        submissions: 'التسليمات',
+        schedule: 'الجدول',
+        students: 'الطلاب',
+        analytics: 'التحليلات'
+      }
     },
     admin: {
       dashboard: 'لوحة تحكم الإدارة',

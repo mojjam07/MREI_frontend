@@ -93,11 +93,13 @@ const UniversityHeader = () => {
           {/* Logo and name */}
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2 sm:gap-4">
-              <img
-                src={logo}
-                alt={t.header.logoAlt}
-                className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12"
-              />
+              <Link to="/">
+                <img
+                  src={logo}
+                  alt={t.header.logoAlt}
+                  className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer"
+                />
+              </Link>
               <h1 className="text-lg sm:text-2md md:text-3xl font-bold text-tertiary">{t.header.universityName}</h1>
             </div>
 

@@ -7,12 +7,12 @@ const MainNav = ({ className = '' }) => {
   const [mobileActiveDropdown, setMobileActiveDropdown] = useState(null);
 
   const menuItems = [
-    { title: 'Why Us?', href: '#why-us' },
-    { title: 'Our Impact', href: '#our-impact' },
-    { title: 'Testimonials', href: '#testimonials' },
-    { title: 'News & Events', href: '#news-events' },
-    { title: 'School life', href: '#school-life' },
-    { title: 'Our Contact', href: '#our-contact' }
+    { title: t('home.whyUs'), href: '#why-us' },
+    { title: t('home.ourImpact'), href: '#our-impact' },
+    { title: t('home.testimonials'), href: '#testimonials' },
+    { title: t('home.newsEvents'), href: '#news-events' },
+    { title: t('home.schoolLife'), href: '#school-life' },
+    { title: t('home.ourContact'), href: '#our-contact' }
   ];
 
   const toggleMobileDropdown = (index) => {

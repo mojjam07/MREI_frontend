@@ -1,7 +1,7 @@
 
 
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 
@@ -10,6 +10,27 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
+
+  // Advert images state
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const advertImages = [
+    'https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Advert+1',
+    'https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=Advert+2',
+    'https://via.placeholder.com/300x200/45B7D1/FFFFFF?text=Advert+3',
+    'https://via.placeholder.com/300x200/96CEB4/FFFFFF?text=Advert+4',
+    'https://via.placeholder.com/300x200/FECA57/FFFFFF?text=Advert+5'
+  ];
+
+  // Rotate images every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prevIndex) =>
+        (prevIndex + 1) % advertImages.length
+      );
+    }, 5000);
+
+    return () => clearInterval(interval);
+  }, [advertImages.length]);
 
   // Scroll to top function
   const scrollToTop = () => {
@@ -77,23 +98,13 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* <div className="footer-column">
-            <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
-              {t('home.footerConnectTitle')}
-            </h3>
-            <div className="contact-info space-y-1.5 sm:space-y-2 mb-3 sm:mb-4 text-sm sm:text-base text-accent">
-              <p>{t('home.footerAddress')}</p>
-              <p>{t('home.footerPhone')}</p>
-              <p className="break-all">{t('home.footerEmail')}</p>
-            </div>
-            <div className="social-links flex flex-wrap gap-2 sm:gap-3">
-              <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerFacebook')}>f</a>
-              <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerTwitter')}>t</a>
-              <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerInstagram')}>i</a>
-              <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerLinkedIn')}>in</a>
-              <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerYouTube')}>y</a>
-            </div>
-          </div> */}
+          <div className="footer-column">
+            <img
+              src={advertImages[currentImageIndex]}
+              alt="Advertisement"
+              className="w-full h-auto rounded-lg shadow-md"
+            />
+          </div>
         </div>
       </div>
 

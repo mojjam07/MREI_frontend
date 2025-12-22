@@ -1,9 +1,6 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-
-
-
 import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
 import PageHeader from '../components/layout/PageHeader';
@@ -11,17 +8,7 @@ import Footer from '../components/layout/Footer';
 import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-
-
-
 import { Plus, Edit, Save, X, Upload, LogOut, User } from 'lucide-react';
-
-
-
-
-
-
-
 import { pdfjs } from 'react-pdf';
 
 // Configure PDF.js worker using the standard react-pdf approach
@@ -35,11 +22,16 @@ console.log('React-PDF version:', pdfjs.version);
 
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
-
   const { user, logout } = useAuth();
-
-  const { createBook, updateBook, deleteBook, books: dashboardBooks, creatingBook, updatingBook } = useDashboard();
-  const books = dashboardBooks || [];
+  const { 
+    books, 
+    createBook, 
+    updateBook, 
+    deleteBook, 
+    creatingBook, 
+    updatingBook, 
+    booksLoading 
+  } = useDashboard();
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isReading, setIsReading] = useState(false);
@@ -56,7 +48,7 @@ const DigitalBookshelf = () => {
     title: '',
     author: '',
     description: '',
-    genre: '',
+    category: '',
     cover_image: null,
     pdf_file: null,
     publication_year: ''
@@ -78,7 +70,7 @@ const DigitalBookshelf = () => {
         formData.append('title', bookData.title || '');
         formData.append('author', bookData.author || '');
         formData.append('description', bookData.description || '');
-        formData.append('genre', bookData.genre || '');
+        formData.append('category', bookData.category || '');
         formData.append('publication_year', bookData.publication_year || '');
         
         // Append files if they exist
@@ -113,7 +105,7 @@ const DigitalBookshelf = () => {
         title: '',
         author: '',
         description: '',
-        genre: '',
+        category: '',
         cover_image: null,
         pdf_file: null,
         publication_year: ''
@@ -566,19 +558,19 @@ const DigitalBookshelf = () => {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Genre</label>
+                    <label className="block text-sm font-medium mb-2">Category</label>
                     <input
                       type="text"
-                      value={editingBook ? editingBook.genre : bookForm.genre}
+                      value={editingBook ? editingBook.category : bookForm.category}
                       onChange={(e) => {
                         if (editingBook) {
-                          setEditingBook({...editingBook, genre: e.target.value});
+                          setEditingBook({...editingBook, category: e.target.value});
                         } else {
-                          setBookForm({...bookForm, genre: e.target.value});
+                          setBookForm({...bookForm, category: e.target.value});
                         }
                       }}
                       className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-                      placeholder="Enter genre"
+                      placeholder="Enter category"
                     />
                   </div>
                   <div>
@@ -689,7 +681,7 @@ const DigitalBookshelf = () => {
                         title: '',
                         author: '',
                         description: '',
-                        genre: '',
+                        category: '',
                         cover_image: null,
                         pdf_file: null,
                         publication_year: ''

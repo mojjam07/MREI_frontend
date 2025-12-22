@@ -10,6 +10,7 @@ import StatCard from '../components/ui/StatCard';
 import ProgressBar from '../components/ui/ProgressBar';
 import SubmissionCard from '../components/tutor/SubmissionCard';
 import DashboardFooter from '../components/layout/DashboardFooter';
+import LanguageSwitcher from '../components/layout/LanguageSwitcher';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const TutorDashboard = () => {
@@ -40,28 +41,28 @@ const TutorDashboard = () => {
       icon: BookOpen,
       title: t('tutor.courses'),
       value: tutorDashboard?.courses_taught?.toString() || '0',
-      change: 'Courses teaching',
+      change: t('tutor.statChanges.coursesTeaching'),
       color: 'blue'
     },
     {
       icon: Users,
       title: t('tutor.students'),
       value: tutorDashboard?.total_students?.toString() || '0',
-      change: 'Total enrolled',
+      change: t('tutor.statChanges.totalEnrolled'),
       color: 'green'
     },
     {
       icon: FileText,
-      title: 'Pending Grading',
+      title: t('tutor.pendingGrading'),
       value: tutorDashboard?.pending_grading?.toString() || '0',
-      change: 'Submissions to grade',
+      change: t('tutor.statChanges.submissionsToGrade'),
       color: 'orange'
     },
     {
       icon: Calendar,
-      title: 'Upcoming Classes',
+      title: t('tutor.upcomingClasses'),
       value: tutorDashboard?.upcoming_classes?.toString() || '0',
-      change: 'Classes scheduled',
+      change: t('tutor.statChanges.classesScheduled'),
       color: 'purple'
     }
   ];
@@ -108,11 +109,14 @@ const TutorDashboard = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <LayoutDashboard className="w-8 h-8" style={{color: 'var(--tertiary-color)'}} />
-              <h1 className="text-2xl font-bold" style={{color: 'var(--light-text)'}}>Tutor Dashboard</h1>
+              <h1 className="text-2xl font-bold" style={{color: 'var(--light-text)'}}>{t('tutor.dashboard')}</h1>
             </div>
-            <button className="p-2 rounded-lg transition-all hover:scale-105 hover-glow" style={{color: 'var(--tertiary-color)'}}>
-              <Settings className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3">
+              <LanguageSwitcher />
+              <button className="p-2 rounded-lg transition-all hover:scale-105 hover-glow" style={{color: 'var(--tertiary-color)'}}>
+                <Settings className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -121,7 +125,7 @@ const TutorDashboard = () => {
       {/* Main Content */}
       <LoadingOverlay 
         isLoading={isMainLoading}
-        loadingText="Loading dashboard..."
+        loadingText={t('tutor.loadingDashboard')}
         overlayColor="rgba(0, 0, 0, 0.8)"
         spinnerColor="var(--primary-color)"
         textColor="white"
@@ -152,7 +156,7 @@ const TutorDashboard = () => {
             }}
           >
             <BarChart3 className="w-4 h-4" />
-            Overview
+            {t('tutor.tabs.overview')}
           </button>
 
           <button
@@ -167,6 +171,7 @@ const TutorDashboard = () => {
             onMouseEnter={(e) => {
               if (activeTab !== 'courses') {
                 e.target.style.backgroundColor = 'var(--accent-color)';
+                e.target.style.backgroundColor = 'var(--accent-color)';
                 e.target.style.color = 'var(--primary-color)';
               }
             }}
@@ -178,7 +183,7 @@ const TutorDashboard = () => {
             }}
           >
             <BookOpen className="w-4 h-4" />
-            Courses
+            {t('tutor.tabs.courses')}
           </button>
 
           <button
@@ -204,7 +209,7 @@ const TutorDashboard = () => {
             }}
           >
             <ClipboardList className="w-4 h-4" />
-            Assignments
+            {t('tutor.tabs.assignments')}
           </button>
 
           <button
@@ -230,7 +235,7 @@ const TutorDashboard = () => {
             }}
           >
             <FileText className="w-4 h-4" />
-            Submissions
+            {t('tutor.tabs.submissions')}
           </button>
 
           <button
@@ -256,7 +261,7 @@ const TutorDashboard = () => {
             }}
           >
             <Calendar className="w-4 h-4" />
-            Schedule
+            {t('tutor.tabs.schedule')}
           </button>
 
           <button
@@ -282,7 +287,7 @@ const TutorDashboard = () => {
             }}
           >
             <Users className="w-4 h-4" />
-            Students
+            {t('tutor.tabs.students')}
           </button>
 
           <button
@@ -308,7 +313,7 @@ const TutorDashboard = () => {
             }}
           >
             <TrendingUp className="w-4 h-4" />
-            Analytics
+            {t('tutor.tabs.analytics')}
           </button>
         </div>
 
@@ -318,10 +323,10 @@ const TutorDashboard = () => {
             {/* Welcome Section */}
             <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
               <h2 className="text-2xl font-bold mb-4 animate-scale-in" style={{color: 'var(--primary-color)'}}>
-                Welcome, {user?.first_name || user?.username}!
+                {t('tutor.welcome.title', { name: user?.first_name?.split(' ')[0] || user?.username })}
               </h2>
               <p style={{color: 'var(--text-color)'}}>
-                Here's an overview of your tutoring activities and student progress.
+                {t('tutor.welcome.description')}
               </p>
             </div>
 
@@ -341,19 +346,19 @@ const TutorDashboard = () => {
 
             {/* Quick Actions */}
             <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
-              <h3 className="text-xl font-bold mb-4" style={{color: 'var(--primary-color)'}}>Quick Actions</h3>
+              <h3 className="text-xl font-bold mb-4" style={{color: 'var(--primary-color)'}}>{t('tutor.quickActions.title')}</h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <button className="p-4 rounded-lg border-2 hover:scale-105 transition-all hover-glow" style={{borderColor: 'var(--primary-color)'}}>
                   <BookOpen className="w-6 h-6 mx-auto mb-2" style={{color: 'var(--primary-color)'}} />
-                  <span style={{color: 'var(--text-color)'}}>Create Assignment</span>
+                  <span style={{color: 'var(--text-color)'}}>{t('tutor.quickActions.createAssignment')}</span>
                 </button>
                 <button className="p-4 rounded-lg border-2 hover:scale-105 transition-all hover-glow" style={{borderColor: 'var(--primary-color)'}}>
                   <FileText className="w-6 h-6 mx-auto mb-2" style={{color: 'var(--primary-color)'}} />
-                  <span style={{color: 'var(--text-color)'}}>Grade Submissions</span>
+                  <span style={{color: 'var(--text-color)'}}>{t('tutor.quickActions.gradeSubmissions')}</span>
                 </button>
                 <button className="p-4 rounded-lg border-2 hover:scale-105 transition-all hover-glow" style={{borderColor: 'var(--primary-color)'}}>
                   <Calendar className="w-6 h-6 mx-auto mb-2" style={{color: 'var(--primary-color)'}} />
-                  <span style={{color: 'var(--text-color)'}}>Schedule Class</span>
+                  <span style={{color: 'var(--text-color)'}}>{t('tutor.quickActions.scheduleClass')}</span>
                 </button>
               </div>
             </div>
@@ -363,10 +368,10 @@ const TutorDashboard = () => {
         {activeTab === 'courses' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>My Courses</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.courses.title')}</h2>
               <button className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow" style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}>
                 <BookOpen className="w-4 h-4" />
-                Manage Courses
+                {t('tutor.courses.manageCourses')}
               </button>
             </div>
 
@@ -374,7 +379,7 @@ const TutorDashboard = () => {
               {coursesLoading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 mx-auto" style={{borderColor: 'var(--primary-color)'}}></div>
-                  <p className="mt-2" style={{color: 'var(--text-color)'}}>Loading courses...</p>
+                  <p className="mt-2" style={{color: 'var(--text-color)'}}>{t('tutor.courses.loading')}</p>
                 </div>
               ) : courses && courses.length > 0 ? (
                 courses.map(course => (
@@ -386,14 +391,14 @@ const TutorDashboard = () => {
                     <p className="text-sm mb-3" style={{color: 'var(--text-color)'}}>{course.description}</p>
                     <div className="flex justify-between items-center">
                       <span className="text-sm" style={{color: 'var(--text-color)'}}>
-                        {course.enrollments?.length || 0} students enrolled
+                        {t('tutor.courses.enrolledStudents', { count: course.enrollments?.length || 0 })}
                       </span>
                       <div className="flex gap-2">
                         <button className="px-3 py-1 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--accent-color)', color: 'var(--primary-color)'}}>
-                          View Details
+                          {t('tutor.courses.viewDetails')}
                         </button>
                         <button className="px-3 py-1 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)'}}>
-                          Edit
+                          {t('tutor.courses.edit')}
                         </button>
                       </div>
                     </div>
@@ -402,7 +407,7 @@ const TutorDashboard = () => {
               ) : (
                 <div className="text-center py-8">
                   <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p style={{color: 'var(--text-color)'}}>No courses assigned</p>
+                  <p style={{color: 'var(--text-color)'}}>{t('tutor.courses.noCourses')}</p>
                 </div>
               )}
             </div>
@@ -412,10 +417,10 @@ const TutorDashboard = () => {
         {activeTab === 'assignments' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Assignments</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.assignments.title')}</h2>
               <button className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow" style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}>
                 <ClipboardList className="w-4 h-4" />
-                Create Assignment
+                {t('tutor.assignments.createAssignment')}
               </button>
             </div>
 
@@ -423,7 +428,7 @@ const TutorDashboard = () => {
               {assignmentsLoading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 mx-auto" style={{borderColor: 'var(--primary-color)'}}></div>
-                  <p className="mt-2" style={{color: 'var(--text-color)'}}>Loading assignments...</p>
+                  <p className="mt-2" style={{color: 'var(--text-color)'}}>{t('tutor.assignments.loading')}</p>
                 </div>
               ) : assignments && assignments.length > 0 ? (
                 assignments.map(assignment => (
@@ -431,18 +436,18 @@ const TutorDashboard = () => {
                     <div className="flex-1">
                       <h4 className="font-medium mb-1" style={{color: 'var(--primary-color)'}}>{assignment.title}</h4>
                       <p className="text-sm mb-1" style={{color: 'var(--text-color)'}}>
-                        {assignment.course?.title || 'Course'} • Due: {new Date(assignment.due_date).toLocaleDateString()}
+                        {assignment.course?.title || t('tutor.assignments.course')} • {t('tutor.assignments.due')}: {new Date(assignment.due_date).toLocaleDateString()}
                       </p>
                       <p className="text-xs" style={{color: 'var(--text-color)'}}>
-                        {assignment.submissions?.length || 0} submissions • {assignment.submissions?.filter(s => s.grade).length || 0} graded
+                        {t('tutor.assignments.submissions', { count: assignment.submissions?.length || 0 })} • {t('tutor.assignments.graded', { count: assignment.submissions?.filter(s => s.grade).length || 0 })}
                       </p>
                     </div>
                     <div className="flex gap-2">
                       <button className="px-3 py-1 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--accent-color)', color: 'var(--primary-color)'}}>
-                        View
+                        {t('tutor.assignments.view')}
                       </button>
                       <button className="px-3 py-1 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)'}}>
-                        Edit
+                        {t('tutor.assignments.edit')}
                       </button>
                     </div>
                   </div>
@@ -450,7 +455,7 @@ const TutorDashboard = () => {
               ) : (
                 <div className="text-center py-8">
                   <ClipboardList className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p style={{color: 'var(--text-color)'}}>No assignments created</p>
+                  <p style={{color: 'var(--text-color)'}}>{t('tutor.assignments.noAssignments')}</p>
                 </div>
               )}
             </div>
@@ -459,12 +464,12 @@ const TutorDashboard = () => {
 
         {activeTab === 'submissions' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
-            <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>Pending Submissions</h2>
+            <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.submissions.title')}</h2>
             
             {pendingSubmissionsLoading ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 mx-auto" style={{borderColor: 'var(--primary-color)'}}></div>
-                <p className="mt-2" style={{color: 'var(--text-color)'}}>Loading submissions...</p>
+                <p className="mt-2" style={{color: 'var(--text-color)'}}>{t('tutor.submissions.loading')}</p>
               </div>
             ) : pendingSubmissions && pendingSubmissions.length > 0 ? (
               <div className="space-y-4">
@@ -478,11 +483,11 @@ const TutorDashboard = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-8">
-                <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-3" />
-                <p style={{color: 'var(--text-color)'}}>No pending submissions</p>
-                <p className="text-sm" style={{color: 'var(--text-color)'}}>All caught up!</p>
-              </div>
+                <div className="text-center py-8">
+                  <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-3" />
+                  <p style={{color: 'var(--text-color)'}}>{t('tutor.submissions.noPending')}</p>
+                  <p className="text-sm" style={{color: 'var(--text-color)'}}>{t('tutor.submissions.allCaughtUp')}</p>
+                </div>
             )}
           </div>
         )}
@@ -490,10 +495,10 @@ const TutorDashboard = () => {
         {activeTab === 'schedule' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Upcoming Classes</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.schedule.title')}</h2>
               <button className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow" style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}>
                 <Calendar className="w-4 h-4" />
-                Schedule Class
+                {t('tutor.schedule.scheduleClass')}
               </button>
             </div>
 
@@ -501,7 +506,7 @@ const TutorDashboard = () => {
               {tutorClassSchedulesLoading ? (
                 <div className="text-center py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 mx-auto" style={{borderColor: 'var(--primary-color)'}}></div>
-                  <p className="mt-2" style={{color: 'var(--text-color)'}}>Loading schedule...</p>
+                  <p className="mt-2" style={{color: 'var(--text-color)'}}>{t('tutor.schedule.loading')}</p>
                 </div>
               ) : tutorClassSchedules && tutorClassSchedules.length > 0 ? (
                 tutorClassSchedules.map(schedule => (
@@ -516,15 +521,15 @@ const TutorDashboard = () => {
                       </p>
                     </div>
                     <button className="px-3 py-1 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--accent-color)', color: 'var(--primary-color)'}}>
-                      View Details
+                      {t('tutor.schedule.viewDetails')}
                     </button>
                   </div>
                 ))
               ) : (
                 <div className="text-center py-8">
                   <Calendar className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p style={{color: 'var(--text-color)'}}>No upcoming classes</p>
-                  <p className="text-sm" style={{color: 'var(--text-color)'}}>Schedule some classes</p>
+                  <p style={{color: 'var(--text-color)'}}>{t('tutor.schedule.noUpcoming')}</p>
+                  <p className="text-sm" style={{color: 'var(--text-color)'}}>{t('tutor.schedule.scheduleSome')}</p>
                 </div>
               )}
             </div>
@@ -533,7 +538,7 @@ const TutorDashboard = () => {
 
         {activeTab === 'students' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
-            <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>Student Management</h2>
+            <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.students.management')}</h2>
             
             <div className="space-y-4">
               {courses && courses.length > 0 ? (
@@ -542,7 +547,7 @@ const TutorDashboard = () => {
                     <h3 className="font-semibold mb-3" style={{color: 'var(--primary-color)'}}>{course.title}</h3>
                     <div className="grid md:grid-cols-2 gap-4">
                       <div>
-                        <h4 className="font-medium mb-2" style={{color: 'var(--text-color)'}}>Enrolled Students ({course.enrollments?.length || 0})</h4>
+                        <h4 className="font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('tutor.students.enrolledStudents', { count: course.enrollments?.length || 0 })}</h4>
                         {course.enrollments && course.enrollments.length > 0 ? (
                           <div className="space-y-2">
                             {course.enrollments.slice(0, 5).map(enrollment => (
@@ -556,21 +561,21 @@ const TutorDashboard = () => {
                               </div>
                             ))}
                             {course.enrollments.length > 5 && (
-                              <p className="text-xs" style={{color: 'var(--text-color)'}}>And {course.enrollments.length - 5} more...</p>
+                              <p className="text-xs" style={{color: 'var(--text-color)'}}>{t('tutor.students.more', { count: course.enrollments.length - 5 })}</p>
                             )}
                           </div>
                         ) : (
-                          <p className="text-sm" style={{color: 'var(--text-color)'}}>No students enrolled</p>
+                          <p className="text-sm" style={{color: 'var(--text-color)'}}>{t('tutor.students.noStudents')}</p>
                         )}
                       </div>
                       <div>
-                        <h4 className="font-medium mb-2" style={{color: 'var(--text-color)'}}>Quick Actions</h4>
+                        <h4 className="font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('tutor.students.quickActions')}</h4>
                         <div className="space-y-2">
                           <button className="w-full px-3 py-2 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--accent-color)', color: 'var(--primary-color)'}}>
-                            View All Students
+                            {t('tutor.students.viewAll')}
                           </button>
                           <button className="w-full px-3 py-2 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)'}}>
-                            Send Message
+                            {t('tutor.students.sendMessage')}
                           </button>
                         </div>
                       </div>
@@ -580,7 +585,7 @@ const TutorDashboard = () => {
               ) : (
                 <div className="text-center py-8">
                   <Users className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p style={{color: 'var(--text-color)'}}>No courses to show students for</p>
+                  <p style={{color: 'var(--text-color)'}}>{t('tutor.students.noCourses')}</p>
                 </div>
               )}
             </div>
@@ -589,7 +594,7 @@ const TutorDashboard = () => {
 
         {activeTab === 'analytics' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
-            <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>Student Performance Analytics</h2>
+            <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.analytics.title')}</h2>
             
             <div className="space-y-4">
               {courses && courses.length > 0 ? (
@@ -605,24 +610,24 @@ const TutorDashboard = () => {
                         </div>
                         <div className="text-right">
                           <div className="text-lg font-bold" style={{color: 'var(--primary-color)'}}>{performance.avgGrade || 0}%</div>
-                          <div className="text-xs" style={{color: 'var(--text-color)'}}>Average Grade</div>
+                          <div className="text-xs" style={{color: 'var(--text-color)'}}>{t('tutor.analytics.averageGrade')}</div>
                         </div>
                       </div>
                       
                       <div className="grid grid-cols-2 gap-4 mb-3">
                         <div className="text-center">
                           <div className="text-2xl font-bold text-green-600">{performance.completionRate}%</div>
-                          <div className="text-xs" style={{color: 'var(--text-color)'}}>Completion Rate</div>
+                          <div className="text-xs" style={{color: 'var(--text-color)'}}>{t('tutor.analytics.completionRate')}</div>
                         </div>
                         <div className="text-center">
                           <div className="text-2xl font-bold text-purple-600">{performance.gradedAssignments}</div>
-                          <div className="text-xs" style={{color: 'var(--text-color)'}}>Graded</div>
+                          <div className="text-xs" style={{color: 'var(--text-color)'}}>{t('tutor.analytics.graded')}</div>
                         </div>
                       </div>
                       
                       <div className="mb-2">
                         <div className="flex justify-between text-sm mb-1" style={{color: 'var(--text-color)'}}>
-                          <span>Assignment Progress</span>
+                          <span>{t('tutor.analytics.assignmentProgress')}</span>
                           <span>{performance.submittedAssignments}/{performance.totalAssignments}</span>
                         </div>
                         <ProgressBar progress={performance.completionRate} color="green" />
@@ -637,7 +642,7 @@ const TutorDashboard = () => {
               ) : (
                 <div className="text-center py-8">
                   <TrendingUp className="h-12 w-12 text-gray-400 mx-auto mb-3" />
-                  <p style={{color: 'var(--text-color)'}}>No course performance data available</p>
+                  <p style={{color: 'var(--text-color)'}}>{t('tutor.analytics.noData')}</p>
                 </div>
               )}
             </div>

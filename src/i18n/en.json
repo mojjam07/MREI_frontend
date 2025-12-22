@@ -116,7 +116,113 @@
       "noCoursePerformanceData": "No course performance data available",
       "loadingSubmissions": "Loading submissions...",
       "loadingSchedule": "Loading schedule...",
-      "scheduleClasses": "Schedule some classes"
+      "scheduleClasses": "Schedule some classes",
+      "loadingDashboard": "Loading dashboard...",
+      "tabs": {
+        "overview": "Overview",
+        "courses": "Courses",
+        "assignments": "Assignments",
+        "submissions": "Submissions",
+        "schedule": "Schedule",
+        "students": "Students",
+        "analytics": "Analytics"
+      },
+      "welcomeMessage": "Welcome, {name}!",
+      "welcomeSubtitle": "Here's an overview of your tutoring activities and student progress.",
+      "statChanges": {
+        "coursesTeaching": "Courses teaching",
+        "totalEnrolled": "Total enrolled",
+        "submissionsToGrade": "Submissions to grade",
+        "classesScheduled": "Classes scheduled"
+      },
+      "quickActions": {
+        "title": "Quick Actions",
+        "createAssignment": "Create Assignment",
+        "gradeSubmissions": "Grade Submissions",
+        "scheduleClass": "Schedule Class"
+      },
+      "courses": {
+        "title": "My Courses",
+        "manageCourses": "Manage Courses",
+        "loading": "Loading courses...",
+        "viewDetails": "View Details",
+        "edit": "Edit",
+        "enrolledStudents": "Enrolled Students ({count})",
+        "noCourses": "No courses assigned"
+      },
+      "assignments": {
+        "title": "Assignments",
+        "createAssignment": "Create Assignment",
+        "loading": "Loading assignments...",
+        "view": "View",
+        "edit": "Edit",
+        "noAssignments": "No assignments created",
+        "course": "Course",
+        "due": "Due:",
+        "submissions": "{count} submissions",
+        "graded": "{count} graded"
+      },
+      "submissions": {
+        "title": "Pending Submissions",
+        "loading": "Loading submissions...",
+        "noPending": "No pending submissions",
+        "allCaughtUp": "All caught up!"
+      },
+      "schedule": {
+        "title": "Class Schedule",
+        "scheduleClass": "Schedule Class",
+        "loading": "Loading schedule...",
+        "noUpcoming": "No upcoming classes",
+        "scheduleSome": "Schedule some classes",
+        "viewDetails": "View Details"
+      },
+      "students": {
+        "management": "Student Management",
+        "enrolledStudents": "Enrolled Students ({count})",
+        "noStudents": "No students enrolled",
+        "viewAll": "View All",
+        "more": "{count} more",
+        "noCourses": "No courses to show students for",
+        "quickActions": "Quick Actions",
+        "sendMessage": "Send Message"
+      },
+      "analytics": {
+        "title": "Analytics",
+        "averageGrade": "Average Grade",
+        "completionRate": "Completion Rate",
+        "graded": "Graded",
+        "assignmentProgress": "Assignment Progress",
+        "noData": "No course performance data available",
+        "viewReport": "View Report",
+        "gradeOverview": "Grade Overview",
+        "totalAssignments": "Total Assignments",
+        "submitted": "Submitted",
+        "loadingAnalytics": "Loading analytics..."
+      },
+      "loadingCourses": "Loading courses...",
+      "studentsEnrolled": "students enrolled",
+      "edit": "Edit",
+      "noCoursesAssigned": "No courses assigned",
+      "assignments": "Assignments",
+      "loadingAssignments": "Loading assignments...",
+      "submissionsGraded": "submissions • graded",
+      "view": "View",
+      "noAssignmentsCreated": "No assignments created",
+      "pendingSubmissions": "Pending Submissions",
+      "studentManagement": "Student Management",
+      "enrolledStudents": "Enrolled Students ({count})",
+      "noStudentsEnrolled": "No students enrolled",
+      "viewAllStudents": "View All Students",
+      "sendMessage": "Send Message",
+      "noCoursesForStudents": "No courses to show students for",
+      "studentPerformanceAnalytics": "Student Performance Analytics",
+      "assignmentProgress": "Assignment Progress",
+      "totalSubmittedGraded": "{total} total assignments • {submitted} submitted • {graded} graded",
+      "roomDurationStudents": "Room: {room} • Duration: {duration} minutes • {students} students",
+      "welcome": {
+        "title": "Welcome back, {name}!",
+        "description": "Here's an overview of your tutoring activities and student progress."
+      }
     },
 
     "nav": {
