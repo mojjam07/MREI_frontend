@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
@@ -11,7 +11,7 @@ import logo from '../assets/logo.png';
 import bgImage from '../assets/banner.png';
 
 const LoginPage = () => {
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const { language, setLanguage, t } = useLanguage();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -19,10 +19,39 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Redirect if user is already logged in
+  useEffect(() => {
+    if (user && user.role) {
+      const getDashboardPath = (userRole) => {
+        switch (userRole?.toLowerCase()) {
+          case 'admin':
+            return '/admin/dashboard';
+          case 'tutor':
+            return '/tutor/dashboard';
+          case 'alumni':
+            return '/alumni/dashboard';
+          case 'student':
+          default:
+            return '/student/dashboard';
+        }
+      };
+      
+      const dashboardPath = getDashboardPath(user.role);
+      console.log('User already authenticated, redirecting to:', dashboardPath);
+      navigate(dashboardPath, { replace: true });
+    }
+  }, [user, navigate]);
+
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError('');
+
+    if (!email.trim() || !password.trim()) {
+      setError('Please enter both email and password');
+      setLoading(false);
+      return;
+    }
 
     const result = await login(email, password);
     setLoading(false);
@@ -40,19 +69,31 @@ const LoginPage = () => {
       return;
     }
 
-    const role = result.user?.role;
-
+    // Get role from login result or fallback to current user state
+    const role = result.role || result.user?.role || user?.role;
+    
+    console.log('Login successful, role:', role, 'result:', result);
+    
     // Navigate based on user role
-    if (role === 'admin') {
-      navigate('/admin/dashboard');
-    } else if (role === 'tutor') {
-      navigate('/tutor/dashboard');
-    } else if (role === 'alumni') {
-      navigate('/alumni/dashboard');
-    } else {
-      // Default to student dashboard
-      navigate('/student/dashboard');
-    }
+    const getDashboardPath = (userRole) => {
+      switch (userRole?.toLowerCase()) {
+        case 'admin':
+          return '/admin/dashboard';
+        case 'tutor':
+          return '/tutor/dashboard';
+        case 'alumni':
+          return '/alumni/dashboard';
+        case 'student':
+        default:
+          return '/student/dashboard';
+      }
+    };
+
+    const dashboardPath = getDashboardPath(role);
+    console.log('Redirecting to:', dashboardPath);
+    
+    // Use replace: true to prevent going back to login page
+    navigate(dashboardPath, { replace: true });
   };
 
 
@@ -123,6 +164,7 @@ const LoginPage = () => {
             placeholder={t('auth.login.passwordPlaceholder')}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            showPasswordToggle
             required
           />
 

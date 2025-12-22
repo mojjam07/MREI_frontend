@@ -1,5 +1,6 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
+import apiClient from "../src/services/apiClient";
 import axios from "axios";
 
 const AuthContext = createContext();
@@ -17,12 +18,11 @@ export const AuthProvider = ({ children }) => {
                 return;
             }
             
-            // Set up axios with the token
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            
+            // Set up apiClient with the token (handled by interceptor)
             // Fetch current user data
-            const response = await axios.get('/api/auth/user/');
-            setUser({ token, ...response.data });
+            const userResponse = await apiClient.get('/auth/user');
+            console.log('Fetched user data:', userResponse.data);
+            setUser({ token, ...userResponse.data.user });
         } catch (error) {
             // If fetching user data fails, clear the auth state
             console.error('Failed to fetch user data:', error);
@@ -42,29 +42,34 @@ export const AuthProvider = ({ children }) => {
 
     const login = async (email, password) => {
         try {
-            const response = await axios.post('/api/auth/login/', { username: email, password });
-            const { access, refresh, user } = response.data;
+            console.log('Attempting login with:', { email, password });
+            const loginResponse = await apiClient.post('/auth/login', { email, password });
+            console.log('Login response:', loginResponse.data);
             
+            const { access, refresh, user } = loginResponse.data;
+
             // Store tokens
             localStorage.setItem('access_token', access);
             localStorage.setItem('refresh_token', refresh);
-            
+
             // Set user data with role
             setUser({ token: access, ...user });
-            return { 
-                success: true, 
+            return {
+                success: true,
                 user: user,
-                role: user.role 
+                role: user.role
             };
         } catch (error) {
-            return { success: false, error: error.response?.data?.detail || 'Login failed' };
+            console.error('Login error:', error);
+            const errorMessage = error.response?.data?.message || error.response?.data?.error || 'Login failed';
+            return { success: false, error: errorMessage };
         }
     };
 
     const logout = () => {
         localStorage.removeItem('access_token');
         localStorage.removeItem('refresh_token');
-        delete axios.defaults.headers.common['Authorization'];
+        // Authorization header is handled by apiClient interceptor
         setUser(null);
     };
 

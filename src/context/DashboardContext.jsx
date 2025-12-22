@@ -14,13 +14,18 @@ export const DashboardProvider = ({ children }) => {
   const { data: stats, isLoading: statsLoading } = useQuery(
     'dashboard-stats',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.STATISTICS);
-      return Array.isArray(response.data) ? response.data[0] : response.data || {
-        active_students: 0,
-        courses: 0,
-        success_rate: 0,
-        tutors: 0
-      };
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.STATISTICS);
+        return Array.isArray(response.data) ? response.data[0] : response.data;
+      } catch (error) {
+        console.warn(`Dashboard stats endpoint not available: ${error.message}. Returning default data.`);
+        return {
+          active_students: 0,
+          courses: 0,
+          success_rate: 0,
+          tutors: 0
+        };
+      }
     },
     {
       enabled: !!user,
@@ -32,8 +37,18 @@ export const DashboardProvider = ({ children }) => {
   const { data: studentDashboard, isLoading: studentDashboardLoading } = useQuery(
     'student-dashboard',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.STUDENT);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.STUDENT);
+        return response.data;
+      } catch (error) {
+        console.warn(`Student dashboard endpoint not available: ${error.message}. Returning default data.`);
+        return {
+          total_courses: 0,
+          completed_assignments: 0,
+          pending_assignments: 0,
+          upcoming_classes: []
+        }; // Fallback for missing endpoint
+      }
     },
     {
       enabled: user?.role === 'student',
@@ -45,14 +60,23 @@ export const DashboardProvider = ({ children }) => {
   const { data: courses, isLoading: coursesLoading } = useQuery(
     'courses',
     async () => {
-      let endpoint = API_ENDPOINTS.ACADEMICS.COURSES;
-      if (user?.role === 'student') {
-        endpoint = API_ENDPOINTS.ACADEMICS.ENROLLMENTS;
-      } else if (user?.role === 'tutor') {
-        endpoint = `${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`;
+      try {
+        let endpoint = API_ENDPOINTS.ACADEMICS.COURSES;
+        if (user?.role === 'student') {
+          endpoint = API_ENDPOINTS.ACADEMICS.STUDENT_ENROLLMENTS;
+        } else if (user?.role === 'tutor') {
+          endpoint = `${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`;
+        }
+        const response = await apiClient.get(endpoint);
+        // Handle different response formats
+        if (user?.role === 'student') {
+          return response.data.success ? response.data.data : response.data;
+        }
+        return response.data;
+      } catch (error) {
+        console.warn(`Courses endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
       }
-      const response = await apiClient.get(endpoint);
-      return response.data;
     },
     {
       enabled: !!user,
@@ -64,11 +88,19 @@ export const DashboardProvider = ({ children }) => {
   const { data: classSchedules, isLoading: classSchedulesLoading } = useQuery(
     'class-schedules',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES);
-      return response.data;
+      try {
+        const endpoint = user?.role === 'student' 
+          ? API_ENDPOINTS.ACADEMICS.STUDENT_CLASS_SCHEDULES
+          : API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES;
+        const response = await apiClient.get(endpoint);
+        return response.data.success ? response.data.data : response.data;
+      } catch (error) {
+        console.warn(`Class schedules endpoint not available: ${error.message}. Returning empty array.`);
+        return []; // Fallback for missing endpoint
+      }
     },
     {
-      enabled: user?.role === 'student',
+      enabled: !!user,
       staleTime: 10 * 60 * 1000,
     }
   );
@@ -77,11 +109,19 @@ export const DashboardProvider = ({ children }) => {
   const { data: attendance, isLoading: attendanceLoading } = useQuery(
     'attendance',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.ATTENDANCE);
-      return response.data;
+      try {
+        const endpoint = user?.role === 'student' 
+          ? API_ENDPOINTS.ACADEMICS.STUDENT_ATTENDANCE
+          : API_ENDPOINTS.ACADEMICS.ATTENDANCE;
+        const response = await apiClient.get(endpoint);
+        return response.data.success ? response.data.data : response.data;
+      } catch (error) {
+        console.warn(`Attendance endpoint not available: ${error.message}. Returning empty array.`);
+        return []; // Fallback for missing endpoint
+      }
     },
     {
-      enabled: user?.role === 'student',
+      enabled: !!user,
       staleTime: 5 * 60 * 1000,
     }
   );
@@ -90,24 +130,27 @@ export const DashboardProvider = ({ children }) => {
   const { data: assignments, isLoading: assignmentsLoading } = useQuery(
     'assignments',
     async () => {
-      let endpoint = API_ENDPOINTS.ACADEMICS.ASSIGNMENTS;
-      if (user?.role === 'student') {
-        // Get assignments for enrolled courses
-        const enrollments = await apiClient.get(API_ENDPOINTS.ACADEMICS.ENROLLMENTS);
-        const courseIds = enrollments.data.map(e => e.course);
-        if (courseIds.length > 0) {
-          endpoint += `?course__in=${courseIds.join(',')}`;
+      try {
+        let endpoint = API_ENDPOINTS.ACADEMICS.ASSIGNMENTS;
+        if (user?.role === 'student') {
+          // Use student-specific endpoint that returns assignments for enrolled courses
+          endpoint = API_ENDPOINTS.ACADEMICS.STUDENT_ASSIGNMENTS;
+          const response = await apiClient.get(endpoint);
+          return response.data.success ? response.data.data : response.data;
+        } else if (user?.role === 'tutor') {
+          // Get assignments for tutor's courses
+          const tutorCourses = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`);
+          const courseIds = tutorCourses.data.map(c => c.id);
+          if (courseIds.length > 0) {
+            endpoint += `?course__in=${courseIds.join(',')}`;
+          }
         }
-      } else if (user?.role === 'tutor') {
-        // Get assignments for tutor's courses
-        const tutorCourses = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`);
-        const courseIds = tutorCourses.data.map(c => c.id);
-        if (courseIds.length > 0) {
-          endpoint += `?course__in=${courseIds.join(',')}`;
-        }
+        const response = await apiClient.get(endpoint);
+        return response.data;
+      } catch (error) {
+        console.warn(`Assignments endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
       }
-      const response = await apiClient.get(endpoint);
-      return response.data;
     },
     {
       enabled: !!user,
@@ -119,8 +162,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: news, isLoading: newsLoading } = useQuery(
     'news',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.NEWS);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.NEWS);
+        return response.data;
+      } catch (error) {
+        console.warn(`News endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: !!user,
@@ -131,8 +179,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: events, isLoading: eventsLoading } = useQuery(
     'events',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.EVENTS);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.EVENTS);
+        return response.data;
+      } catch (error) {
+        console.warn(`Events endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: !!user,
@@ -143,8 +196,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: testimonials, isLoading: testimonialsLoading } = useQuery(
     'testimonials',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.TESTIMONIALS);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.TESTIMONIALS);
+        return response.data;
+      } catch (error) {
+        console.warn(`Testimonials endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: !!user,
@@ -156,8 +214,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: allTestimonials, isLoading: allTestimonialsLoading } = useQuery(
     'all-testimonials',
     async () => {
-      const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}`);
-      return response.data;
+      try {
+        const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}`);
+        return response.data;
+      } catch (error) {
+        console.warn(`All testimonials endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -169,8 +232,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: pendingTestimonials, isLoading: pendingTestimonialsLoading } = useQuery(
     'pending-testimonials',
     async () => {
-      const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}?approved=false`);
-      return response.data;
+      try {
+        const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}?approved=false`);
+        return response.data;
+      } catch (error) {
+        console.warn(`Pending testimonials endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -181,8 +249,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: campusLife, isLoading: campusLifeLoading } = useQuery(
     'campus-life',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE);
+        return response.data;
+      } catch (error) {
+        console.warn(`Campus life endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: !!user,
@@ -208,8 +281,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: users, isLoading: usersLoading } = useQuery(
     'users',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.USERS);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.USERS);
+        return response.data;
+      } catch (error) {
+        console.warn(`Users endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -221,8 +299,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: studentProfiles, isLoading: studentProfilesLoading } = useQuery(
     'student-profiles',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.STUDENTS.PROFILES);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.STUDENTS.PROFILES);
+        return response.data;
+      } catch (error) {
+        console.warn(`Student profiles endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -234,8 +317,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: tutorProfiles, isLoading: tutorProfilesLoading } = useQuery(
     'tutor-profiles',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.TUTORS.PROFILES);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.TUTORS.PROFILES);
+        return response.data;
+      } catch (error) {
+        console.warn(`Tutor profiles endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -346,8 +434,18 @@ export const DashboardProvider = ({ children }) => {
   const { data: tutorDashboard, isLoading: tutorDashboardLoading } = useQuery(
     'tutor-dashboard',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.TUTOR);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.TUTOR);
+        return response.data;
+      } catch (error) {
+        console.warn(`Tutor dashboard endpoint not available: ${error.message}. Returning default data.`);
+        return {
+          total_courses: 0,
+          total_students: 0,
+          pending_assignments: 0,
+          recent_submissions: []
+        }; // Fallback for missing endpoint
+      }
     },
     {
       enabled: user?.role === 'tutor',
@@ -359,8 +457,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: pendingSubmissions, isLoading: pendingSubmissionsLoading } = useQuery(
     'pending-submissions',
     async () => {
-      const response = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.SUBMISSIONS}?grade__isnull=true`);
-      return response.data;
+      try {
+        const response = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.SUBMISSIONS}?grade__isnull=true`);
+        return response.data;
+      } catch (error) {
+        console.warn(`Pending submissions endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'tutor',
@@ -390,8 +493,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: tutorClassSchedules, isLoading: tutorClassSchedulesLoading } = useQuery(
     'class-schedules-tutor',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES);
+        return response.data;
+      } catch (error) {
+        console.warn(`Tutor class schedules endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'tutor',
@@ -524,8 +632,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: contactMessages, isLoading: contactMessagesLoading } = useQuery(
     'contact-messages',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CONTACT);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CONTACT);
+        return response.data;
+      } catch (error) {
+        console.warn(`Contact messages endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -537,8 +650,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: unreadMessages, isLoading: unreadMessagesLoading } = useQuery(
     'unread-messages',
     async () => {
-      const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.CONTACT}?read=false`);
-      return response.data;
+      try {
+        const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.CONTACT}?read=false`);
+        return response.data;
+      } catch (error) {
+        console.warn(`Unread messages endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: user?.role === 'admin',
@@ -550,8 +668,13 @@ export const DashboardProvider = ({ children }) => {
   const { data: books, isLoading: booksLoading } = useQuery(
     'books',
     async () => {
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.BOOKS);
-      return response.data;
+      try {
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.BOOKS);
+        return response.data;
+      } catch (error) {
+        console.warn(`Books endpoint not available: ${error.message}. Returning empty array.`);
+        return [];
+      }
     },
     {
       enabled: !!user,  // Enable for all authenticated users

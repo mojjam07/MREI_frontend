@@ -77,7 +77,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          <div className="footer-column">
+          {/* <div className="footer-column">
             <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
               {t('home.footerConnectTitle')}
             </h3>
@@ -93,7 +93,7 @@ const Footer = () => {
               <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerLinkedIn')}>in</a>
               <a href="#" className="social-icon w-8 h-8 sm:w-9 sm:h-9 bg-tertiary rounded-full flex items-center justify-center text-text hover:text-accent hover:bg-link transition-colors text-xs sm:text-sm font-medium" aria-label={t('home.footerYouTube')}>y</a>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

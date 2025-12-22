@@ -226,6 +226,7 @@ const SignupPage = () => {
             placeholder={t('auth.signup.passwordPlaceholder')}
             value={formData.password}
             onChange={handleChange}
+            showPasswordToggle
           />
 
           <Input
@@ -235,6 +236,7 @@ const SignupPage = () => {
             placeholder={t('auth.signup.confirmPasswordPlaceholder')}
             value={formData.confirmPassword}
             onChange={handleChange}
+            showPasswordToggle
           />
 
           <div className="space-y-2">

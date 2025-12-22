@@ -1,6 +1,6 @@
 
 
-const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 export const API_BASE_URL = baseUrl;
 
 export const API_ENDPOINTS = {
@@ -20,24 +20,29 @@ export const API_ENDPOINTS = {
     LIST: '/tutors'
   },
   ACADEMICS: {
-    COURSES: '/courses',
-    ENROLLMENTS: '/enrollments',
-    ASSIGNMENTS: '/assignments',
-    SUBMISSIONS: '/submissions',
-    CLASS_SCHEDULES: '/class-schedules',
-    ATTENDANCE: '/attendance'
+    COURSES: '/academics/courses',
+    ENROLLMENTS: '/academics/enrollments',
+    ASSIGNMENTS: '/academics/assignments',
+    SUBMISSIONS: '/academics/submissions',
+    CLASS_SCHEDULES: '/academics/class-schedules',
+    ATTENDANCE: '/academics/attendance',
+    // Student-specific endpoints
+    STUDENT_ENROLLMENTS: '/academics/enrollments/student',
+    STUDENT_ASSIGNMENTS: '/academics/assignments/student',
+    STUDENT_ATTENDANCE: '/academics/attendance/student',
+    STUDENT_CLASS_SCHEDULES: '/academics/class-schedules/student'
   },
 
   COMMUNICATION: {
-    STATISTICS: '/statistics',
-    NEWS: '/news',
-    EVENTS: '/events',
-    TESTIMONIALS: '/testimonials',
-    CAMPUS_LIFE: '/campus-life',
-    CONTACT: '/contact',
-    DASHBOARD_STATS: '/dashboard-stats',
-    HOME_CONTENT: '/home-content',
-    BOOKS: '/books'
+    STATISTICS: '/communication/statistics',
+    NEWS: '/communication/news',
+    EVENTS: '/communication/events',
+    TESTIMONIALS: '/communication/testimonials',
+    CAMPUS_LIFE: '/communication/campus-life',
+    CONTACT: '/communication/contact',
+    DASHBOARD_STATS: '/communication/dashboard-stats',
+    HOME_CONTENT: '/communication/home-content',
+    BOOKS: '/communication/books'
   },
   DASHBOARD: {
     STUDENT: '/dashboard/student',
