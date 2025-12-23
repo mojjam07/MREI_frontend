@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BookOpen, Users, FileText, TrendingUp, Calendar, Award, LayoutDashboard, Settings, BarChart3, ClipboardList, GraduationCap, CheckCircle } from 'lucide-react';
-import { useTranslation } from 'react-i18next';
+import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
 
@@ -14,7 +14,7 @@ import LanguageSwitcher from '../components/layout/LanguageSwitcher';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 
 const TutorDashboard = () => {
-  const { t } = useTranslation();
+  const { t } = useLanguage();
   const { user } = useAuth();
 
   // Active tab state for navigation
@@ -35,33 +35,58 @@ const TutorDashboard = () => {
     gradingSubmission
   } = useDashboard();
 
+  // Transform backend data to component format
+  const transformedTutorData = tutorDashboard?.data ? {
+    totalCourses: tutorDashboard.data.statistics?.total_courses || 0,
+    totalStudents: tutorDashboard.data.statistics?.total_students || 0,
+    totalAssignments: tutorDashboard.data.statistics?.total_assignments || 0,
+    totalSubmissions: tutorDashboard.data.statistics?.total_submissions || 0,
+    pendingGrading: tutorDashboard.data.statistics?.pending_submissions || 0,
+    averageScore: Math.round((tutorDashboard.data.statistics?.average_score || 0) * 10) / 10,
+    coursesTaught: tutorDashboard.data.courses || [],
+    pendingSubmissionsList: tutorDashboard.data.pending_submissions || [],
+    upcomingAssignments: tutorDashboard.data.upcoming_assignments || [],
+    recentActivity: tutorDashboard.data.recent_activity || []
+  } : {
+    totalCourses: 0,
+    totalStudents: 0,
+    totalAssignments: 0,
+    totalSubmissions: 0,
+    pendingGrading: 0,
+    averageScore: 0,
+    coursesTaught: [],
+    pendingSubmissionsList: [],
+    upcomingAssignments: [],
+    recentActivity: []
+  };
+
   // Enhanced stats from backend analytics
   const stats = [
     {
       icon: BookOpen,
-      title: t('tutor.courses'),
-      value: tutorDashboard?.courses_taught?.toString() || '0',
+      title: t('tutor.stats.courses'),
+      value: transformedTutorData.totalCourses.toString(),
       change: t('tutor.statChanges.coursesTeaching'),
       color: 'blue'
     },
     {
       icon: Users,
-      title: t('tutor.students'),
-      value: tutorDashboard?.total_students?.toString() || '0',
+      title: t('tutor.stats.students'),
+      value: transformedTutorData.totalStudents.toString(),
       change: t('tutor.statChanges.totalEnrolled'),
       color: 'green'
     },
     {
       icon: FileText,
       title: t('tutor.pendingGrading'),
-      value: tutorDashboard?.pending_grading?.toString() || '0',
+      value: transformedTutorData.pendingGrading.toString(),
       change: t('tutor.statChanges.submissionsToGrade'),
       color: 'orange'
     },
     {
       icon: Calendar,
       title: t('tutor.upcomingClasses'),
-      value: tutorDashboard?.upcoming_classes?.toString() || '0',
+      value: transformedTutorData.upcomingAssignments.length.toString(),
       change: t('tutor.statChanges.classesScheduled'),
       color: 'purple'
     }
@@ -439,7 +464,7 @@ const TutorDashboard = () => {
                         {assignment.course?.title || t('tutor.assignments.course')} • {t('tutor.assignments.due')}: {new Date(assignment.due_date).toLocaleDateString()}
                       </p>
                       <p className="text-xs" style={{color: 'var(--text-color)'}}>
-                        {t('tutor.assignments.submissions', { count: assignment.submissions?.length || 0 })} • {t('tutor.assignments.graded', { count: assignment.submissions?.filter(s => s.grade).length || 0 })}
+                        {t('tutor.assignments.stats.submitted', { count: assignment.submissions?.length || 0 })} • {t('tutor.assignments.stats.graded', { count: assignment.submissions?.filter(s => s.grade).length || 0 })}
                       </p>
                     </div>
                     <div className="flex gap-2">
@@ -517,7 +542,7 @@ const TutorDashboard = () => {
                         {new Date(schedule.date).toLocaleDateString()} at {schedule.time}
                       </p>
                       <p className="text-xs" style={{color: 'var(--text-color)'}}>
-                        Room: {schedule.room} • Duration: {schedule.duration} minutes • {schedule.students?.length || 0} students
+                        {t('tutor.schedule.room')}: {schedule.room} • {t('tutor.schedule.duration')}: {schedule.duration} {t('tutor.schedule.minutes')} • {schedule.students?.length || 0} {t('tutor.schedule.students')}
                       </p>
                     </div>
                     <button className="px-3 py-1 text-sm rounded hover:scale-105 transition-all" style={{backgroundColor: 'var(--accent-color)', color: 'var(--primary-color)'}}>
@@ -634,7 +659,7 @@ const TutorDashboard = () => {
                       </div>
                       
                       <div className="text-xs" style={{color: 'var(--text-color)'}}>
-                        {performance.totalAssignments} total assignments • {performance.submittedAssignments} submitted • {performance.gradedAssignments} graded
+                        {performance.totalAssignments} {t('tutor.analytics.totalAssignments')} • {performance.submittedAssignments} {t('tutor.analytics.submittedAssignments')} • {performance.gradedAssignments} {t('tutor.analytics.gradedAssignments')}
                       </div>
                     </div>
                   );

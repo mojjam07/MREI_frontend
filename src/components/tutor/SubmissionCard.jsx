@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import Button from '../ui/Button';
 import { X } from 'lucide-react';
+import { useLanguage } from '../../context/LanguageContext';
 
 const SubmissionCard = ({ submission, onGrade, grading }) => {
   const [showGradeForm, setShowGradeForm] = useState(false);
   const [grade, setGrade] = useState('');
   const [feedback, setFeedback] = useState('');
+  const { t } = useLanguage();
 
   const handleSubmitGrade = async () => {
     try {
@@ -23,13 +25,13 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
       <div className="flex justify-between items-start mb-3">
         <div>
           <h4 className="font-medium text-gray-800">{submission.assignment?.title}</h4>
-          <p className="text-sm text-gray-600">By {submission.student?.username}</p>
+          <p className="text-sm text-gray-600">{t('tutor.submissions.by')} {submission.student?.username}</p>
           <p className="text-xs text-gray-500">
-            Submitted: {new Date(submission.submitted_at).toLocaleDateString()}
+            {t('tutor.submissions.submitted')}: {new Date(submission.submitted_at).toLocaleDateString()}
           </p>
         </div>
         <span className="text-xs bg-orange-100 text-orange-800 px-2 py-1 rounded">
-          Pending
+          {t('tutor.submissions.pending')}
         </span>
       </div>
       
@@ -46,7 +48,7 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
         <div className="mb-3">
           <div className="flex items-center space-x-2 text-sm text-blue-600">
             <span>📎</span>
-            <span>Attachment: {submission.attachment}</span>
+            <span>{t('tutor.submissions.attachment')}: {submission.attachment}</span>
           </div>
         </div>
       )}
@@ -55,7 +57,7 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
         <div className="mt-4 space-y-3 border-t pt-3">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Grade (0-100)
+              {t('tutor.submissions.gradeForm.title')}
             </label>
             <input
               type="number"
@@ -64,20 +66,20 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
               value={grade}
               onChange={(e) => setGrade(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              placeholder="Enter grade"
+              placeholder={t('tutor.submissions.gradeForm.placeholder')}
             />
           </div>
           
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Feedback
+              {t('tutor.submissions.gradeForm.feedback')}
             </label>
             <textarea
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               rows="3"
-              placeholder="Provide feedback to the student"
+              placeholder={t('tutor.submissions.gradeForm.feedbackPlaceholder')}
             />
           </div>
           
@@ -87,7 +89,7 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
               onClick={handleSubmitGrade}
               disabled={!grade || grading}
             >
-              {grading ? 'Grading...' : 'Submit Grade'}
+              {grading ? t('tutor.submissions.grading') : t('tutor.submissions.gradeForm.submitGrade')}
             </Button>
             <Button 
               size="sm" 
@@ -95,7 +97,7 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
               onClick={() => setShowGradeForm(false)}
               disabled={grading}
             >
-              Cancel
+              {t('tutor.submissions.gradeForm.cancel')}
             </Button>
           </div>
         </div>
@@ -106,7 +108,7 @@ const SubmissionCard = ({ submission, onGrade, grading }) => {
           className="w-full"
           disabled={grading}
         >
-          {grading ? 'Grading...' : 'Grade Submission'}
+          {grading ? t('tutor.submissions.grading') : t('tutor.submissions.gradeSubmission')}
         </Button>
       )}
     </div>

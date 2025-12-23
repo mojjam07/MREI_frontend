@@ -93,33 +93,96 @@
     },
 
     "tutor": {
-      "dashboard": "لوحة تحكم المدرس",
-      "welcome": "مرحباً بعودتك",
-      "courses": "الدورات",
-      "students": "الطلاب",
-      "myCourses": "دوراتي",
-      "recentAssignments": "الواجبات الأخيرة",
-      "performance": "الأداء",
-      "manageCourses": "إدارة الدورات",
-      "manageAssignments": "إدارة الواجبات",
-      "pendingGrading": "في انتظار التصحيح",
-      "upcomingClasses": "الحصص القادمة",
-      "studentPerformance": "أداء الطلاب",
-      "classSchedule": "جدول الحصص",
-      "totalGraded": "إجمالي المصحح",
-      "completionRate": "معدل الإكمال",
-      "averageGrade": "متوسط الدرجات",
-      "viewDetails": "عرض التفاصيل",
-      "viewAllSubmissions": "عرض جميع التسليمات",
-      "viewFullSchedule": "عرض الجدول الكامل",
-      "allCaughtUp": "كل شيء محدث!",
-      "noPendingSubmissions": "لا توجد تسليمات معلقة",
-      "noUpcomingClasses": "لا توجد حصص قادمة",
-      "noCoursePerformanceData": "لا توجد بيانات أداء الدورة",
-      "loadingSubmissions": "جاري تحميل التسليمات...",
-      "loadingSchedule": "جاري تحميل الجدول...",
-      "scheduleClasses": "جدول بعض الحصص",
+      "dashboard": "لوحة تحكم المعلم",
       "loadingDashboard": "جاري تحميل لوحة التحكم...",
+      "welcome": {
+        "title": "مرحباً بعودتك، {name}!",
+        "description": "إليك نظرة عامة على أنشطتك التدريسية وتقدم الطلاب."
+      },
+    "statChanges": {
+        "coursesTeaching": "دورات تدريس",
+        "totalEnrolled": "إجمالي المسجلين",
+        "submissionsToGrade": "تسليمات للتصحيح",
+        "classesScheduled": "حصص مجدولة"
+    },
+    "stats": {
+        "courses": "الدورات",
+        "students": "الطلاب"
+    },
+    "pendingGrading": "تصحيح معلق",
+      "upcomingClasses": "الحصص القادمة",
+      "quickActions": {
+        "title": "إجراءات سريعة",
+        "createAssignment": "إنشاء واجب",
+        "gradeSubmissions": "تصحيح التسليمات",
+        "scheduleClass": "جدولة حصة"
+      },
+      "courses": {
+        "title": "دوراتي",
+        "manageCourses": "إدارة الدورات",
+        "loading": "جاري تحميل الدورات...",
+        "noCourses": "لم يتم تعيين دورات بعد",
+        "viewDetails": "عرض التفاصيل",
+        "edit": "تعديل",
+        "enrolledStudents": "الطلاب المسجلون: {count}",
+        "course": "الدورة"
+      },
+      "assignments": {
+        "title": "الواجبات",
+        "createAssignment": "إنشاء واجب",
+        "loading": "جاري تحميل الواجبات...",
+        "noAssignments": "لم يتم إنشاء واجبات بعد",
+        "view": "عرض",
+        "edit": "تعديل",
+        "course": "الدورة",
+        "due": "مستحق",
+        "submissions": "التسليمات",
+        "graded": "مصحح"
+      },
+      "submissions": {
+        "title": "التسليمات",
+        "loading": "جاري تحميل التسليمات...",
+        "noPending": "لا توجد تسليمات معلقة",
+        "allCaughtUp": "أنت على اطلاع بكل شيء!",
+        "course": "الدورة",
+        "time": "الوقت",
+        "room": "القاعة"
+      },
+      "schedule": {
+        "title": "جدول الحصص",
+        "scheduleClass": "جدولة حصة",
+        "loading": "جاري تحميل الجدول...",
+        "noUpcoming": "لا توجد حصص قادمة",
+        "scheduleSome": "جدول بعض الحصص للبدء",
+        "viewDetails": "عرض التفاصيل",
+        "course": "الدورة",
+        "time": "الوقت",
+        "room": "القاعة"
+      },
+      "students": {
+        "management": "إدارة الطلاب",
+        "enrolledStudents": "الطلاب المسجلون: {count}",
+        "more": "+{count} المزيد",
+        "noStudents": "لا يوجد طلاب مسجلون",
+        "quickActions": "إجراءات سريعة",
+        "viewAll": "عرض الكل",
+        "sendMessage": "إرسال رسالة",
+        "noCourses": "لم يتم تعيين دورات",
+        "course": "الدورة",
+        "time": "الوقت",
+        "room": "القاعة"
+      },
+      "analytics": {
+        "title": "تحليلات الطلاب",
+        "averageGrade": "متوسط الدرجات",
+        "completionRate": "معدل الإكمال",
+        "graded": "مصحح",
+        "assignmentProgress": "تقدم الواجبات",
+        "noData": "لا توجد بيانات تحليلية",
+        "course": "الدورة",
+        "time": "الوقت",
+        "room": "القاعة"
+      },
       "tabs": {
         "overview": "نظرة عامة",
         "courses": "الدورات",
@@ -128,41 +191,7 @@
         "schedule": "الجدول",
         "students": "الطلاب",
         "analytics": "التحليلات"
-      },
-      "welcome": {
-        "title": "مرحباً بعودتك، {name}!",
-        "description": "إليك نظرة عامة على أنشطتك التدريسية وتقدم الطلاب."
-      },
-      "statChanges": {
-        "coursesTeaching": "دورات يتم تدريسها",
-        "totalEnrolled": "إجمالي المسجلين",
-        "submissionsToGrade": "تسليمات للتصحيح",
-        "classesScheduled": "حصص مجدولة"
-      },
-      "quickActions": "الإجراءات السريعة",
-      "createAssignment": "إنشاء واجب",
-      "gradeSubmissions": "تصحيح التسليمات",
-      "scheduleClass": "جدولة حصة",
-      "loadingCourses": "جاري تحميل الدورات...",
-      "studentsEnrolled": "طلاب مسجلون",
-      "edit": "تعديل",
-      "noCoursesAssigned": "لا توجد دورات معينة",
-      "assignments": "الواجبات",
-      "loadingAssignments": "جاري تحميل الواجبات...",
-      "submissionsGraded": "تسليمات • مصححة",
-      "view": "عرض",
-      "noAssignmentsCreated": "لم يتم إنشاء واجبات",
-      "pendingSubmissions": "التسليمات المعلقة",
-      "studentManagement": "إدارة الطلاب",
-      "enrolledStudents": "الطلاب المسجلون ({count})",
-      "noStudentsEnrolled": "لا يوجد طلاب مسجلون",
-      "viewAllStudents": "عرض جميع الطلاب",
-      "sendMessage": "إرسال رسالة",
-      "noCoursesForStudents": "لا توجد دورات لعرض الطلاب لها",
-      "studentPerformanceAnalytics": "تحليلات أداء الطلاب",
-      "assignmentProgress": "تقدم الواجب",
-      "totalSubmittedGraded": "{total} إجمالي الواجبات • {submitted} تم التسليم • {graded} تم التصحيح",
-      "roomDurationStudents": "القاعة: {room} • المدة: {duration} دقائق • {students} طلاب"
+      }
     },
 
     "nav": {

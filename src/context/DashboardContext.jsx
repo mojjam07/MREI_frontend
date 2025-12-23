@@ -440,10 +440,16 @@ export const DashboardProvider = ({ children }) => {
       } catch (error) {
         console.warn(`Tutor dashboard endpoint not available: ${error.message}. Returning default data.`);
         return {
-          total_courses: 0,
-          total_students: 0,
-          pending_assignments: 0,
-          recent_submissions: []
+          data: {
+            statistics: {
+              total_courses: 0,
+              total_students: 0,
+              total_assignments: 0,
+              total_submissions: 0,
+              pending_submissions: 0,
+              average_score: 0
+            }
+          }
         }; // Fallback for missing endpoint
       }
     },

@@ -226,8 +226,12 @@ const translations = {
     tutor: {
       dashboard: 'Tutor Dashboard',
       loadingDashboard: 'Loading dashboard...',
+      stats: {
+        courses: 'Courses',
+        students: 'Students'
+      },
       welcome: {
-        title: 'Welcome back, {name}!',
+        title: 'Welcome back, Ustadh {name}!',
         description: 'Here\'s an overview of your teaching activities and student progress.'
       },
       statChanges: {
@@ -264,7 +268,12 @@ const translations = {
         course: 'Course',
         due: 'Due',
         submissions: 'Submissions',
-        graded: 'Graded'
+        graded: 'Graded',
+        stats: {
+          total: 'total assignments',
+          submitted: 'submitted assignments',
+          graded: 'graded assignments'
+        }
       },
       submissions: {
         title: 'Submissions',
@@ -273,7 +282,21 @@ const translations = {
         allCaughtUp: 'You\'re all caught up!',
         course: 'Course',
         time: 'Time',
-        room: 'Room'
+        room: 'Room',
+        pending: 'Pending',
+        by: 'By',
+        submitted: 'Submitted',
+        gradeSubmission: 'Grade Submission',
+        grading: 'Grading...',
+        gradeForm: {
+          title: 'Grade (0-100)',
+          placeholder: 'Enter grade',
+          feedback: 'Feedback',
+          feedbackPlaceholder: 'Provide feedback to the student',
+          submitGrade: 'Submit Grade',
+          cancel: 'Cancel'
+        },
+        attachment: 'Attachment'
       },
       schedule: {
         title: 'Class Schedule',
@@ -284,7 +307,10 @@ const translations = {
         viewDetails: 'View Details',
         course: 'Course',
         time: 'Time',
-        room: 'Room'
+        room: 'Room',
+        duration: 'Duration',
+        minutes: 'minutes',
+        students: 'students'
       },
       students: {
         management: 'Student Management',
@@ -308,7 +334,10 @@ const translations = {
         noData: 'No analytics data available',
         course: 'Course',
         time: 'Time',
-        room: 'Room'
+        room: 'Room',
+        totalAssignments: 'total assignments',
+        submittedAssignments: 'submitted assignments',
+        gradedAssignments: 'graded assignments'
       },
       tabs: {
         overview: 'Overview',
@@ -974,8 +1003,12 @@ const translations = {
     tutor: {
       dashboard: 'لوحة تحكم المعلم',
       loadingDashboard: 'جاري تحميل لوحة التحكم...',
+      stats: {
+        courses: 'الدورات',
+        students: 'الطلاب'
+      },
       welcome: {
-        title: 'مرحباً بعودتك، {name}!',
+        title: 'مرحباً بعودتك يا أستاذ، {name}!',
         description: 'إليك نظرة عامة على أنشطتك التدريسية وتقدم الطلاب.'
       },
       statChanges: {
@@ -1021,7 +1054,21 @@ const translations = {
         allCaughtUp: 'أنت على اطلاع بكل شيء!',
         course: 'الدورة',
         time: 'الوقت',
-        room: 'القاعة'
+        room: 'القاعة',
+        pending: 'معلق',
+        by: 'بواسطة',
+        submitted: 'مُسلم',
+        gradeSubmission: 'تصحيح التسليم',
+        grading: 'جاري التصحيح...',
+        gradeForm: {
+          title: 'الدرجة (0-100)',
+          placeholder: 'أدخل الدرجة',
+          feedback: 'التعليق',
+          feedbackPlaceholder: 'قدم تعليقات للطالب',
+          submitGrade: 'إرسال الدرجة',
+          cancel: 'إلغاء'
+        },
+        attachment: 'مرفق'
       },
       schedule: {
         title: 'جدول الحصص',
@@ -1032,7 +1079,10 @@ const translations = {
         viewDetails: 'عرض التفاصيل',
         course: 'الدورة',
         time: 'الوقت',
-        room: 'القاعة'
+        room: 'القاعة',
+        duration: 'المدة',
+        minutes: 'دقيقة',
+        students: 'طلاب'
       },
       students: {
         management: 'إدارة الطلاب',
@@ -1056,7 +1106,10 @@ const translations = {
         noData: 'لا توجد بيانات تحليلية',
         course: 'الدورة',
         time: 'الوقت',
-        room: 'القاعة'
+        room: 'القاعة',
+        totalAssignments: 'إجمالي الواجبات',
+        submittedAssignments: 'الواجبات المسلمة',
+        gradedAssignments: 'الواجبات المصححة'
       },
       tabs: {
         overview: 'نظرة عامة',
