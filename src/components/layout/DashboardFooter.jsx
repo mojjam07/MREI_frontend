@@ -48,7 +48,7 @@ const DashboardFooter = () => {
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-lg flex items-center justify-center" style={{backgroundColor: 'var(--primary-color)'}}>
-                <span className="text-white font-bold text-sm">U</span>
+                <span className="text-white font-bold text-sm">R</span>
               </div>
               <h3 className="font-semibold text-lg" style={{color: 'var(--light-text)'}}>{t('dashboardFooter.university.name')}</h3>
             </div>
@@ -88,16 +88,18 @@ const DashboardFooter = () => {
                 <User className="w-4 h-4" />
                 {t('dashboardFooter.quickLinks.dashboard')}
               </button>
-              <button
-                onClick={() => handleNavClick('/library')}
-                className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
-                style={{color: 'var(--light-text)'}}
-                onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
-                onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
-              >
-                <BookOpen className="w-4 h-4" />
-                {t('dashboardFooter.quickLinks.library')}
-              </button>
+              {user && (
+                <button
+                  onClick={() => handleNavClick('/library')}
+                  className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"
+                  style={{color: 'var(--light-text)'}}
+                  onMouseEnter={(e) => e.target.style.color = 'var(--primary-color)'}
+                  onMouseLeave={(e) => e.target.style.color = 'var(--light-text)'}
+                >
+                  <BookOpen className="w-4 h-4" />
+                  {t('dashboardFooter.quickLinks.library')}
+                </button>
+              )}
               <button
                 onClick={() => handleNavClick('/profile')}
                 className="flex items-center gap-2 text-sm hover:scale-105 transition-all w-full text-left"

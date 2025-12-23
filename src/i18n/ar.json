@@ -588,6 +588,93 @@
         "selectYear": "اختر السنة"
     },
 
+    "admin": {
+      "dashboard": "لوحة تحكم المدير",
+      "welcome": "مرحباً بعودتك",
+      "statisticsManagement": "إدارة الإحصائيات",
+      "activeStudents": "الطلاب النشطون",
+      "courses": "الدورات",
+      "successRate": "معدل النجاح (%)",
+      "tutors": "المدرسون",
+      "editStatistics": "تعديل الإحصائيات",
+      "saveStatistics": "حفظ الإحصائيات",
+      "saving": "جاري الحفظ...",
+      "cancel": "إلغاء",
+      "newsManagement": "إدارة الأخبار",
+      "eventsManagement": "إدارة الأحداث",
+      "testimonialsManagement": "إدارة الشهادات",
+      "campusLifeManagement": "إدارة الحياة الجامعية",
+      "studentsManagement": "إدارة الطلاب",
+      "tutorsManagement": "إدارة المدرسين",
+      "booksManagement": "إدارة الرف الرقمي",
+      "testimonialApproval": "موافقة الشهادات",
+      "contactMessages": "رسائل التواصل",
+      "loadingDashboard": "جاري تحميل لوحة تحكم المدير...",
+      "form": {
+        "labels": {
+          "title": "العنوان",
+          "description": "الوصف",
+          "content": "المحتوى",
+          "authorTitle": "عنوان المؤلف",
+          "eventDate": "تاريخ الحدث",
+          "location": "الموقع",
+          "videoId": "معرف فيديو يوتيوب",
+          "image": "الصورة"
+        },
+        "placeholders": {
+          "userId": "أدخل معرف المستخدم",
+          "studentNumber": "STU000001",
+          "courseOfStudy": "علوم الحاسوب",
+          "staffNumber": "TUT000001",
+          "subjects": "بايثون، جافا سكريبت، هياكل البيانات",
+          "bio": "وصف مختصر عن المدرس..."
+        }
+      },
+      "messages": {
+        "loadingContent": "جاري تحميل {type}...",
+        "addFirstContent": "أضف {type} الأول!",
+        "statsUpdated": "تم تحديث الإحصائيات بنجاح!",
+        "statsUpdateFailed": "فشل في تحديث الإحصائيات",
+        "announcementSaved": "تم حفظ {type} بنجاح!",
+        "announcementDeleted": "تم حذف {type} بنجاح!",
+        "studentCreated": "تم إنشاء الطالب بنجاح!",
+        "studentUpdated": "تم تحديث الطالب بنجاح!",
+        "studentDeleted": "تم حذف الطالب بنجاح!",
+        "tutorCreated": "تم إنشاء المدرس بنجاح!",
+        "tutorUpdated": "تم تحديث المدرس بنجاح!",
+        "tutorDeleted": "تم حذف المدرس بنجاح!",
+        "bookCreated": "تم إنشاء الكتاب بنجاح!",
+        "bookUpdated": "تم تحديث الكتاب بنجاح!",
+        "bookDeleted": "تم حذف الكتاب بنجاح!",
+        "failedToSaveStudent": "فشل في حفظ الطالب",
+        "failedToSaveTutor": "فشل في حفظ المدرس",
+        "failedToSaveBook": "فشل في حفظ الكتاب",
+        "failedToDeleteStudent": "فشل في حذف الطالب",
+        "failedToDeleteTutor": "فشل في حذف المدرس",
+        "failedToDeleteBook": "فشل في حذف الكتاب",
+        "testimonialApproved": "تمت الموافقة على الشهادة بنجاح!",
+        "testimonialUnapproved": "تم إلغاء موافقة الشهادة بنجاح!",
+        "testimonialToggled": "تم تبديل موافقة الشهادة بنجاح!",
+        "messageMarkedRead": "تم وضع علامة مقروء على الرسالة!",
+        "messageMarkedReplied": "تم وضع علامة تم الرد على الرسالة!",
+        "messageDeleted": "تم حذف الرسالة بنجاح!"
+      },
+        "buttons": {
+            "saving": "جاري الحفظ...",
+            "cancel": "إلغاء",
+            "save": "حفظ",
+            "saveStudent": "حفظ الطالب",
+            "saveTutor": "حفظ المدرس",
+            "saveBook": "حفظ الكتاب",
+            "addNewStudent": "إضافة طالب جديد",
+            "addNewTutor": "إضافة مدرس جديد",
+            "addNewBook": "إضافة كتاب جديد",
+            "editStudent": "تعديل الطالب",
+            "editTutor": "تعديل المدرس",
+            "editBook": "تعديل الكتاب"
+        }
+    },
+
     "dashboardFooter": {
         "confirm": {
             "logout": "هل أنت متأكد من رغبتك في تسجيل الخروج؟"

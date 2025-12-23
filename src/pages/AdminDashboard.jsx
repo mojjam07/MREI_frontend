@@ -1,12 +1,15 @@
 
 import React, { useState } from 'react';
 import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 import { useDashboard } from '../context/DashboardContext';
 import DataTable from '../components/ui/DataTable';
 import DashboardFooter from '../components/layout/DashboardFooter';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
+import LanguageSwitcher from '../components/layout/LanguageSwitcher';
 
 const AdminDashboard = () => {
+  const { t } = useLanguage();
 
   const [activeTab, setActiveTab] = useState('stats');
   const [editingStats, setEditingStats] = useState(false);
@@ -86,22 +89,22 @@ const AdminDashboard = () => {
         if (bookData.id) {
           await updateBook({ id: bookData.id, data: formData });
           // Show success notification
-          setNotification({ message: 'Book updated successfully!', type: 'success' });
+          setNotification({ message: t('admin.messages.bookUpdated'), type: 'success' });
         } else {
           await createBook(formData);
           // Show success notification
-          setNotification({ message: 'Book created successfully!', type: 'success' });
+          setNotification({ message: t('admin.messages.bookCreated'), type: 'success' });
         }
       } else {
         // Handle text-only updates (no file changes)
         if (bookData.id) {
           await updateBook({ id: bookData.id, data: bookData });
           // Show success notification
-          setNotification({ message: 'Book updated successfully!', type: 'success' });
+          setNotification({ message: t('admin.messages.bookUpdated'), type: 'success' });
         } else {
           await createBook(bookData);
           // Show success notification
-          setNotification({ message: 'Book created successfully!', type: 'success' });
+          setNotification({ message: t('admin.messages.bookCreated'), type: 'success' });
         }
       }
       
@@ -118,20 +121,20 @@ const AdminDashboard = () => {
       });
     } catch (error) {
       console.error('Error saving book:', error);
-      setNotification({ message: 'Failed to save book. Please try again.', type: 'error' });
+      setNotification({ message: t('admin.messages.failedToSaveBook'), type: 'error' });
     }
   };
 
 
   const handleBookDelete = async (book) => {
-    if (window.confirm(`Are you sure you want to delete book "${book.title}"?`)) {
+    if (window.confirm(`${t('admin.messages.confirmDeleteBook')} "${book.title}"?`)) {
       try {
         await deleteBook(book.id);
         // Show success notification
-        setNotification({ message: 'Book deleted successfully!', type: 'success' });
+        setNotification({ message: t('admin.messages.bookDeleted'), type: 'success' });
       } catch (error) {
         console.error('Error deleting book:', error);
-        setNotification({ message: 'Failed to delete book. Please try again.', type: 'error' });
+        setNotification({ message: t('admin.messages.failedToDeleteBook'), type: 'error' });
       }
     }
   };
@@ -146,11 +149,11 @@ const AdminDashboard = () => {
     return (
       <div className="bg-gray-50 rounded-lg p-6 mb-6">
         <h3 className="text-xl font-semibold mb-4">
-          {isEditing ? 'Edit Book' : 'Add New Book'}
+          {isEditing ? t('admin.buttons.editBook') : t('admin.buttons.addNewBook')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2">Title</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.title')}</label>
             <input
               type="text"
               value={isEditing ? currentForm.title : bookForm.title}
@@ -162,11 +165,11 @@ const AdminDashboard = () => {
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              placeholder="Enter book title"
+              placeholder={t('form.placeholders.title')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Author</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.author')}</label>
             <input
               type="text"
               value={isEditing ? currentForm.author : bookForm.author}
@@ -178,11 +181,11 @@ const AdminDashboard = () => {
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              placeholder="Enter author name"
+              placeholder={t('form.placeholders.author')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Genre</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.genre')}</label>
             <input
               type="text"
               value={isEditing ? currentForm.genre : bookForm.genre}
@@ -194,11 +197,11 @@ const AdminDashboard = () => {
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              placeholder="Enter genre"
+              placeholder={t('form.placeholders.genre')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">Publication Year</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.publicationYear')}</label>
             <input
               type="number"
               value={isEditing ? currentForm.publication_year : bookForm.publication_year}
@@ -211,14 +214,14 @@ const AdminDashboard = () => {
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              placeholder="2024"
+              placeholder={t('labels.year')}
               min="1000"
               max="2030"
             />
           </div>
 
           <div>
-            <label className="block text-sm font-medium mb-2">Cover Image</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.coverImage')}</label>
             <input
               type="file"
               accept="image/*"
@@ -235,12 +238,12 @@ const AdminDashboard = () => {
             {(isEditing ? currentForm.cover_image : bookForm.cover_image) &&
              typeof (isEditing ? currentForm.cover_image : bookForm.cover_image) === 'object' && (
               <p className="text-sm mt-1 text-gray-600">
-                Selected: {(isEditing ? currentForm.cover_image : bookForm.cover_image).name}
+                {t('admin.labels.selected')}: {(isEditing ? currentForm.cover_image : bookForm.cover_image).name}
               </p>
             )}
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2">PDF File</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.pdfFile')}</label>
             <input
               type="file"
               accept=".pdf"
@@ -257,12 +260,12 @@ const AdminDashboard = () => {
             {(isEditing ? currentForm.pdf_file : bookForm.pdf_file) &&
              typeof (isEditing ? currentForm.pdf_file : bookForm.pdf_file) === 'object' && (
               <p className="text-sm mt-1 text-gray-600">
-                Selected: {(isEditing ? currentForm.pdf_file : bookForm.pdf_file).name}
+                {t('admin.labels.selected')}: {(isEditing ? currentForm.pdf_file : bookForm.pdf_file).name}
               </p>
             )}
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-2">Description</label>
+            <label className="block text-sm font-medium mb-2">{t('admin.labels.description')}</label>
             <textarea
               value={isEditing ? currentForm.description : bookForm.description}
               onChange={(e) => {
@@ -274,7 +277,7 @@ const AdminDashboard = () => {
               }}
               rows="3"
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              placeholder="Enter book description"
+              placeholder={t('form.placeholders.description')}
             ></textarea>
           </div>
         </div>
@@ -297,7 +300,7 @@ const AdminDashboard = () => {
             className="bg-success text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2"
           >
             <Save className="w-4 h-4" />
-            {(creatingBook || updatingBook) ? 'Saving...' : 'Save Book'}
+            {(creatingBook || updatingBook) ? t('admin.buttons.saving') : t('admin.buttons.saveBook')}
           </button>
           <button
             onClick={() => {
@@ -316,7 +319,7 @@ const AdminDashboard = () => {
             className="bg-gray-500 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition-colors flex items-center gap-2"
           >
             <X className="w-4 h-4" />
-            Cancel
+            {t('admin.buttons.cancel')}
           </button>
         </div>
       </div>
@@ -396,10 +399,10 @@ const AdminDashboard = () => {
       await updateStats(tempStats);
       setEditingStats(false);
       setTempStats({});
-      alert('Stats updated successfully!');
+      setNotification({ message: t('admin.messages.statsUpdated'), type: 'success' });
     } catch (error) {
       console.error('Error updating stats:', error);
-      alert('Failed to update stats');
+      setNotification({ message: t('admin.messages.statsUpdateFailed'), type: 'error' });
     }
   };
 
@@ -453,23 +456,23 @@ const AdminDashboard = () => {
       setEditingItem(null);
       setIsAddingNew(false);
       setNewItem({});
-      alert(`${type.charAt(0).toUpperCase() + type.slice(1)} saved successfully!`);
+      setNotification({ message: t('admin.messages.announcementSaved', { type }), type: 'success' });
     } catch (error) {
       console.error('Error saving announcement:', error);
-      alert('Failed to save announcement');
+      setNotification({ message: t('admin.messages.announcementSaveFailed', { type }), type: 'error' });
     }
   };
 
 
   // Handle announcement delete
   const handleAnnouncementDelete = async (type, item) => {
-    if (window.confirm(`Are you sure you want to delete this ${type}?`)) {
+    if (window.confirm(t('admin.confirmation.deleteAnnouncement', { type }))) {
       try {
         await deleteAnnouncement({ type, id: item.id });
-        alert(`${type.charAt(0).toUpperCase() + type.slice(1)} deleted successfully!`);
+        setNotification({ message: t('admin.messages.announcementDeleted', { type }), type: 'success' });
       } catch (error) {
         console.error('Error deleting announcement:', error);
-        alert('Failed to delete announcement');
+        setNotification({ message: t('admin.messages.announcementDeleteFailed', { type }), type: 'error' });
       }
     }
   };
@@ -479,10 +482,10 @@ const AdminDashboard = () => {
     try {
       if (studentData.id) {
         await updateStudent({ id: studentData.id, data: studentData });
-        alert('Student updated successfully!');
+        setNotification({ message: t('admin.messages.studentUpdated'), type: 'success' });
       } else {
         await createStudent(studentData);
-        alert('Student created successfully!');
+        setNotification({ message: t('admin.messages.studentCreated'), type: 'success' });
       }
       setEditingStudent(null);
       setAddingStudent(false);
@@ -495,18 +498,20 @@ const AdminDashboard = () => {
       });
     } catch (error) {
       console.error('Error saving student:', error);
-      alert('Failed to save student');
+      setNotification({ message: t('admin.messages.studentSaveFailed'), type: 'error' });
     }
   };
 
   const handleStudentDelete = async (student) => {
-    if (window.confirm(`Are you sure you want to delete student ${student.user?.username || student.student_number}?`)) {
+    if (window.confirm(t('admin.confirmation.deleteStudent', { 
+      name: student.user?.username || student.student_number 
+    }))) {
       try {
         await deleteStudent(student.id);
-        alert('Student deleted successfully!');
+        setNotification({ message: t('admin.messages.studentDeleted'), type: 'success' });
       } catch (error) {
         console.error('Error deleting student:', error);
-        alert('Failed to delete student');
+        setNotification({ message: t('admin.messages.studentDeleteFailed'), type: 'error' });
       }
     }
   };
@@ -516,10 +521,10 @@ const AdminDashboard = () => {
     try {
       if (tutorData.id) {
         await updateTutor({ id: tutorData.id, data: tutorData });
-        alert('Tutor updated successfully!');
+        setNotification({ message: t('admin.messages.tutorUpdated'), type: 'success' });
       } else {
         await createTutor(tutorData);
-        alert('Tutor created successfully!');
+        setNotification({ message: t('admin.messages.tutorCreated'), type: 'success' });
       }
       setEditingTutor(null);
       setAddingTutor(false);
@@ -532,18 +537,20 @@ const AdminDashboard = () => {
       });
     } catch (error) {
       console.error('Error saving tutor:', error);
-      alert('Failed to save tutor');
+      setNotification({ message: t('admin.messages.tutorSaveFailed'), type: 'error' });
     }
   };
 
   const handleTutorDelete = async (tutor) => {
-    if (window.confirm(`Are you sure you want to delete tutor ${tutor.user?.username || tutor.staff_number}?`)) {
+    if (window.confirm(t('admin.confirmation.deleteTutor', { 
+      name: tutor.user?.username || tutor.staff_number 
+    }))) {
       try {
         await deleteTutor(tutor.id);
-        alert('Tutor deleted successfully!');
+        setNotification({ message: t('admin.messages.tutorDeleted'), type: 'success' });
       } catch (error) {
         console.error('Error deleting tutor:', error);
-        alert('Failed to delete tutor');
+        setNotification({ message: t('admin.messages.tutorDeleteFailed'), type: 'error' });
       }
     }
   };
@@ -552,11 +559,11 @@ const AdminDashboard = () => {
   // Stats Management Component
   const renderStatsManager = () => (
     <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
-      <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>Statistics Management</h2>
+      <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('admin.statisticsManagement')}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
         <div>
-          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Active Students</label>
+          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.activeStudents')}</label>
           <input
             type="number"
             value={editingStats ? tempStats?.active_students : stats?.active_students || 0}
@@ -571,7 +578,7 @@ const AdminDashboard = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Courses</label>
+          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.courses')}</label>
           <input
             type="number"
             value={editingStats ? tempStats?.courses : stats?.courses || 0}
@@ -586,7 +593,7 @@ const AdminDashboard = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Success Rate (%)</label>
+          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.successRate')}</label>
           <input
             type="number"
             value={editingStats ? tempStats?.success_rate : stats?.success_rate || 0}
@@ -601,7 +608,7 @@ const AdminDashboard = () => {
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Tutors</label>
+          <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.tutors')}</label>
           <input
             type="number"
             value={editingStats ? tempStats?.tutors : stats?.tutors || 0}
@@ -625,7 +632,7 @@ const AdminDashboard = () => {
             style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
           >
             <Edit2 className="w-4 h-4" />
-            Edit Statistics
+            {t('admin.editStatistics')}
           </button>
         ) : (
           <>
@@ -644,7 +651,7 @@ const AdminDashboard = () => {
               style={{backgroundColor: 'var(--secondary-color)', color: 'var(--light-text)'}}
             >
               <X className="w-4 h-4" />
-              Cancel
+              {t('admin.cancel')}
             </button>
           </>
         )}
@@ -853,7 +860,7 @@ const AdminDashboard = () => {
     return (
       <div className="rounded-lg p-4 mb-4 border-2 hover-lift" style={{borderColor: 'var(--primary-color)', backgroundColor: 'var(--accent-color)'}}>
         <h3 className="text-lg font-semibold mb-4" style={{color: 'var(--primary-color)'}}>
-          {isEditing ? 'Edit Student' : 'Add New Student'}
+          {isEditing ? t('admin.buttons.editStudent') : t('admin.buttons.addNewStudent')}
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -1301,11 +1308,14 @@ const AdminDashboard = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <LayoutDashboard className="w-8 h-8" style={{color: 'var(--tertiary-color)'}} />
-              <h1 className="text-2xl font-bold" style={{color: 'var(--light-text)'}}>Admin Dashboard</h1>
+              <h1 className="text-2xl font-bold" style={{color: 'var(--light-text)'}}>{t('admin.dashboard')}</h1>
             </div>
-            <button className="p-2 rounded-lg transition-all hover:scale-105 hover-glow" style={{color: 'var(--tertiary-color)'}}>
-              <Settings className="w-5 h-5" />
-            </button>
+            <div className="flex items-center gap-3">
+              <LanguageSwitcher />
+              <button className="p-2 rounded-lg transition-all hover:scale-105 hover-glow" style={{color: 'var(--tertiary-color)'}}>
+                <Settings className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
       </header>
@@ -1344,7 +1354,7 @@ const AdminDashboard = () => {
             }}
           >
             <BarChart3 className="w-4 h-4" />
-            Statistics
+            {t('admin.tabs.stats')}
           </button>
 
           <button
@@ -1370,7 +1380,7 @@ const AdminDashboard = () => {
             }}
           >
             <Newspaper className="w-4 h-4" />
-            News
+            {t('admin.tabs.news')}
           </button>
           <button
             onClick={() => setActiveTab('events')}
@@ -1395,7 +1405,7 @@ const AdminDashboard = () => {
             }}
           >
             <Calendar className="w-4 h-4" />
-            Events
+            {t('admin.tabs.events')}
           </button>
           <button
             onClick={() => setActiveTab('testimonials')}
@@ -1420,7 +1430,7 @@ const AdminDashboard = () => {
             }}
           >
             <MessageSquare className="w-4 h-4" />
-            Testimonials
+            {t('admin.tabs.testimonials')}
           </button>
           <button
             onClick={() => setActiveTab('campus-life')}
@@ -1445,7 +1455,7 @@ const AdminDashboard = () => {
             }}
           >
             <Camera className="w-4 h-4" />
-            Campus Life
+            {t('admin.tabs.campusLife')}
           </button>
           <button
             onClick={() => setActiveTab('students')}
@@ -1470,7 +1480,7 @@ const AdminDashboard = () => {
             }}
           >
             <Users className="w-4 h-4" />
-            Students
+            {t('admin.tabs.students')}
           </button>
 
 
@@ -1497,7 +1507,7 @@ const AdminDashboard = () => {
             }}
           >
             <GraduationCap className="w-4 h-4" />
-            Tutors
+            {t('admin.tabs.tutors')}
           </button>
           <button
             onClick={() => setActiveTab('books')}
@@ -1522,7 +1532,7 @@ const AdminDashboard = () => {
             }}
           >
             <Camera className="w-4 h-4" />
-            Books
+            {t('admin.tabs.books')}
           </button>
           <button
             onClick={() => setActiveTab('testimonial-approval')}
@@ -1547,7 +1557,7 @@ const AdminDashboard = () => {
             }}
           >
             <Award className="w-4 h-4" />
-            Testimonial Approval
+            {t('admin.tabs.testimonialApproval')}
             {pendingTestimonials && pendingTestimonials.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 {pendingTestimonials.length}
@@ -1577,7 +1587,7 @@ const AdminDashboard = () => {
             }}
           >
             <MessageSquare className="w-4 h-4" />
-            Contact Messages
+            {t('admin.tabs.contactMessages')}
             {unreadMessages && unreadMessages.length > 0 && (
               <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                 {unreadMessages.length}
@@ -1600,7 +1610,7 @@ const AdminDashboard = () => {
         {activeTab === 'testimonial-approval' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Testimonial Approval</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('admin.sections.testimonialApproval')}</h2>
               {pendingTestimonials && pendingTestimonials.length > 0 && (
                 <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}>
                   {pendingTestimonials.length} pending approval{pendingTestimonials.length !== 1 ? 's' : ''}
@@ -1647,10 +1657,10 @@ const AdminDashboard = () => {
                           onClick={async () => {
                             try {
                               await approveTestimonial(testimonial.id);
-                              alert('Testimonial approved successfully!');
+                              setNotification({ message: t('admin.messages.testimonialApproved'), type: 'success' });
                             } catch (error) {
                               console.error('Error approving testimonial:', error);
-                              alert('Failed to approve testimonial');
+                              setNotification({ message: t('admin.messages.testimonialApproveFailed'), type: 'error' });
                             }
                           }}
                           disabled={approvingTestimonial}
@@ -1658,16 +1668,16 @@ const AdminDashboard = () => {
                           style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}
                         >
                           <Award className="w-4 h-4" />
-                          {approvingTestimonial ? 'Approving...' : 'Approve'}
+                        {approvingTestimonial ? t('admin.buttons.approving') : t('admin.buttons.approve')}
                         </button>
                         <button
                           onClick={async () => {
                             try {
                               await unapproveTestimonial(testimonial.id);
-                              alert('Testimonial unapproved successfully!');
+                              setNotification({ message: t('admin.messages.testimonialUnapproved'), type: 'success' });
                             } catch (error) {
                               console.error('Error unapproving testimonial:', error);
-                              alert('Failed to unapprove testimonial');
+                              setNotification({ message: t('admin.messages.testimonialUnapproveFailed'), type: 'error' });
                             }
                           }}
                           disabled={unapprovingTestimonial}
@@ -1675,16 +1685,16 @@ const AdminDashboard = () => {
                           style={{backgroundColor: 'var(--secondary-color)', color: 'var(--light-text)'}}
                         >
                           <X className="w-4 h-4" />
-                          {unapprovingTestimonial ? 'Unapproving...' : 'Unapprove'}
+                          {unapprovingTestimonial ? t('admin.buttons.unapproving') : t('admin.buttons.unapprove')}
                         </button>
                         <button
                           onClick={async () => {
                             try {
                               await toggleTestimonialApproval(testimonial.id);
-                              alert('Testimonial approval toggled successfully!');
+                              setNotification({ message: t('admin.messages.testimonialToggled'), type: 'success' });
                             } catch (error) {
                               console.error('Error toggling testimonial approval:', error);
-                              alert('Failed to toggle testimonial approval');
+                              setNotification({ message: t('admin.messages.testimonialToggleFailed'), type: 'error' });
                             }
                           }}
                           disabled={togglingTestimonialApproval}
@@ -1692,7 +1702,7 @@ const AdminDashboard = () => {
                           style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
                         >
                           <Edit2 className="w-4 h-4" />
-                          {togglingTestimonialApproval ? 'Toggling...' : 'Toggle'}
+                          {togglingTestimonialApproval ? t('admin.buttons.toggling') : t('admin.buttons.toggle')}
                         </button>
                       </div>
                     </div>
@@ -1713,7 +1723,7 @@ const AdminDashboard = () => {
         {activeTab === 'contact-messages' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Contact Messages</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('admin.sections.contactMessages')}</h2>
               {unreadMessages && unreadMessages.length > 0 && (
                 <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}>
                   {unreadMessages.length} unread message{unreadMessages.length !== 1 ? 's' : ''}
@@ -1741,7 +1751,7 @@ const AdminDashboard = () => {
                               backgroundColor: !message.read ? 'var(--error-color)' : 'var(--tertiary-color)',
                               color: !message.read ? 'var(--light-text)' : 'var(--primary-color)'
                             }}>
-                              {!message.read ? 'Unread' : 'Read'}
+                              {!message.read ? t('admin.status.unread') : t('admin.status.read')}
                             </span>
                             <span className="text-xs" style={{color: 'var(--text-color)'}}>
                               {new Date(message.created_at).toLocaleDateString()}
@@ -1768,10 +1778,10 @@ const AdminDashboard = () => {
                             onClick={async () => {
                               try {
                                 await markMessageRead(message.id);
-                                alert('Message marked as read!');
+                                setNotification({ message: t('admin.messages.messageMarkedRead'), type: 'success' });
                               } catch (error) {
                                 console.error('Error marking message as read:', error);
-                                alert('Failed to mark message as read');
+                                setNotification({ message: t('admin.messages.messageMarkReadFailed'), type: 'error' });
                               }
                             }}
                             disabled={markingMessageRead}
@@ -1787,10 +1797,10 @@ const AdminDashboard = () => {
                             onClick={async () => {
                               try {
                                 await markMessageReplied(message.id);
-                                alert('Message marked as replied!');
+                                setNotification({ message: t('admin.messages.messageMarkedReplied'), type: 'success' });
                               } catch (error) {
                                 console.error('Error marking message as replied:', error);
-                                alert('Failed to mark message as replied');
+                                setNotification({ message: t('admin.messages.messageMarkRepliedFailed'), type: 'error' });
                               }
                             }}
                             disabled={markingMessageReplied}
@@ -1803,13 +1813,13 @@ const AdminDashboard = () => {
                         )}
                         <button
                           onClick={async () => {
-                            if (window.confirm('Are you sure you want to delete this message?')) {
+                            if (window.confirm(t('admin.confirmation.deleteMessage'))) {
                               try {
                                 await deleteContactMessage(message.id);
-                                alert('Message deleted successfully!');
+                                setNotification({ message: t('admin.messages.messageDeleted'), type: 'success' });
                               } catch (error) {
                                 console.error('Error deleting message:', error);
-                                alert('Failed to delete message');
+                                setNotification({ message: t('admin.messages.messageDeleteFailed'), type: 'error' });
                               }
                             }
                           }}
@@ -1839,7 +1849,7 @@ const AdminDashboard = () => {
         {activeTab === 'students' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Students Management</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('admin.studentsManagement')}</h2>
               <button
                 onClick={() => setAddingStudent(true)}
                 className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
@@ -1926,7 +1936,6 @@ const AdminDashboard = () => {
         {activeTab === 'tutors' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Tutors Management</h2>
               <button
                 onClick={() => setAddingTutor(true)}
                 className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
@@ -2017,15 +2026,12 @@ const AdminDashboard = () => {
         {activeTab === 'books' && (
           <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
             <div className="flex justify-between items-center mb-6">
-              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>Digital Bookshelf Management</h2>
+              <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('admin.sections.digitalBookshelfManagement')}</h2>
 
 
               {!addingBook && !editingBook && (
                 <button
-                  onClick={() => {
-                    console.error('error');
-                    setAddingBook(true);
-                  }}
+                  onClick={() => setAddingBook(true)}
                   className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
                   style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
                 >

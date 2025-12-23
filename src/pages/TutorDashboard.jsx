@@ -157,7 +157,7 @@ const TutorDashboard = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Navigation Tabs */}
-        <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
+        <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--tertiary-color)'}}>
           <button
             onClick={() => setActiveTab('overview')}
             className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
@@ -346,7 +346,7 @@ const TutorDashboard = () => {
         {activeTab === 'overview' && (
           <div className="space-y-8">
             {/* Welcome Section */}
-            <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+            <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
               <h2 className="text-2xl font-bold mb-4 animate-scale-in" style={{color: 'var(--primary-color)'}}>
                 {t('tutor.welcome.title', { name: user?.first_name?.split(' ')[0] || user?.username })}
               </h2>
@@ -370,7 +370,7 @@ const TutorDashboard = () => {
             </div>
 
             {/* Quick Actions */}
-            <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+            <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
               <h3 className="text-xl font-bold mb-4" style={{color: 'var(--primary-color)'}}>{t('tutor.quickActions.title')}</h3>
               <div className="grid md:grid-cols-3 gap-4">
                 <button className="p-4 rounded-lg border-2 hover:scale-105 transition-all hover-glow" style={{borderColor: 'var(--primary-color)'}}>
@@ -391,7 +391,7 @@ const TutorDashboard = () => {
         )}
 
         {activeTab === 'courses' && (
-          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.courses.title')}</h2>
               <button className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow" style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}>
@@ -440,7 +440,7 @@ const TutorDashboard = () => {
         )}
 
         {activeTab === 'assignments' && (
-          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.assignments.title')}</h2>
               <button className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow" style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}>
@@ -488,7 +488,7 @@ const TutorDashboard = () => {
         )}
 
         {activeTab === 'submissions' && (
-          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
             <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.submissions.title')}</h2>
             
             {pendingSubmissionsLoading ? (
@@ -518,7 +518,7 @@ const TutorDashboard = () => {
         )}
 
         {activeTab === 'schedule' && (
-          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.schedule.title')}</h2>
               <button className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow" style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}>
@@ -562,7 +562,7 @@ const TutorDashboard = () => {
         )}
 
         {activeTab === 'students' && (
-          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
             <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.students.management')}</h2>
             
             <div className="space-y-4">
@@ -618,7 +618,7 @@ const TutorDashboard = () => {
         )}
 
         {activeTab === 'analytics' && (
-          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+          <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--tertiary-color)'}}>
             <h2 className="text-2xl font-bold mb-6 animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('tutor.analytics.title')}</h2>
             
             <div className="space-y-4">
