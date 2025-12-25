@@ -19,6 +19,14 @@ import DigitalBookshelf from "./pages/DigitalBookshelf";
 import Calendar from "./pages/Calendar";
 import ProtectedRoute from "./route/ProtectedRoute";
 
+// New main navigation pages
+import WhyUs from "./pages/mainNavPages/WhyUs";
+import OurImpact from "./pages/mainNavPages/OurImpact";
+import Testimonials from "./pages/mainNavPages/Testimonials";
+import NewsEvents from "./pages/mainNavPages/NewsEvents";
+import SchoolLife from "./pages/mainNavPages/SchoolLife";
+import ContactUs from "./pages/mainNavPages/ContactUs";
+
 // Generic dashboard component that renders the correct dashboard based on user role
 const RoleBasedDashboard = () => {
   const { user } = useAuth();
@@ -48,6 +56,15 @@ export default function App() {
       <Route path="/about" element={<AboutUs />} />
       <Route path="/academics" element={<Academics />} />
       <Route path="/admissions" element={<Admissions />} />
+      
+      {/* New main navigation pages */}
+      <Route path="/why-us" element={<WhyUs />} />
+      <Route path="/our-impact" element={<OurImpact />} />
+      <Route path="/testimonials" element={<Testimonials />} />
+      <Route path="/news-events" element={<NewsEvents />} />
+      <Route path="/school-life" element={<SchoolLife />} />
+      <Route path="/contact-us" element={<ContactUs />} />
+      
       <Route
         path="/library"
         element={

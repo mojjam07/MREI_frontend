@@ -1021,6 +1021,323 @@ const translations = {
         supportServices: 'Support Services',
         sendInquiry: 'Send Inquiry'
       }
+    },
+
+    whyUs: {
+      title: 'Why Choose Mahdu Rahmah?',
+      subtitle: 'Discover what makes our educational institution the preferred choice for students seeking quality learning experiences',
+      expertTutorsTitle: 'Expert Tutors',
+      expertTutorsDesc: 'Our experienced educators bring years of expertise and passion for teaching to help students achieve their academic goals',
+      flexibleLearningTitle: 'Flexible Learning Options',
+      flexibleLearningDesc: 'Study at your own pace with our comprehensive online and offline learning programs designed for busy lifestyles',
+      provenSuccessTitle: 'Proven Success Stories',
+      provenSuccessDesc: 'Join thousands of successful graduates who have transformed their lives through our quality education programs',
+      expertTutorsFeatures: [
+        'Highly qualified and certified instructors',
+        'Years of teaching experience across diverse subjects',
+        'Personalized attention to each student',
+        'Regular progress assessments and feedback'
+      ],
+      flexibleLearningFeatures: [
+        '24/7 access to learning materials',
+        'Multiple learning formats (online, offline, hybrid)',
+        'Self-paced learning paths',
+        'Flexible scheduling options'
+      ],
+      provenSuccessFeatures: [
+        '95% student satisfaction rate',
+        'Alumni working in top companies worldwide',
+        'Continuous support throughout the journey',
+        'Career guidance and placement assistance'
+      ]
+    },
+
+    ourImpact: {
+      title: 'Our Impact on Education',
+      subtitle: 'Measuring our success through student achievements and institutional excellence',
+      studentStatsTitle: 'Student Statistics',
+      studentStatsDesc: 'Our student body represents diversity and excellence in academic achievement',
+      courseOfferingsTitle: 'Comprehensive Course Offerings',
+      courseOfferingsDesc: 'Wide range of programs designed to meet diverse educational needs and career aspirations',
+      successMetricsTitle: 'Success Metrics',
+      successMetricsDesc: 'Quantifiable results that demonstrate our commitment to educational excellence',
+      tutorNetworkTitle: 'Expert Tutor Network',
+      tutorNetworkDesc: 'Connecting students with qualified educators who are passionate about teaching and mentoring',
+      studentStats: {
+        totalStudents: 'Total Students',
+        activeLearners: 'Active Learners',
+        graduateRate: 'Graduate Rate',
+        internationalStudents: 'International Students'
+      },
+      courseStats: {
+        totalPrograms: 'Total Programs',
+        certificationCourses: 'Certification Courses',
+        degreePrograms: 'Degree Programs',
+        specializedTracks: 'Specialized Tracks'
+      },
+      successMetrics: {
+        employmentRate: 'Employment Rate',
+        averageSalary: 'Average Salary Increase',
+        studentSatisfaction: 'Student Satisfaction',
+        industryPartnerships: 'Industry Partnerships'
+      },
+      tutorNetwork: {
+        certifiedTutors: 'Certified Tutors',
+        subjectExperts: 'Subject Experts',
+        industryProfessionals: 'Industry Professionals',
+        ongoingTraining: 'Ongoing Training'
+      }
+    },
+
+    testimonials: {
+      title: 'Student Testimonials',
+      subtitle: 'Hear from our students and alumni about their transformative educational journey',
+      studentTestimonialsTitle: 'Student Testimonials',
+      studentTestimonialsDesc: 'Current students share their experiences and learning outcomes',
+      alumniStoriesTitle: 'Alumni Success Stories',
+      alumniStoriesDesc: 'Graduates reflect on how our education impacted their careers and lives',
+      successCasesTitle: 'Success Cases',
+      successCasesDesc: 'Real examples of how our programs have changed lives and opened new opportunities',
+      featuredTestimonials: [
+        {
+          name: 'Ahmad Muhammad',
+          role: 'Software Engineer',
+          company: 'Tech Solutions Ltd.',
+          quote: 'The practical approach and expert guidance I received at Mahdu Rahmah completely transformed my career prospects. I landed my dream job within 3 months of graduation.',
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
+        },
+        {
+          name: 'Fatima Al-Zahra',
+          role: 'Business Analyst',
+          company: 'Global Consulting Group',
+          quote: 'The flexibility of the program allowed me to balance my studies with my professional commitments. The quality of education exceeded my expectations.',
+          image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
+        },
+        {
+          name: 'Omar Hassan',
+          role: 'Marketing Director',
+          company: 'Creative Agency Inc.',
+          quote: 'The industry connections and real-world projects prepared me for the challenges of modern business. I am grateful for the foundation built here.',
+          image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+        }
+      ],
+      loadMore: 'Load More Testimonials',
+      shareYourStory: 'Share Your Story'
+    },
+
+    newsEvents: {
+      title: 'News & Events',
+      subtitle: 'Stay informed about the latest happenings, achievements, and upcoming events at Mahdu Rahmah',
+      latestNewsTitle: 'Latest News',
+      latestNewsDesc: 'Recent announcements, achievements, and developments from our institution',
+      upcomingEventsTitle: 'Upcoming Events',
+      upcomingEventsDesc: 'Join us for exciting events, workshops, seminars, and community gatherings',
+      academicAnnouncementsTitle: 'Academic Announcements',
+      academicAnnouncementsDesc: 'Important notices regarding academics, admissions, and institutional updates',
+      featuredNews: [
+        {
+          title: 'Mahdu Rahmah Wins National Education Excellence Award',
+          summary: 'Our institution has been recognized for outstanding contributions to quality education and student success.',
+          date: '2024-01-15',
+          category: 'Awards',
+          image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=250&fit=crop'
+        },
+        {
+          title: 'New Campus Library Opens with Advanced Digital Resources',
+          summary: 'State-of-the-art library facility enhances learning opportunities for students and researchers.',
+          date: '2024-01-10',
+          category: 'Facilities',
+          image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=250&fit=crop'
+        },
+        {
+          title: 'Partnership with Leading Tech Companies Announced',
+          summary: 'New industry partnerships will provide enhanced internship and job placement opportunities for our graduates.',
+          date: '2024-01-05',
+          category: 'Partnerships',
+          image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop'
+        }
+      ],
+      featuredEvents: [
+        {
+          title: 'Annual Science Fair 2024',
+          summary: 'Students showcase innovative projects in science and technology',
+          date: '2024-02-20',
+          time: '09:00 AM - 05:00 PM',
+          location: 'Main Auditorium',
+          category: 'Academic'
+        },
+        {
+          title: 'Career Development Workshop',
+          summary: 'Learn essential skills for job interviews and professional networking',
+          date: '2024-02-25',
+          time: '02:00 PM - 04:00 PM',
+          location: 'Conference Hall B',
+          category: 'Career'
+        },
+        {
+          title: 'Cultural Festival',
+          summary: 'Celebration of diversity with performances, food, and cultural exhibits',
+          date: '2024-03-01',
+          time: '10:00 AM - 08:00 PM',
+          location: 'Campus Grounds',
+          category: 'Cultural'
+        }
+      ],
+      viewAllNews: 'View All News',
+      viewAllEvents: 'View All Events',
+      subscribeNewsletter: 'Subscribe to Newsletter'
+    },
+
+    schoolLife: {
+      title: 'Vibrant Campus Life',
+      subtitle: 'Experience a rich and diverse campus community that extends beyond academics',
+      campusFacilitiesTitle: 'World-Class Campus Facilities',
+      campusFacilitiesDesc: 'Modern infrastructure designed to support learning, recreation, and personal development',
+      studentActivitiesTitle: 'Engaging Student Activities',
+      studentActivitiesDesc: 'Diverse range of activities that promote leadership, creativity, and personal growth',
+      clubsOrganizationsTitle: 'Clubs & Organizations',
+      clubsOrganizationsDesc: 'Join interest-based groups that foster community building and skill development',
+      sportsRecreationTitle: 'Sports & Recreation',
+      sportsRecreationDesc: 'Physical fitness and recreational activities for overall well-being and team building',
+      facilities: [
+        {
+          name: 'Modern Library',
+          description: 'Extensive collection of books, journals, and digital resources with quiet study areas',
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
+        },
+        {
+          name: 'Science Laboratories',
+          description: 'State-of-the-art labs equipped with modern equipment for hands-on learning',
+          image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop'
+        },
+        {
+          name: 'Computer Centers',
+          description: 'High-tech computer labs with latest software and internet connectivity',
+          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop'
+        },
+        {
+          name: 'Student Lounge Areas',
+          description: 'Comfortable spaces for relaxation, study groups, and socializing',
+          image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300&h=200&fit=crop'
+        }
+      ],
+      activities: [
+        {
+          name: 'Leadership Programs',
+          description: 'Develop leadership skills through student government and peer mentoring',
+          category: 'Leadership'
+        },
+        {
+          name: 'Community Service',
+          description: 'Make a positive impact through volunteer work and social initiatives',
+          category: 'Service'
+        },
+        {
+          name: 'Innovation Challenges',
+          description: 'Participate in hackathons, competitions, and entrepreneurial projects',
+          category: 'Innovation'
+        },
+        {
+          name: 'Cultural Celebrations',
+          description: 'Celebrate diversity through cultural festivals and international events',
+          category: 'Culture'
+        }
+      ],
+      clubs: [
+        'Computer Science Society',
+        'Business Club',
+        'Literature Society',
+        'Environmental Club',
+        'Photography Club',
+        'Debate Team',
+        'Drama Society',
+        'Music Ensemble'
+      ],
+      sports: [
+        {
+          name: 'Football',
+          description: 'Competitive and recreational football programs for all skill levels'
+        },
+        {
+          name: 'Basketball',
+          description: 'Indoor courts for practice and tournaments'
+        },
+        {
+          name: 'Table Tennis',
+          description: 'Table tennis tables in recreation areas'
+        },
+        {
+          name: 'Athletics',
+          description: 'Track and field activities and competitions'
+        }
+      ]
+    },
+
+    contactUs: {
+      title: 'Get in Touch',
+      subtitle: 'We\'re here to help! Reach out to us for any questions, admissions information, or general inquiries',
+      contactDetailsTitle: 'Contact Information',
+      contactDetailsDesc: 'Multiple ways to connect with our team for immediate assistance',
+      locationDirectionsTitle: 'Location & Directions',
+      locationDirectionsDesc: 'Find us easily with detailed directions and campus map',
+      supportServicesTitle: 'Support Services',
+      supportServicesDesc: 'Comprehensive support to ensure your success throughout your educational journey',
+      sendInquiryTitle: 'Send an Inquiry',
+      sendInquiryDesc: 'Have a specific question? Send us a message and we\'ll respond promptly',
+      contactInfo: {
+        address: '12A Baale Street, Ishagatedo Mushin Road, Lagos 12345, Nigeria',
+        phone: '+234 (0) 123-4567',
+        email: 'info@mahdurahmah.edu',
+        hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
+        emergency: 'Emergency Contact: +234 (0) 987-6543'
+      },
+      departments: [
+        {
+          name: 'Admissions Office',
+          email: 'admissions@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 101',
+          description: 'For application and enrollment inquiries'
+        },
+        {
+          name: 'Academic Affairs',
+          email: 'academics@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 102',
+          description: 'For academic programs and course information'
+        },
+        {
+          name: 'Student Services',
+          email: 'studentservices@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 103',
+          description: 'For student support and campus life'
+        },
+        {
+          name: 'Technical Support',
+          email: 'techsupport@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 104',
+          description: 'For IT and technical assistance'
+        }
+      ],
+      inquiryForm: {
+        name: 'Full Name',
+        email: 'Email Address',
+        phone: 'Phone Number',
+        subject: 'Subject',
+        message: 'Message',
+        send: 'Send Message',
+        required: 'This field is required',
+        emailInvalid: 'Please enter a valid email address'
+      },
+      mapEmbed: 'Google Maps will be embedded here showing the campus location',
+      socialMedia: {
+        title: 'Follow Us',
+        platforms: [
+          { name: 'Facebook', url: '#', handle: '@mahdurahmah' },
+          { name: 'Twitter', url: '#', handle: '@mahdurahmah' },
+          { name: 'Instagram', url: '#', handle: '@mahdurahmah' },
+          { name: 'LinkedIn', url: '#', handle: 'mahdurahmah-institute' },
+          { name: 'YouTube', url: '#', handle: 'MahduRahmahTV' }
+        ]
+      }
     }
   },
 
@@ -2003,6 +2320,323 @@ const translations = {
         locationDirections: 'الموقع والإرشادات',
         supportServices: 'خدمات الدعم',
         sendInquiry: 'إرسال استفسار'
+      }
+    },
+
+    whyUs: {
+      title: 'لماذا تختار معهد الرحمة؟',
+      subtitle: 'اكتشف ما يجعل مؤسستنا التعليمية الخيار المفضل للطلاب الذين يسعون لتجارب تعليمية عالية الجودة',
+      expertTutorsTitle: 'مدرسون خبراء',
+      expertTutorsDesc: 'مربونا متمرسون يجلبون سنوات من الخبرة والشغف بالتدريس لمساعدة الطلاب على تحقيق أهدافهم الأكاديمية',
+      flexibleLearningTitle: 'خيارات التعلم المرنة',
+      flexibleLearningDesc: 'ادرس بوتيرتك الخاصة مع برامج التعلم الشاملة عبر الإنترنت وخارج الإنترنت المصممة للأنماط الحياة المزدحمة',
+      provenSuccessTitle: 'قصص نجاح مثبتة',
+      provenSuccessDesc: 'انضم إلى آلاف الخريجين الناجحين الذين غيروا حياتهم من خلال برامج التعليم عالي الجودة',
+      expertTutorsFeatures: [
+        'مدرسون مؤهلون ومعتمدون بدرجة عالية',
+        'سنوات من الخبرة التدريسية عبر مواد متنوعة',
+        'اهتمام شخصي بكل طالب',
+        'تقييمات تقدم منتظمة وتعليقات'
+      ],
+      flexibleLearningFeatures: [
+        'وصول على مدار الساعة لمواد التعلم',
+        'تنسيقات تعلم متعددة (عبر الإنترنت، خارج الإنترنت، هجين)',
+        'مسارات تعلم ذاتية الوتيرة',
+        'خيارات جدولة مرنة'
+      ],
+      provenSuccessFeatures: [
+        '95% معدل رضا الطلاب',
+        'خريجون يعملون في أفضل الشركات عالمياً',
+        'دعم مستمر طوال الرحلة',
+        'إرشاد مهني ومساعدة في التوظيف'
+      ]
+    },
+
+    ourImpact: {
+      title: 'تأثيرنا على التعليم',
+      subtitle: 'قياس نجاحنا من خلال إنجازات الطلاب وتميز المؤسسة',
+      studentStatsTitle: 'إحصائيات الطلاب',
+      studentStatsDesc: 'هيكل طلابنا يمثل التنوع والتميز في الإنجاز الأكاديمي',
+      courseOfferingsTitle: 'عروض دورات شاملة',
+      courseOfferingsDesc: 'مجموعة واسعة من البرامج المصممة لتلبية الاحتياجات التعليمية المتنوعة والطموحات المهنية',
+      successMetricsTitle: 'مقاييس النجاح',
+      successMetricsDesc: 'نتائج قابلة للقياس تظهر التزامنا بالتميز التعليمي',
+      tutorNetworkTitle: 'شبكة مدرسين خبراء',
+      tutorNetworkDesc: 'ربط الطلاب مع مربين مؤهلين هم متحمسون للتدريس والإرشاد',
+      studentStats: {
+        totalStudents: 'إجمالي الطلاب',
+        activeLearners: 'متعلمون نشطون',
+        graduateRate: 'معدل التخرج',
+        internationalStudents: 'طلاب دوليون'
+      },
+      courseStats: {
+        totalPrograms: 'إجمالي البرامج',
+        certificationCourses: 'دورات الشهادات',
+        degreePrograms: 'برامج الدرجات',
+        specializedTracks: 'مسارات متخصصة'
+      },
+      successMetrics: {
+        employmentRate: 'معدل التوظيف',
+        averageSalary: 'متوسط زيادة الراتب',
+        studentSatisfaction: 'رضا الطلاب',
+        industryPartnerships: 'شراكات الصناعة'
+      },
+      tutorNetwork: {
+        certifiedTutors: 'مدرسون معتمدون',
+        subjectExperts: 'خبراء المواد',
+        industryProfessionals: 'مهنيو الصناعة',
+        ongoingTraining: 'تدريب مستمر'
+      }
+    },
+
+    testimonials: {
+      title: 'شهادات الطلاب',
+      subtitle: 'اسمع من طلابنا وخريجينا عن رحلتهم التعليمية التحويلية',
+      studentTestimonialsTitle: 'شهادات الطلاب',
+      studentTestimonialsDesc: 'الطلاب الحاليون يشاركون تجاربهم ونتائج التعلم',
+      alumniStoriesTitle: 'قصص نجاح الخريجين',
+      alumniStoriesDesc: 'الخريجون يعكسون على كيف أثر تعليمنا على حياتهم المهنية وحياتهم',
+      successCasesTitle: 'حالات النجاح',
+      successCasesDesc: 'أمثلة حقيقية على كيف غيرت برامجنا الحياة وافتتحت فرص جديدة',
+      featuredTestimonials: [
+        {
+          name: 'أحمد محمد',
+          role: 'مهندس برمجيات',
+          company: 'شركة حلول التقنية المحدودة',
+          quote: 'النهج العملي والإرشاد الخبير الذي تلقيته في معهد الرحمة غير تماماً توقعاتي المهنية. حصلت على وظيفة أحلامي خلال 3 أشهر من التخرج.',
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
+        },
+        {
+          name: 'فاطمة الزهراء',
+          role: 'محلل أعمال',
+          company: 'مجموعة الاستشارات العالمية',
+          quote: 'مرونة البرنامج سمحت لي بموازنة دراستي مع التزاماتي المهنية. جودة التعليم تجاوزت توقعاتي.',
+          image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
+        },
+        {
+          name: 'عمر حسن',
+          role: 'مدير تسويق',
+          company: 'وكالة الإبداع المحدودة',
+          quote: 'الاتصالات الصناعية والمشاريع الواقعية أعدتني لتحديات الأعمال الحديثة. أنا ممتن للأساس المبني هنا.',
+          image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+        }
+      ],
+      loadMore: 'تحميل المزيد من الشهادات',
+      shareYourStory: 'شارك قصتك'
+    },
+
+    newsEvents: {
+      title: 'الأخبار والفعاليات',
+      subtitle: 'ابقَ على اطلاع حول آخر الأحداث والإنجازات والفعاليات القادمة في معهد الرحمة',
+      latestNewsTitle: 'أحدث الأخبار',
+      latestNewsDesc: 'إعلانات حديثة وإنجازات وتطويرات من مؤسستنا',
+      upcomingEventsTitle: 'الفعاليات القادمة',
+      upcomingEventsDesc: 'انضم إلينا في فعاليات مثيرة وورش عمل وندوات والتقاء مجتمعي',
+      academicAnnouncementsTitle: 'الإعلانات الأكاديمية',
+      academicAnnouncementsDesc: 'إشعارات مهمة بخصوص الأكاديميات والقبول والتحديثات المؤسسية',
+      featuredNews: [
+        {
+          title: 'معهد الرحمة يفوز بجائزة التميز التعليمي الوطنية',
+          summary: 'تم الاعتراف بمؤسستنا لمساهمات متميزة في التعليم عالي الجودة ونجاح الطلاب.',
+          date: '2024-01-15',
+          category: 'جوائز',
+          image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=250&fit=crop'
+        },
+        {
+          title: 'افتتاح مكتبة حرم جديد بالموارد الرقمية المتقدمة',
+          summary: 'مرفق مكتبة حديث المستوى يعزز فرص التعلم للطلاب والباحثين.',
+          date: '2024-01-10',
+          category: 'مرافق',
+          image: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=400&h=250&fit=crop'
+        },
+        {
+          title: 'إعلان شراكة مع شركات التقنية الرائدة',
+          summary: 'شراكات صناعية جديدة ستوفر فرص تدريب وعمل محسنة لخريجينا.',
+          date: '2024-01-05',
+          category: 'شراكات',
+          image: 'https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=250&fit=crop'
+        }
+      ],
+      featuredEvents: [
+        {
+          title: 'معرض العلوم السنوي 2024',
+          summary: 'الطلاب يعرضون مشاريع مبتكرة في العلوم والتكنولوجيا',
+          date: '2024-02-20',
+          time: '09:00 ص - 05:00 م',
+          location: 'القاعة الرئيسية',
+          category: 'أكاديمي'
+        },
+        {
+          title: 'ورشة تطوير المهنة',
+          summary: 'تعلم مهارات أساسية لمقابلات العمل والشبكات المهنية',
+          date: '2024-02-25',
+          time: '02:00 م - 04:00 م',
+          location: 'قاعة المؤتمرات ب',
+          category: 'مهنة'
+        },
+        {
+          title: 'مهرجان ثقافي',
+          summary: 'احتفال بالتنوع مع عروض وأكل ومعارض ثقافية',
+          date: '2024-03-01',
+          time: '10:00 ص - 08:00 م',
+          location: 'أرض الحرم',
+          category: 'ثقافي'
+        }
+      ],
+      viewAllNews: 'عرض جميع الأخبار',
+      viewAllEvents: 'عرض جميع الفعاليات',
+      subscribeNewsletter: 'اشترك في النشرة الإخبارية'
+    },
+
+    schoolLife: {
+      title: 'حياة جامعية نابضة بالحياة',
+      subtitle: 'اختبر مجتمع جامعي غني ومتنوع يمتد ما وراء الأكاديميات',
+      campusFacilitiesTitle: 'مرافق حرم من الدرجة العالمية',
+      campusFacilitiesDesc: 'بنية تحتية حديثة مصممة لدعم التعلم والترفيه والتطوير الشخصي',
+      studentActivitiesTitle: 'أنشطة طلابية جذابة',
+      studentActivitiesDesc: 'مجموعة متنوعة من الأنشطة التي تعزز القيادة والإبداع والنمو الشخصي',
+      clubsOrganizationsTitle: 'الأندية والمنظمات',
+      clubsOrganizationsDesc: 'انضم لمجموعات قائمة على الاهتمامات تعزز بناء المجتمع وتطوير المهارات',
+      sportsRecreationTitle: 'الرياضة والترفيه',
+      sportsRecreationDesc: 'أنشطة اللياقة البدنية والترفيه للصحة العامة وبناء الفريق',
+      facilities: [
+        {
+          name: 'مكتبة حديثة',
+          description: 'مجموعة واسعة من الكتب والمجلات والموارد الرقمية مع مناطق دراسة هادئة',
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
+        },
+        {
+          name: 'مختبرات العلوم',
+          description: 'مختبرات حديثة المستوى مجهزة بمعدات حديثة للتعلم العملي',
+          image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop'
+        },
+        {
+          name: 'مراكز الحاسوب',
+          description: 'مختبرات حاسوب عالية التقنية مع أحدث البرامج والاتصال بالإنترنت',
+          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop'
+        },
+        {
+          name: 'مناطق استراحة الطلاب',
+          description: 'مساحات مريحة للاسترخاء ومجموعات الدراسة والتواصل الاجتماعي',
+          image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300&h=200&fit=crop'
+        }
+      ],
+      activities: [
+        {
+          name: 'برامج القيادة',
+          description: 'تطوير مهارات القيادة من خلال الحكومة الطلابية والإرشاد من الأقران',
+          category: 'قيادة'
+        },
+        {
+          name: 'خدمة المجتمع',
+          description: 'تأثير إيجابي من خلال العمل التطوعي والمبادرات الاجتماعية',
+          category: 'خدمة'
+        },
+        {
+          name: 'تحديات الابتكار',
+          description: 'المشاركة في هاكاثون ومسابقات ومشاريع ريادة الأعمال',
+          category: 'ابتكار'
+        },
+        {
+          name: 'الاحتفالات الثقافية',
+          description: 'احتفال بالتنوع من خلال المهرجانات الثقافية والفعاليات الدولية',
+          category: 'ثقافة'
+        }
+      ],
+      clubs: [
+        'جمعية علوم الحاسوب',
+        'نادي الأعمال',
+        'جمعية الأدب',
+        'نادي البيئة',
+        'نادي التصوير',
+        'فريق المناظرة',
+        'جمعية الدراما',
+        'فرقة الموسيقى'
+      ],
+      sports: [
+        {
+          name: 'كرة القدم',
+          description: 'برامج كرة قدم تنافسية وترفيهية لجميع مستويات المهارة'
+        },
+        {
+          name: 'كرة السلة',
+          description: 'ملاعب داخلية للممارسة والبطولات'
+        },
+        {
+          name: 'تنس الطاولة',
+          description: 'طاولات تنس الطاولة في مناطق الترفيه'
+        },
+        {
+          name: 'ألعاب القوى',
+          description: 'أنشطة ومباريات ألعاب القوى والمضمار'
+        }
+      ]
+    },
+
+    contactUs: {
+      title: 'تواصل معنا',
+      subtitle: 'نحن هنا للمساعدة! تواصل معنا لأي أسئلة أو معلومات قبول أو استفسارات عامة',
+      contactDetailsTitle: 'معلومات الاتصال',
+      contactDetailsDesc: 'طرق متعددة للتواصل مع فريقنا للحصول على مساعدة فورية',
+      locationDirectionsTitle: 'الموقع والإرشادات',
+      locationDirectionsDesc: 'اعثر علينا بسهولة مع إرشادات مفصلة وخريطة الحرم',
+      supportServicesTitle: 'خدمات الدعم',
+      supportServicesDesc: 'دعم شامل لضمان نجاحك طوال رحلتك التعليمية',
+      sendInquiryTitle: 'إرسال استفسار',
+      sendInquiryDesc: 'لديك سؤال محدد؟ أرسل لنا رسالة وسنرد بسرعة',
+      contactInfo: {
+        address: '12A شارع بالي، إشاغاتيدو طريق موشن، لاغوس 12345، نيجيريا',
+        phone: '+234 (0) 123-4567',
+        email: 'info@mahdurahmah.edu',
+        hours: 'الاثنين - الجمعة: 8:00 ص - 6:00 م',
+        emergency: 'جهة اتصال الطوارئ: +234 (0) 987-6543'
+      },
+      departments: [
+        {
+          name: 'مكتب القبول',
+          email: 'admissions@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 101',
+          description: 'لسؤالات التقديم والتسجيل'
+        },
+        {
+          name: 'الشؤون الأكاديمية',
+          email: 'academics@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 102',
+          description: 'للبرامج الأكاديمية ومعلومات الدورات'
+        },
+        {
+          name: 'خدمات الطلاب',
+          email: 'studentservices@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 103',
+          description: 'لدعم الطلاب وحياة الحرم'
+        },
+        {
+          name: 'الدعم التقني',
+          email: 'techsupport@mahdurahmah.edu',
+          phone: '+234 (0) 123-4567 ext. 104',
+          description: 'لمساعدة تقنية وتقنية'
+        }
+      ],
+      inquiryForm: {
+        name: 'الاسم الكامل',
+        email: 'عنوان البريد الإلكتروني',
+        phone: 'رقم الهاتف',
+        subject: 'الموضوع',
+        message: 'الرسالة',
+        send: 'إرسال الرسالة',
+        required: 'هذا الحقل مطلوب',
+        emailInvalid: 'يرجى إدخال عنوان بريد إلكتروني صحيح'
+      },
+      mapEmbed: 'ستتم إضافة خرائط جوجل هنا لإظهار موقع الحرم',
+      socialMedia: {
+        title: 'تابعنا',
+        platforms: [
+          { name: 'فيسبوك', url: '#', handle: '@mahdurahmah' },
+          { name: 'تويتر', url: '#', handle: '@mahdurahmah' },
+          { name: 'إنستغرام', url: '#', handle: '@mahdurahmah' },
+          { name: 'لينكد إن', url: '#', handle: 'mahdurahmah-institute' },
+          { name: 'يوتيوب', url: '#', handle: 'MahduRahmahTV' }
+        ]
       }
     }
   }

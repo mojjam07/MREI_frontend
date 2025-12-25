@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 
 const MainNav = ({ className = '' }) => {
@@ -9,59 +10,59 @@ const MainNav = ({ className = '' }) => {
   const menuItems = [
     {
       title: t('home.whyUs'),
-      href: '#why-us',
+      href: '/why-us',
       submenu: [
-        { title: t('navDropdowns.whyUs.expertTutors'), href: '#why-us' },
-        { title: t('navDropdowns.whyUs.flexibleLearning'), href: '#why-us' },
-        { title: t('navDropdowns.whyUs.provenSuccess'), href: '#why-us' }
+        { title: t('navDropdowns.whyUs.expertTutors'), href: '/why-us' },
+        { title: t('navDropdowns.whyUs.flexibleLearning'), href: '/why-us' },
+        { title: t('navDropdowns.whyUs.provenSuccess'), href: '/why-us' }
       ]
     },
     {
       title: t('home.ourImpact'),
-      href: '#our-impact',
+      href: '/our-impact',
       submenu: [
-        { title: t('navDropdowns.ourImpact.studentStats'), href: '#our-impact' },
-        { title: t('navDropdowns.ourImpact.courseOfferings'), href: '#our-impact' },
-        { title: t('navDropdowns.ourImpact.successMetrics'), href: '#our-impact' },
-        { title: t('navDropdowns.ourImpact.tutorNetwork'), href: '#our-impact' }
+        { title: t('navDropdowns.ourImpact.studentStats'), href: '/our-impact' },
+        { title: t('navDropdowns.ourImpact.courseOfferings'), href: '/our-impact' },
+        { title: t('navDropdowns.ourImpact.successMetrics'), href: '/our-impact' },
+        { title: t('navDropdowns.ourImpact.tutorNetwork'), href: '/our-impact' }
       ]
     },
     {
       title: t('home.testimonials'),
-      href: '#testimonials',
+      href: '/testimonials',
       submenu: [
-        { title: t('navDropdowns.testimonials.studentTestimonials'), href: '#testimonials' },
-        { title: t('navDropdowns.testimonials.alumniStories'), href: '#testimonials' },
-        { title: t('navDropdowns.testimonials.successCases'), href: '#testimonials' }
+        { title: t('navDropdowns.testimonials.studentTestimonials'), href: '/testimonials' },
+        { title: t('navDropdowns.testimonials.alumniStories'), href: '/testimonials' },
+        { title: t('navDropdowns.testimonials.successCases'), href: '/testimonials' }
       ]
     },
     {
       title: t('home.newsEvents'),
-      href: '#news-events',
+      href: '/news-events',
       submenu: [
-        { title: t('navDropdowns.newsEvents.latestNews'), href: '#news-events' },
-        { title: t('navDropdowns.newsEvents.upcomingEvents'), href: '#news-events' },
-        { title: t('navDropdowns.newsEvents.academicAnnouncements'), href: '#news-events' }
+        { title: t('navDropdowns.newsEvents.latestNews'), href: '/news-events' },
+        { title: t('navDropdowns.newsEvents.upcomingEvents'), href: '/news-events' },
+        { title: t('navDropdowns.newsEvents.academicAnnouncements'), href: '/news-events' }
       ]
     },
     {
       title: t('home.schoolLife'),
-      href: '#school-life',
+      href: '/school-life',
       submenu: [
-        { title: t('navDropdowns.schoolLife.campusFacilities'), href: '#school-life' },
-        { title: t('navDropdowns.schoolLife.studentActivities'), href: '#school-life' },
-        { title: t('navDropdowns.schoolLife.clubsOrganizations'), href: '#school-life' },
-        { title: t('navDropdowns.schoolLife.sportsRecreation'), href: '#school-life' }
+        { title: t('navDropdowns.schoolLife.campusFacilities'), href: '/school-life' },
+        { title: t('navDropdowns.schoolLife.studentActivities'), href: '/school-life' },
+        { title: t('navDropdowns.schoolLife.clubsOrganizations'), href: '/school-life' },
+        { title: t('navDropdowns.schoolLife.sportsRecreation'), href: '/school-life' }
       ]
     },
     {
       title: t('home.ourContact'),
-      href: '#our-contact',
+      href: '/contact-us',
       submenu: [
-        { title: t('navDropdowns.ourContact.contactDetails'), href: '#our-contact' },
-        { title: t('navDropdowns.ourContact.locationDirections'), href: '#our-contact' },
-        { title: t('navDropdowns.ourContact.supportServices'), href: '#our-contact' },
-        { title: t('navDropdowns.ourContact.sendInquiry'), href: '#our-contact' }
+        { title: t('navDropdowns.ourContact.contactDetails'), href: '/contact-us' },
+        { title: t('navDropdowns.ourContact.locationDirections'), href: '/contact-us' },
+        { title: t('navDropdowns.ourContact.supportServices'), href: '/contact-us' },
+        { title: t('navDropdowns.ourContact.sendInquiry'), href: '/contact-us' }
       ]
     }
   ];
@@ -82,22 +83,22 @@ const MainNav = ({ className = '' }) => {
               onMouseEnter={() => setActiveDropdown(index)} 
               onMouseLeave={() => setActiveDropdown(null)}
             >
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 className="text-tertiary hover:text-link transition-colors py-2 px-2 lg:px-3 block text-sm lg:text-base whitespace-nowrap"
               >
                 {item.title}
-              </a>
+              </Link>
               {activeDropdown === index && item.submenu && (
                 <ul className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} bg-tertiary shadow-lg border rounded border-tertiary py-2 min-w-[12rem] z-50`}>
                   {item.submenu.map((subItem, subIndex) => (
                     <li key={subIndex}>
-                      <a
-                        href={subItem.href}
+                      <Link
+                        to={subItem.href}
                         className="block px-4 py-2 text-sm text-text hover:bg-gray-50 hover:text-link transition-colors"
                       >
                         {subItem.title}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -129,12 +130,12 @@ const MainNav = ({ className = '' }) => {
                   <ul className="bg-tertiary/50 py-1">
                     {item.submenu.map((subItem, subIndex) => (
                       <li key={subIndex}>
-                        <a
-                          href={subItem.href}
+                        <Link
+                          to={subItem.href}
                           className="block px-6 py-2 text-xs text-warning hover:bg-white/10 hover:text-link transition-colors"
                         >
                           {subItem.title}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
