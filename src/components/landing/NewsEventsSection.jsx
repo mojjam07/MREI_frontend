@@ -35,7 +35,7 @@ const NewsEventsSection = () => {
       })));
     } catch (error) {
       console.error('Error fetching home content:', error);
-      setError('Failed to load news and events. Please try again.');
+      setError(t('home.errorLoadingNewsEvents'));
       setNewsItems([]);
       setEventsItems([]);
     } finally {
@@ -54,7 +54,7 @@ const NewsEventsSection = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            <p className="text-text mt-4">Loading news and events...</p>
+            <p className="text-text mt-4">{t('home.loadingNewsEvents')}</p>
           </div>
         </div>
       </section>
@@ -71,7 +71,7 @@ const NewsEventsSection = () => {
               onClick={fetchHomeContent}
               className="bg-primary text-light-text px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
             >
-              Try Again
+              {t('home.tryAgain')}
             </button>
           </div>
         </div>

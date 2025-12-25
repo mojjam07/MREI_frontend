@@ -674,37 +674,45 @@ const AdminDashboard = () => {
     return (
       <>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.title')}
+          </label>
           <input
             type="text"
             value={item.title || ''}
-            onChange={(e) => updateItem({title: e.target.value})}
+            onChange={(e) => updateItem({ title: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.description')}
+          </label>
           <textarea
             value={item.content || ''}
-            onChange={(e) => updateItem({content: e.target.value})}
+            onChange={(e) => updateItem({ content: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             rows="3"
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Image File</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.imageFile')}
+          </label>
           <input
             type="file"
             accept="image/*"
             onChange={(e) => {
               const file = e.target.files[0];
-              updateItem({image: file});
+              updateItem({ image: file });
             }}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
           {item.image && typeof item.image === 'object' && (
             <p className="text-sm mt-1 text-gray-600">
-              Selected: {item.image.name}
+              {t('common.selected')}: {item.image.name}
             </p>
           )}
         </div>
@@ -724,49 +732,63 @@ const AdminDashboard = () => {
     return (
       <>
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.title')}
+          </label>
           <input
             type="text"
             value={item.title || ''}
-            onChange={(e) => updateItem({title: e.target.value})}
+            onChange={(e) => updateItem({ title: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Details</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.details')}
+          </label>
           <textarea
             value={item.content || ''}
-            onChange={(e) => updateItem({content: e.target.value})}
+            onChange={(e) => updateItem({ content: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             rows="3"
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Event Date</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.eventDate')}
+          </label>
           <input
             type="datetime-local"
             value={item.event_date || ''}
-            onChange={(e) => updateItem({event_date: e.target.value})}
+            onChange={(e) => updateItem({ event_date: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.location')}
+          </label>
           <input
             type="text"
             value={item.location || ''}
-            onChange={(e) => updateItem({location: e.target.value})}
+            onChange={(e) => updateItem({ location: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
           />
         </div>
+
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">YouTube Video ID</label>
+          <label className="block text-sm font-medium text-gray-700 mb-2">
+            {t('admin.form.labels.youtubeVideoId')}
+          </label>
           <input
             type="text"
             value={item.video_id || ''}
-            onChange={(e) => updateItem({video_id: e.target.value})}
+            onChange={(e) => updateItem({ video_id: e.target.value })}
             className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            placeholder="dQw4w9WgXcQ"
+            placeholder={t('admin.form.placeholders.youtubeVideoId')}
           />
         </div>
       </>
@@ -780,19 +802,32 @@ const AdminDashboard = () => {
         {type !== 'campus_life' && (
           <>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('admin.form.labels.title')}
+              </label>
               <input
                 type="text"
                 value={item.title || ''}
-                onChange={(e) => isNew ? setNewItem({...item, title: e.target.value}) : setEditingItem({...item, title: e.target.value})}
+                onChange={(e) =>
+                  isNew
+                    ? setNewItem({ ...item, title: e.target.value })
+                    : setEditingItem({ ...item, title: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Content</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('admin.form.labels.content')}
+              </label>
               <textarea
                 value={item.content || ''}
-                onChange={(e) => isNew ? setNewItem({...item, content: e.target.value}) : setEditingItem({...item, content: e.target.value})}
+                onChange={(e) =>
+                  isNew
+                    ? setNewItem({ ...item, content: e.target.value })
+                    : setEditingItem({ ...item, content: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
                 rows="3"
               />
@@ -800,21 +835,27 @@ const AdminDashboard = () => {
           </>
         )}
 
-        {(item.type === 'news' || item.type === 'testimonial' || item.type === 'campus_life') && (
+        {(item.type === 'news' ||
+          item.type === 'testimonial' ||
+          item.type === 'campus_life') && (
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Image File</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              {t('admin.form.labels.imageFile')}
+            </label>
             <input
               type="file"
               accept="image/*"
               onChange={(e) => {
                 const file = e.target.files[0];
-                isNew ? setNewItem({...item, image: file}) : setEditingItem({...item, image: file});
+                isNew
+                  ? setNewItem({ ...item, image: file })
+                  : setEditingItem({ ...item, image: file });
               }}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
             />
             {item.image && typeof item.image === 'object' && (
               <p className="text-sm mt-1 text-gray-600">
-                Selected: {item.image.name}
+                {t('common.selected')}: {item.image.name}
               </p>
             )}
           </div>
@@ -823,20 +864,33 @@ const AdminDashboard = () => {
         {item.type === 'testimonial' && (
           <>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Author Name</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('admin.form.labels.authorName')}
+              </label>
               <input
                 type="text"
                 value={item.author || ''}
-                onChange={(e) => isNew ? setNewItem({...item, author: e.target.value}) : setEditingItem({...item, author: e.target.value})}
+                onChange={(e) =>
+                  isNew
+                    ? setNewItem({ ...item, author: e.target.value })
+                    : setEditingItem({ ...item, author: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
             </div>
+
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Author Title</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">
+                {t('admin.form.labels.authorTitle')}
+              </label>
               <input
                 type="text"
                 value={item.author_title || ''}
-                onChange={(e) => isNew ? setNewItem({...item, author_title: e.target.value}) : setEditingItem({...item, author_title: e.target.value})}
+                onChange={(e) =>
+                  isNew
+                    ? setNewItem({ ...item, author_title: e.target.value })
+                    : setEditingItem({ ...item, author_title: e.target.value })
+                }
                 className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
               />
             </div>
@@ -864,7 +918,7 @@ const AdminDashboard = () => {
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>User ID</label>
+            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.form.labels.userId')}</label>
             <input
               type="number"
               value={currentForm.user || ''}
@@ -878,11 +932,11 @@ const AdminDashboard = () => {
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
               style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="Enter user ID"
+              placeholder={t('admin.form.placeholders.userId')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Student Number</label>
+            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.form.labels.studentNumber')}</label>
             <input
               type="text"
               value={currentForm.student_number || ''}
@@ -895,11 +949,11 @@ const AdminDashboard = () => {
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
               style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="STU000001"
+              placeholder={t('admin.form.placeholders.studentNumber')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Course of Study</label>
+            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.form.labels.courseOfStudy')}</label>
             <input
               type="text"
               value={currentForm.course_of_study || ''}
@@ -912,11 +966,11 @@ const AdminDashboard = () => {
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
               style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="Computer Science"
+              placeholder={t('admin.form.placeholders.courseOfStudy')}
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Admission Year</label>
+            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.form.labels.admissionYear')}</label>
             <input
               type="number"
               value={currentForm.admission_year || new Date().getFullYear()}
@@ -935,7 +989,7 @@ const AdminDashboard = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Status</label>
+            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.form.labels.status')}</label>
             <select
               value={currentForm.status || 'active'}
               onChange={(e) => {
@@ -948,10 +1002,10 @@ const AdminDashboard = () => {
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
               style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
             >
-              <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
-              <option value="graduated">Graduated</option>
-              <option value="suspended">Suspended</option>
+              <option value="active">{t('admin.status.options.active')}</option>
+              <option value="inactive">{t('admin.status.options.inactive')}</option>
+              <option value="graduated">{t('admin.status.options.graduated')}</option>
+              <option value="suspended">{t('admin.status.options.suspended')}</option>
             </select>
           </div>
         </div>
@@ -966,7 +1020,7 @@ const AdminDashboard = () => {
             style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}
           >
             <Save className="w-4 h-4" />
-            {(creatingStudent || updatingStudent) ? 'Saving...' : 'Save Student'}
+            {(creatingStudent || updatingStudent) ? t('home.saving') : t('home.saveStudent')}
           </button>
           <button
             onClick={() => {
@@ -984,7 +1038,7 @@ const AdminDashboard = () => {
             style={{backgroundColor: 'var(--secondary-color)', color: 'var(--light-text)'}}
           >
             <X className="w-4 h-4" />
-            Cancel
+            {t('common.cancel')}
           </button>
         </div>
       </div>
@@ -997,98 +1051,122 @@ const AdminDashboard = () => {
     const isEditing = !isNew && tutor;
 
     return (
-      <div className="rounded-lg p-4 mb-4 border-2 hover-lift" style={{borderColor: 'var(--primary-color)', backgroundColor: 'var(--accent-color)'}}>
-        <h3 className="text-lg font-semibold mb-4" style={{color: 'var(--primary-color)'}}>
-          {isEditing ? 'Edit Tutor' : 'Add New Tutor'}
+      <div
+        className="rounded-lg p-4 mb-4 border-2 hover-lift"
+        style={{ borderColor: 'var(--primary-color)', backgroundColor: 'var(--accent-color)' }}
+      >
+        <h3
+          className="text-lg font-semibold mb-4"
+          style={{ color: 'var(--primary-color)' }}
+        >
+          {isEditing
+            ? t('admin.tutor.editTutor')
+            : t('admin.tutor.addNewTutor')}
         </h3>
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>User ID</label>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              {t('admin.tutor.userId')}
+            </label>
             <input
               type="number"
               value={currentForm.user || ''}
               onChange={(e) => {
                 const value = parseInt(e.target.value);
                 if (isNew) {
-                  setTutorForm({...tutorForm, user: value});
+                  setTutorForm({ ...tutorForm, user: value });
                 } else {
-                  setEditingTutor({...tutor, user: value});
+                  setEditingTutor({ ...tutor, user: value });
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="Enter user ID"
+              style={{ borderColor: 'var(--primary-color)', color: 'var(--text-color)' }}
+              placeholder={t('admin.tutor.placeholders.userId')}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Staff Number</label>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              {t('admin.tutor.staffNumber')}
+            </label>
             <input
               type="text"
               value={currentForm.staff_number || ''}
               onChange={(e) => {
                 if (isNew) {
-                  setTutorForm({...tutorForm, staff_number: e.target.value});
+                  setTutorForm({ ...tutorForm, staff_number: e.target.value });
                 } else {
-                  setEditingTutor({...tutor, staff_number: e.target.value});
+                  setEditingTutor({ ...tutor, staff_number: e.target.value });
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="TUT000001"
+              style={{ borderColor: 'var(--primary-color)', color: 'var(--text-color)' }}
+              placeholder={t('admin.tutor.placeholders.staffNumber')}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Department</label>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              {t('admin.tutor.department')}
+            </label>
             <input
               type="text"
               value={currentForm.department || ''}
               onChange={(e) => {
                 if (isNew) {
-                  setTutorForm({...tutorForm, department: e.target.value});
+                  setTutorForm({ ...tutorForm, department: e.target.value });
                 } else {
-                  setEditingTutor({...tutor, department: e.target.value});
+                  setEditingTutor({ ...tutor, department: e.target.value });
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="Computer Science"
+              style={{ borderColor: 'var(--primary-color)', color: 'var(--text-color)' }}
+              placeholder={t('admin.tutor.placeholders.department')}
             />
           </div>
+
           <div>
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Subjects (comma-separated)</label>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              {t('admin.tutor.subjects')}
+            </label>
             <input
               type="text"
               value={currentForm.subjects || ''}
               onChange={(e) => {
                 if (isNew) {
-                  setTutorForm({...tutorForm, subjects: e.target.value});
+                  setTutorForm({ ...tutorForm, subjects: e.target.value });
                 } else {
-                  setEditingTutor({...tutor, subjects: e.target.value});
+                  setEditingTutor({ ...tutor, subjects: e.target.value });
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
-              placeholder="Python, JavaScript, Data Structures"
+              style={{ borderColor: 'var(--primary-color)', color: 'var(--text-color)' }}
+              placeholder={t('admin.tutor.placeholders.subjects')}
             />
           </div>
+
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>Bio</label>
+            <label className="block text-sm font-medium mb-2" style={{ color: 'var(--text-color)' }}>
+              {t('admin.tutor.bio')}
+            </label>
             <textarea
               value={currentForm.bio || ''}
               onChange={(e) => {
                 if (isNew) {
-                  setTutorForm({...tutorForm, bio: e.target.value});
+                  setTutorForm({ ...tutorForm, bio: e.target.value });
                 } else {
-                  setEditingTutor({...tutor, bio: e.target.value});
+                  setEditingTutor({ ...tutor, bio: e.target.value });
                 }
               }}
               className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
-              style={{borderColor: 'var(--primary-color)', color: 'var(--text-color)'}}
+              style={{ borderColor: 'var(--primary-color)', color: 'var(--text-color)' }}
               rows="3"
-              placeholder="Brief description about the tutor..."
+              placeholder={t('admin.tutor.placeholders.bio')}
             />
           </div>
         </div>
+
         <div className="flex gap-2 mt-4">
           <button
             onClick={() => {
@@ -1097,11 +1175,14 @@ const AdminDashboard = () => {
             }}
             disabled={creatingTutor || updatingTutor}
             className="px-6 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
-            style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}
+            style={{ backgroundColor: 'var(--success-color)', color: 'var(--light-text)' }}
           >
             <Save className="w-4 h-4" />
-            {(creatingTutor || updatingTutor) ? 'Saving...' : 'Save Tutor'}
+            {(creatingTutor || updatingTutor)
+              ? t('common.saving')
+              : t('admin.tutor.saveTutor')}
           </button>
+
           <button
             onClick={() => {
               setEditingTutor(null);
@@ -1115,10 +1196,10 @@ const AdminDashboard = () => {
               });
             }}
             className="px-6 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
-            style={{backgroundColor: 'var(--secondary-color)', color: 'var(--light-text)'}}
+            style={{ backgroundColor: 'var(--secondary-color)', color: 'var(--light-text)' }}
           >
             <X className="w-4 h-4" />
-            Cancel
+            {t('common.cancel')}
           </button>
         </div>
       </div>
@@ -1130,12 +1211,21 @@ const AdminDashboard = () => {
     const typeLabel = type.charAt(0).toUpperCase() + type.slice(1).replace('_', ' ');
     
     return (
-      <div className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up" style={{backgroundColor: 'var(--light-text)'}}>
+      <div
+        className="rounded-lg shadow-md p-6 hover-lift animate-fade-in-up"
+        style={{ backgroundColor: 'var(--light-text)' }}
+      >
         <div className="flex justify-between items-center mb-6">
           <div className="flex items-center gap-2">
             {icon}
-            <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{typeLabel} Management</h2>
+            <h2
+              className="text-2xl font-bold animate-scale-in"
+              style={{ color: 'var(--primary-color)' }}
+            >
+              {typeLabel} {t('common.management')}
+            </h2>
           </div>
+
           <button
             onClick={() => {
               setIsAddingNew(true);
@@ -1143,13 +1233,12 @@ const AdminDashboard = () => {
               setEditingItem(null);
             }}
             className="px-4 py-2 rounded-lg hover:scale-105 transition-all flex items-center gap-2 hover-glow"
-            style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
+            style={{ backgroundColor: 'var(--primary-color)', color: 'var(--light-text)' }}
           >
             <Plus className="w-4 h-4" />
-            Add New {typeLabel.slice(0, -1)}
+            {t('common.addNew')} {typeLabel.slice(0, -1)}
           </button>
         </div>
-
 
         {isAddingNew && (
           <div className="bg-gray-50 rounded-lg p-4 mb-4 border-2 border-blue-200">
@@ -1157,6 +1246,7 @@ const AdminDashboard = () => {
               {type === 'news' && renderNewsForm(newItem, true)}
               {type === 'event' && renderEventForm(newItem, true)}
               {type !== 'news' && type !== 'event' && renderContentForm(type, newItem, true)}
+
               <div className="flex gap-2">
                 <button
                   onClick={() => handleAnnouncementSave(type, newItem)}
@@ -1164,8 +1254,11 @@ const AdminDashboard = () => {
                   className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
                 >
                   <Save className="w-4 h-4" />
-                  {(creatingAnnouncement || updatingAnnouncement) ? 'Saving...' : 'Save'}
+                  {(creatingAnnouncement || updatingAnnouncement)
+                    ? t('common.saving')
+                    : t('common.save')}
                 </button>
+
                 <button
                   onClick={() => {
                     setEditingItem(null);
@@ -1175,7 +1268,7 @@ const AdminDashboard = () => {
                   className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
                 >
                   <X className="w-4 h-4" />
-                  Cancel
+                  {t('common.cancel')}
                 </button>
               </div>
             </div>
@@ -1185,19 +1278,21 @@ const AdminDashboard = () => {
         {loading ? (
           <div className="text-center py-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto"></div>
-            <p className="text-gray-600 mt-2">Loading {typeLabel.toLowerCase()}...</p>
+            <p className="text-gray-600 mt-2">
+              {t('common.loading')} {typeLabel.toLowerCase()}...
+            </p>
           </div>
         ) : (
           <div className="space-y-4">
             {data && data.map((item) => (
               <div key={item.id}>
-
                 {editingItem?.id === item.id ? (
                   <div className="bg-gray-50 rounded-lg p-4 mb-4 border-2 border-blue-200">
                     <div className="grid grid-cols-1 gap-4">
                       {type === 'news' && renderNewsForm(editingItem)}
                       {type === 'event' && renderEventForm(editingItem)}
                       {type !== 'news' && type !== 'event' && renderContentForm(type, editingItem)}
+
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleAnnouncementSave(type, editingItem)}
@@ -1205,8 +1300,11 @@ const AdminDashboard = () => {
                           className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2 disabled:opacity-50"
                         >
                           <Save className="w-4 h-4" />
-                          {(creatingAnnouncement || updatingAnnouncement) ? 'Saving...' : 'Save'}
+                          {(creatingAnnouncement || updatingAnnouncement)
+                            ? t('common.saving')
+                            : t('common.save')}
                         </button>
+
                         <button
                           onClick={() => {
                             setEditingItem(null);
@@ -1216,67 +1314,81 @@ const AdminDashboard = () => {
                           className="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors flex items-center gap-2"
                         >
                           <X className="w-4 h-4" />
-                          Cancel
+                          {t('common.cancel')}
                         </button>
                       </div>
                     </div>
                   </div>
                 ) : (
-
-                  <div className="border rounded-lg p-4 hover:shadow-md transition-all hover-lift" style={{borderColor: 'var(--primary-color)'}}>
+                  <div
+                    className="border rounded-lg p-4 hover:shadow-md transition-all hover-lift"
+                    style={{ borderColor: 'var(--primary-color)' }}
+                  >
                     <div className="flex justify-between items-start">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className="px-2 py-1 text-xs font-semibold rounded" style={{backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)'}}>
+                          <span
+                            className="px-2 py-1 text-xs font-semibold rounded"
+                            style={{ backgroundColor: 'var(--tertiary-color)', color: 'var(--primary-color)' }}
+                          >
                             {typeLabel}
                           </span>
-                          <span className="text-xs" style={{color: 'var(--text-color)'}}>
+                          <span className="text-xs" style={{ color: 'var(--text-color)' }}>
                             {new Date(item.created_at).toLocaleDateString()}
                           </span>
                         </div>
+
                         {item.title && (
-                          <h3 className="font-semibold mb-1" style={{color: 'var(--primary-color)'}}>{item.title}</h3>
+                          <h3 className="font-semibold mb-1" style={{ color: 'var(--primary-color)' }}>
+                            {item.title}
+                          </h3>
                         )}
+
                         {item.content && (
-                          <p className="text-sm mb-2" style={{color: 'var(--text-color)'}}>{item.content.substring(0, 100)}...</p>
+                          <p className="text-sm mb-2" style={{ color: 'var(--text-color)' }}>
+                            {item.content.substring(0, 100)}...
+                          </p>
                         )}
+
                         {item.author && (
-                          <p className="text-sm" style={{color: 'var(--text-color)'}}>
-                            <strong>Author:</strong> {item.author}
+                          <p className="text-sm" style={{ color: 'var(--text-color)' }}>
+                            <strong>{t('admin.labels.author')}:</strong> {item.author}
                           </p>
                         )}
+
                         {item.event_date && (
-                          <p className="text-sm" style={{color: 'var(--text-color)'}}>
-                            <strong>Event Date:</strong> {new Date(item.event_date).toLocaleDateString()}
+                          <p className="text-sm" style={{ color: 'var(--text-color)' }}>
+                            <strong>{t('admin.labels.eventDate')}:</strong>{' '}
+                            {new Date(item.event_date).toLocaleDateString()}
                           </p>
                         )}
+
                         {item.location && (
-                          <p className="text-sm" style={{color: 'var(--text-color)'}}>
-                            <strong>Location:</strong> {item.location}
+                          <p className="text-sm" style={{ color: 'var(--text-color)' }}>
+                            <strong>{t('admin.labels.location')}:</strong> {item.location}
                           </p>
                         )}
+
                         {item.video_id && (
-                          <p className="text-sm" style={{color: 'var(--text-color)'}}>
-                            <strong>Video ID:</strong> {item.video_id}
+                          <p className="text-sm" style={{ color: 'var(--text-color)' }}>
+                            <strong>{t('admin.labels.videoId')}:</strong> {item.video_id}
                           </p>
                         )}
                       </div>
+
                       <div className="flex gap-2 ml-4">
                         <button
                           onClick={() => setEditingItem(item)}
                           className="p-2 rounded-lg transition-all hover:scale-110 hover-glow"
-                          style={{color: 'var(--primary-color)'}}
-                          onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--accent-color)'}
-                          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                          style={{ color: 'var(--primary-color)' }}
                         >
                           <Edit2 className="w-4 h-4" />
                         </button>
+
                         <button
                           onClick={() => handleAnnouncementDelete(type, item)}
                           className="p-2 rounded-lg transition-all hover:scale-110 hover-glow"
-                          style={{color: 'var(--error-color)'}}
-                          onMouseEnter={(e) => e.target.style.backgroundColor = 'var(--accent-color)'}
-                          onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                          style={{ color: 'var(--error-color)' }}
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -1286,8 +1398,14 @@ const AdminDashboard = () => {
                 )}
               </div>
             ))}
+
             {(!data || data.length === 0) && (
-              <p className="text-gray-500 text-center py-8">No {typeLabel.toLowerCase()} found. Add your first {typeLabel.slice(0, -1).toLowerCase()}!</p>
+              <p className="text-gray-500 text-center py-8">
+                {t('admin.empty.noItems', {
+                  type: typeLabel.toLowerCase(),
+                  singular: typeLabel.slice(0, -1).toLowerCase()
+                })}
+              </p>
             )}
           </div>
         )}
@@ -1323,7 +1441,7 @@ const AdminDashboard = () => {
       {/* Main Content */}
       <LoadingOverlay 
         isLoading={isMainLoading}
-        loadingText="Loading admin dashboard..."
+        loadingText={t('admin.loading.adminDashboard')}
         overlayColor="rgba(0, 0, 0, 0.8)"
         spinnerColor="var(--primary-color)"
         textColor="white"
@@ -1613,7 +1731,7 @@ const AdminDashboard = () => {
               <h2 className="text-2xl font-bold animate-scale-in" style={{color: 'var(--primary-color)'}}>{t('admin.sections.testimonialApproval')}</h2>
               {pendingTestimonials && pendingTestimonials.length > 0 && (
                 <span className="px-3 py-1 rounded-full text-sm font-semibold" style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}>
-                  {pendingTestimonials.length} pending approval{pendingTestimonials.length !== 1 ? 's' : ''}
+                  {pendingTestimonials.length} {t('home.pendingApproval')}{pendingTestimonials.length !== 1 ? t('home.plural') : ''}
                 </span>
               )}
             </div>
@@ -1621,7 +1739,7 @@ const AdminDashboard = () => {
             {pendingTestimonialsLoading ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
-                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading pending testimonials...</p>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>{t('home.loadingPendingTestimonials')}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -1642,12 +1760,12 @@ const AdminDashboard = () => {
                           <p className="text-sm mb-3" style={{color: 'var(--text-color)'}}>{testimonial.content}</p>
                           {testimonial.author && (
                             <p className="text-sm mb-1" style={{color: 'var(--text-color)'}}>
-                              <strong>Author:</strong> {testimonial.author} - {testimonial.author_title}
+                              <strong>{t('home.author')}</strong> {testimonial.author} - {testimonial.author_title}
                             </p>
                           )}
                           {testimonial.image && (
                             <p className="text-sm mb-1" style={{color: 'var(--text-color)'}}>
-                              <strong>Image:</strong> {testimonial.image}
+                              <strong>{t('home.image')}</strong> {testimonial.image}
                             </p>
                           )}
                         </div>
@@ -1710,8 +1828,8 @@ const AdminDashboard = () => {
                 ) : (
                   <div className="text-center py-12">
                     <Award className="w-16 h-16 mx-auto mb-4" style={{color: 'var(--text-color)'}} />
-                    <h3 className="text-lg font-semibold mb-2" style={{color: 'var(--primary-color)'}}>All Caught Up!</h3>
-                    <p className="text-gray-500">No testimonials pending approval at this time.</p>
+                    <h3 className="text-lg font-semibold mb-2" style={{color: 'var(--primary-color)'}}>{t('home.allCaughtUp')}</h3>
+                    <p className="text-gray-500">{t('home.noPendingTestimonials')}</p>
                   </div>
                 )}
               </div>
@@ -1734,7 +1852,7 @@ const AdminDashboard = () => {
             {contactMessagesLoading ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
-                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading contact messages...</p>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>{t('home.loadingContactMessages')}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -1767,8 +1885,8 @@ const AdminDashboard = () => {
                           </h3>
                           <p className="text-sm mb-3" style={{color: 'var(--text-color)'}}>{message.message}</p>
                           <div className="text-sm" style={{color: 'var(--text-color)'}}>
-                            <p><strong>From:</strong> {message.name} ({message.email})</p>
-                            {message.phone && <p><strong>Phone:</strong> {message.phone}</p>}
+                            <p><strong>{t('home.from')}</strong> {message.name} ({message.email})</p>
+                            {message.phone && <p><strong>{t('home.phoneLabel')}</strong> {message.phone}</p>}
                           </div>
                         </div>
                       </div>
@@ -1789,7 +1907,7 @@ const AdminDashboard = () => {
                             style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
                           >
                             <Edit2 className="w-4 h-4" />
-                            {markingMessageRead ? 'Marking...' : 'Mark Read'}
+                            {markingMessageRead ? t('home.marking') : t('home.markRead')}
                           </button>
                         )}
                         {!message.replied && (
@@ -1808,7 +1926,7 @@ const AdminDashboard = () => {
                             style={{backgroundColor: 'var(--success-color)', color: 'var(--light-text)'}}
                           >
                             <MessageSquare className="w-4 h-4" />
-                            {markingMessageReplied ? 'Marking...' : 'Mark Replied'}
+                            {markingMessageReplied ? t('home.marking') : t('home.markReplied')}
                           </button>
                         )}
                         <button
@@ -1828,7 +1946,7 @@ const AdminDashboard = () => {
                           style={{backgroundColor: 'var(--error-color)', color: 'var(--light-text)'}}
                         >
                           <Trash2 className="w-4 h-4" />
-                          {deletingContactMessage ? 'Deleting...' : 'Delete'}
+                          {deletingContactMessage ? t('home.deleting') : t('home.delete')}
                         </button>
                       </div>
                     </div>
@@ -1856,7 +1974,7 @@ const AdminDashboard = () => {
                 style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
               >
                 <Plus className="w-4 h-4" />
-                Add New Student
+                {t('admin.buttons.addNewStudent')}
               </button>
             </div>
 
@@ -1866,7 +1984,7 @@ const AdminDashboard = () => {
             {studentProfilesLoading ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
-                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading students...</p>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>{t('home.loadingStudents')}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -1927,7 +2045,7 @@ const AdminDashboard = () => {
                   </div>
                 ))}
                 {(!studentProfiles || studentProfiles.length === 0) && (
-                  <p className="text-gray-500 text-center py-8">No students found. Add your first student!</p>
+                  <p className="text-gray-500 text-center py-8">{t('home.noStudentsFound')}</p>
                 )}
               </div>
             )}
@@ -1942,7 +2060,7 @@ const AdminDashboard = () => {
                 style={{backgroundColor: 'var(--primary-color)', color: 'var(--light-text)'}}
               >
                 <Plus className="w-4 h-4" />
-                Add New Tutor
+                {t('admin.tutor.addNewTutor')}
               </button>
             </div>
 
@@ -1952,7 +2070,7 @@ const AdminDashboard = () => {
             {tutorProfilesLoading ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
-                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading tutors...</p>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>{t('home.loadingTutors')}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -2010,7 +2128,7 @@ const AdminDashboard = () => {
                   </div>
                 ))}
                 {(!tutorProfiles || tutorProfiles.length === 0) && (
-                  <p className="text-gray-500 text-center py-8">No tutors found. Add your first tutor!</p>
+                  <p className="text-gray-500 text-center py-8">{t('home.noTutorsFound')}</p>
                 )}
               </div>
             )}
@@ -2053,7 +2171,7 @@ const AdminDashboard = () => {
                   onClick={() => setNotification(null)}
                   className="ml-4 text-sm underline hover:no-underline"
                 >
-                  Dismiss
+                {t('common.dismiss')}
                 </button>
               </div>
             )}
@@ -2064,7 +2182,7 @@ const AdminDashboard = () => {
             {booksLoading ? (
               <div className="text-center py-8">
                 <div className="animate-spin rounded-full h-8 w-8 border-b-2 mx-auto animate-bounce-in" style={{borderColor: 'var(--primary-color)'}}></div>
-                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>Loading books...</p>
+                <p className="mt-2 animate-fade-in-up" style={{color: 'var(--text-color)'}}>{t('home.loadingBooks')}</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -2108,7 +2226,7 @@ const AdminDashboard = () => {
                                 className="hover:underline"
                                 style={{color: 'var(--primary-color)'}}
                               >
-                                View PDF
+                                {t('home.viewPDF')}
                               </a>
                             )}
                           </div>

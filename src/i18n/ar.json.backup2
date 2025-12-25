@@ -126,10 +126,6 @@
         "submissionsToGrade": "تسليمات للتصحيح",
         "classesScheduled": "حصص مجدولة"
       },
-      "stats": {
-        "courses": "الدورات",
-        "students": "الطلاب"
-      },
       "quickActions": {
         "title": "إجراءات سريعة",
         "createAssignment": "إنشاء واجب",
@@ -156,11 +152,7 @@
         "course": "الدورة",
         "due": "مستحق:",
         "submissions": "{count} تسليمات",
-        "graded": "{count} مصحح",
-        "stats": {
-          "submitted": "{count} مُسلم",
-          "graded": "{count} مصحح"
-        }
+        "graded": "{count} مصحح"
       },
       "submissions": {
         "title": "التسليمات المعلقة",
@@ -174,11 +166,7 @@
         "loading": "جاري تحميل الجدول...",
         "noUpcoming": "لا توجد حصص قادمة",
         "scheduleSome": "جدول بعض الحصص للبدء",
-        "viewDetails": "عرض التفاصيل",
-        "room": "القاعة",
-        "duration": "المدة",
-        "minutes": "دقيقة",
-        "students": "طلاب"
+        "viewDetails": "عرض التفاصيل"
       },
       "students": {
         "management": "إدارة الطلاب",
@@ -201,7 +189,6 @@
         "gradeOverview": "نظرة عامة على الدرجات",
         "totalAssignments": "إجمالي الواجبات",
         "submitted": "مُسلم",
-        "gradedAssignments": "مصححة",
         "loadingAnalytics": "جاري تحميل التحليلات..."
       },
       "tabs": {
@@ -759,32 +746,6 @@
         }
     },
 
-    "alumni": {
-        "title": "شبكة الخريجين",
-        "subtitle": "ابقَ على اتصال مع مجتمعنا من الخريجين الناجحين",
-        "featured": "خريجون مميزون",
-        "stories": "قصص النجاح",
-        "network": "شبكة الخريجين",
-        "events": "الفعاليات القادمة",
-        "viewProfile": "عرض الملف الشخصي",
-        "achievements": "الإنجازات",
-        "currentPosition": "المنصب الحالي",
-        "graduated": "تخرج في"
-    },
-
-    "common": {
-        "search": "بحث",
-        "filter": "تصفية",
-        "export": "تصدير",
-        "save": "حفظ",
-        "cancel": "إلغاء",
-        "edit": "تعديل",
-        "delete": "حذف",
-        "view": "عرض",
-        "loading": "جاري التحميل...",
-        "noData": "لا توجد بيانات"
-    },
-
     "home": {
         "hero": "اصنع مستقبلك بتميز في التعليم",
         "heroDesc": "انضم إلى آلاف الطلاب الذين بدأوا بالفعل رحلة النجاح. استمتع بتعليم عالمي المستوى مع التعلم المخصص والمدرسين الخبراء والبرامج المبتكرة المصممة لمساعدتك في تحقيق أهدافك.",
@@ -876,18 +837,5 @@
         "footerAccessibility": "إمكانية الوصول",
         "footerConsumer": "معلومات المستهلك",
         "footerEmergency": "معلومات الطوارئ"
-    },
-
-    "notFound": {
-        "title": "الصفحة غير موجودة",
-        "subtitle": "عذراً، الصفحة التي تبحث عنها غير موجودة أو تم نقلها إلى مكان آخر.",
-        "description": "تحقق مرة أخرى من عنوان URL أو ارجع إلى الصفحة الرئيسية لمتابعة رحلتك.",
-        "goHome": "الذهاب إلى الرئيسية",
-        "goBack": "العودة",
-        "helpfulLinks": "روابط مفيدة:",
-        "home": "الرئيسية",
-        "login": "تسجيل الدخول",
-        "signUp": "إنشاء حساب",
-        "contactUs": "تواصل معنا"
     }
 }

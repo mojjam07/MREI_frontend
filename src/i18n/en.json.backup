@@ -91,10 +91,6 @@
     "tutor": {
       "dashboard": "Tutor Dashboard",
       "welcome": "Welcome back",
-      "stats": {
-        "courses": "Courses",
-        "students": "Students"
-      },
       "courses": "Courses",
       "students": "Students",
       "myCourses": "My Courses",
@@ -162,11 +158,7 @@
         "course": "Course",
         "due": "Due:",
         "submissions": "{count} submissions",
-        "graded": "{count} graded",
-        "stats": {
-          "submitted": "{count} submitted",
-          "graded": "{count} graded"
-        }
+        "graded": "{count} graded"
       },
       "submissions": {
         "title": "Pending Submissions",
@@ -180,11 +172,7 @@
         "loading": "Loading schedule...",
         "noUpcoming": "No upcoming classes",
         "scheduleSome": "Schedule some classes",
-        "viewDetails": "View Details",
-        "room": "Room",
-        "duration": "Duration",
-        "minutes": "minutes",
-        "students": "students"
+        "viewDetails": "View Details"
       },
       "students": {
         "management": "Student Management",

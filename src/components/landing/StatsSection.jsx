@@ -26,7 +26,7 @@ const StatsSection = () => {
       ]);
     } catch (error) {
       console.error('Error fetching stats:', error);
-      setError('Failed to load statistics. Please try again.');
+      setError(t('home.errorLoadingStatistics'));
       setStats([]);
     } finally {
       setLoading(false);
@@ -44,7 +44,7 @@ const StatsSection = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-light-text"></div>
-            <p className="text-light-text mt-4">Loading statistics...</p>
+            <p className="text-light-text mt-4">{t('home.loadingStatistics')}</p>
           </div>
         </div>
       </section>
@@ -61,7 +61,7 @@ const StatsSection = () => {
               onClick={fetchStats}
               className="bg-accent text-primary px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
             >
-              Try Again
+              {t('home.tryAgain')}
             </button>
           </div>
         </div>

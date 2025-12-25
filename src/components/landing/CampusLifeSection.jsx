@@ -21,7 +21,7 @@ const CampusLifeSection = () => {
       setCampusPhotos(photos);
     } catch (error) {
       console.error('Error fetching campus photos:', error);
-      setError('Failed to load campus photos. Please try again.');
+      setError(t('home.errorLoadingCampusPhotos'));
       setCampusPhotos([]);
     } finally {
       setLoading(false);
@@ -46,7 +46,7 @@ const CampusLifeSection = () => {
           </div>
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-tertiary"></div>
-            <p className="text-tertiary mt-4">Loading campus photos...</p>
+            <p className="text-tertiary mt-4">{t('home.loadingCampusPhotos')}</p>
           </div>
         </div>
       </section>
@@ -71,7 +71,7 @@ const CampusLifeSection = () => {
               onClick={fetchCampusPhotos}
               className="bg-tertiary text-primary px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
             >
-              Try Again
+              {t('home.tryAgain')}
             </button>
           </div>
         </div>
