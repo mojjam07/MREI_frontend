@@ -11,13 +11,37 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { Plus, Edit, Save, X, Upload, LogOut, User } from 'lucide-react';
 import { pdfjs } from 'react-pdf';
 
-// Configure PDF.js worker using the standard react-pdf approach
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+// Configure PDF.js worker with CDN fallback for better reliability
+const configurePdfWorker = () => {
+  try {
+    // Try to use the local worker first (for development)
+    if (import.meta.env.DEV) {
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+        'pdfjs-dist/build/pdf.worker.min.js',
+        import.meta.url,
+      ).toString();
+    } else {
+      // Use CDN for production builds
+      pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+    }
+    console.log('PDF.js worker configured successfully:', pdfjs.GlobalWorkerOptions.workerSrc);
+    return true;
+  } catch (error) {
+    console.error('Failed to configure PDF worker:', error);
+    // Fallback to CDN
+    try {
+      pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+      console.log('Using CDN worker fallback:', pdfjs.GlobalWorkerOptions.workerSrc);
+      return true;
+    } catch (fallbackError) {
+      console.error('Failed to configure worker fallback:', fallbackError);
+      return false;
+    }
+  }
+};
 
-console.log('PDF.js worker configured with:', pdfjs.GlobalWorkerOptions.workerSrc);
+// Initialize worker
+configurePdfWorker();
 console.log('React-PDF version:', pdfjs.version);
 
 const DigitalBookshelf = () => {
@@ -168,16 +192,13 @@ const DigitalBookshelf = () => {
     // Add timeout for loading state to prevent infinite loading
     const loadingTimeout = setTimeout(() => {
       if (pdfLoading) {
-        console.warn('PDF loading timeout reached, checking worker status...');
-        console.warn('Worker source:', pdfjs.GlobalWorkerOptions.workerSrc);
-        console.warn('React-PDF version:', pdfjs.version);
-        setPdfError('PDF loading timed out. This may be due to worker configuration issues. Check console for details.');
+        setPdfError('PDF loading is taking too long. Please try again or check your internet connection.');
         setPdfLoading(false);
       }
-    }, 15000); // Reduced to 15 seconds for faster feedback
+    }, 5000); // Reduced to 5 seconds for better UX
 
     // Store timeout ID for cleanup
-    setTimeout(() => clearTimeout(loadingTimeout), 16000);
+    setTimeout(() => clearTimeout(loadingTimeout), 6000);
   };
 
 
@@ -193,56 +214,28 @@ const DigitalBookshelf = () => {
 
 
   const onDocumentLoadError = (error) => {
-    console.group('PDF Loading Error Analysis');
-    console.error('Error details:', {
-      error,
-      message: error?.message,
-      name: error?.name,
-      stack: error?.stack,
-      selectedBook: selectedBook,
-      fileType: selectedBook?.pdf_file?.type || 'unknown',
-      fileSize: selectedBook?.pdf_file?.size || 'unknown',
-      workerSrc: pdfjs.GlobalWorkerOptions.workerSrc,
-      reactPdfVersion: pdfjs.version,
-      pdfjsDistVersion: pdfjs.version
-    });
-    console.groupEnd();
+    console.error('PDF Loading Error:', error);
 
     setPdfLoading(false);
-    let errorMessage = 'Failed to load PDF file. ';
+    let errorMessage = 'Unable to open this PDF. ';
     let shouldRetry = false;
 
-    // Enhanced error detection and messaging
-    if (error?.name === 'InvalidPDFException') {
-      errorMessage += 'The file appears to be corrupted or is not a valid PDF. Please check if the file is not password-protected or corrupted.';
-    } else if (error?.name === 'MissingPDFException') {
-      errorMessage += 'PDF content could not be found in the file. The file may be incomplete or corrupted.';
-    } else if (error?.name === 'UnexpectedServerResponse') {
-      errorMessage += 'Server returned an unexpected response. Please check if the file exists and the server is accessible.';
-      shouldRetry = true;
-    } else if (error?.message?.includes('CORS')) {
-      errorMessage += 'Cross-origin access is blocked. This might be due to server CORS settings or an inaccessible URL.';
+    // User-friendly error detection and messaging
+    if (error?.name === 'InvalidPDFException' || error?.name === 'MissingPDFException') {
+      errorMessage += 'The file may be corrupted or not a valid PDF.';
     } else if (error?.message?.includes('404')) {
-      errorMessage += 'The PDF file could not be found. Please check if the URL is correct.';
-    } else if (error?.message?.includes('Worker') || error?.message?.includes('worker')) {
-      errorMessage += 'There seems to be an issue with the PDF processing worker. This might be due to version incompatibility or network issues.';
-      shouldRetry = true;
-    } else if (error?.message?.includes('Failed to fetch') || error?.message?.includes('Network Error')) {
-      errorMessage += 'Network error occurred while loading the PDF. Please check your internet connection.';
-      shouldRetry = true;
-    } else if (error?.message?.includes('Loading chunk') || error?.message?.includes('Loading PDF')) {
-      errorMessage += 'The PDF is taking too long to load. This may be due to file size or network issues.';
+      errorMessage += 'The file could not be found. Please check with the administrator.';
+    } else if (error?.message?.includes('CORS')) {
+      errorMessage += 'Unable to access the file due to security restrictions.';
+    } else if (error?.message?.includes('Network Error') || error?.message?.includes('Failed to fetch')) {
+      errorMessage += 'Please check your internet connection and try again.';
       shouldRetry = true;
     } else if (selectedBook?.pdf_file?.type && selectedBook?.pdf_file?.type !== 'application/pdf') {
-      errorMessage += `Invalid file type: ${selectedBook.pdf_file.type}. Please ensure you have selected a valid PDF file.`;
+      errorMessage += 'Please select a valid PDF file.';
     } else if (selectedBook?.pdf_file?.size > 50 * 1024 * 1024) {
-      errorMessage += 'The PDF file is too large. Maximum size allowed is 50MB.';
-    } else if (selectedBook?.id === 'local-temp' && selectedBook?.pdf_file instanceof File) {
-      // Special handling for local files
-      errorMessage += 'Local PDF file could not be processed. This may be due to browser security restrictions or file corruption.';
-      shouldRetry = true;
+      errorMessage += 'The file is too large. Maximum size allowed is 50MB.';
     } else {
-      errorMessage += 'An unexpected error occurred while loading the PDF. Please try again or contact support if the problem persists.';
+      errorMessage += 'Please try again or contact support if the problem persists.';
       shouldRetry = true;
     }
 
@@ -271,97 +264,61 @@ const DigitalBookshelf = () => {
 
 
 
-  // Enhanced function to get the correct file format for react-pdf with better validation
+  // Simplified and robust function to get PDF file for react-pdf
   const getPdfFile = (book) => {
-    console.log('Getting PDF file for book:', book.title, 'ID:', book.id);
-    console.log('Book PDF file details:', {
-      type: typeof book.pdf_file,
-      isFile: book.pdf_file instanceof File,
-      fileName: book.pdf_file?.name,
-      fileSize: book.pdf_file?.size,
-      fileType: book.pdf_file?.type,
-      url: book.pdf_file?.url
-    });
+    if (!book || !book.pdf_file) {
+      console.error('No PDF file found in book object');
+      return null;
+    }
 
     try {
+      // Handle local temporary files (from file upload)
       if (book.id === 'local-temp') {
-        // For local files, return the File object directly
         const file = book.pdf_file;
-        console.log('Local file detected:', {
-          name: file?.name,
-          size: file?.size,
-          type: file?.type,
-          lastModified: file?.lastModified
-        });
-
-        if (!file) {
-          console.error('No local file provided for local-temp book');
+        if (!file || !(file instanceof File)) {
+          console.error('Invalid local file object');
           return null;
         }
 
-        if (!(file instanceof File)) {
-          console.error('Local file is not a File object:', typeof file);
+        // Validate file type and size
+        const isValidPdf = file.type === 'application/pdf' || file.name?.toLowerCase().endsWith('.pdf');
+        if (!isValidPdf) {
+          console.error('Invalid PDF file type:', file.type, file.name);
           return null;
         }
 
-        // Enhanced validation for local files
-        if (file.type !== 'application/pdf' && !file.name?.toLowerCase().endsWith('.pdf')) {
-          console.error('Invalid file type for local PDF:', {
-            type: file.type,
-            name: file.name,
-            endsWithPdf: file.name?.toLowerCase().endsWith('.pdf')
-          });
-          return null;
-        }
-
-        // Check file size
         if (file.size > 50 * 1024 * 1024) {
-          console.error('File too large for local PDF:', file.size);
+          console.error('File too large (max 50MB):', file.size);
           return null;
         }
 
-        console.log('Returning local File object for PDF rendering');
         return file;
-      } else if (typeof book.pdf_file === 'string') {
-        // For server URLs, return the string URL
-        const url = book.pdf_file.trim();
-        console.log('Remote URL detected:', url);
-
-        if (!url) {
-          console.error('Empty URL provided for remote PDF');
-          return null;
-        }
-
-        // Basic URL validation
-        if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('/')) {
-          console.error('Invalid URL format for remote PDF:', url);
-          return null;
-        }
-
-        console.log('Returning URL string for PDF rendering');
-        return url;
-      } else if (book.pdf_file && typeof book.pdf_file === 'object') {
-        // Handle File objects from other sources
-        if (book.pdf_file instanceof File) {
-          console.log('File object detected from other source');
-          return book.pdf_file;
-        }
-
-        // Check for URL property
-        if (book.pdf_file.url && typeof book.pdf_file.url === 'string') {
-          console.log('URL property found in object:', book.pdf_file.url);
-          return book.pdf_file.url;
-        }
-
-        console.error('Object PDF file does not have valid File or URL property');
-        return null;
       }
 
-      console.error('No valid PDF file found in book object - invalid structure');
+      // Handle server URLs (string)
+      if (typeof book.pdf_file === 'string') {
+        const url = book.pdf_file.trim();
+        if (!url || (!url.startsWith('http') && !url.startsWith('/'))) {
+          console.error('Invalid URL format:', url);
+          return null;
+        }
+        return url;
+      }
+
+      // Handle File objects from other sources
+      if (book.pdf_file instanceof File) {
+        return book.pdf_file;
+      }
+
+      // Handle objects with URL property
+      if (book.pdf_file.url && typeof book.pdf_file.url === 'string') {
+        return book.pdf_file.url;
+      }
+
+      console.error('Unsupported PDF file format');
       return null;
     } catch (error) {
-      console.error('Error in getPdfFile:', error);
-      console.error('Error stack:', error.stack);
+      console.error('Error processing PDF file:', error);
       return null;
     }
   };

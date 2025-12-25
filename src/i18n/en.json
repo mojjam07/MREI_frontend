@@ -168,6 +168,19 @@
           "graded": "{count} graded"
         }
       },
+      "analytics": {
+        "title": "Analytics",
+        "averageGrade": "Average Grade",
+        "completionRate": "Completion Rate",
+        "graded": "Graded",
+        "assignmentProgress": "Assignment Progress",
+        "noData": "No course performance data available",
+        "viewReport": "View Report",
+        "gradeOverview": "Grade Overview",
+        "totalAssignments": "Total Assignments",
+        "submitted": "Submitted",
+        "gradedAssignments": "Graded"
+      },
       "submissions": {
         "title": "Pending Submissions",
         "loading": "Loading submissions...",
@@ -196,24 +209,11 @@
         "quickActions": "Quick Actions",
         "sendMessage": "Send Message"
       },
-      "analytics": {
-        "title": "Analytics",
-        "averageGrade": "Average Grade",
-        "completionRate": "Completion Rate",
-        "graded": "Graded",
-        "assignmentProgress": "Assignment Progress",
-        "noData": "No course performance data available",
-        "viewReport": "View Report",
-        "gradeOverview": "Grade Overview",
-        "totalAssignments": "Total Assignments",
-        "submitted": "Submitted",
-        "loadingAnalytics": "Loading analytics..."
-      },
+
       "loadingCourses": "Loading courses...",
       "studentsEnrolled": "students enrolled",
       "edit": "Edit",
       "noCoursesAssigned": "No courses assigned",
-      "assignments": "Assignments",
       "loadingAssignments": "Loading assignments...",
       "submissionsGraded": "submissions • graded",
       "view": "View",
@@ -774,6 +774,10 @@
         "sending": "Sending...",
         "messageSuccess": "Success! Your message has been sent successfully. We'll get back to you soon.",
         "messageError": "Error! There was a problem sending your message. Please try again later.",
+        "addressValue": "12A Baale Street Ishagatedo Mushin Road, Lagos 12345",
+        "phoneValue": "+1 (555) 123-4567",
+        "emailValue": "info@mahdurahmah.edu",
+        "sendingMessage": "Sending...",
 
         "footerAboutTitle": "About Us",
         "footerAcademicsTitle": "Academics",

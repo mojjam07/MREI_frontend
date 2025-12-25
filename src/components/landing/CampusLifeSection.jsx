@@ -66,7 +66,7 @@ const CampusLifeSection = () => {
             </p>
           </div>
           <div className="text-center">
-            <p className="text-tertiary mb-4">{error}</p>
+            <p className="text-tertiary mb-4">{t('home.errorLoadingCampusPhotos')}</p>
             <button
               onClick={fetchCampusPhotos}
               className="bg-tertiary text-primary px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
@@ -117,14 +117,14 @@ const CampusLifeSection = () => {
 
               {/* Hover Content */}
               <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-4 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                <p className="text-xs sm:text-sm font-medium">Campus Life</p>
-                <p className="text-xs opacity-90 hidden sm:block">Explore our vibrant community</p>
+                <p className="text-xs sm:text-sm font-medium">{t('home.campusLifeHover')}</p>
+                <p className="text-xs opacity-90 hidden sm:block">{t('home.exploreCommunity')}</p>
               </div>
 
               {/* Corner Badge (for featured image) */}
               {index === 0 && (
                 <div className="absolute top-3 right-3 bg-tertiary text-primary text-xs font-semibold px-2 sm:px-3 py-1 rounded-full shadow-lg">
-                  Featured
+                  {t('home.featured')}
                 </div>
               )}
             </div>

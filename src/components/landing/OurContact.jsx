@@ -86,7 +86,7 @@ const OurContact = () => {
                 </svg>
                 <div>
                   <p className="font-semibold text-primary text-sm sm:text-base">{t('home.address')}</p>
-                  <p className="text-text text-sm sm:text-base">12A Baale Street Ishagatedo Mushin Road, Lagos 12345</p>
+                  <p className="text-text text-sm sm:text-base">{t('home.addressValue')}</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -95,7 +95,7 @@ const OurContact = () => {
                 </svg>
                 <div>
                   <p className="font-semibold text-primary text-sm sm:text-base">{t('home.phone')}</p>
-                  <p className="text-text text-sm sm:text-base">+1 (555) 123-4567</p>
+                  <p className="text-text text-sm sm:text-base">{t('home.phoneValue')}</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -104,7 +104,7 @@ const OurContact = () => {
                 </svg>
                 <div>
                   <p className="font-semibold text-primary text-sm sm:text-base">{t('home.email')}</p>
-                  <p className="text-text text-sm sm:text-base break-all">info@mahdurahmah.edu</p>
+                  <p className="text-text text-sm sm:text-base break-all">{t('home.emailValue')}</p>
                 </div>
               </div>
             </div>
@@ -168,14 +168,14 @@ const OurContact = () => {
               {/* Success Message */}
               {submitStatus === 'success' && (
                 <div className="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded-lg text-sm">
-                  <strong>Success!</strong> Your message has been sent successfully. We'll get back to you soon.
+                  {t('home.messageSuccess')}
                 </div>
               )}
 
               {/* Error Message */}
               {submitStatus === 'error' && (
                 <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg text-sm">
-                  <strong>Error!</strong> There was a problem sending your message. Please try again later.
+                  {t('home.messageError')}
                 </div>
               )}
 
@@ -250,7 +250,7 @@ const OurContact = () => {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                     </svg>
-                    Sending...
+                    {t('home.sendingMessage')}
                   </>
                 ) : (
                   t('home.send')

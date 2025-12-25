@@ -66,7 +66,7 @@ const NewsEventsSection = () => {
       <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <p className="text-text mb-4">{error}</p>
+            <p className="text-text mb-4">{t('home.errorLoadingNewsEvents')}</p>
             <button 
               onClick={fetchHomeContent}
               className="bg-primary text-light-text px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
@@ -192,7 +192,7 @@ const NewsEventsSection = () => {
             </ul>
             <div className="mt-6 sm:mt-8 text-center">
               <a href="#" className="text-sm sm:text-base text-primary hover:text-link-hover font-medium">
-                View All Events →
+                {t('home.viewAllEvents')}
               </a>
             </div>
           </div>

@@ -18,6 +18,7 @@ export default defineConfig({
   },
   define: {
     global: 'globalThis',
+    __PDF_WORKER_CDN__: JSON.stringify(`https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`)
   },
   build: {
     rollupOptions: {
@@ -26,6 +27,9 @@ export default defineConfig({
           pdfjs: ['pdfjs-dist']
         }
       }
-    }
+    },
+    // Improve PDF worker handling
+    assetsInlineLimit: 4096,
+    chunkSizeWarningLimit: 1000
   }
 });
