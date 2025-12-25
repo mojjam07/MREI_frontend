@@ -846,5 +846,41 @@
             "welcome": "Welcome",
             "logout": "Logout"
         }
+    },
+
+    "navDropdowns": {
+        "whyUs": {
+            "expertTutors": "Expert Tutors",
+            "flexibleLearning": "Flexible Learning Options",
+            "provenSuccess": "Proven Success Stories"
+        },
+        "ourImpact": {
+            "studentStats": "Student Statistics",
+            "courseOfferings": "Course Offerings",
+            "successMetrics": "Success Metrics",
+            "tutorNetwork": "Tutor Network"
+        },
+        "testimonials": {
+            "studentTestimonials": "Student Testimonials",
+            "alumniStories": "Alumni Stories",
+            "successCases": "Success Cases"
+        },
+        "newsEvents": {
+            "latestNews": "Latest News",
+            "upcomingEvents": "Upcoming Events",
+            "academicAnnouncements": "Academic Announcements"
+        },
+        "schoolLife": {
+            "campusFacilities": "Campus Facilities",
+            "studentActivities": "Student Activities",
+            "clubsOrganizations": "Clubs & Organizations",
+            "sportsRecreation": "Sports & Recreation"
+        },
+        "ourContact": {
+            "contactDetails": "Contact Details",
+            "locationDirections": "Location & Directions",
+            "supportServices": "Support Services",
+            "sendInquiry": "Send Inquiry"
+        }
     }
 }

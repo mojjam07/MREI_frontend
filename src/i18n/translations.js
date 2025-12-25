@@ -985,6 +985,42 @@ const translations = {
       login: 'Login',
       signUp: 'Sign Up',
       contactUs: 'Contact Us'
+    },
+
+    navDropdowns: {
+      whyUs: {
+        expertTutors: 'Expert Tutors',
+        flexibleLearning: 'Flexible Learning Options',
+        provenSuccess: 'Proven Success Stories'
+      },
+      ourImpact: {
+        studentStats: 'Student Statistics',
+        courseOfferings: 'Course Offerings',
+        successMetrics: 'Success Metrics',
+        tutorNetwork: 'Tutor Network'
+      },
+      testimonials: {
+        studentTestimonials: 'Student Testimonials',
+        alumniStories: 'Alumni Stories',
+        successCases: 'Success Cases'
+      },
+      newsEvents: {
+        latestNews: 'Latest News',
+        upcomingEvents: 'Upcoming Events',
+        academicAnnouncements: 'Academic Announcements'
+      },
+      schoolLife: {
+        campusFacilities: 'Campus Facilities',
+        studentActivities: 'Student Activities',
+        clubsOrganizations: 'Clubs & Organizations',
+        sportsRecreation: 'Sports & Recreation'
+      },
+      ourContact: {
+        contactDetails: 'Contact Details',
+        locationDirections: 'Location & Directions',
+        supportServices: 'Support Services',
+        sendInquiry: 'Send Inquiry'
+      }
     }
   },
 
@@ -1932,6 +1968,42 @@ const translations = {
       currentMonth: 'الشهر الحالي',
       selectMonth: 'اختر الشهر',
       selectYear: 'اختر السنة'
+    },
+
+    navDropdowns: {
+      whyUs: {
+        expertTutors: 'مدرسون خبراء',
+        flexibleLearning: 'خيارات التعلم المرنة',
+        provenSuccess: 'قصص نجاح مثبتة'
+      },
+      ourImpact: {
+        studentStats: 'إحصائيات الطلاب',
+        courseOfferings: 'عروض الدورات',
+        successMetrics: 'مقاييس النجاح',
+        tutorNetwork: 'شبكة المدرسين'
+      },
+      testimonials: {
+        studentTestimonials: 'شهادات الطلاب',
+        alumniStories: 'قصص الخريجين',
+        successCases: 'حالات النجاح'
+      },
+      newsEvents: {
+        latestNews: 'أحدث الأخبار',
+        upcomingEvents: 'الفعاليات القادمة',
+        academicAnnouncements: 'الإعلانات الأكاديمية'
+      },
+      schoolLife: {
+        campusFacilities: 'مرافق الحرم الجامعي',
+        studentActivities: 'أنشطة الطلاب',
+        clubsOrganizations: 'الأندية والمنظمات',
+        sportsRecreation: 'الرياضة والترفيه'
+      },
+      ourContact: {
+        contactDetails: 'تفاصيل التواصل',
+        locationDirections: 'الموقع والإرشادات',
+        supportServices: 'خدمات الدعم',
+        sendInquiry: 'إرسال استفسار'
+      }
     }
   }
 };
