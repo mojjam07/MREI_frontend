@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "axios": "^1.6.0",
+    "hijri-date": "^0.2.2",
     "i18next": "^23.0.0",
     "lucide-react": "^0.556.0",
+    "moment-hijri": "^3.0.0",
     "pdfjs-dist": "^4.4.168",
     "react": "^18.3.0",
     "react-dom": "^18.3.0",

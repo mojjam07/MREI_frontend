@@ -1,6 +1,3 @@
-
-
-
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -114,7 +111,7 @@ const Calendar = () => {
             key={index}
             className={`p-2 text-center text-sm h-10 flex items-center justify-center rounded cursor-pointer hover:bg-primary hover:text-white transition-colors ${
               day ? 'text-gray-900' : ''
-            } ${isToday(day) ? 'bg-accent text-white font-bold' : ''}`}
+            } ${isToday(day) ? 'bg-tertiary text-primary font-bold' : ''}`}
           >
             {day}
           </div>
@@ -269,8 +266,8 @@ const Calendar = () => {
               </div>
 
               {/* Today Highlight */}
-              <div className="text-center p-4 bg-gray-50 rounded-lg">
-                <p className="text-sm text-gray-600">
+              <div className="text-center p-4 bg-tertiary rounded-lg">
+                <p className="text-sm text-primary">
                   {t('calendar.today')}: {currentDate.toLocaleDateString()}
                 </p>
               </div>
