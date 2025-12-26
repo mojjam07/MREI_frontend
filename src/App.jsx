@@ -1,7 +1,3 @@
-
-
-
-
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Landing from "./pages/Landing";
@@ -27,24 +23,30 @@ import NewsEvents from "./pages/mainNavPages/NewsEvents";
 import SchoolLife from "./pages/mainNavPages/SchoolLife";
 import ContactUs from "./pages/mainNavPages/ContactUs";
 
+// Helper function to get dashboard path based on user role
+const getDashboardPath = (userRole) => {
+  const role = userRole?.toLowerCase();
+  switch (role) {
+    case 'admin':
+      return '/admin/dashboard';
+    case 'tutor':
+      return '/tutor/dashboard';
+    case 'alumni':
+      return '/alumni/dashboard';
+    case 'student':
+    default:
+      return '/student/dashboard';
+  }
+};
+
 // Generic dashboard component that renders the correct dashboard based on user role
 const RoleBasedDashboard = () => {
   const { user } = useAuth();
 
-  if (!user) return <Navigate to="/login" />;
+  if (!user || !user.role) return <Navigate to="/login" />;
 
-  switch (user.role) {
-    case 'admin':
-      return <AdminDashboard />;
-    case 'student':
-      return <StudentDashboard />;
-    case 'tutor':
-      return <TutorDashboard />;
-    case 'alumni':
-      return <StudentDashboard />; // Using student dashboard for alumni
-    default:
-      return <Navigate to="/login" />;
-  }
+  const dashboardPath = getDashboardPath(user.role);
+  return <Navigate to={dashboardPath} replace />;
 };
 
 export default function App() {
@@ -103,14 +105,6 @@ export default function App() {
         }
       />
       <Route
-        path="/admin/dashboard"
-        element={
-          <ProtectedRoute allowedRoles={['admin']}>
-            <AdminDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
         path="/alumni/dashboard"
         element={
           <ProtectedRoute allowedRoles={['alumni']}>
@@ -118,7 +112,6 @@ export default function App() {
           </ProtectedRoute>
         }
       />
-      
 
       {/* Generic dashboard route for backward compatibility */}
       <Route

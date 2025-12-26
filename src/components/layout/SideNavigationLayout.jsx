@@ -123,7 +123,7 @@ const SideNavigationLayout = ({ children }) => {
         {/* Toggle Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed top-4 left-4 z-30 p-3 bg-white rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-50"
+          className="fixed top-4 left-4 z-30 p-3 bg-white rounded-lg shadow-lg transition-all duration-300 hover:bg-gray-50 lg:hidden"
         >
           {isOpen ? (
             <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">

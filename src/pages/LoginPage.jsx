@@ -19,23 +19,25 @@ const LoginPage = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Helper function to get dashboard path based on user role
+  const getDashboardPath = (userRole) => {
+    const role = userRole?.toLowerCase();
+    switch (role) {
+      case 'admin':
+        return '/admin/dashboard';
+      case 'tutor':
+        return '/tutor/dashboard';
+      case 'alumni':
+        return '/alumni/dashboard';
+      case 'student':
+      default:
+        return '/student/dashboard';
+    }
+  };
+
   // Redirect if user is already logged in
   useEffect(() => {
     if (user && user.role) {
-      const getDashboardPath = (userRole) => {
-        switch (userRole?.toLowerCase()) {
-          case 'admin':
-            return '/admin/dashboard';
-          case 'tutor':
-            return '/tutor/dashboard';
-          case 'alumni':
-            return '/alumni/dashboard';
-          case 'student':
-          default:
-            return '/student/dashboard';
-        }
-      };
-      
       const dashboardPath = getDashboardPath(user.role);
       console.log('User already authenticated, redirecting to:', dashboardPath);
       navigate(dashboardPath, { replace: true });
@@ -74,21 +76,6 @@ const LoginPage = () => {
     
     console.log('Login successful, role:', role, 'result:', result);
     
-    // Navigate based on user role
-    const getDashboardPath = (userRole) => {
-      switch (userRole?.toLowerCase()) {
-        case 'admin':
-          return '/admin/dashboard';
-        case 'tutor':
-          return '/tutor/dashboard';
-        case 'alumni':
-          return '/alumni/dashboard';
-        case 'student':
-        default:
-          return '/student/dashboard';
-      }
-    };
-
     const dashboardPath = getDashboardPath(role);
     console.log('Redirecting to:', dashboardPath);
     
