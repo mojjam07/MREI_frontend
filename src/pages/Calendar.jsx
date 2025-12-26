@@ -13,10 +13,19 @@ import {
 } from '../utils/hijriCalendar';
 
 const Calendar = () => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { ref: heroRef, animationClasses: heroAnimation } = useScrollAnimation();
   const { ref: cardsRef, animationClasses: cardsAnimation } = useScrollAnimation();
   const { ref: calendarRef, animationClasses: calendarAnimation } = useScrollAnimation();
+  
+  // RTL-specific classes
+  const isRTL = language === 'ar';
+  const rtlFlex = isRTL ? 'flex-row-reverse' : 'flex-row';
+  const rtlMargin = isRTL ? 'mr-4' : 'ml-4';
+  const rtlText = isRTL ? 'text-right' : 'text-left';
+  const rtlJustify = isRTL ? 'justify-end' : 'justify-start';
+  const rtlChevronLeft = isRTL ? 'rotate-180' : '';
+  const rtlChevronRight = isRTL ? 'rotate-180' : '';
 
   const [activeTab, setActiveTab] = useState('hijri');
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -110,12 +119,48 @@ const Calendar = () => {
   };
 
   const islamicSpecialDays = [
-    { name: t('calendar.islamicEvents.ramadan'), date: 'varies', color: 'bg-green-100 text-green-800' },
-    { name: t('calendar.islamicEvents.eidAlFitr'), date: 'varies', color: 'bg-blue-100 text-blue-800' },
-    { name: t('calendar.islamicEvents.eidAlAdha'), date: 'varies', color: 'bg-purple-100 text-purple-800' },
-    { name: t('calendar.islamicEvents.mawlid'), date: 'varies', color: 'bg-yellow-100 text-yellow-800' },
-    { name: t('calendar.islamicEvents.hijriNewYear'), date: 'varies', color: 'bg-red-100 text-red-800' },
-    { name: t('calendar.islamicEvents.ashura'), date: 'varies', color: 'bg-indigo-100 text-indigo-800' }
+    { 
+      name: t('calendar.islamicEvents.ramadan'), 
+      date: 'Month 9', 
+      description: 'Varies annually based on moon sighting',
+      varies: true,
+      color: 'bg-green-100 text-green-800' 
+    },
+    { 
+      name: t('calendar.islamicEvents.eidAlFitr'), 
+      date: '10 Shawwal', 
+      description: '1st day of Shawwal (after Ramadan)',
+      varies: true,
+      color: 'bg-blue-100 text-blue-800' 
+    },
+    { 
+      name: t('calendar.islamicEvents.eidAlAdha'), 
+      date: '12 Dhu al-Hijjah', 
+      description: '10th day of Dhu al-Hijjah',
+      varies: false,
+      color: 'bg-purple-100 text-purple-800' 
+    },
+    { 
+      name: t('calendar.islamicEvents.mawlid'), 
+      date: '3 Rabi al-Awwal', 
+      description: '12th of Rabi al-Awwal',
+      varies: false,
+      color: 'bg-yellow-100 text-yellow-800' 
+    },
+    { 
+      name: t('calendar.islamicEvents.hijriNewYear'), 
+      date: '1 Muharram', 
+      description: '1st of Muharram',
+      varies: false,
+      color: 'bg-red-100 text-red-800' 
+    },
+    { 
+      name: t('calendar.islamicEvents.ashura'), 
+      date: '10 Muharram', 
+      description: '10th of Muharram',
+      varies: false,
+      color: 'bg-indigo-100 text-indigo-800' 
+    }
   ];
 
   const instituteScheduleDays = [
@@ -205,7 +250,7 @@ const Calendar = () => {
             {/* Islamic Special Days Card */}
             <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg hover-lift hover-glow transition-all duration-300">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                <div className={`w-12 h-12 bg-green-100 rounded-full flex items-center justify-center ${rtlMargin}`}>
                   <CalendarIcon className="w-6 h-6 text-green-600" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-primary">
@@ -218,10 +263,18 @@ const Calendar = () => {
               <div className="space-y-3">
                 {islamicSpecialDays.map((event, index) => (
                   <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-gray-50 transition-colors">
-                    <span className="text-sm font-medium text-gray-900">{event.name}</span>
-                    <span className={`px-2 py-1 text-xs rounded-full ${event.color}`}>
-                      {event.date}
-                    </span>
+                    <div className="flex-1">
+                      <span className="text-sm font-medium text-gray-900">{event.name}</span>
+                      <p className="text-xs text-gray-500 mt-1">{event.description}</p>
+                    </div>
+                    <div className="flex flex-col items-end">
+                      <span className={`px-2 py-1 text-xs rounded-full ${event.color}`}>
+                        {event.date}
+                      </span>
+                      <span className="text-xs text-gray-400 mt-1">
+                        {event.varies ? 'Varies annually' : 'Fixed date'}
+                      </span>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -230,7 +283,7 @@ const Calendar = () => {
             {/* Institute Schedule Days Card */}
             <div className="bg-white p-6 sm:p-8 rounded-lg shadow-lg hover-lift hover-glow transition-all duration-300">
               <div className="flex items-center mb-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                <div className={`w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center ${rtlMargin}`}>
                   <Clock className="w-6 h-6 text-blue-600" />
                 </div>
                 <h3 className="text-xl sm:text-2xl font-bold text-primary">
@@ -288,12 +341,12 @@ const Calendar = () => {
             {/* Calendar Display */}
             <div className="bg-white rounded-lg shadow-lg p-6">
               {/* Calendar Header */}
-              <div className="flex items-center justify-between mb-6">
+              <div className={`flex items-center justify-between mb-6 ${isRTL ? 'flex-row-reverse' : 'flex-row'}`}>
                 <button
                   onClick={() => navigateMonth(-1)}
                   className="p-2 rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  <ChevronLeft className="w-6 h-6 text-gray-600" />
+                  <ChevronLeft className={`w-6 h-6 text-gray-600 ${isRTL ? 'rotate-180' : ''}`} />
                 </button>
                 
                 <div className="text-center">
@@ -317,7 +370,7 @@ const Calendar = () => {
                   onClick={() => navigateMonth(1)}
                   className="p-2 rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  <ChevronRight className="w-6 h-6 text-gray-600" />
+                  <ChevronRight className={`w-6 h-6 text-gray-600 ${isRTL ? 'rotate-180' : ''}`} />
                 </button>
               </div>
 

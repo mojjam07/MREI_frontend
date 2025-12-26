@@ -143,8 +143,7 @@
         "noCourses": "لم يتم تعيين دورات بعد",
         "viewDetails": "عرض التفاصيل",
         "edit": "تعديل",
-        "enrolledStudents": "الطلاب المسجلون ({count})",
-        "noCourses": "لم يتم تعيين دورات"
+        "enrolledStudents": "الطلاب المسجلون ({count})"
       },
       "assignments": {
         "title": "الواجبات",
@@ -557,9 +556,7 @@
         "hijriCalendar": "التقويم الهجري",
         "gregorianCalendar": "التقويم الميلادي",
         "islamicEvents": {
-            "ramadan": "رمضان",
-            "eidAlFitr": "عيد الفطر",
-            "eidAlAdha": "عيد الأضحى",
+            "ramadan": "رمضان",            
             "mawlid": "المولد النبوي",
             "hijriNewYear": "رأس السنة الهجرية",
             "ashura": "عاشوراء",
@@ -626,7 +623,6 @@
 
         "loading": "جاري تحميل التقويم...",
         "error": "فشل في تحميل بيانات التقويم",
-        "today": "اليوم",
         "currentMonth": "الشهر الحالي",
         "selectMonth": "اختر الشهر",
         "selectYear": "اختر السنة"
@@ -934,7 +930,7 @@
         "campusLife": "الحياة الجامعية",
         "campusLifeDesc": "استمتع بالمجتمع النشط والأنشطة المتنوعة في الحرم الجامعي",
         "campusGalleryBtn": "عرض معرض الحرم الجامعي",
-        "loaerrorLoadingCampusPhotosdingCampusPhotos": "جاري تحميل صور الحرم الجامعي...",
+        "loadingCampusPhotos": "جاري تحميل صور الحرم الجامعي...",
         "errorLoadingCampusPhotos": "فشل في تحميل صور الحرم الجامعي. يرجى المحاولة مرة أخرى.",
         "campusLifeHover": "الحياة الجامعية",
         "exploreCommunity": "استكشف مجتمعنا النشط",
