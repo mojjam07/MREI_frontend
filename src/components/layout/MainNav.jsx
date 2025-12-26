@@ -46,6 +46,16 @@ const MainNav = ({ className = '' }) => {
       ]
     },
     {
+      title: t('nav.academicCalendar'),
+      href: '/calendar',
+      submenu: [
+        { title: t('calendar.hijriCalendar'), href: '/calendar' },
+        { title: t('calendar.gregorianCalendar'), href: '/calendar' },
+        { title: t('calendar.islamicSpecialDays'), href: '/calendar' },
+        { title: t('calendar.instituteScheduleDays'), href: '/calendar' }
+      ]
+    },
+    {
       title: t('home.schoolLife'),
       href: '/school-life',
       submenu: [

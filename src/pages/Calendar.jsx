@@ -4,6 +4,13 @@ import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import PageHeader from '../components/layout/PageHeader';
 import Footer from '../components/layout/Footer';
 import { ChevronLeft, ChevronRight, Calendar as CalendarIcon, Clock } from 'lucide-react';
+import { 
+  gregorianToHijri, 
+  hijriToGregorian, 
+  getHijriCalendarDays, 
+  getCurrentHijriDate, 
+  navigateHijriMonth
+} from '../utils/hijriCalendar';
 
 const Calendar = () => {
   const { t } = useLanguage();
@@ -11,9 +18,9 @@ const Calendar = () => {
   const { ref: cardsRef, animationClasses: cardsAnimation } = useScrollAnimation();
   const { ref: calendarRef, animationClasses: calendarAnimation } = useScrollAnimation();
 
-
-  const [activeTab, setActiveTab] = useState('gregorian');
+  const [activeTab, setActiveTab] = useState('hijri');
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [hijriDate, setHijriDate] = useState(getCurrentHijriDate());
 
   // Helper function to get Gregorian month key
   const getGregorianMonthKey = (monthIndex) => {
@@ -30,43 +37,76 @@ const Calendar = () => {
       'muharram', 'safar', 'rabiAlAwwal', 'rabiAlThani', 'jumadaAlAwwala', 'jumadaAlThaniya',
       'rajab', 'shaaban', 'ramadan', 'shawwal', 'dhuAlQiidah', 'dhuAlHijjah'
     ];
-    return months[monthIndex];
+    return months[monthIndex - 1];
   };
 
   const navigateMonth = (direction) => {
-    const newDate = new Date(currentDate);
-    newDate.setMonth(newDate.getMonth() + direction);
-    setCurrentDate(newDate);
+    if (activeTab === 'hijri') {
+      // Navigate Hijri calendar
+      const { year: newYear, month: newMonth } = navigateHijriMonth(
+        hijriDate.year, 
+        hijriDate.month, 
+        direction
+      );
+      setHijriDate(prev => ({ ...prev, year: newYear, month: newMonth }));
+      
+      // Update Gregorian date to match
+      const gregorianDate = hijriToGregorian(newYear, newMonth, 1);
+      setCurrentDate(gregorianDate);
+    } else {
+      // Navigate Gregorian calendar
+      const newDate = new Date(currentDate);
+      newDate.setMonth(newDate.getMonth() + direction);
+      setCurrentDate(newDate);
+      
+      // Update Hijri date to match
+      const newHijriDate = gregorianToHijri(newDate);
+      setHijriDate(newHijriDate);
+    }
   };
 
-  const getDaysInMonth = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const firstDay = new Date(year, month, 1);
-    const lastDay = new Date(year, month + 1, 0);
-    const daysInMonth = lastDay.getDate();
-    const startingDayOfWeek = firstDay.getDay();
+  const getDaysInMonth = () => {
+    if (activeTab === 'hijri') {
+      // Get Hijri calendar days
+      return getHijriCalendarDays(hijriDate.year, hijriDate.month);
+    } else {
+      // Get Gregorian calendar days
+      const year = currentDate.getFullYear();
+      const month = currentDate.getMonth();
+      const firstDay = new Date(year, month, 1);
+      const lastDay = new Date(year, month + 1, 0);
+      const daysInMonth = lastDay.getDate();
+      const startingDayOfWeek = firstDay.getDay();
 
-    const days = [];
-    
-    // Add empty cells for days before the first day of the month
-    for (let i = 0; i < startingDayOfWeek; i++) {
-      days.push(null);
+      const days = [];
+      
+      // Add empty cells for days before the first day of the month
+      for (let i = 0; i < startingDayOfWeek; i++) {
+        days.push(null);
+      }
+      
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(year, month, day);
+        const hijriDateForDay = gregorianToHijri(date);
+        days.push({
+          day,
+          gregorianDate: date,
+          hijriDate: hijriDateForDay,
+          isToday: isToday(date),
+          isIslamicHoliday: hijriDateForDay.isIslamicHoliday || false
+        });
+      }
+      
+      return days;
     }
-    
-    // Add days of the month
-    for (let day = 1; day <= daysInMonth; day++) {
-      days.push(day);
-    }
-    
-    return days;
   };
 
-  const isToday = (day) => {
+  const isToday = (date) => {
     const today = new Date();
-    return day === today.getDate() && 
-           currentDate.getMonth() === today.getMonth() && 
-           currentDate.getFullYear() === today.getFullYear();
+    return date.getDate() === today.getDate() && 
+           date.getMonth() === today.getMonth() && 
+           date.getFullYear() === today.getFullYear();
   };
 
   const islamicSpecialDays = [
@@ -88,7 +128,7 @@ const Calendar = () => {
   ];
 
   const renderCalendarDays = () => {
-    const days = getDaysInMonth(currentDate);
+    const days = getDaysInMonth();
     const dayNames = [
       t('calendar.daysOfWeek.saturday'),
       t('calendar.daysOfWeek.sunday'),
@@ -106,14 +146,32 @@ const Calendar = () => {
             {dayName}
           </div>
         ))}
-        {days.map((day, index) => (
+        {days.map((dayData, index) => (
           <div
             key={index}
-            className={`p-2 text-center text-sm h-10 flex items-center justify-center rounded cursor-pointer hover:bg-primary hover:text-white transition-colors ${
-              day ? 'text-gray-900' : ''
-            } ${isToday(day) ? 'bg-tertiary text-primary font-bold' : ''}`}
+            className={`p-2 text-center text-sm h-16 flex flex-col items-center justify-center rounded cursor-pointer hover:bg-primary hover:text-white transition-colors ${
+              dayData ? 'text-gray-900' : ''
+            } ${dayData && dayData.isToday ? 'bg-tertiary text-primary font-bold' : ''} ${
+              dayData && dayData.isIslamicHoliday ? 'bg-red-100 text-red-800 font-semibold' : ''
+            }`}
           >
-            {day}
+            {dayData ? (
+              <>
+                <span className="text-lg">
+                  {activeTab === 'hijri' ? dayData.day : dayData.day}
+                </span>
+                {activeTab === 'hijri' && dayData.hijriDate && (
+                  <span className="text-xs text-gray-500">
+                    {dayData.hijriDate.day}/{dayData.hijriDate.month}
+                  </span>
+                )}
+                {activeTab === 'gregorian' && dayData.hijriDate && (
+                  <span className="text-xs text-gray-500">
+                    {dayData.hijriDate.day}/{dayData.hijriDate.month}
+                  </span>
+                )}
+              </>
+            ) : null}
           </div>
         ))}
       </div>
@@ -241,13 +299,18 @@ const Calendar = () => {
                 <div className="text-center">
                   <h2 className="text-2xl font-bold text-primary mb-1">
                     {activeTab === 'hijri'
-                      ? t(`calendar.months.hijri.${getHijriMonthKey(currentDate.getMonth())}`)
+                      ? t(`calendar.months.hijri.${getHijriMonthKey(hijriDate.month)}`)
                       : t(`calendar.months.gregorian.${getGregorianMonthKey(currentDate.getMonth())}`)
                     }
                   </h2>
                   <p className="text-gray-600">
-                    {currentDate.getFullYear()}
+                    {activeTab === 'hijri' ? hijriDate.year : currentDate.getFullYear()}
                   </p>
+                  {activeTab === 'hijri' && (
+                    <p className="text-sm text-gray-500">
+                      {currentDate.toLocaleDateString()}
+                    </p>
+                  )}
                 </div>
                 
                 <button
