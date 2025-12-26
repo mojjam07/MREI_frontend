@@ -1,12 +1,13 @@
 
 import React, { useState } from 'react';
-import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera } from 'lucide-react';
+import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera, GraduationCap as AlumniIcon } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useDashboard } from '../context/DashboardContext';
 import DataTable from '../components/ui/DataTable';
 import DashboardFooter from '../components/layout/DashboardFooter';
 import LoadingOverlay from '../components/ui/LoadingOverlay';
 import LanguageSwitcher from '../components/layout/LanguageSwitcher';
+import { Link } from 'react-router-dom';
 
 const AdminDashboard = () => {
   const { t } = useLanguage();
@@ -1712,6 +1713,22 @@ const AdminDashboard = () => {
               </span>
             )}
           </button>
+          <Link
+            to="/admin/alumni-dashboard"
+            className="px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105"
+            style={{color: 'var(--primary-color)'}}
+            onMouseEnter={(e) => {
+              e.target.style.backgroundColor = 'var(--accent-color)';
+              e.target.style.color = 'var(--primary-color)';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.color = 'var(--primary-color)';
+            }}
+          >
+            <AlumniIcon className="w-4 h-4" />
+            {t('admin.tabs.alumniManagement', 'Alumni Management')}
+          </Link>
         </div>
 
         {/* Content Area */}

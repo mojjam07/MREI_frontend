@@ -6,6 +6,8 @@ import SignupPage from "./pages/SignupPage";
 import StudentDashboard from "./pages/StudentDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import TutorDashboard from "./pages/TutorDashboard";
+import AlumniDashboard from "./pages/AlumniDashboard";
+import AlumniAdminDashboard from "./pages/AlumniAdminDashboard";
 import NotFound from "./pages/NotFound";
 
 import AboutUs from "./pages/AboutUs";
@@ -108,7 +110,15 @@ export default function App() {
         path="/alumni/dashboard"
         element={
           <ProtectedRoute allowedRoles={['alumni']}>
-            <StudentDashboard />
+            <AlumniDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/alumni-dashboard"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AlumniAdminDashboard />
           </ProtectedRoute>
         }
       />

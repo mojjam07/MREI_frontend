@@ -571,7 +571,117 @@ const translations = {
       viewProfile: 'View Profile',
       achievements: 'Achievements',
       currentPosition: 'Current Position',
-      graduated: 'Graduated'
+      graduated: 'Graduated',
+      
+      // Dashboard sections
+      dashboard: 'Alumni Dashboard',
+      welcomeBack: 'Welcome back',
+      stayConnected: 'Stay connected with your alma mater and fellow alumni',
+      loadingDashboard: 'Loading dashboard...',
+      
+      // Present Alumni Excos
+      presentExcos: 'Present Alumni Excos',
+      executiveMembers: 'Executive Members',
+      roles: 'Roles',
+      contactInfo: 'Contact Information',
+      position: 'Position',
+      email: 'Email',
+      phone: 'Phone',
+      executiveTitle: 'Alumni Executive Committee',
+      executiveSubtitle: 'Meet your current alumni leadership',
+      
+      // Alumni Events
+      alumniEvents: 'Alumni Events',
+      upcomingAlumniEvents: 'Upcoming Alumni Events',
+      pastAlumniEvents: 'Past Alumni Events',
+      eventDetails: 'Event Details',
+      rsvp: 'RSVP',
+      
+      // Alumni Message
+      alumniMessage: 'Alumni Message',
+      messageFromAdmin: 'Message from Alumni Administration',
+      unreadMessages: 'Unread Messages',
+      markAsRead: 'Mark as Read',
+      composeMessage: 'Compose Message',
+      
+      // Alma Mata Info
+      almaMataInfo: 'Alma Mata Info',
+      instituteNews: 'Institute News',
+      instituteEvents: 'Institute Events',
+      recentUpdates: 'Recent Updates',
+      
+      // Finance
+      finance: 'Finance',
+      financialRecords: 'Financial Records',
+      contributions: 'Contributions',
+      payments: 'Payments',
+      statements: 'Statements',
+      donationHistory: 'Donation History',
+      
+      // Suggestions
+      suggestions: 'Suggestions',
+      shareSuggestions: 'Share Your Suggestions',
+      feedback: 'Feedback',
+      submitSuggestion: 'Submit Suggestion',
+      suggestionHistory: 'Suggestion History',
+      status: 'Status',
+      pending: 'Pending',
+      implemented: 'Implemented',
+      underReview: 'Under Review',
+      
+      // Group Chat
+      groupChat: 'Group Chat',
+      alumniDiscussion: 'Alumni Discussion Forum',
+      sendMessage: 'Send Message',
+      messagePlaceholder: 'Type your message...',
+      onlineMembers: 'Online Members',
+      
+      // Admin Dashboard
+      adminDashboard: 'Alumni Admin Dashboard',
+      manageAlumniContent: 'Manage Alumni Content',
+      manageExecutives: 'Manage Executive Members',
+      alumniCommunications: 'Alumni Communications',
+      
+      // General
+      tabs: {
+        overview: 'Overview',
+        newsEvents: 'News & Events',
+        resources: 'Resources',
+        presentExcos: 'Present Excos',
+        alumniMessage: 'Alumni Message',
+        almaMataInfo: 'Alma Mata Info',
+        finance: 'Finance',
+        suggestions: 'Suggestions',
+        groupChat: 'Group Chat'
+      },
+      actions: {
+        viewAll: 'View All',
+        readMore: 'Read More',
+        edit: 'Edit',
+        delete: 'Delete',
+        save: 'Save',
+        cancel: 'Cancel',
+        submit: 'Submit',
+        send: 'Send'
+      },
+      placeholders: {
+        noNewsAvailable: 'No news available at the moment',
+        noUpcomingEvents: 'No upcoming events',
+        noTestimonials: 'No testimonials available',
+        noCampusLife: 'No campus life content available',
+        noEventsAvailable: 'No events available',
+        noBooksAvailable: 'No books available',
+        noExecutiveMembers: 'No executive members found',
+        noMessages: 'No messages',
+        noFinancialRecords: 'No financial records',
+        noSuggestions: 'No suggestions yet'
+      },
+      stats: {
+        thisMonth: 'this month',
+        next30Days: 'next 30 days',
+        fromAlumni: 'from alumni',
+        available: 'available'
+      }
     },
 
     common: {
