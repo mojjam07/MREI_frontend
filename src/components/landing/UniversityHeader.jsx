@@ -16,10 +16,10 @@ const UniversityHeader = () => {
   const t = translations[language];
 
   const audienceLinks = [
-    t.header.currentStudents,
-    t.header.adminStaff,
-    t.header.alumni,
-    t.header.partnersSponsors
+    { text: t.header.currentStudents, path: '/login' },
+    { text: t.header.adminStaff, path: '/login' },
+    { text: t.header.alumni, path: '/login' },
+    { text: t.header.partnersSponsors, path: '/contact-us' }
   ];
 
   return (
@@ -32,12 +32,12 @@ const UniversityHeader = () => {
             <ul className="flex flex-wrap gap-2 lg:gap-4 text-xs lg:text-sm">
               {audienceLinks.map((link, index) => (
                 <li key={index}>
-                  <a
-                    href="#"
+                  <Link
+                    to={link.path}
                     className="text-tertiary hover:text-light-text transition-colors hover-lift"
                   >
-                    {link}
-                  </a>
+                    {link.text}
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -51,7 +51,7 @@ const UniversityHeader = () => {
                   onClick={() => setIsSearchOpen(!isSearchOpen)}
                   className="flex items-center gap-2 px-3 py-1 border border-accent rounded-md hover:bg-accent hover:text-text transition-colors text-sm"
                 >
-                  <Search className="w-4 h-4" />
+                  <Search className="w-4 h-4 text-tertiary" />
                   <span className="text-tertiary">{t.header.searchPlaceholderShort}</span>
                 </button>
 
@@ -60,7 +60,7 @@ const UniversityHeader = () => {
                   isOpen={isSearchOpen}
                   onClose={() => setIsSearchOpen(false)}
                   placeholder={t.header.searchPlaceholder}
-                  className="w-80"
+                  className="w-80 text-primary"
                   onSearchResultClick={(result) => {
                     console.log('Search result clicked:', result);
                     setIsSearchOpen(false);
@@ -165,12 +165,12 @@ const UniversityHeader = () => {
                 <ul className="space-y-2">
                   {audienceLinks.map((link, index) => (
                     <li key={index}>
-                      <a
-                        href="#"
+                      <Link
+                        to={link.path}
                         className="block py-2 text-tertiary hover:text-light-text transition-colors text-sm"
                       >
-                        {link}
-                      </a>
+                        {link.text}
+                      </Link>
                     </li>
                   ))}
                 </ul>
