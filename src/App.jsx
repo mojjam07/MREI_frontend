@@ -14,6 +14,7 @@ import AboutUs from "./pages/AboutUs";
 import Academics from "./pages/Academics";
 import Admissions from "./pages/Admissions";
 import DigitalBookshelf from "./pages/DigitalBookshelf";
+import Library from "./pages/Library";
 import Calendar from "./pages/Calendar";
 import ProtectedRoute from "./route/ProtectedRoute";
 
@@ -71,11 +72,7 @@ export default function App() {
       
       <Route
         path="/library"
-        element={
-          <ProtectedRoute>
-            <DigitalBookshelf />
-          </ProtectedRoute>
-        }
+        element={<Library />}
       />
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/login" element={<LoginPage />} />
