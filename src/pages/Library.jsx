@@ -9,8 +9,47 @@ import { API_ENDPOINTS } from '../config';
 import PageHeader from '../components/layout/PageHeader';
 import Footer from '../components/layout/Footer';
 
-// Configure PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
+// Configure PDF.js worker for Vite
+pdfjs.GlobalWorkerOptions.workerSrc = new URL(
+  'pdfjs-dist/build/pdf.worker.min.js',
+  import.meta.url,
+).toString();
+
+// Static fallback data
+const staticBooks = [
+  {
+    id: 1,
+    title: "The Holy Quran",
+    author: "Allah (SWT)",
+    cover_url: "https://via.placeholder.com/150x220?text=Quran",
+    description: "The central religious text of Islam.",
+    pdf_url: null
+  },
+  {
+    id: 2,
+    title: "Sahih Al-Bukhari",
+    author: "Imam Bukhari",
+    cover_url: "https://via.placeholder.com/150x220?text=Bukhari",
+    description: "One of the most authentic collections of Hadith.",
+    pdf_url: null
+  },
+  {
+    id: 3,
+    title: "Riyad as-Salihin",
+    author: "Imam An-Nawawi",
+    cover_url: "https://via.placeholder.com/150x220?text=Riyad",
+    description: "The Gardens of the Righteous.",
+    pdf_url: null
+  },
+  {
+    id: 4,
+    title: "Fortress of the Muslim",
+    author: "Said bin Ali bin Wahf Al-Qahtani",
+    cover_url: "https://via.placeholder.com/150x220?text=Hisnul+Muslim",
+    description: "Invocations from the Quran and Sunnah.",
+    pdf_url: null
+  }
+];
 
 const Library = () => {
   const { t } = useLanguage();
@@ -21,6 +60,39 @@ const Library = () => {
   const [customFile, setCustomFile] = useState(null);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+
+  // Fetch books from API
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        setBooksLoading(true);
+        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.BOOKS);
+        // API returns { success: true, data: { books: [...], pagination: {...} } }
+        // We need to extract the books array from the response
+        setBooks(response.data?.data?.books || response.data || []);
+        setError(null);
+      } catch (err) {
+        console.error('Failed to fetch books:', err);
+        const message = err.response?.data?.detail || err.message || 'Failed to load books';
+        setError(message);
+        // Fallback to static data
+        setBooks(staticBooks);
+      } finally {
+        setBooksLoading(false);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
+  // Cleanup object URLs
+  useEffect(() => {
+    return () => {
+      if (customFile) {
+        URL.revokeObjectURL(customFile);
+      }
+    };
+  }, [customFile]);
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
@@ -36,16 +108,39 @@ const Library = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const fileUrl = URL.createObjectURL(file);
-      setCustomFile(fileUrl);
-      setSelectedBook({
-        id: 'custom',
-        title: file.name,
-        author: 'You',
-        isCustom: true,
-        pdf_file: fileUrl
-      });
-      setPageNumber(1);
+      // Validate file type
+      if (!file.type.includes('pdf')) {
+        alert('Please select a PDF file only.');
+        return;
+      }
+
+      // Validate file size (max 50MB)
+      if (file.size > 50 * 1024 * 1024) {
+        alert('File size must be less than 50MB.');
+        return;
+      }
+
+      try {
+        // Cleanup previous file URL if exists
+        if (customFile) {
+          URL.revokeObjectURL(customFile);
+        }
+
+        const fileUrl = URL.createObjectURL(file);
+        setCustomFile(fileUrl);
+        setSelectedBook({
+          id: 'custom',
+          title: file.name,
+          author: 'You',
+          isCustom: true,
+          pdf_url: fileUrl
+        });
+        setPageNumber(1);
+        setError(null);
+      } catch (err) {
+        console.error('Error processing file:', err);
+        setError('Failed to process the selected file. Please try again.');
+      }
     }
   };
 
@@ -68,6 +163,19 @@ const Library = () => {
             {t('digitalBookshelf.subtitle')}
           </p>
         </div>
+
+        {/* Error message display */}
+        {error && (
+          <div className="mb-12 rounded-lg border border-yellow-200 bg-yellow-100 p-4 text-center text-yellow-800">
+            <div className="flex items-center justify-center">
+              <AlertCircle className="mr-3 h-5 w-5" />
+              <div>
+                <h3 className="font-semibold">Could not connect to the library.</h3>
+                <p className="text-sm">{error}. Showing available offline books.</p>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Upload Section */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-8 mb-12 text-center">
@@ -101,22 +209,15 @@ const Library = () => {
         {booksLoading ? (
           <div className="flex justify-center py-12">
             <Loader2 className="w-12 h-12 animate-spin text-indigo-600" />
-          </div>
-        ) : error ? (
-          <div className="col-span-full text-center py-12 text-red-500 bg-red-50 rounded-lg">
-            <AlertCircle className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold">An Error Occurred</h3>
-            <p>{error}</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          </div>) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {books && books.length > 0 ? (
               books.map((book) => (
                 <div key={book.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
                   <div className="h-64 bg-gray-200 relative group cursor-pointer" onClick={() => setSelectedBook(book)}>
-                    {book.cover_image ? (
+                    {book.cover_url ? (
                       <img 
-                        src={book.cover_image} 
+                        src={book.cover_url} 
                         alt={book.title} 
                         className="w-full h-full object-cover"
                       />
@@ -152,7 +253,7 @@ const Library = () => {
                 <p>No books available in the library yet.</p>
               </div>
             )}
-          </div>
+            </div>
         )}
 
         {/* Reader Modal */}
@@ -178,19 +279,30 @@ const Library = () => {
                 </div>
                 
                 <div className="flex-1 bg-gray-100 p-4 overflow-auto flex justify-center">
-                  {selectedBook.pdf_file ? (
+                  {selectedBook.pdf_url ? (
                     <Document
-                      file={selectedBook.pdf_file}
+                      file={selectedBook.pdf_url}
                       onLoadSuccess={onDocumentLoadSuccess}
+                      onLoadError={(error) => {
+                        console.error('PDF load error:', error);
+                        setError('Failed to load PDF file. Please try again.');
+                      }}
                       loading={
                         <div className="flex items-center justify-center h-64">
                           <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                          <span className="ml-2 text-gray-600">Loading PDF...</span>
                         </div>
                       }
                       error={
                         <div className="flex flex-col items-center justify-center h-64 text-red-500">
                           <AlertCircle className="w-8 h-8 mb-2" />
                           <p>Failed to load PDF file.</p>
+                          <button 
+                            onClick={() => setError(null)}
+                            className="mt-2 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200"
+                          >
+                            Try Again
+                          </button>
                         </div>
                       }
                     >
@@ -200,6 +312,12 @@ const Library = () => {
                         renderAnnotationLayer={false}
                         className="shadow-lg"
                         width={Math.min(window.innerWidth * 0.8, 800)}
+                        loading={
+                          <div className="flex items-center justify-center h-64">
+                            <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
+                            <span className="ml-2 text-gray-600">Loading page...</span>
+                          </div>
+                        }
                       />
                     </Document>
                   ) : (

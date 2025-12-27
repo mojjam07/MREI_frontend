@@ -1,6 +1,4 @@
-
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   BookOpen,
   Calendar,
@@ -30,21 +28,22 @@ import StatCard from '../components/ui/StatCard';
 import ProgressBar from '../components/ui/ProgressBar';
 import DashboardFooter from '../components/layout/DashboardFooter';
 import LanguageSwitcher from '../components/layout/LanguageSwitcher';
-import LoadingOverlay from '../components/ui/LoadingOverlay';
+import DashboardSkeleton from '../components/ui/DashboardSkeleton';
 
 const StudentDashboard = () => {
 
   const { t } = useLanguage();
   const [activeTab, setActiveTab] = useState('overview');
+  const [error, setError] = useState(null); // Add error state
   
-  const { 
+  const {
     studentDashboard,
     studentDashboardLoading,
-    courses: enrollments, 
-    assignments, 
+    courses: enrollments,
+    assignments,
     classSchedules,
     attendance,
-    coursesLoading, 
+    coursesLoading,
     assignmentsLoading,
     classSchedulesLoading,
     attendanceLoading,
@@ -52,32 +51,62 @@ const StudentDashboard = () => {
     events
   } = useDashboard();
 
+  // Add error handling effect with timeout
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const stillLoading = studentDashboardLoading ||
+                          coursesLoading ||
+                          assignmentsLoading ||
+                          classSchedulesLoading ||
+                          attendanceLoading;
+
+      if (stillLoading) {
+        setError('Failed to load dashboard data. Please check your connection.');
+      }
+    }, 10000); // 10 second timeout
+
+    return () => clearTimeout(timeout);
+  }, [studentDashboardLoading, coursesLoading, assignmentsLoading, classSchedulesLoading, attendanceLoading]);
+
+  // Clear error when data loads successfully
+  useEffect(() => {
+    if (!studentDashboardLoading && !coursesLoading && !assignmentsLoading) {
+      setError(null);
+    }
+  }, [studentDashboardLoading, coursesLoading, assignmentsLoading]);
+
   // Transform backend data to component format
-  const courses = enrollments?.map(enrollment => ({
-    id: enrollment.course?.id || enrollment.id,
+  const courses = enrollments?.map(enrollment => {
+    // Handle different possible response formats
+    const course = enrollment.course || enrollment;
+    return {
+      id: course?.id || enrollment.id,
+      name: course?.title || course?.name || t('student.fallbacks.course'),
+      code: course?.code || '',
+      progress: enrollment.progress || 0,
+      grade: enrollment.grade || null,
+      status: enrollment.status || 'enrolled',
+      nextClass: classSchedules?.find(cs => cs.course === course?.id)?.scheduled_date ||
+                 classSchedules?.find(cs => cs.course_id === course?.id)?.date ||
+                 t('student.fallbacks.toBeDetermined')
+    };
+  }) || [];
 
-    name: enrollment.course?.title || t('student.fallbacks.course'),
-    code: enrollment.course?.code || '',
-    progress: enrollment.progress || 0,
-    grade: enrollment.grade || null,
-    status: enrollment.status || 'enrolled',
-
-    nextClass: classSchedules?.find(cs => cs.course === enrollment.course?.id)?.scheduled_date || t('student.fallbacks.toBeDetermined')
-  })) || [];
-
-  const transformedAssignments = assignments?.map(assignment => ({
-    id: assignment.id,
-    title: assignment.title,
-
-    course: assignment.course?.title || t('student.fallbacks.course'),
-    due: assignment.due_date,
-    status: assignment.submissions?.[0]?.grade ? 'completed' : 
-            assignment.submissions?.[0] ? 'inProgress' : 'pending',
-    grade: assignment.submissions?.[0]?.grade || null,
-    feedback: assignment.submissions?.[0]?.feedback || null,
-
-    type: assignment.assignment_type || t('student.fallbacks.general')
-  })) || [];
+  const transformedAssignments = assignments?.map(assignment => {
+    // Handle nested submission data
+    const submission = assignment.submissions?.[0] || {};
+    return {
+      id: assignment.id,
+      title: assignment.title || assignment.name,
+      course: assignment.course?.title || assignment.course?.name || t('student.fallbacks.course'),
+      due: assignment.due_date || assignment.due || assignment.deadline,
+      status: submission.grade ? 'completed' :
+              submission.submitted_at ? 'inProgress' : 'pending',
+      grade: submission.grade || null,
+      feedback: submission.feedback || null,
+      type: assignment.assignment_type || assignment.type || t('student.fallbacks.general')
+    };
+  }) || [];
 
   const upcomingClasses = classSchedules?.filter(cs => {
     const classDate = new Date(cs.scheduled_date);
@@ -537,7 +566,7 @@ const StudentDashboard = () => {
   );
 
 
-  // Main loading state with dark masking
+  // Main loading state with skeleton
   const isMainLoading = studentDashboardLoading;
 
   return (
@@ -563,105 +592,99 @@ const StudentDashboard = () => {
 
 
       {/* Main Content */}
-      <LoadingOverlay 
-        isLoading={isMainLoading}
-        loadingText={t('student.loadingDashboard')}
-        overlayColor="rgba(0, 0, 0, 0.8)"
-        spinnerColor="var(--primary-color)"
-        textColor="white"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Navigation Tabs */}
-        <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
-          <button
-            onClick={() => setActiveTab('overview')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
-              activeTab === 'overview' ? 'text-white' : ''
-            }`}
-            style={{
-              backgroundColor: activeTab === 'overview' ? 'var(--primary-color)' : 'transparent',
-              color: activeTab === 'overview' ? 'var(--light-text)' : 'var(--text-color)'
-            }}
-            onMouseEnter={(e) => {
-              if (activeTab !== 'overview') {
-                e.target.style.backgroundColor = 'var(--accent-color)';
-                e.target.style.color = 'var(--primary-color)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeTab !== 'overview') {
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = 'var(--text-color)';
-              }
-            }}
+      {isMainLoading ? (
+        <DashboardSkeleton />
+      ) : (
+        <>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Navigation Tabs */}
+            <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
+              <button
+                onClick={() => setActiveTab('overview')}
+                className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
+                  activeTab === 'overview' ? 'text-white' : ''
+                }`}
+                style={{
+                  backgroundColor: activeTab === 'overview' ? 'var(--primary-color)' : 'transparent',
+                  color: activeTab === 'overview' ? 'var(--light-text)' : 'var(--text-color)'
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== 'overview') {
+                    e.target.style.backgroundColor = 'var(--accent-color)';
+                    e.target.style.color = 'var(--primary-color)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== 'overview') {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.color = 'var(--text-color)';
+                  }
+                }}
+              >
+                <TrendingUp className="w-4 h-4" />
+                {t('student.tabs.overview')}
+              </button>
 
-          >
-            <TrendingUp className="w-4 h-4" />
-            {t('student.tabs.overview')}
-          </button>
+              <button
+                onClick={() => setActiveTab('assignments')}
+                className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
+                  activeTab === 'assignments' ? 'text-white' : ''
+                }`}
+                style={{
+                  backgroundColor: activeTab === 'assignments' ? 'var(--primary-color)' : 'transparent',
+                  color: activeTab === 'assignments' ? 'var(--light-text)' : 'var(--text-color)'
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== 'assignments') {
+                    e.target.style.backgroundColor = 'var(--accent-color)';
+                    e.target.style.color = 'var(--primary-color)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== 'assignments') {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.color = 'var(--text-color)';
+                  }
+                }}
+              >
+                <FileText className="w-4 h-4" />
+                {t('student.tabs.assignments')}
+              </button>
 
-          <button
-            onClick={() => setActiveTab('assignments')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
-              activeTab === 'assignments' ? 'text-white' : ''
-            }`}
-            style={{
-              backgroundColor: activeTab === 'assignments' ? 'var(--primary-color)' : 'transparent',
-              color: activeTab === 'assignments' ? 'var(--light-text)' : 'var(--text-color)'
-            }}
-            onMouseEnter={(e) => {
-              if (activeTab !== 'assignments') {
-                e.target.style.backgroundColor = 'var(--accent-color)';
-                e.target.style.color = 'var(--primary-color)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeTab !== 'assignments') {
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = 'var(--text-color)';
-              }
-            }}
+              <button
+                onClick={() => setActiveTab('attendance')}
+                className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
+                  activeTab === 'attendance' ? 'text-white' : ''
+                }`}
+                style={{
+                  backgroundColor: activeTab === 'attendance' ? 'var(--primary-color)' : 'transparent',
+                  color: activeTab === 'attendance' ? 'var(--light-text)' : 'var(--text-color)'
+                }}
+                onMouseEnter={(e) => {
+                  if (activeTab !== 'attendance') {
+                    e.target.style.backgroundColor = 'var(--accent-color)';
+                    e.target.style.color = 'var(--primary-color)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (activeTab !== 'attendance') {
+                    e.target.style.backgroundColor = 'transparent';
+                    e.target.style.color = 'var(--text-color)';
+                  }
+                }}
+              >
+                <Users className="w-4 h-4" />
+                {t('student.tabs.attendance')}
+              </button>
+            </div>
 
-          >
-            <FileText className="w-4 h-4" />
-            {t('student.tabs.assignments')}
-          </button>
-
-          <button
-            onClick={() => setActiveTab('attendance')}
-            className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
-              activeTab === 'attendance' ? 'text-white' : ''
-            }`}
-            style={{
-              backgroundColor: activeTab === 'attendance' ? 'var(--primary-color)' : 'transparent',
-              color: activeTab === 'attendance' ? 'var(--light-text)' : 'var(--text-color)'
-            }}
-            onMouseEnter={(e) => {
-              if (activeTab !== 'attendance') {
-                e.target.style.backgroundColor = 'var(--accent-color)';
-                e.target.style.color = 'var(--primary-color)';
-              }
-            }}
-            onMouseLeave={(e) => {
-              if (activeTab !== 'attendance') {
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = 'var(--text-color)';
-              }
-            }}
-
-          >
-            <Users className="w-4 h-4" />
-            {t('student.tabs.attendance')}
-          </button>
-        </div>
-
-
-        {/* Content Area */}
-        {activeTab === 'overview' && renderOverviewTab()}
-        {activeTab === 'assignments' && renderAssignmentsTab()}
-        {activeTab === 'attendance' && renderAttendanceTab()}
-        </div>
-      </LoadingOverlay>
+            {/* Content Area */}
+            {activeTab === 'overview' && renderOverviewTab()}
+            {activeTab === 'assignments' && renderAssignmentsTab()}
+            {activeTab === 'attendance' && renderAttendanceTab()}
+          </div>
+        </>
+      )}
 
       {/* Footer */}
       <DashboardFooter />

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BookOpen, Users, FileText, TrendingUp, Calendar, Award, LayoutDashboard, Settings, BarChart3, ClipboardList, GraduationCap, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useAuth } from '../../context/AuthContext';
@@ -11,7 +11,7 @@ import ProgressBar from '../components/ui/ProgressBar';
 import SubmissionCard from '../components/tutor/SubmissionCard';
 import DashboardFooter from '../components/layout/DashboardFooter';
 import LanguageSwitcher from '../components/layout/LanguageSwitcher';
-import LoadingOverlay from '../components/ui/LoadingOverlay';
+import DashboardSkeleton from '../components/ui/DashboardSkeleton';
 
 const TutorDashboard = () => {
   const { t } = useLanguage();
@@ -19,6 +19,7 @@ const TutorDashboard = () => {
 
   // Active tab state for navigation
   const [activeTab, setActiveTab] = useState('overview');
+  const [error, setError] = useState(null); // Add error state
 
   const {
     tutorDashboard,
@@ -35,18 +36,42 @@ const TutorDashboard = () => {
     gradingSubmission
   } = useDashboard();
 
+  // Add error handling effect with timeout
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      const stillLoading = tutorDashboardLoading ||
+                          coursesLoading ||
+                          assignmentsLoading ||
+                          pendingSubmissionsLoading ||
+                          tutorClassSchedulesLoading;
+
+      if (stillLoading) {
+        setError('Failed to load dashboard data. Please check your connection.');
+      }
+    }, 10000); // 10 second timeout
+
+    return () => clearTimeout(timeout);
+  }, [tutorDashboardLoading, coursesLoading, assignmentsLoading, pendingSubmissionsLoading, tutorClassSchedulesLoading]);
+
+  // Clear error when data loads successfully
+  useEffect(() => {
+    if (!tutorDashboardLoading && !coursesLoading && !assignmentsLoading) {
+      setError(null);
+    }
+  }, [tutorDashboardLoading, coursesLoading, assignmentsLoading]);
+
   // Transform backend data to component format
   const transformedTutorData = tutorDashboard?.data ? {
-    totalCourses: tutorDashboard.data.statistics?.total_courses || 0,
-    totalStudents: tutorDashboard.data.statistics?.total_students || 0,
-    totalAssignments: tutorDashboard.data.statistics?.total_assignments || 0,
-    totalSubmissions: tutorDashboard.data.statistics?.total_submissions || 0,
-    pendingGrading: tutorDashboard.data.statistics?.pending_submissions || 0,
-    averageScore: Math.round((tutorDashboard.data.statistics?.average_score || 0) * 10) / 10,
-    coursesTaught: tutorDashboard.data.courses || [],
-    pendingSubmissionsList: tutorDashboard.data.pending_submissions || [],
-    upcomingAssignments: tutorDashboard.data.upcoming_assignments || [],
-    recentActivity: tutorDashboard.data.recent_activity || []
+    totalCourses: tutorDashboard.data.statistics?.total_courses || tutorDashboard.data.totalCourses || 0,
+    totalStudents: tutorDashboard.data.statistics?.total_students || tutorDashboard.data.totalStudents || 0,
+    totalAssignments: tutorDashboard.data.statistics?.total_assignments || tutorDashboard.data.totalAssignments || 0,
+    totalSubmissions: tutorDashboard.data.statistics?.total_submissions || tutorDashboard.data.totalSubmissions || 0,
+    pendingGrading: tutorDashboard.data.statistics?.pending_submissions || tutorDashboard.data.pendingGrading || 0,
+    averageScore: Math.round((tutorDashboard.data.statistics?.average_score || tutorDashboard.data.averageScore || 0) * 10) / 10,
+    coursesTaught: tutorDashboard.data.courses || tutorDashboard.data.coursesTaught || [],
+    pendingSubmissionsList: tutorDashboard.data.pending_submissions || tutorDashboard.data.pendingSubmissionsList || [],
+    upcomingAssignments: tutorDashboard.data.upcoming_assignments || tutorDashboard.data.upcomingAssignments || [],
+    recentActivity: tutorDashboard.data.recent_activity || tutorDashboard.data.recentActivity || []
   } : {
     totalCourses: 0,
     totalStudents: 0,
@@ -148,16 +173,13 @@ const TutorDashboard = () => {
 
 
       {/* Main Content */}
-      <LoadingOverlay 
-        isLoading={isMainLoading}
-        loadingText={t('tutor.loadingDashboard')}
-        overlayColor="rgba(0, 0, 0, 0.8)"
-        spinnerColor="var(--primary-color)"
-        textColor="white"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Navigation Tabs */}
-        <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--tertiary-color)'}}>
+      {isMainLoading ? (
+        <DashboardSkeleton />
+      ) : (
+        <>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            {/* Navigation Tabs */}
+            <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--tertiary-color)'}}>
           <button
             onClick={() => setActiveTab('overview')}
             className={`px-4 py-2 rounded-lg font-medium transition-all flex items-center gap-2 hover:scale-105 ${
@@ -672,10 +694,10 @@ const TutorDashboard = () => {
               )}
             </div>
           </div>
-
         )}
         </div>
-      </LoadingOverlay>
+      </>
+    )}
 
       {/* Footer */}
       <DashboardFooter />

@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient, useQueries } from 'react-query';
 import apiClient from '../services/apiClient';
 import { API_ENDPOINTS } from '../config';
 import { useAuth } from '../../context/AuthContext';
@@ -9,6 +9,34 @@ const DashboardContext = createContext();
 export const DashboardProvider = ({ children }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
+
+  // API Health Check - Step 8.2: Connection Health Check
+  const { data: healthCheck } = useQuery(
+    'api-health',
+    async () => {
+      try {
+        console.log('Checking API health...');
+        const response = await apiClient.get('/health');
+        console.log('API Health Check:', response);
+        return { status: 'ok', timestamp: new Date().toISOString() };
+      } catch (error) {
+        console.warn('API Health Check failed:', error.message);
+        return { status: 'error', error: error.message, timestamp: new Date().toISOString() };
+      }
+    },
+    {
+      retry: 3,
+      staleTime: 30000, // 30 seconds
+      refetchOnWindowFocus: false,
+    }
+  );
+
+  // Log health status
+  React.useEffect(() => {
+    if (healthCheck) {
+      console.log('API Health Status:', healthCheck);
+    }
+  }, [healthCheck]);
 
   // Statistics Query
   const { data: stats, isLoading: statsLoading } = useQuery(
@@ -56,11 +84,12 @@ export const DashboardProvider = ({ children }) => {
     }
   );
 
-  // Courses Query (role-based)
+  // Courses Query (role-based) - Enhanced with better caching
   const { data: courses, isLoading: coursesLoading } = useQuery(
     'courses',
     async () => {
       try {
+        console.log('Fetching courses data...');
         let endpoint = API_ENDPOINTS.ACADEMICS.COURSES;
         if (user?.role === 'student') {
           endpoint = API_ENDPOINTS.ACADEMICS.STUDENT_ENROLLMENTS;
@@ -68,6 +97,8 @@ export const DashboardProvider = ({ children }) => {
           endpoint = `${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`;
         }
         const response = await apiClient.get(endpoint);
+        console.log('Courses response:', response);
+        
         // Handle different response formats
         if (user?.role === 'student') {
           return response.data.success ? response.data.data : response.data;
@@ -80,7 +111,8 @@ export const DashboardProvider = ({ children }) => {
     },
     {
       enabled: !!user,
-      staleTime: 5 * 60 * 1000,
+      staleTime: 10 * 60 * 1000, // 10 minutes for better performance
+      cacheTime: 30 * 60 * 1000, // 30 minutes cache
     }
   );
 
