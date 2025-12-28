@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BookOpen, Users, FileText, TrendingUp, Calendar, Award, LayoutDashboard, Settings, BarChart3, ClipboardList, GraduationCap, CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
 
 import Card from '../components/ui/Card';

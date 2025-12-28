@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
@@ -85,9 +85,9 @@ const LoginPage = () => {
 
 
   return (
-    <div 
+    <div
       className="min-h-screen flex items-center justify-center px-6 relative"
-      style={{ 
+      style={{
         backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${bgImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',

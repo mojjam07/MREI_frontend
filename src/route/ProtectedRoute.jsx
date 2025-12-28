@@ -1,6 +1,6 @@
 
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../context/AuthContext";
 
 // Helper function to get dashboard path based on user role
 const getDashboardPath = (userRole) => {

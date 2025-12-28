@@ -13,7 +13,7 @@ import {
   ChevronLeft
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 import LanguageSwitcher from './LanguageSwitcher';
 // import DashboardFooter from './DashboardFooter';

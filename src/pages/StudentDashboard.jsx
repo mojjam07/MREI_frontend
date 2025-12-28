@@ -61,6 +61,14 @@ const StudentDashboard = () => {
                           attendanceLoading;
 
       if (stillLoading) {
+        console.error('Dashboard loading timeout - still loading after 10 seconds');
+        console.log('Loading states:', {
+          studentDashboardLoading,
+          coursesLoading,
+          assignmentsLoading,
+          classSchedulesLoading,
+          attendanceLoading
+        });
         setError('Failed to load dashboard data. Please check your connection.');
       }
     }, 10000); // 10 second timeout
@@ -567,7 +575,21 @@ const StudentDashboard = () => {
 
 
   // Main loading state with skeleton
-  const isMainLoading = studentDashboardLoading;
+  const isMainLoading = studentDashboardLoading || coursesLoading || assignmentsLoading;
+
+  // Debug logging
+  console.log('StudentDashboard render:', {
+    isMainLoading,
+    studentDashboardLoading,
+    coursesLoading,
+    assignmentsLoading,
+    classSchedulesLoading,
+    attendanceLoading,
+    error,
+    studentDashboard: !!studentDashboard,
+    courses: courses?.length,
+    assignments: assignments?.length
+  });
 
   return (
     <div className="min-h-screen" style={{backgroundColor: 'var(--accent-color)'}}>
@@ -592,7 +614,20 @@ const StudentDashboard = () => {
 
 
       {/* Main Content */}
-      {isMainLoading ? (
+      {error ? (
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+          <div className="text-center py-12">
+            <div className="text-red-600 text-lg font-semibold mb-4">Error Loading Dashboard</div>
+            <p className="text-gray-600 mb-4">{error}</p>
+            <button
+              onClick={() => window.location.reload()}
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+            >
+              Reload Page
+            </button>
+          </div>
+        </div>
+      ) : isMainLoading ? (
         <DashboardSkeleton />
       ) : (
         <>

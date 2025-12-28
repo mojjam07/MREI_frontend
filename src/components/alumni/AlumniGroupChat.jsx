@@ -22,7 +22,7 @@ import {
   ThumbsDown
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import apiClient from '../../services/apiClient';
 
 import Card from '../ui/Card';

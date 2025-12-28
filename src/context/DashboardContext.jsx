@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react';
-import { useQuery, useMutation, useQueryClient, useQueries } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import apiClient from '../services/apiClient';
 import { API_ENDPOINTS } from '../config';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from './AuthContext';
 
 const DashboardContext = createContext();
 

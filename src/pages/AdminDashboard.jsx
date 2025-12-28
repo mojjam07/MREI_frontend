@@ -1,16 +1,19 @@
 
 import React, { useState } from 'react';
-import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera, GraduationCap as AlumniIcon } from 'lucide-react';
+import { LayoutDashboard, Users, GraduationCap, Award, BarChart3, Settings, Plus, Edit2, Trash2, Save, X, Newspaper, Calendar, MessageSquare, Camera } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useDashboard } from '../context/DashboardContext';
 import DataTable from '../components/ui/DataTable';
 import DashboardFooter from '../components/layout/DashboardFooter';
-import LoadingOverlay from '../components/ui/LoadingOverlay';
+import DashboardSkeleton from '../components/ui/DashboardSkeleton';
 import LanguageSwitcher from '../components/layout/LanguageSwitcher';
 import { Link } from 'react-router-dom';
 
+const AlumniIcon = GraduationCap;
+
 const AdminDashboard = () => {
-  const { t } = useLanguage();
+  const language = useLanguage();
+  const t = language?.t || ((k) => k);
 
   const [activeTab, setActiveTab] = useState('stats');
   const [editingStats, setEditingStats] = useState(false);
@@ -157,7 +160,7 @@ const AdminDashboard = () => {
             <label className="block text-sm font-medium mb-2">{t('admin.labels.title')}</label>
             <input
               type="text"
-              value={isEditing ? currentForm.title : bookForm.title}
+              value={(isEditing ? currentForm.title : bookForm.title) || ''}
               onChange={(e) => {
                 if (isEditing) {
                   setEditingBook({...currentForm, title: e.target.value});
@@ -173,7 +176,7 @@ const AdminDashboard = () => {
             <label className="block text-sm font-medium mb-2">{t('admin.labels.author')}</label>
             <input
               type="text"
-              value={isEditing ? currentForm.author : bookForm.author}
+              value={(isEditing ? currentForm.author : bookForm.author) || ''}
               onChange={(e) => {
                 if (isEditing) {
                   setEditingBook({...currentForm, author: e.target.value});
@@ -189,7 +192,7 @@ const AdminDashboard = () => {
             <label className="block text-sm font-medium mb-2">{t('admin.labels.genre')}</label>
             <input
               type="text"
-              value={isEditing ? currentForm.genre : bookForm.genre}
+              value={(isEditing ? currentForm.genre : bookForm.genre) || ''}
               onChange={(e) => {
                 if (isEditing) {
                   setEditingBook({...currentForm, genre: e.target.value});
@@ -205,7 +208,7 @@ const AdminDashboard = () => {
             <label className="block text-sm font-medium mb-2">{t('admin.labels.publicationYear')}</label>
             <input
               type="number"
-              value={isEditing ? currentForm.publication_year : bookForm.publication_year}
+              value={(isEditing ? currentForm.publication_year : bookForm.publication_year) || ''}
               onChange={(e) => {
                 const value = parseInt(e.target.value) || '';
                 if (isEditing) {
@@ -268,7 +271,7 @@ const AdminDashboard = () => {
           <div className="md:col-span-2">
             <label className="block text-sm font-medium mb-2">{t('admin.labels.description')}</label>
             <textarea
-              value={isEditing ? currentForm.description : bookForm.description}
+              value={(isEditing ? currentForm.description : bookForm.description) || ''}
               onChange={(e) => {
                 if (isEditing) {
                   setEditingBook({...currentForm, description: e.target.value});
@@ -392,7 +395,7 @@ const AdminDashboard = () => {
     deleteBook,
     creatingBook,
     updatingBook
-  } = useDashboard();
+  } = useDashboard() || {};
 
   // Handle stats update
   const handleStatsUpdate = async () => {
@@ -567,7 +570,7 @@ const AdminDashboard = () => {
           <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.activeStudents')}</label>
           <input
             type="number"
-            value={editingStats ? tempStats?.active_students : stats?.active_students || 0}
+            value={(editingStats ? tempStats?.active_students : stats?.active_students) || 0}
             onChange={(e) => editingStats && setTempStats({...tempStats, active_students: parseInt(e.target.value)})}
             disabled={!editingStats}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent disabled:opacity-50 transition-all"
@@ -582,7 +585,7 @@ const AdminDashboard = () => {
           <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.courses')}</label>
           <input
             type="number"
-            value={editingStats ? tempStats?.courses : stats?.courses || 0}
+            value={(editingStats ? tempStats?.courses : stats?.courses) || 0}
             onChange={(e) => editingStats && setTempStats({...tempStats, courses: parseInt(e.target.value)})}
             disabled={!editingStats}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent disabled:opacity-50 transition-all"
@@ -597,7 +600,7 @@ const AdminDashboard = () => {
           <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.successRate')}</label>
           <input
             type="number"
-            value={editingStats ? tempStats?.success_rate : stats?.success_rate || 0}
+            value={(editingStats ? tempStats?.success_rate : stats?.success_rate) || 0}
             onChange={(e) => editingStats && setTempStats({...tempStats, success_rate: parseInt(e.target.value)})}
             disabled={!editingStats}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent disabled:opacity-50 transition-all"
@@ -612,7 +615,7 @@ const AdminDashboard = () => {
           <label className="block text-sm font-medium mb-2" style={{color: 'var(--text-color)'}}>{t('admin.labels.tutors')}</label>
           <input
             type="number"
-            value={editingStats ? tempStats?.tutors : stats?.tutors || 0}
+            value={(editingStats ? tempStats?.tutors : stats?.tutors) || 0}
             onChange={(e) => editingStats && setTempStats({...tempStats, tutors: parseInt(e.target.value)})}
             disabled={!editingStats}
             className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent disabled:opacity-50 transition-all"
@@ -1440,15 +1443,12 @@ const AdminDashboard = () => {
       </header>
 
       {/* Main Content */}
-      <LoadingOverlay 
-        isLoading={isMainLoading}
-        loadingText={t('admin.loading.adminDashboard')}
-        overlayColor="rgba(0, 0, 0, 0.8)"
-        spinnerColor="var(--primary-color)"
-        textColor="white"
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Navigation Tabs */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {isMainLoading ? (
+          <DashboardSkeleton />
+        ) : (
+          <>
+            {/* Navigation Tabs */}
         <div className="rounded-lg shadow-sm mb-6 p-2 flex flex-wrap gap-2 hover-lift" style={{backgroundColor: 'var(--light-text)'}}>
           <button
             onClick={() => setActiveTab('stats')}
@@ -2284,13 +2284,13 @@ const AdminDashboard = () => {
             )}
           </div>
         )}
+    </>
+    )}
+  </div>
 
-        </div>
-      </LoadingOverlay>
-
-      {/* Footer */}
-      <DashboardFooter />
-    </div>
+  {/* Footer */}
+  <DashboardFooter />
+  </div>
   );
 };
 

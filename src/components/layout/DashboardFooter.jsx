@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { Home, LogOut, Settings, User, HelpCircle, Mail, Phone, MapPin, BookOpen } from 'lucide-react';
-import { useAuth } from '../../../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { useLanguage } from '../../context/LanguageContext';
 import { useNavigate } from 'react-router-dom';
 

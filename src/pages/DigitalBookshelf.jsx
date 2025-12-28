@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { useAuth } from '../../context/AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { useDashboard } from '../context/DashboardContext';
 import PageHeader from '../components/layout/PageHeader';
 import Footer from '../components/layout/Footer';

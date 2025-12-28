@@ -399,6 +399,54 @@ const translations = {
       users: 'User Management',
       reports: 'Reports',
       settings: 'Settings',
+      form: {
+        labels: {
+          title: 'Title',
+          description: 'Description',
+          imageFile: 'Image File',
+          details: 'Details',
+          eventDate: 'Event Date',
+          location: 'Location',
+          youtubeVideoId: 'YouTube Video ID',
+          content: 'Content'
+        },
+        placeholders: {
+          title: 'Enter title',
+          author: 'Enter author',
+          genre: 'Enter genre',
+          description: 'Enter description'
+        }
+      },
+      tutor: {
+        addNewTutor: 'Add New Tutor',
+        userId: 'User ID',
+        placeholders: {
+          userId: 'Enter user ID',
+          staffNumber: 'Enter staff number',
+          department: 'Enter department',
+          subjects: 'Enter subjects (comma-separated)',
+          bio: 'Enter bio'
+        },
+        staffNumber: 'Staff Number',
+        department: 'Department',
+        subjects: 'Subjects',
+        bio: 'Bio',
+        saveTutor: 'Save Tutor'
+      },
+      alumni: {
+        welcomeAdmin: 'Welcome to Alumni Management',
+        manageAlumniContent: 'Manage Alumni Content',
+        totalAlumni: 'Total Alumni',
+        activeEvents: 'Active Events',
+        totalDonations: 'Total Donations',
+        activeChats: 'Active Chats',
+        quickActions: 'Quick Actions',
+        manageContent: 'Manage Content',
+        manageExecutives: 'Manage Executives',
+        manageFinance: 'Manage Finance',
+        manageCommunications: 'Manage Communications',
+        recentActivity: 'Recent Activity'
+      },
       totalUsers: 'Total Users',
       activeToday: 'Active Today',
       revenue: 'Monthly Revenue',
@@ -414,6 +462,19 @@ const translations = {
       successRate: 'Success Rate (%)',
       tutors: 'Tutors',
       editStatistics: 'Edit Statistics',
+      labels: {
+        activeStudents: 'Active Students',
+        courses: 'Courses',
+        successRate: 'Success Rate',
+        tutors: 'Tutors',
+        title: 'Title',
+        author: 'Author',
+        genre: 'Genre',
+        publicationYear: 'Publication Year',
+        coverImage: 'Cover Image',
+        pdfFile: 'PDF File',
+        description: 'Description'
+      },
       saveStatistics: 'Save Statistics',
       saving: 'Saving...',
       cancel: 'Cancel',
@@ -540,25 +601,33 @@ const translations = {
       viewPdf: 'View PDF',
       noBooksYet: 'No Books Yet',
       startBuildingBookshelf: 'Start building your digital bookshelf by adding your first book!',
-      tabs: {
-        stats: 'Statistics',
-        news: 'News',
-        events: 'Events',
-        testimonials: 'Testimonials',
-        campusLife: 'Campus Life',
-        students: 'Students',
-        tutors: 'Tutors',
-        books: 'Books',
-        testimonialApproval: 'Testimonial Approval',
-        contactMessages: 'Contact Messages'
+      empty: {
+        noItemsEvent: 'No events available',
+        noItems: 'No items available'
       },
+      addNewTestimonial: 'Add New Testimonial',
+  tabs: {
+    stats: 'Statistics',
+    news: 'News',
+    events: 'Events',
+    testimonials: 'Testimonials',
+    campusLife: 'Campus Life',
+    students: 'Students',
+    tutors: 'Tutors',
+    books: 'Books',
+    testimonialApproval: 'Testimonial Approval',
+    contactMessages: 'Contact Messages',
+    alumniManagement: 'Alumni Management'
+  },
       buttons: {
         addNewBook: 'Add New Book',
         editBook: 'Edit Book',
         addNewStudent: 'Add New Student',
         editStudent: 'Edit Student',
         approve: 'Approve',
-        approving: 'Approving...'
+        approving: 'Approving...',
+        saveBook: 'Save Book',
+        cancel: 'Cancel'
       }
     },
     alumni: {
@@ -694,8 +763,19 @@ const translations = {
       delete: 'Delete',
       view: 'View',
       loading: 'Loading...',
-      noData: 'No data available'
-
+      noData: 'No data available',
+      management: 'Management',
+      addNew: 'Add New',
+      news: 'News',
+      new: 'New',
+      events: 'Events',
+      testimonialManagement: 'Testimonial Management',
+      testimonial: {
+        management: 'Testimonial Management'
+      },
+      labels: {
+        year: 'Year'
+      }
     },
 
 
@@ -1822,6 +1902,77 @@ const translations = {
       users: 'إدارة المستخدمين',
       reports: 'التقارير',
       settings: 'الإعدادات',
+      form: {
+        labels: {
+          title: 'العنوان',
+          description: 'الوصف',
+          imageFile: 'ملف الصورة',
+          details: 'التفاصيل',
+          eventDate: 'تاريخ الفعالية',
+          location: 'الموقع',
+          youtubeVideoId: 'معرف فيديو اليوتيوب',
+          content: 'المحتوى'
+        },
+        placeholders: {
+          title: 'أدخل العنوان',
+          author: 'أدخل المؤلف',
+          genre: 'أدخل النوع',
+          description: 'أدخل الوصف'
+        }
+      },
+      tutor: {
+        addNewTutor: 'إضافة معلم جديد',
+        userId: 'معرف المستخدم',
+        placeholders: {
+          userId: 'أدخل معرف المستخدم',
+          staffNumber: 'أدخل رقم الموظف',
+          department: 'أدخل القسم',
+          subjects: 'أدخل المواد (مفصولة بفواصل)',
+          bio: 'أدخل السيرة الذاتية'
+        },
+        staffNumber: 'رقم الموظف',
+        department: 'القسم',
+        subjects: 'المواد',
+        bio: 'السيرة الذاتية',
+        saveTutor: 'حفظ المعلم'
+      },
+      labels: {
+        activeStudents: 'الطلاب النشطون',
+        courses: 'الدورات',
+        successRate: 'معدل النجاح',
+        tutors: 'المعلمون',
+        title: 'العنوان',
+        author: 'المؤلف',
+        genre: 'النوع',
+        publicationYear: 'سنة النشر',
+        coverImage: 'صورة الغلاف',
+        pdfFile: 'ملف PDF',
+        description: 'الوصف'
+      },
+      buttons: {
+        addNewBook: 'إضافة كتاب جديد',
+        editBook: 'تعديل الكتاب',
+        addNewStudent: 'إضافة طالب جديد',
+        editStudent: 'تعديل الطالب',
+        approve: 'اعتماد',
+        approving: 'جاري الاعتماد...',
+        saveBook: 'حفظ الكتاب',
+        cancel: 'إلغاء'
+      },
+      alumni: {
+        welcomeAdmin: 'مرحباً بك في إدارة الخريجين',
+        manageAlumniContent: 'إدارة محتوى الخريجين',
+        totalAlumni: 'إجمالي الخريجين',
+        activeEvents: 'الفعاليات النشطة',
+        totalDonations: 'إجمالي التبرعات',
+        activeChats: 'المحادثات النشطة',
+        quickActions: 'إجراءات سريعة',
+        manageContent: 'إدارة المحتوى',
+        manageExecutives: 'إدارة المسؤولين',
+        manageFinance: 'إدارة المالية',
+        manageCommunications: 'إدارة الاتصالات',
+        recentActivity: 'النشاط الأخير'
+      },
       totalUsers: 'إجمالي المستخدمين',
       activeToday: 'نشط اليوم',
       revenue: 'الإيرادات الشهرية',
@@ -1973,16 +2124,9 @@ const translations = {
         tutors: 'المعلمون',
         books: 'الكتب',
         testimonialApproval: 'موافقة الشهادات',
-        contactMessages: 'رسائل التواصل'
+        contactMessages: 'رسائل التواصل',
+        alumniManagement: 'إدارة الخريجين'
       },
-      buttons: {
-        addNewBook: 'إضافة كتاب جديد',
-        editBook: 'تعديل الكتاب',
-        addNewStudent: 'إضافة طالب جديد',
-        editStudent: 'تعديل الطالب',
-        approve: 'اعتماد',
-        approving: 'جاري الاعتماد...'
-      }
     },
     alumni: {
       title: 'شبكة الخريجين',
@@ -2007,8 +2151,19 @@ const translations = {
       delete: 'حذف',
       view: 'عرض',
       loading: 'جاري التحميل...',
-      noData: 'لا توجد بيانات'
-
+      noData: 'لا توجد بيانات',
+      management: 'إدارة',
+      addNew: 'إضافة جديد',
+      news: 'أخبار',
+      new: 'جديد',
+      events: 'فعاليات',
+      testimonialManagement: 'إدارة الشهادات',
+      testimonial: {
+        management: 'إدارة الشهادات'
+      },
+      labels: {
+        year: 'السنة'
+      }
     },
 
 

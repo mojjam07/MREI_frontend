@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "./context/AuthContext";
 import Landing from "./pages/Landing";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -54,7 +54,7 @@ const RoleBasedDashboard = () => {
 
 export default function App() {
   return (
-
+    <>
     <Routes>
 
       <Route path="/" element={<Landing />} />
@@ -133,5 +133,6 @@ export default function App() {
       {/* 404 Not Found route - must be last */}
       <Route path="*" element={<NotFound />} />
     </Routes>
+    </>
   );
 }

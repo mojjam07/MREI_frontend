@@ -5,7 +5,7 @@ import "./index.css";
 import "./i18n/i18n";
 import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { AuthProvider } from "../context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import { DashboardProvider } from "./context/DashboardContext";
 
