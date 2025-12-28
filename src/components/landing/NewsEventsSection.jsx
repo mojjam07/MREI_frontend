@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { API_ENDPOINTS } from '../../config';
-import apiClient from '../../services/apiClient';
+import { contentApi } from '../../services/apiClient';
 
 const NewsEventsSection = () => {
   const { t, language } = useLanguage();
@@ -17,21 +16,27 @@ const NewsEventsSection = () => {
       setLoading(true);
       setError(null);
       
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.HOME_CONTENT);
-      const data = response.data.data;
+      // Fetch news and events separately
+      const [newsResponse, eventsResponse] = await Promise.all([
+        contentApi.getNews({ limit: 3 }),
+        contentApi.getEvents({ limit: 3 })
+      ]);
       
-      setNewsItems(data.news.map(item => ({
+      const newsData = newsResponse.data.data?.news || [];
+      const eventsData = eventsResponse.data.data?.events || [];
+      
+      setNewsItems(newsData.map(item => ({
         date: new Date(item.created_at).toLocaleDateString(),
         title: item.title,
         description: item.content,
         image: item.image || '/placeholder/400/250'
       })));
       
-      setEventsItems(data.events.map(item => ({
+      setEventsItems(eventsData.map(item => ({
         date: new Date(item.event_date).toLocaleDateString(),
         title: item.title,
-        details: item.content,
-        videoId: item.video_id || 'dQw4w9WgXcQ'
+        details: item.description,
+        videoId: 'dQw4w9WgXcQ' // default YouTube video
       })));
     } catch (error) {
       console.error('Error fetching home content:', error);

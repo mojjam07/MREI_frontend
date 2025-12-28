@@ -28,7 +28,7 @@ const AlumniExecutiveMembers = () => {
   const fetchExecutiveMembers = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get('/admin/executive-members');
+      const response = await apiClient.get('/api/content/executive-members');
       setExecutiveMembers(response.data.data || []);
     } catch (error) {
       console.error('Error fetching executive members:', error);

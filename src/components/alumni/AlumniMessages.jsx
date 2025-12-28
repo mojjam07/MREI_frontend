@@ -22,7 +22,6 @@ import LoadingOverlay from '../ui/LoadingOverlay';
 
 const AlumniMessages = () => {
   const { t } = useLanguage();
-  const { user } = useAuth();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedMessage, setSelectedMessage] = useState(null);
@@ -41,7 +40,7 @@ const AlumniMessages = () => {
   const fetchMessages = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get('/admin/alumni-messages');
+      const response = await apiClient.get('/api/content/alumni-messages');
       const messagesData = response.data.data || [];
       
       // Sort messages by date (most recent first)
@@ -128,7 +127,7 @@ const AlumniMessages = () => {
 
   const markAsRead = async (messageId) => {
     try {
-      await apiClient.patch(`/admin/messages/${messageId}/read`);
+      await apiClient.patch(`/api/content/messages/${messageId}/read`);
       setMessages(messages.map(msg => 
         msg.id === messageId ? { ...msg, is_read: true } : msg
       ));
@@ -148,7 +147,7 @@ const AlumniMessages = () => {
     }
 
     try {
-      const response = await apiClient.post('/admin/messages', {
+      const response = await apiClient.post('/api/content/messages', {
         ...newMessage,
         recipient_type: 'admin'
       });

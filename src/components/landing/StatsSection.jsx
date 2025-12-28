@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { API_ENDPOINTS } from '../../config';
-import apiClient from '../../services/apiClient';
+import { contentApi } from '../../services/apiClient';
 
 const StatsSection = () => {
   const { t } = useLanguage();
@@ -15,7 +14,7 @@ const StatsSection = () => {
       setLoading(true);
       setError(null);
       
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.STATISTICS);
+      const response = await contentApi.getStatistics();
       const data = response.data.data.statistics;
       
       setStats([

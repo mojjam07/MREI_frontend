@@ -66,7 +66,7 @@ const Library = () => {
     const fetchBooks = async () => {
       try {
         setBooksLoading(true);
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.BOOKS);
+        const response = await apiClient.get(API_ENDPOINTS.LIBRARY.BOOKS);
         // API returns { success: true, data: { books: [...], pagination: {...} } }
         // We need to extract the books array from the response
         setBooks(response.data?.data?.books || response.data || []);

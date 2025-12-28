@@ -171,30 +171,29 @@ const SchoolLife = () => {
           <div className="max-w-4xl mx-auto px-4 lg:px-8 text-center">
             <div className="bg-gradient-to-r from-primary to-accent text-white p-8 lg:p-12 rounded-lg shadow-xl">
               <h2 className="text-xl lg:text-2xl font-bold mb-6">
-                Experience Campus Life at Mahdu Rahmah
+                {t('schoolLife.campusExperienceTitle')}
               </h2>
               <p className="text-sm lg:text-base text-white/90 mb-8">
-                Join a vibrant community where learning extends beyond the classroom. 
-                Discover new friendships, develop leadership skills, and create memories that last a lifetime.
+                {t('schoolLife.campusExperienceDesc')}
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">25+</div>
-                  <div className="text-sm text-white/80">Student Clubs</div>
+                  <div className="text-sm text-white/80">{t('schoolLife.stats.studentClubs')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">100+</div>
-                  <div className="text-sm text-white/80">Annual Events</div>
+                  <div className="text-sm text-white/80">{t('schoolLife.stats.annualEvents')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">12</div>
-                  <div className="text-sm text-white/80">Sports Teams</div>
+                  <div className="text-sm text-white/80">{t('schoolLife.stats.sportsTeams')}</div>
                 </div>
               </div>
 
               <button className="bg-white text-primary px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors duration-300 font-semibold">
-                Join Our Community
+                {t('schoolLife.joinCommunityButton')}
               </button>
             </div>
           </div>

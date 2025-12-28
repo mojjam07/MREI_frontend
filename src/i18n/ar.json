@@ -1039,27 +1039,37 @@
         "subtitle": "اكتشف المزايا الفريدة التي تميزنا وتجعل رحلتك التعليمية استثنائية",
         "expertTutorsTitle": "المدرسون والخبراء",
         "expertTutorsDesc": "تعلم من المحترفين في الصناعة والمدرسين ذوي الخبرة المتحمسين لنجاحك والملتزمين بتقديم إرشادات مخصصة.",
-        "expertTutorsFeature1": "محترفون في الصناعة مع خبرة في العالم الحقيقي",
-        "expertTutorsFeature2": "اهتمام مخصص وإرشاد",
-        "expertTutorsFeature3": "منهجيات تدريس مدعومة بالبحث",
+        "expertTutorsFeatures": [
+            "محترفون في الصناعة مع خبرة في العالم الحقيقي",
+            "اهتمام مخصص وإرشاد",
+            "منهجيات تدريس مدعومة بالبحث"
+        ],
         "flexibleLearningTitle": "خيارات التعلم المرنة",
         "flexibleLearningDesc": "ادرس بوتيرتك الخاصة مع خيارات الجدولة المرنة التي تناسب أسلوب حياتك وتفضيلات التعلم.",
-        "flexibleLearningFeature1": "حصص عبر الإنترنت ومختلطة وحضورية",
-        "flexibleLearningFeature2": "وحدات تعلم ذاتية الوتيرة",
-        "flexibleLearningFeature3": "جداول حصص متعددة للاختيار من بينها",
+        "flexibleLearningFeatures": [
+            "حصص عبر الإنترنت ومختلطة وحضورية",
+            "وحدات تعلم ذاتية الوتيرة",
+            "جداول حصص متعددة للاختيار من بينها"
+        ],
         "provenSuccessTitle": "قصص نجاح مثبتة",
         "provenSuccessDesc": "انضم إلى آلاف الخريجين الناجحين الذين حققوا أهدافهم المهنية من خلال برامجنا المبتكرة والدعم الشامل.",
-        "successRate": "معدل النجاح",
-        "graduates": "الخريجون",
-        "expertTutors": "مدرسون خبراء",
-        "yearsExperience": "سنوات الخبرة",
+        "provenSuccessFeatures": [
+            "معدل النجاح",
+            "خريجون",
+            "مدرسون خبراء",
+            "سنوات الخبرة"
+        ],
         "whyChooseUsTitle": "لماذا تختارنا؟",
         "personalizedLearningTitle": "التعلم المخصص",
         "personalizedLearningDesc": "تجارب تعليمية مصممة خصيصاً لأسلوب التعلم الفريد وأهدافك.",
         "innovativeApproachTitle": "نهج مبتكر",
         "innovativeApproachDesc": "تقنية متطورة وطرق تدريس حديثة لتحسين نتائج التعلم.",
         "continuousSupportTitle": "دعم مستمر",
-        "continuousSupportDesc": "إرشاد وموارد مستمرة طوال رحلتك التعليمية بأكملها."
+        "continuousSupportDesc": "إرشاد وموارد مستمرة طوال رحلتك التعليمية بأكملها.",
+        "featuresGridTitle": "لماذا تختارنا؟",
+        "personalizedLearningFeature": "تجارب تعليمية مصممة خصيصاً لنجاحك ونموك الفردي.",
+        "innovativeApproachFeature": "أساليب تدريس متطورة وتكامل تقني للتعلم الحديث.",
+        "continuousSupportFeature": "إرشاد مستمر طوال رحلتك التعليمية."
     },
 
     "ourImpact": {
@@ -1089,7 +1099,43 @@
         "personalizedSupportTitle": "دعم مخصص",
         "personalizedSupportDesc": "إرشاد فردي مصمم لاحتياجات التعلم الفردية.",
         "communityFocusTitle": "التركيز على المجتمع",
-        "communityFocusDesc": "تعزيز روابط ذات معنى وتجارب تعاونية في التعلم."
+        "communityFocusDesc": "تعزيز روابط ذات معنى وتجارب تعاونية في التعلم.",
+        "studentStatsTitle": "إحصائيات الطلاب",
+        "studentStatsDesc": "اكتشف الأثر القوي الذي نحدثه في حياة طلابنا ومستقبلهم",
+        "courseOfferingsSectionTitle": "عروض الدورات المتنوعة",
+        "successMetricsSectionTitle": "مقاييس النجاح",
+        "tutorNetworkSectionTitle": "شبكة المدرسين",
+        "studentStats": {
+            "totalStudents": "إجمالي الطلاب",
+            "activeLearners": "المتعلمون النشطون",
+            "graduateRate": "معدل التخرج",
+            "internationalStudents": "الطلاب الدوليون"
+        },
+        "courseStats": {
+            "totalPrograms": "إجمالي البرامج",
+            "certificationCourses": "دورات الشهادات",
+            "degreePrograms": "برامج الدرجة",
+            "specializedTracks": "المسارات المتخصصة"
+        },
+        "successMetrics": {
+            "employmentRate": "معدل التوظيف",
+            "averageSalary": "متوسط الراتب",
+            "studentSatisfaction": "رضا الطلاب",
+            "industryPartnerships": "شراكات الصناعة"
+        },
+        "tutorNetwork": {
+            "certifiedTutors": "مدرسون معتمدون",
+            "subjectExperts": "خبراء المواد",
+            "industryProfessionals": "محترفون في الصناعة",
+            "ongoingTraining": "التدريب المستمر"
+        },
+        "commitmentTitle": "التزامنا بالتميز",
+        "commitmentDesc": "من خلال الابتكار المستمر والتفاني في نجاح الطلاب، يواصل معهد محمد رحمة أن يكون رائداً في توفير تعليم عالمي المستوى وتجارب تعلم تحويلية.",
+        "stats": {
+            "yearsOfExcellence": "سنوات من التميز",
+            "industryPartners": "شريك في الصناعة",
+            "successRate": "معدل النجاح"
+        }
     },
 
     "testimonials": {
@@ -1103,7 +1149,63 @@
         "successCasesDesc": "نتائج قابلة للقياس تدل على فعالية نهجنا التعليمي",
         "joinSuccessStoriesTitle": "انضم إلى قصص النجاح لدينا",
         "joinSuccessStoriesDesc": "كن جزءاً من مجتمع يحتفل بالإنجازات ويدعم أهدافك",
-        "applyNowButton": "تقدم الآن"
+        "applyNowButton": "تقدم الآن",
+        "featuredTestimonials": [
+            {
+                "name": "أحمد محمد",
+                "role": "مطور برمجيات",
+                "company": "شركة التكنولوجيا المتقدمة",
+                "quote": "المعهد غير حياتي تماماً. التعليم المتميز والإرشاد الفردي ساعدني في تحقيق أحلامي المهنية.",
+                "image": "/images/testimonials/ahmed-mohamed.jpg"
+            },
+            {
+                "name": "فاطمة علي",
+                "role": "مديرة تسويق",
+                "company": "مجموعة الأعمال الحديثة",
+                "quote": "الخبرة العملية والتدريب العملي الذي حصلت عليه كان أساس نجاحي في مجال التسويق.",
+                "image": "/images/testimonials/fatima-ali.jpg"
+            },
+            {
+                "name": "خالد أحمد",
+                "role": "مهندس معماري",
+                "company": "مكتب الهندسة المعمارية",
+                "quote": "المدرسون الخبراء والمرافق المتطورة ساعدتني في تطوير مهاراتي التقنية والإبداعية.",
+                "image": "/images/testimonials/khalid-ahmed.jpg"
+            },
+            {
+                "name": "سارة محمود",
+                "role": "محاسبة قانونية",
+                "company": "شركة المحاسبة والاستشارات",
+                "quote": "المناهج المحدثة والتدريب العملي جعلني مستعدة لسوق العمل من اليوم الأول.",
+                "image": "/images/testimonials/sara-mahmoud.jpg"
+            },
+            {
+                "name": "محمد عبدالله",
+                "role": "مختص تقني",
+                "company": "شركة الحلول الرقمية",
+                "quote": "التعلم المرن والجدولة المناسبة ساعدني في الموازنة بين العمل والدراسة بنجاح.",
+                "image": "/images/testimonials/mohamed-abdullah.jpg"
+            },
+            {
+                "name": "نور الدين",
+                "role": "طبيب بيطري",
+                "company": "عيادة الحيوان المختصة",
+                "quote": "المختبرات المجهزة والتدريب العملي أعطاني الثقة والخبرة اللازمة لممارسة المهنة.",
+                "image": "/images/testimonials/nour-el-din.jpg"
+            }
+        ],
+        "loadMore": "تحميل المزيد",
+        "shareYourStory": "شارك قصتك",
+        "impactInNumbersTitle": "تأثيرنا بالأرقام",
+        "impactInNumbersDesc": "قصص النجاح من مجتمعنا تتحدث عن نفسها. إليك ما يقوله طلابنا وخريجوننا عن تجربتهم.",
+        "successMetricsTitle": "انضم إلى قصص النجاح",
+        "successMetricsDesc": "كن جزءاً من مجتمعنا المتنامي من الخريجين الناجحين الذين غيروا مسيرتهم المهنية وحياتهم من خلال التعليم المتميز في معهد محمد رحمة.",
+        "metrics": {
+            "studentSatisfaction": "رضا الطلاب",
+            "careerAdvancement": "التقدم الوظيفي",
+            "wouldRecommend": "ينصحون بالتسجيل",
+            "higherEarnings": "دخل أعلى"
+        }
     },
 
     "newsEvents": {
@@ -1138,7 +1240,91 @@
         "getInvolvedTitle": "شارك",
         "getInvolvedDesc": "اكتشف فرصاً لا نهائية للمشاركة والتعلم والنمو خارج الفصل الدراسي",
         "joinClubButton": "انضم إلى نادي",
-        "learnMoreButton": "تعرف أكثر"
+        "learnMoreButton": "تعرف أكثر",
+        "facilities": [
+            {
+                "name": "مكتبة حديثة",
+                "description": "مكتبة مجهزة بأحدث التقنيات والكتب الأكاديمية",
+                "image": "/images/library-facility.jpg"
+            },
+            {
+                "name": "مختبرات علمية",
+                "description": "مختبرات مجهزة بأحدث المعدات للبحث والتطبيق العملي",
+                "image": "/images/labs-facility.jpg"
+            },
+            {
+                "name": "مرافق رياضية",
+                "description": "ملاعب رياضية وصالات للياقة البدنية والأنشطة الرياضية",
+                "image": "/images/sports-facility.jpg"
+            },
+            {
+                "name": "مراكز تقنية",
+                "description": "مراكز كمبيوتر مجهزة بأحدث البرامج والتقنيات",
+                "image": "/images/tech-facility.jpg"
+            }
+        ],
+        "activities": [
+            {
+                "name": "الأنشطة الثقافية",
+                "description": "مهرجانات ومعارض فنية وفعاليات ثقافية متنوعة",
+                "category": "ثقافة"
+            },
+            {
+                "name": "الأنشطة الرياضية",
+                "description": "بطولات رياضية وأنشطة بدنية متنوعة",
+                "category": "رياضة"
+            },
+            {
+                "name": "المشاريع التطوعية",
+                "description": "فرص للعمل التطوعي وخدمة المجتمع",
+                "category": "خدمة مجتمعية"
+            },
+            {
+                "name": "النوادي الأكاديمية",
+                "description": "نوادي متخصصة في المجالات الأكاديمية المختلفة",
+                "category": "أكاديمي"
+            }
+        ],
+        "clubs": [
+            "نادي علوم الحاسوب",
+            "نادي الأعمال",
+            "نادي الهندسة",
+            "نادي الفنون",
+            "نادي الموسيقى",
+            "نادي المسرح",
+            "نادي الإعلام",
+            "نادي البيئة",
+            "نادي الترجمة",
+            "نادي القيادة",
+            "نادي العلوم",
+            "نادي القراءة"
+        ],
+        "sports": [
+            {
+                "name": "كرة القدم",
+                "description": "فريق كرة قدم ينافس في المسابقات المحلية والإقليمية"
+            },
+            {
+                "name": "كرة السلة",
+                "description": "فريق كرة سلة نشط في البطولات الجامعية"
+            },
+            {
+                "name": "كرة الطاولة",
+                "description": "بطولات تنس طاولة داخلية ودورية"
+            },
+            {
+                "name": "ألعاب القوى",
+                "description": "ممارسة متنوعة للألعاب الرياضية والمسابقات"
+            }
+        ],
+        "campusExperienceTitle": "اختبر الحياة الجامعية في معهد محمد رحمة",
+        "campusExperienceDesc": "انضم إلى مجتمع نابض بالحياة حيث يتجاوز التعلم الفصل الدراسي. اكتشف صداقات جديدة، وطور مهارات القيادة، وأنشئ ذكريات تدوم مدى الحياة.",
+        "stats": {
+            "studentClubs": "نادي طلابي",
+            "annualEvents": "فعالية سنوية",
+            "sportsTeams": "فريق رياضي"
+        },
+        "joinCommunityButton": "انضم إلى مجتمعنا"
     },
 
     "contactUs": {

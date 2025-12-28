@@ -144,24 +144,23 @@ const OurImpact = () => {
           <div className="max-w-4xl mx-auto px-4 lg:px-8 text-center">
             <div className="bg-gradient-to-r from-primary to-accent text-white p-8 lg:p-12 rounded-lg shadow-xl">
               <h2 className="text-xl lg:text-2xl font-bold mb-4">
-                Our Commitment to Excellence
+                {t('ourImpact.commitmentTitle')}
               </h2>
               <p className="text-sm lg:text-base text-white/90 mb-6">
-                Through continuous innovation and dedication to student success, Mahdu Rahmah Institute 
-                continues to be a leader in providing world-class education and transformative learning experiences.
+                {t('ourImpact.commitmentDesc')}
               </p>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">20+</div>
-                  <div className="text-sm text-white/80">Years of Excellence</div>
+                  <div className="text-sm text-white/80">{t('ourImpact.stats.yearsOfExcellence')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">50+</div>
-                  <div className="text-sm text-white/80">Industry Partners</div>
+                  <div className="text-sm text-white/80">{t('ourImpact.stats.industryPartners')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">99%</div>
-                  <div className="text-sm text-white/80">Success Rate</div>
+                  <div className="text-sm text-white/80">{t('ourImpact.stats.successRate')}</div>
                 </div>
               </div>
             </div>

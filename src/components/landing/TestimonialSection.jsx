@@ -1,8 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { API_ENDPOINTS } from '../../config';
-import apiClient from '../../services/apiClient';
+import { contentApi } from '../../services/apiClient';
 
 const TestimonialSection = () => {
   const { t, language } = useLanguage();
@@ -15,7 +14,7 @@ const TestimonialSection = () => {
       setLoading(true);
       setError(null);
       
-      const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.HOME_CONTENT);
+      const response = await contentApi.getHomeContent();
       const data = response.data.data;
       const testimonials = data.testimonials;
       

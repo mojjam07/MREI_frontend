@@ -126,7 +126,7 @@ const WhyUs = () => {
           <div className="max-w-6xl mx-auto px-4 lg:px-8">
             <div className={`text-center mb-8 lg:mb-12 ${featuresAnimation}`}>
               <h2 className="text-xl lg:text-2xl font-bold text-primary mb-4 lg:mb-6">
-                Why Choose Us?
+                {t('whyUs.featuresGridTitle')}
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
@@ -135,10 +135,10 @@ const WhyUs = () => {
                   <span className="text-white text-xl lg:text-2xl font-bold">🎯</span>
                 </div>
                 <h3 className="text-lg lg:text-xl font-bold text-primary mb-2">
-                  Personalized Learning
+                  {t('whyUs.personalizedLearningTitle')}
                 </h3>
                 <p className="text-gray-600 text-sm lg:text-base">
-                  Tailored educational experiences designed for individual success and growth.
+                  {t('whyUs.personalizedLearningFeature')}
                 </p>
               </div>
               <div className="text-center p-4 lg:p-6 hover-lift hover-scale animate-fade-in-up animate-stagger-2">
@@ -146,10 +146,10 @@ const WhyUs = () => {
                   <span className="text-white text-xl lg:text-2xl font-bold">🚀</span>
                 </div>
                 <h3 className="text-lg lg:text-xl font-bold text-primary mb-2">
-                  Innovative Approach
+                  {t('whyUs.innovativeApproachTitle')}
                 </h3>
                 <p className="text-gray-600 text-sm lg:text-base">
-                  Cutting-edge teaching methods and technology integration for modern learning.
+                  {t('whyUs.innovativeApproachFeature')}
                 </p>
               </div>
               <div className="text-center p-4 lg:p-6 hover-lift hover-scale animate-fade-in-up animate-stagger-3">
@@ -157,10 +157,10 @@ const WhyUs = () => {
                   <span className="text-white text-xl lg:text-2xl font-bold">💡</span>
                 </div>
                 <h3 className="text-lg lg:text-xl font-bold text-primary mb-2">
-                  Continuous Support
+                  {t('whyUs.continuousSupportTitle')}
                 </h3>
                 <p className="text-gray-600 text-sm lg:text-base">
-                  Ongoing mentorship and guidance throughout your educational journey.
+                  {t('whyUs.continuousSupportFeature')}
                 </p>
               </div>
             </div>

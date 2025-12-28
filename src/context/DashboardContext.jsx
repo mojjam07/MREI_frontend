@@ -10,908 +10,335 @@ export const DashboardProvider = ({ children }) => {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  // API Health Check - Step 8.2: Connection Health Check
-  const { data: healthCheck } = useQuery(
-    'api-health',
-    async () => {
-      try {
-        console.log('Checking API health...');
-        const response = await apiClient.get('/health');
-        console.log('API Health Check:', response);
-        return { status: 'ok', timestamp: new Date().toISOString() };
-      } catch (error) {
-        console.warn('API Health Check failed:', error.message);
-        return { status: 'error', error: error.message, timestamp: new Date().toISOString() };
-      }
-    },
-    {
-      retry: 3,
-      staleTime: 30000, // 30 seconds
-      refetchOnWindowFocus: false,
-    }
-  );
-
-  // Log health status
-  React.useEffect(() => {
-    if (healthCheck) {
-      console.log('API Health Status:', healthCheck);
-    }
-  }, [healthCheck]);
-
-  // Statistics Query
+  /* =========================
+     DASHBOARD / STATS
+  ========================== */
   const { data: stats, isLoading: statsLoading } = useQuery(
     'dashboard-stats',
     async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.STATISTICS);
-        return Array.isArray(response.data) ? response.data[0] : response.data;
-      } catch (error) {
-        console.warn(`Dashboard stats endpoint not available: ${error.message}. Returning default data.`);
-        return {
-          active_students: 0,
-          courses: 0,
-          success_rate: 0,
-          tutors: 0
-        };
-      }
+      const res = await apiClient.get(API_ENDPOINTS.CONTENT.STATISTICS);
+      return res.data;
     },
-    {
-      enabled: !!user,
-      staleTime: 5 * 60 * 1000, // 5 minutes
-    }
+    { enabled: !!user }
   );
 
-  // Student Dashboard Analytics (Student role only)
-  const { data: studentDashboard, isLoading: studentDashboardLoading } = useQuery(
-    'student-dashboard',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.STUDENT);
-        return response.data;
-      } catch (error) {
-        console.warn(`Student dashboard endpoint not available: ${error.message}. Returning default data.`);
-        return {
-          total_courses: 0,
-          completed_assignments: 0,
-          pending_assignments: 0,
-          upcoming_classes: []
-        }; // Fallback for missing endpoint
-      }
-    },
-    {
-      enabled: user?.role === 'student',
-      staleTime: 2 * 60 * 1000, // 2 minutes for student dashboard
-    }
-  );
-
-  // Courses Query (role-based) - Enhanced with better caching
-  const { data: courses, isLoading: coursesLoading } = useQuery(
-    'courses',
-    async () => {
-      try {
-        console.log('Fetching courses data...');
-        let endpoint = API_ENDPOINTS.ACADEMICS.COURSES;
-        if (user?.role === 'student') {
-          endpoint = API_ENDPOINTS.ACADEMICS.STUDENT_ENROLLMENTS;
-        } else if (user?.role === 'tutor') {
-          endpoint = `${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`;
-        }
-        const response = await apiClient.get(endpoint);
-        console.log('Courses response:', response);
-        
-        // Handle different response formats
-        if (user?.role === 'student') {
-          return response.data.success ? response.data.data : response.data;
-        }
-        return response.data;
-      } catch (error) {
-        console.warn(`Courses endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 10 * 60 * 1000, // 10 minutes for better performance
-      cacheTime: 30 * 60 * 1000, // 30 minutes cache
-    }
-  );
-
-  // Class Schedules Query (Student role only)
-  const { data: classSchedules, isLoading: classSchedulesLoading } = useQuery(
-    'class-schedules',
-    async () => {
-      try {
-        const endpoint = user?.role === 'student' 
-          ? API_ENDPOINTS.ACADEMICS.STUDENT_CLASS_SCHEDULES
-          : API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES;
-        const response = await apiClient.get(endpoint);
-        return response.data.success ? response.data.data : response.data;
-      } catch (error) {
-        console.warn(`Class schedules endpoint not available: ${error.message}. Returning empty array.`);
-        return []; // Fallback for missing endpoint
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 10 * 60 * 1000,
-    }
-  );
-
-  // Attendance Query (Student role only)
-  const { data: attendance, isLoading: attendanceLoading } = useQuery(
-    'attendance',
-    async () => {
-      try {
-        const endpoint = user?.role === 'student' 
-          ? API_ENDPOINTS.ACADEMICS.STUDENT_ATTENDANCE
-          : API_ENDPOINTS.ACADEMICS.ATTENDANCE;
-        const response = await apiClient.get(endpoint);
-        return response.data.success ? response.data.data : response.data;
-      } catch (error) {
-        console.warn(`Attendance endpoint not available: ${error.message}. Returning empty array.`);
-        return []; // Fallback for missing endpoint
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 5 * 60 * 1000,
-    }
-  );
-
-  // Assignments Query (role-based)
-  const { data: assignments, isLoading: assignmentsLoading } = useQuery(
-    'assignments',
-    async () => {
-      try {
-        let endpoint = API_ENDPOINTS.ACADEMICS.ASSIGNMENTS;
-        if (user?.role === 'student') {
-          // Use student-specific endpoint that returns assignments for enrolled courses
-          endpoint = API_ENDPOINTS.ACADEMICS.STUDENT_ASSIGNMENTS;
-          const response = await apiClient.get(endpoint);
-          return response.data.success ? response.data.data : response.data;
-        } else if (user?.role === 'tutor') {
-          // Get assignments for tutor's courses
-          const tutorCourses = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.COURSES}?tutor=${user.id}`);
-          const courseIds = tutorCourses.data.map(c => c.id);
-          if (courseIds.length > 0) {
-            endpoint += `?course__in=${courseIds.join(',')}`;
-          }
-        }
-        const response = await apiClient.get(endpoint);
-        return response.data;
-      } catch (error) {
-        console.warn(`Assignments endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 2 * 60 * 1000, // 2 minutes
-    }
-  );
-
-  // Separate content type queries
-  const { data: news, isLoading: newsLoading } = useQuery(
+  /* =========================
+     CONTENT (PUBLIC)
+  ========================== */
+  const newsQuery = useQuery(
     'news',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.NEWS);
-        return response.data;
-      } catch (error) {
-        console.warn(`News endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 10 * 60 * 1000,
-    }
+    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.NEWS)).data,
+    { enabled: !!user }
   );
 
-  const { data: events, isLoading: eventsLoading } = useQuery(
+  const eventsQuery = useQuery(
     'events',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.EVENTS);
-        return response.data;
-      } catch (error) {
-        console.warn(`Events endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 10 * 60 * 1000,
-    }
+    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.EVENTS)).data,
+    { enabled: !!user }
   );
 
-  const { data: testimonials, isLoading: testimonialsLoading } = useQuery(
+  const testimonialsQuery = useQuery(
     'testimonials',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.TESTIMONIALS);
-        return response.data;
-      } catch (error) {
-        console.warn(`Testimonials endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 10 * 60 * 1000,
-    }
+    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.TESTIMONIALS)).data,
+    { enabled: !!user }
   );
 
-  // All testimonials for admin (including pending)
-  const { data: allTestimonials, isLoading: allTestimonialsLoading } = useQuery(
-    'all-testimonials',
-    async () => {
-      try {
-        const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}`);
-        return response.data;
-      } catch (error) {
-        console.warn(`All testimonials endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 2 * 60 * 1000,
-    }
-  );
-
-  // Pending testimonials for admin approval
-  const { data: pendingTestimonials, isLoading: pendingTestimonialsLoading } = useQuery(
-    'pending-testimonials',
-    async () => {
-      try {
-        const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}?approved=false`);
-        return response.data;
-      } catch (error) {
-        console.warn(`Pending testimonials endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 1 * 60 * 1000,
-    }
-  );
-
-  const { data: campusLife, isLoading: campusLifeLoading } = useQuery(
+  const campusLifeQuery = useQuery(
     'campus-life',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE);
-        return response.data;
-      } catch (error) {
-        console.warn(`Campus life endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,
-      staleTime: 10 * 60 * 1000,
-    }
+    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.CAMPUS_LIFE)).data,
+    { enabled: !!user }
   );
 
-  // Legacy combined announcements for backward compatibility
-  const announcements = React.useMemo(() => {
-    if (!news || !events || !testimonials || !campusLife) return [];
-    
-    return [
-      ...news.map(item => ({ ...item, type: 'news' })),
-      ...events.map(item => ({ ...item, type: 'event' })),
-      ...testimonials.map(item => ({ ...item, type: 'testimonial' })),
-      ...campusLife.map(item => ({ ...item, type: 'campus_life' }))
-    ].sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
-  }, [news, events, testimonials, campusLife]);
-
-  const announcementsLoading = newsLoading || eventsLoading || testimonialsLoading || campusLifeLoading;
-
-  // Users Query (admin only)
-  const { data: users, isLoading: usersLoading } = useQuery(
-    'users',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.USERS);
-        return response.data;
-      } catch (error) {
-        console.warn(`Users endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 5 * 60 * 1000,
-    }
+  /* =========================
+     ADMIN CONTENT QUERIES
+  ========================== */
+  const adminNewsQuery = useQuery(
+    'admin-news',
+    async () => (await apiClient.get('/dashboard/admin/news/')).data,
+    { enabled: user?.role === 'admin' }
   );
 
-  // Student Profiles Query (admin only)
-  const { data: studentProfiles, isLoading: studentProfilesLoading } = useQuery(
-    'student-profiles',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.STUDENTS.PROFILES);
-        return response.data;
-      } catch (error) {
-        console.warn(`Student profiles endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 5 * 60 * 1000,
-    }
+  const adminEventsQuery = useQuery(
+    'admin-events',
+    async () => (await apiClient.get('/dashboard/admin/events/')).data,
+    { enabled: user?.role === 'admin' }
   );
 
-  // Tutor Profiles Query (admin only)
-  const { data: tutorProfiles, isLoading: tutorProfilesLoading } = useQuery(
-    'tutor-profiles',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.TUTORS.PROFILES);
-        return response.data;
-      } catch (error) {
-        console.warn(`Tutor profiles endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 5 * 60 * 1000,
-    }
+  const adminTestimonialsQuery = useQuery(
+    'admin-testimonials',
+    async () => (await apiClient.get('/dashboard/admin/testimonials/')).data,
+    { enabled: user?.role === 'admin' }
   );
 
-  // Mutations
-  const updateStatsMutation = useMutation(
-    async (newStats) => {
-      const response = await apiClient.put(`${API_ENDPOINTS.COMMUNICATION.STATISTICS}1/`, newStats);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('dashboard-stats');
-      },
-    }
+  const adminCampusLifeQuery = useQuery(
+    'admin-campus-life',
+    async () => (await apiClient.get('/dashboard/admin/campus-life/')).data,
+    { enabled: user?.role === 'admin' }
   );
 
-  const createAnnouncementMutation = useMutation(
-    async ({ type, data }) => {
-      let endpoint = '';
-      switch (type) {
-        case 'news':
-          endpoint = API_ENDPOINTS.COMMUNICATION.NEWS;
-          break;
-        case 'event':
-          endpoint = API_ENDPOINTS.COMMUNICATION.EVENTS;
-          break;
-        case 'testimonial':
-          endpoint = API_ENDPOINTS.COMMUNICATION.TESTIMONIALS;
-          break;
-        case 'campus_life':
-          endpoint = API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE;
-          break;
-        default:
-          throw new Error('Invalid announcement type');
-      }
-      const response = await apiClient.post(endpoint, data);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('announcements');
-      },
-    }
-  );
-
-  const updateAnnouncementMutation = useMutation(
-    async ({ type, id, data }) => {
-      let endpoint = '';
-      switch (type) {
-        case 'news':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.NEWS}${id}/`;
-          break;
-        case 'event':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.EVENTS}${id}/`;
-          break;
-        case 'testimonial':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/`;
-          break;
-        case 'campus_life':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE}${id}/`;
-          break;
-        default:
-          throw new Error('Invalid announcement type');
-      }
-      const response = await apiClient.put(endpoint, data);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('announcements');
-      },
-    }
-  );
-
-  const deleteAnnouncementMutation = useMutation(
-    async ({ type, id }) => {
-      let endpoint = '';
-      switch (type) {
-        case 'news':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.NEWS}${id}/`;
-          break;
-        case 'event':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.EVENTS}${id}/`;
-          break;
-        case 'testimonial':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/`;
-          break;
-        case 'campus_life':
-          endpoint = `${API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE}${id}/`;
-          break;
-        default:
-          throw new Error('Invalid announcement type');
-      }
-      await apiClient.delete(endpoint);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('announcements');
-      },
-    }
-  );
-
-  // Tutor Dashboard Analytics Query
-  const { data: tutorDashboard, isLoading: tutorDashboardLoading } = useQuery(
-    'tutor-dashboard',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.DASHBOARD.TUTOR);
-        return response.data;
-      } catch (error) {
-        console.warn(`Tutor dashboard endpoint not available: ${error.message}. Returning default data.`);
-        return {
-          data: {
-            statistics: {
-              total_courses: 0,
-              total_students: 0,
-              total_assignments: 0,
-              total_submissions: 0,
-              pending_submissions: 0,
-              average_score: 0
-            }
-          }
-        }; // Fallback for missing endpoint
-      }
-    },
-    {
-      enabled: user?.role === 'tutor',
-      staleTime: 2 * 60 * 1000,
-    }
-  );
-
-  // Pending Submissions Query  
-  const { data: pendingSubmissions, isLoading: pendingSubmissionsLoading } = useQuery(
-    'pending-submissions',
-    async () => {
-      try {
-        const response = await apiClient.get(`${API_ENDPOINTS.ACADEMICS.SUBMISSIONS}?grade__isnull=true`);
-        return response.data;
-      } catch (error) {
-        console.warn(`Pending submissions endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'tutor',
-      staleTime: 1 * 60 * 1000,
-    }
-  );
-
-  // Grade Submission Mutation
-  const gradeSubmissionMutation = useMutation(
-    async ({ submissionId, grade, feedback }) => {
-      const response = await apiClient.post(`${API_ENDPOINTS.ACADEMICS.SUBMISSIONS}${submissionId}/grade/`, {
-        grade,
-        feedback
-      });
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('pending-submissions');
-        queryClient.invalidateQueries('submissions');
-        queryClient.invalidateQueries('tutor-dashboard');
-      },
-    }
-  );
-
-  // Class Schedules Query (Tutor role only)
-  const { data: tutorClassSchedules, isLoading: tutorClassSchedulesLoading } = useQuery(
-    'class-schedules-tutor',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.ACADEMICS.CLASS_SCHEDULES);
-        return response.data;
-      } catch (error) {
-        console.warn(`Tutor class schedules endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'tutor',
-      staleTime: 10 * 60 * 1000,
-    }
-  );
-
-  // Student mutations
-  const createStudentMutation = useMutation(
-    async (studentData) => {
-      const response = await apiClient.post(API_ENDPOINTS.STUDENTS.PROFILES, studentData);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('student-profiles');
-        queryClient.invalidateQueries('users');
-      },
-    }
-  );
-
-  const updateStudentMutation = useMutation(
-    async ({ id, data }) => {
-      const response = await apiClient.put(`${API_ENDPOINTS.STUDENTS.PROFILES}${id}/`, data);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('student-profiles');
-        queryClient.invalidateQueries('users');
-      },
-    }
-  );
-
-  const deleteStudentMutation = useMutation(
-    async (id) => {
-      await apiClient.delete(`${API_ENDPOINTS.STUDENTS.PROFILES}${id}/`);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('student-profiles');
-        queryClient.invalidateQueries('users');
-      },
-    }
-  );
-
-  // Tutor mutations
-  const createTutorMutation = useMutation(
-    async (tutorData) => {
-      const response = await apiClient.post(API_ENDPOINTS.TUTORS.PROFILES, tutorData);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('tutor-profiles');
-        queryClient.invalidateQueries('users');
-      },
-    }
-  );
-
-  const updateTutorMutation = useMutation(
-    async ({ id, data }) => {
-      const response = await apiClient.put(`${API_ENDPOINTS.TUTORS.PROFILES}${id}/`, data);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('tutor-profiles');
-        queryClient.invalidateQueries('users');
-      },
-    }
-  );
-
-  const deleteTutorMutation = useMutation(
-    async (id) => {
-      await apiClient.delete(`${API_ENDPOINTS.TUTORS.PROFILES}${id}/`);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('tutor-profiles');
-        queryClient.invalidateQueries('users');
-      },
-    }
-  );
-
-  // Testimonial approval mutations
-  const approveTestimonialMutation = useMutation(
-    async (id) => {
-      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/approve/`);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('testimonials');
-        queryClient.invalidateQueries('pending-testimonials');
-        queryClient.invalidateQueries('all-testimonials');
-      },
-    }
-  );
-
-  const unapproveTestimonialMutation = useMutation(
-    async (id) => {
-      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/unapprove/`);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('testimonials');
-        queryClient.invalidateQueries('pending-testimonials');
-        queryClient.invalidateQueries('all-testimonials');
-      },
-    }
-  );
-
-  const toggleTestimonialApprovalMutation = useMutation(
-    async (id) => {
-      const response = await apiClient.patch(`${API_ENDPOINTS.COMMUNICATION.TESTIMONIALS}${id}/toggle_approval/`);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('testimonials');
-        queryClient.invalidateQueries('pending-testimonials');
-        queryClient.invalidateQueries('all-testimonials');
-      },
-    }
-  );
-
-  // Contact messages management (for admin)
-  const { data: contactMessages, isLoading: contactMessagesLoading } = useQuery(
-    'contact-messages',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CONTACT);
-        return response.data;
-      } catch (error) {
-        console.warn(`Contact messages endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 2 * 60 * 1000,
-    }
-  );
-
-
-  const { data: unreadMessages, isLoading: unreadMessagesLoading } = useQuery(
-    'unread-messages',
-    async () => {
-      try {
-        const response = await apiClient.get(`${API_ENDPOINTS.COMMUNICATION.CONTACT}?read=false`);
-        return response.data;
-      } catch (error) {
-        console.warn(`Unread messages endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: user?.role === 'admin',
-      staleTime: 1 * 60 * 1000,
-    }
-  );
-
-  // Books Query (for all authenticated users to ensure DigitalBookshelf sync)
-  const { data: books, isLoading: booksLoading } = useQuery(
+  /* =========================
+     BOOKS (DIGITAL BOOKSHELF)
+  ========================== */
+  const booksQuery = useQuery(
     'books',
-    async () => {
-      try {
-        const response = await apiClient.get(API_ENDPOINTS.COMMUNICATION.BOOKS);
-        return response.data;
-      } catch (error) {
-        console.warn(`Books endpoint not available: ${error.message}. Returning empty array.`);
-        return [];
-      }
-    },
-    {
-      enabled: !!user,  // Enable for all authenticated users
-      staleTime: 5 * 60 * 1000,
-    }
-  );
-
-  // Contact message mutations
-  const markMessageReadMutation = useMutation(
-    async (id) => {
-      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/mark_read/`);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('contact-messages');
-        queryClient.invalidateQueries('unread-messages');
+    async () => (await apiClient.get(API_ENDPOINTS.LIBRARY.BOOKS)).data,
+    { 
+      enabled: !!user,
+      retry: (failureCount, error) => {
+        // Don't retry on 404 or authentication errors
+        if (error.response?.status === 404 || error.response?.status === 401) {
+          return false;
+        }
+        // Retry up to 2 times for other errors
+        return failureCount < 2;
       },
+      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000)
     }
   );
 
-  const markMessageRepliedMutation = useMutation(
-    async (id) => {
-      const response = await apiClient.post(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/mark_replied/`);
-      return response.data;
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('contact-messages');
-        queryClient.invalidateQueries('unread-messages');
-      },
-    }
-  );
-
-
-  const deleteContactMessageMutation = useMutation(
-    async (id) => {
-      await apiClient.delete(`${API_ENDPOINTS.COMMUNICATION.CONTACT}${id}/`);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('contact-messages');
-        queryClient.invalidateQueries('unread-messages');
-      },
-    }
-  );
-
-  // Book mutations
+  // Books mutations
   const createBookMutation = useMutation(
-    async (bookData) => {
-      const response = await apiClient.post(API_ENDPOINTS.COMMUNICATION.BOOKS, bookData);
-      return response.data;
+    (data) => {
+      // Handle FormData for file uploads
+      if (data instanceof FormData) {
+        return apiClient.post(API_ENDPOINTS.LIBRARY.BOOKS, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      }
+      return apiClient.post(API_ENDPOINTS.LIBRARY.BOOKS, data);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('books');
+      },
+      onError: (error) => {
+        console.error('Failed to create book:', error);
       },
     }
   );
 
   const updateBookMutation = useMutation(
-    async ({ id, data }) => {
-      const response = await apiClient.put(`${API_ENDPOINTS.COMMUNICATION.BOOKS}${id}/`, data);
-      return response.data;
+    ({ id, data }) => {
+      // Handle FormData for file uploads
+      if (data instanceof FormData) {
+        return apiClient.put(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`, data, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+      }
+      return apiClient.put(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`, data);
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries('books');
+      },
+      onError: (error) => {
+        console.error('Failed to update book:', error);
       },
     }
   );
 
   const deleteBookMutation = useMutation(
-    async (id) => {
-      await apiClient.delete(`${API_ENDPOINTS.COMMUNICATION.BOOKS}${id}/`);
-    },
+    (id) => apiClient.delete(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`),
     {
       onSuccess: () => {
         queryClient.invalidateQueries('books');
       },
+      onError: (error) => {
+        console.error('Failed to delete book:', error);
+      },
     }
   );
 
+  /* =========================
+     ADMIN MUTATIONS (JSON ONLY)
+  ========================== */
+
+  // NEWS
+  const createNews = useMutation(
+    (data) => apiClient.post('/dashboard/admin/news/', data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-news');
+        queryClient.invalidateQueries('news');
+      },
+    }
+  );
+
+  const updateNews = useMutation(
+    ({ id, data }) => apiClient.put(`/dashboard/admin/news/${id}/`, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-news');
+        queryClient.invalidateQueries('news');
+      },
+    }
+  );
+
+  const deleteNews = useMutation(
+    (id) => apiClient.delete(`/dashboard/admin/news/${id}/`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-news');
+        queryClient.invalidateQueries('news');
+      },
+    }
+  );
+
+  // EVENTS
+  const createEvent = useMutation(
+    (data) => apiClient.post('/dashboard/admin/events/', data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-events');
+        queryClient.invalidateQueries('events');
+      },
+    }
+  );
+
+  const updateEvent = useMutation(
+    ({ id, data }) => apiClient.put(`/dashboard/admin/events/${id}/`, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-events');
+        queryClient.invalidateQueries('events');
+      },
+    }
+  );
+
+  const deleteEvent = useMutation(
+    (id) => apiClient.delete(`/dashboard/admin/events/${id}/`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-events');
+        queryClient.invalidateQueries('events');
+      },
+    }
+  );
+
+  // TESTIMONIALS
+  const createTestimonial = useMutation(
+    (data) => apiClient.post('/dashboard/admin/testimonials/', data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-testimonials');
+        queryClient.invalidateQueries('testimonials');
+      },
+    }
+  );
+
+  const updateTestimonial = useMutation(
+    ({ id, data }) => apiClient.put(`/dashboard/admin/testimonials/${id}/`, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-testimonials');
+        queryClient.invalidateQueries('testimonials');
+      },
+    }
+  );
+
+  const deleteTestimonial = useMutation(
+    (id) => apiClient.delete(`/dashboard/admin/testimonials/${id}/`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-testimonials');
+        queryClient.invalidateQueries('testimonials');
+      },
+    }
+  );
+
+  // CAMPUS LIFE
+  const createCampusLife = useMutation(
+    (data) => apiClient.post('/dashboard/admin/campus-life/', data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-campus-life');
+        queryClient.invalidateQueries('campus-life');
+      },
+    }
+  );
+
+  const updateCampusLife = useMutation(
+    ({ id, data }) => apiClient.put(`/dashboard/admin/campus-life/${id}/`, data),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-campus-life');
+        queryClient.invalidateQueries('campus-life');
+      },
+    }
+  );
+
+  const deleteCampusLife = useMutation(
+    (id) => apiClient.delete(`/dashboard/admin/campus-life/${id}/`),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries('admin-campus-life');
+        queryClient.invalidateQueries('campus-life');
+      },
+    }
+  );
+
+  /* =========================
+     CONTEXT VALUE
+  ========================== */
   const value = {
     // Data
     stats,
-    courses,
-    assignments,
-    announcements,
-    users,
-    
-    // Student Dashboard Analytics
-    studentDashboard,
-    classSchedules,
-    attendance,
-    
-    // Separate content data
-    news,
-    events,
-    testimonials,
-    campusLife,
+    news: newsQuery.data,
+    events: eventsQuery.data,
+    testimonials: testimonialsQuery.data,
+    campusLife: campusLifeQuery.data,
 
-    // Student and Tutor data
-    studentProfiles,
-    tutorProfiles,
+    // Books data
+    books: booksQuery.data?.data?.books || booksQuery.data?.books || booksQuery.data || [],
 
-    // Tutor-specific data
-    tutorDashboard,
-    pendingSubmissions,
-    tutorClassSchedules,
-
-
-    // Admin-specific data
-    allTestimonials,
-    pendingTestimonials,
-    contactMessages,
-    unreadMessages,
-    books,
+    adminNews: adminNewsQuery.data,
+    adminEvents: adminEventsQuery.data,
+    adminTestimonials: adminTestimonialsQuery.data,
+    adminCampusLife: adminCampusLifeQuery.data,
 
     // Loading states
     statsLoading,
-    coursesLoading,
-    assignmentsLoading,
-    announcementsLoading,
-    usersLoading,
-    newsLoading,
-    eventsLoading,
-    testimonialsLoading,
-    campusLifeLoading,
-    studentProfilesLoading,
-    tutorProfilesLoading,
-    studentDashboardLoading,
-    classSchedulesLoading,
-    attendanceLoading,
-    tutorDashboardLoading,
-    pendingSubmissionsLoading,
-    tutorClassSchedulesLoading,
-    allTestimonialsLoading,
-    pendingTestimonialsLoading,
-    contactMessagesLoading,
+    newsLoading: newsQuery.isLoading,
+    eventsLoading: eventsQuery.isLoading,
+    testimonialsLoading: testimonialsQuery.isLoading,
+    campusLifeLoading: campusLifeQuery.isLoading,
 
-    unreadMessagesLoading,
-    booksLoading,
-
-    // Mutations
-    updateStats: updateStatsMutation.mutateAsync,
-    createAnnouncement: createAnnouncementMutation.mutateAsync,
-    updateAnnouncement: updateAnnouncementMutation.mutateAsync,
-    deleteAnnouncement: deleteAnnouncementMutation.mutateAsync,
-    
-    // Student mutations
-    createStudent: createStudentMutation.mutateAsync,
-    updateStudent: updateStudentMutation.mutateAsync,
-    deleteStudent: deleteStudentMutation.mutateAsync,
-    
-    // Tutor mutations
-    createTutor: createTutorMutation.mutateAsync,
-    updateTutor: updateTutorMutation.mutateAsync,
-    deleteTutor: deleteTutorMutation.mutateAsync,
-    gradeSubmission: gradeSubmissionMutation.mutateAsync,
-
-    // Testimonial approval mutations
-    approveTestimonial: approveTestimonialMutation.mutateAsync,
-    unapproveTestimonial: unapproveTestimonialMutation.mutateAsync,
-    toggleTestimonialApproval: toggleTestimonialApprovalMutation.mutateAsync,
-
-
-    // Contact message mutations
-    markMessageRead: markMessageReadMutation.mutateAsync,
-    markMessageReplied: markMessageRepliedMutation.mutateAsync,
-    deleteContactMessage: deleteContactMessageMutation.mutateAsync,
-
-    // Book mutations
-    createBook: createBookMutation.mutateAsync,
-    updateBook: updateBookMutation.mutateAsync,
-    deleteBook: deleteBookMutation.mutateAsync,
-
-
-    // Mutation states
-    updatingStats: updateStatsMutation.isLoading,
-    creatingAnnouncement: createAnnouncementMutation.isLoading,
-    updatingAnnouncement: updateAnnouncementMutation.isLoading,
-    deletingAnnouncement: deleteAnnouncementMutation.isLoading,
-    creatingStudent: createStudentMutation.isLoading,
-    updatingStudent: updateStudentMutation.isLoading,
-    deletingStudent: deleteStudentMutation.isLoading,
-    creatingTutor: createTutorMutation.isLoading,
-    updatingTutor: updateTutorMutation.isLoading,
-    deletingTutor: deleteTutorMutation.isLoading,
-    gradingSubmission: gradeSubmissionMutation.isLoading,
-    approvingTestimonial: approveTestimonialMutation.isLoading,
-    unapprovingTestimonial: unapproveTestimonialMutation.isLoading,
-    togglingTestimonialApproval: toggleTestimonialApprovalMutation.isLoading,
-    markingMessageRead: markMessageReadMutation.isLoading,
-    markingMessageReplied: markMessageRepliedMutation.isLoading,
-    deletingContactMessage: deleteContactMessageMutation.isLoading,
+    // Books loading states
+    booksLoading: booksQuery.isLoading,
     creatingBook: createBookMutation.isLoading,
     updatingBook: updateBookMutation.isLoading,
     deletingBook: deleteBookMutation.isLoading,
+
+    adminNewsLoading: adminNewsQuery.isLoading,
+    adminEventsLoading: adminEventsQuery.isLoading,
+    adminTestimonialsLoading: adminTestimonialsQuery.isLoading,
+    adminCampusLifeLoading: adminCampusLifeQuery.isLoading,
+
+    // Mutations
+    createNews: createNews.mutateAsync,
+    updateNews: updateNews.mutateAsync,
+    deleteNews: deleteNews.mutateAsync,
+
+    createEvent: createEvent.mutateAsync,
+    updateEvent: updateEvent.mutateAsync,
+    deleteEvent: deleteEvent.mutateAsync,
+
+    createTestimonial: createTestimonial.mutateAsync,
+    updateTestimonial: updateTestimonial.mutateAsync,
+    deleteTestimonial: deleteTestimonial.mutateAsync,
+
+    createCampusLife: createCampusLife.mutateAsync,
+    updateCampusLife: updateCampusLife.mutateAsync,
+    deleteCampusLife: deleteCampusLife.mutateAsync,
+
+    // Books mutations
+    createBook: createBookMutation.mutateAsync,
+    updateBook: updateBookMutation.mutateAsync,
+    deleteBook: deleteBookMutation.mutate,
   };
 
   return (
@@ -924,7 +351,7 @@ export const DashboardProvider = ({ children }) => {
 export const useDashboard = () => {
   const context = useContext(DashboardContext);
   if (!context) {
-    throw new Error('useDashboard must be used within a DashboardProvider');
+    throw new Error('useDashboard must be used within DashboardProvider');
   }
   return context;
 };

@@ -52,10 +52,10 @@ const Testimonials = () => {
           <div className="max-w-6xl mx-auto px-4 lg:px-8">
             <div className={`text-center mb-8 lg:mb-12 ${featuredAnimation}`}>
               <h2 className="text-xl lg:text-2xl font-bold text-primary mb-4">
-                Featured Stories
+                {t('testimonials.impactInNumbersTitle')}
               </h2>
               <p className="text-gray-600 text-sm lg:text-base max-w-3xl mx-auto">
-                Discover the transformative journeys of our students and alumni who have achieved remarkable success through our educational programs.
+                {t('testimonials.impactInNumbersDesc')}
               </p>
             </div>
 
@@ -108,10 +108,10 @@ const Testimonials = () => {
           <div className="max-w-6xl mx-auto px-4 lg:px-8">
             <div className="text-center mb-8 lg:mb-12">
               <h2 className="text-xl lg:text-2xl font-bold text-primary mb-4">
-                Our Impact in Numbers
+                {t('testimonials.impactInNumbersTitle')}
               </h2>
               <p className="text-gray-600 text-sm lg:text-base max-w-3xl mx-auto">
-                The success stories from our community speak for themselves. Here's what our students and alumni have to say about their experience.
+                {t('testimonials.impactInNumbersDesc')}
               </p>
             </div>
 
@@ -133,28 +133,28 @@ const Testimonials = () => {
           <div className="max-w-4xl mx-auto px-4 lg:px-8 text-center">
             <div className="bg-gradient-to-r from-primary to-accent text-white p-8 lg:p-12 rounded-lg shadow-xl">
               <h2 className="text-xl lg:text-2xl font-bold mb-6">
-                Join Our Success Stories
+                {t('testimonials.successMetricsTitle')}
               </h2>
               <p className="text-sm lg:text-base text-white/90 mb-8">
-                Become part of our growing community of successful graduates who have transformed their careers and lives through quality education at Mahdu Rahmah Institute.
+                {t('testimonials.successMetricsDesc')}
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">98%</div>
-                  <div className="text-sm text-white/80">Student Satisfaction</div>
+                  <div className="text-sm text-white/80">{t('testimonials.metrics.studentSatisfaction')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">95%</div>
-                  <div className="text-sm text-white/80">Career Advancement</div>
+                  <div className="text-sm text-white/80">{t('testimonials.metrics.careerAdvancement')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">92%</div>
-                  <div className="text-sm text-white/80">Would Recommend</div>
+                  <div className="text-sm text-white/80">{t('testimonials.metrics.wouldRecommend')}</div>
                 </div>
                 <div>
                   <div className="text-2xl lg:text-3xl font-bold mb-1">89%</div>
-                  <div className="text-sm text-white/80">Higher Earnings</div>
+                  <div className="text-sm text-white/80">{t('testimonials.metrics.higherEarnings')}</div>
                 </div>
               </div>
 

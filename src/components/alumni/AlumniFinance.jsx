@@ -12,10 +12,10 @@ import {
   PieChart,
   BarChart3,
   FileText,
-  ExternalLink
+  ExternalLink,
+  Clock
 } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
-import apiClient from '../../services/apiClient';
 
 import Card from '../ui/Card';
 import Button from '../ui/Button';
@@ -42,24 +42,8 @@ const AlumniFinance = () => {
   const fetchFinanceData = async () => {
     try {
       setLoading(true);
-      const [recordsRes, contributionsRes, paymentsRes, statementsRes, summaryRes] = await Promise.all([
-        apiClient.get('/admin/financial-records'),
-        apiClient.get('/admin/contributions'),
-        apiClient.get('/admin/payments'),
-        apiClient.get('/admin/statements'),
-        apiClient.get('/admin/finance-summary')
-      ]);
-
-      setData({
-        records: recordsRes.data.data || [],
-        contributions: contributionsRes.data.data || [],
-        payments: paymentsRes.data.data || [],
-        statements: statementsRes.data.data || [],
-        summary: summaryRes.data.data || {}
-      });
-    } catch (error) {
-      console.error('Error fetching finance data:', error);
-      // Fallback to sample data if API fails
+      // Using sample data directly for alumni finance component
+      // Admin API calls removed - this component shows alumni financial information
       setData({
         contributions: [
           {

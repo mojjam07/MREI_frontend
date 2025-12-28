@@ -69,63 +69,18 @@ const AdminDashboard = () => {
 
 
   // Book management functions
-  const handleBookSave = async (bookData, formFiles = null) => {
+  const handleBookSave = async (bookData) => {
     try {
-      // Check if we have files to upload
-      if (formFiles && (formFiles.cover_image || formFiles.pdf_file)) {
-        const formData = new FormData();
-        
-        // Append text fields
-        formData.append('title', bookData.title || '');
-        formData.append('author', bookData.author || '');
-        formData.append('description', bookData.description || '');
-        formData.append('genre', bookData.genre || '');
-        formData.append('publication_year', bookData.publication_year || '');
-        
-        // Append files if they exist
-        if (formFiles.cover_image) {
-          formData.append('cover_image', formFiles.cover_image);
-        }
-        if (formFiles.pdf_file) {
-          formData.append('pdf_file', formFiles.pdf_file);
-        }
-        
-        if (bookData.id) {
-          await updateBook({ id: bookData.id, data: formData });
-          // Show success notification
-          setNotification({ message: t('admin.messages.bookUpdated'), type: 'success' });
-        } else {
-          await createBook(formData);
-          // Show success notification
-          setNotification({ message: t('admin.messages.bookCreated'), type: 'success' });
-        }
+      if (bookData.id) {
+        await updateBook({ id: bookData.id, data: bookData });
       } else {
-        // Handle text-only updates (no file changes)
-        if (bookData.id) {
-          await updateBook({ id: bookData.id, data: bookData });
-          // Show success notification
-          setNotification({ message: t('admin.messages.bookUpdated'), type: 'success' });
-        } else {
-          await createBook(bookData);
-          // Show success notification
-          setNotification({ message: t('admin.messages.bookCreated'), type: 'success' });
-        }
+        await createBook(bookData);
       }
-      
+
       setEditingBook(null);
       setAddingBook(false);
-      setBookForm({
-        title: '',
-        author: '',
-        description: '',
-        genre: '',
-        cover_image: null,
-        pdf_file: null,
-        publication_year: ''
-      });
     } catch (error) {
       console.error('Error saving book:', error);
-      setNotification({ message: t('admin.messages.failedToSaveBook'), type: 'error' });
     }
   };
 
@@ -227,17 +182,13 @@ const AdminDashboard = () => {
           <div>
             <label className="block text-sm font-medium mb-2">{t('admin.labels.coverImage')}</label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
-                if (isEditing) {
-                  setEditingBook({...currentForm, cover_image: file});
-                } else {
-                  setBookForm({...bookForm, cover_image: file});
-                }
-              }}
-              className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:border-transparent transition-all"
+              type="url"
+              value={bookForm.cover_image || ''}
+              onChange={(e) =>
+                setBookForm({ ...bookForm, cover_image: e.target.value })
+              }
+              placeholder="https://example.com/cover.jpg"
+              className="w-full px-4 py-2 border rounded-lg"
             />
             {(isEditing ? currentForm.cover_image : bookForm.cover_image) &&
              typeof (isEditing ? currentForm.cover_image : bookForm.cover_image) === 'object' && (
@@ -423,49 +374,20 @@ const AdminDashboard = () => {
   // Handle announcement save
   const handleAnnouncementSave = async (type, item) => {
     try {
-      // Check if we have files to upload
-      const hasImageFile = item.image && typeof item.image === 'object';
-
-      if (hasImageFile) {
-        const formData = new FormData();
-
-        // Append text fields
-        formData.append('title', item.title || '');
-        formData.append('content', item.content || '');
-        formData.append('author', item.author || '');
-        formData.append('author_title', item.author_title || '');
-        formData.append('event_date', item.event_date || '');
-        formData.append('location', item.location || '');
-        formData.append('video_id', item.video_id || '');
-
-        // Append file if it exists
-        if (item.image) {
-          formData.append('image', item.image);
-        }
-
-        if (item.id) {
-          await updateAnnouncement({ type, id: item.id, data: formData });
-        } else {
-          await createAnnouncement({ type, data: formData });
-        }
+      if (item.id) {
+        await updateAnnouncement({ type, id: item.id, data: item });
       } else {
-        // Handle text-only updates (no file changes)
-        if (item.id) {
-          await updateAnnouncement({ type, id: item.id, data: item });
-        } else {
-          await createAnnouncement({ type, data: item });
-        }
+        await createAnnouncement({ type, data: item });
       }
 
       setEditingItem(null);
       setIsAddingNew(false);
       setNewItem({});
-      setNotification({ message: t('admin.messages.announcementSaved', { type }), type: 'success' });
     } catch (error) {
       console.error('Error saving announcement:', error);
-      setNotification({ message: t('admin.messages.announcementSaveFailed', { type }), type: 'error' });
     }
   };
+
 
 
   // Handle announcement delete
@@ -706,13 +628,11 @@ const AdminDashboard = () => {
             {t('admin.form.labels.imageFile')}
           </label>
           <input
-            type="file"
-            accept="image/*"
-            onChange={(e) => {
-              const file = e.target.files[0];
-              updateItem({ image: file });
-            }}
-            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+            type="url"
+            value={item.image || ''}
+            onChange={(e) => updateItem({ image: e.target.value })}
+            placeholder="https://example.com/image.jpg"
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg"
           />
           {item.image && typeof item.image === 'object' && (
             <p className="text-sm mt-1 text-gray-600">
@@ -847,15 +767,15 @@ const AdminDashboard = () => {
               {t('admin.form.labels.imageFile')}
             </label>
             <input
-              type="file"
-              accept="image/*"
-              onChange={(e) => {
-                const file = e.target.files[0];
+              type="url"
+              value={item.image || ''}
+              onChange={(e) =>
                 isNew
-                  ? setNewItem({ ...item, image: file })
-                  : setEditingItem({ ...item, image: file });
-              }}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+                  ? setNewItem({ ...item, image: e.target.value })
+                  : setEditingItem({ ...item, image: e.target.value })
+              }
+              placeholder="https://example.com/image.jpg"
+              className="w-full px-4 py-2 border border-gray-300 rounded-lg"
             />
             {item.image && typeof item.image === 'object' && (
               <p className="text-sm mt-1 text-gray-600">
