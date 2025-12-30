@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.90.15",
     "axios": "^1.6.0",
     "hijri-date": "^0.2.2",
     "i18next": "^23.0.0",
@@ -20,7 +21,6 @@
     "react-dom": "^18.3.0",
     "react-i18next": "^13.0.0",
     "react-pdf": "^10.2.0",
-    "react-query": "^4.0.0",
     "react-router-dom": "^6.22.0",
     "react-slick": "^0.31.0",
     "slick-carousel": "^1.8.1"

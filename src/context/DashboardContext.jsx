@@ -1,5 +1,5 @@
 import React, { createContext, useContext } from 'react';
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import apiClient from '../services/apiClient';
 import { API_ENDPOINTS } from '../config';
 import { useAuth } from './AuthContext';
@@ -13,332 +13,552 @@ export const DashboardProvider = ({ children }) => {
   /* =========================
      DASHBOARD / STATS
   ========================== */
-  const { data: stats, isLoading: statsLoading } = useQuery(
-    'dashboard-stats',
-    async () => {
-      const res = await apiClient.get(API_ENDPOINTS.CONTENT.STATISTICS);
-      return res.data;
+  const { data: stats, isLoading: statsLoading } = useQuery({
+    queryKey: ['dashboard-stats'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.CONTENT.STATISTICS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch dashboard stats:', error);
+        return { data: { statistics: {} } };
+      }
     },
-    { enabled: !!user }
-  );
+    enabled: !!user,
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
   /* =========================
      CONTENT (PUBLIC)
   ========================== */
-  const newsQuery = useQuery(
-    'news',
-    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.NEWS)).data,
-    { enabled: !!user }
-  );
+  const newsQuery = useQuery({
+    queryKey: ['news'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.CONTENT.NEWS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch news:', error);
+        return { data: { news: [] } };
+      }
+    },
+    enabled: !!user,
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
-  const eventsQuery = useQuery(
-    'events',
-    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.EVENTS)).data,
-    { enabled: !!user }
-  );
+  const eventsQuery = useQuery({
+    queryKey: ['events'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.CONTENT.EVENTS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch events:', error);
+        return { data: { events: [] } };
+      }
+    },
+    enabled: !!user,
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
-  const testimonialsQuery = useQuery(
-    'testimonials',
-    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.TESTIMONIALS)).data,
-    { enabled: !!user }
-  );
+  const testimonialsQuery = useQuery({
+    queryKey: ['testimonials'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.CONTENT.TESTIMONIALS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch testimonials:', error);
+        return { data: { testimonials: [] } };
+      }
+    },
+    enabled: !!user,
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
-  const campusLifeQuery = useQuery(
-    'campus-life',
-    async () => (await apiClient.get(API_ENDPOINTS.CONTENT.CAMPUS_LIFE)).data,
-    { enabled: !!user }
-  );
+  const campusLifeQuery = useQuery({
+    queryKey: ['campus-life'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.CONTENT.CAMPUS_LIFE);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch campus life:', error);
+        return { data: { campus_life: [] } };
+      }
+    },
+    enabled: !!user,
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
   /* =========================
      ADMIN CONTENT QUERIES
   ========================== */
-  const adminNewsQuery = useQuery(
-    'admin-news',
-    async () => (await apiClient.get('/dashboard/admin/news/')).data,
-    { enabled: user?.role === 'admin' }
-  );
+  const adminNewsQuery = useQuery({
+    queryKey: ['admin-news'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.DASHBOARD.ADMIN_NEWS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin news:', error);
+        return { data: { news: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
-  const adminEventsQuery = useQuery(
-    'admin-events',
-    async () => (await apiClient.get('/dashboard/admin/events/')).data,
-    { enabled: user?.role === 'admin' }
-  );
+  const adminEventsQuery = useQuery({
+    queryKey: ['admin-events'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.DASHBOARD.ADMIN_EVENTS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin events:', error);
+        return { data: { events: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
-  const adminTestimonialsQuery = useQuery(
-    'admin-testimonials',
-    async () => (await apiClient.get('/dashboard/admin/testimonials/')).data,
-    { enabled: user?.role === 'admin' }
-  );
+  const adminTestimonialsQuery = useQuery({
+    queryKey: ['admin-testimonials'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.DASHBOARD.ADMIN_TESTIMONIALS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin testimonials:', error);
+        return { data: { testimonials: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
-  const adminCampusLifeQuery = useQuery(
-    'admin-campus-life',
-    async () => (await apiClient.get('/dashboard/admin/campus-life/')).data,
-    { enabled: user?.role === 'admin' }
-  );
+  const adminCampusLifeQuery = useQuery({
+    queryKey: ['admin-campus-life'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.DASHBOARD.ADMIN_CAMPUS_LIFE);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin campus life:', error);
+        return { data: { campus_life: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const adminStudentsQuery = useQuery({
+    queryKey: ['admin-students'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get('/api/admin/students');
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin students:', error);
+        return { data: { students: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const adminTutorsQuery = useQuery({
+    queryKey: ['admin-tutors'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get('/api/admin/tutors');
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin tutors:', error);
+        return { data: { tutors: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const adminContactMessagesQuery = useQuery({
+    queryKey: ['admin-contact-messages'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.DASHBOARD.ADMIN_CONTACT_MESSAGES);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin contact messages:', error);
+        return { data: { contact_messages: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const adminLibraryQuery = useQuery({
+    queryKey: ['admin-library'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.DASHBOARD.ADMIN_BOOKS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch admin library:', error);
+        return { data: { library: [] } };
+      }
+    },
+    enabled: user?.role === 'admin',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
 
   /* =========================
      BOOKS (DIGITAL BOOKSHELF)
   ========================== */
-  const booksQuery = useQuery(
-    'books',
-    async () => (await apiClient.get(API_ENDPOINTS.LIBRARY.BOOKS)).data,
-    { 
-      enabled: !!user,
-      retry: (failureCount, error) => {
-        // Don't retry on 404 or authentication errors
-        if (error.response?.status === 404 || error.response?.status === 401) {
-          return false;
+  const booksQuery = useQuery({
+    queryKey: ['books'],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(API_ENDPOINTS.LIBRARY.BOOKS);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch books:', error);
+        return { data: { books: [] } };
+      }
+    },
+    enabled: !!user,
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const createBookMutation = useMutation({
+    mutationFn: async (data) => {
+      try {
+        if (data instanceof FormData) {
+          const res = await apiClient.post(API_ENDPOINTS.LIBRARY.BOOKS, data, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          });
+          return res.data;
         }
-        // Retry up to 2 times for other errors
-        return failureCount < 2;
-      },
-      retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000)
-    }
-  );
-
-  // Books mutations
-  const createBookMutation = useMutation(
-    (data) => {
-      // Handle FormData for file uploads
-      if (data instanceof FormData) {
-        return apiClient.post(API_ENDPOINTS.LIBRARY.BOOKS, data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-      }
-      return apiClient.post(API_ENDPOINTS.LIBRARY.BOOKS, data);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('books');
-      },
-      onError: (error) => {
+        const res = await apiClient.post(API_ENDPOINTS.LIBRARY.BOOKS, data);
+        return res.data;
+      } catch (error) {
         console.error('Failed to create book:', error);
-      },
-    }
-  );
-
-  const updateBookMutation = useMutation(
-    ({ id, data }) => {
-      // Handle FormData for file uploads
-      if (data instanceof FormData) {
-        return apiClient.put(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`, data, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
+        throw error;
       }
-      return apiClient.put(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`, data);
     },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('books');
-      },
-      onError: (error) => {
-        console.error('Failed to update book:', error);
-      },
-    }
-  );
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+    },
+  });
 
-  const deleteBookMutation = useMutation(
-    (id) => apiClient.delete(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('books');
-      },
-      onError: (error) => {
+  const updateBookMutation = useMutation({
+    mutationFn: async ({ id, data }) => {
+      try {
+        if (data instanceof FormData) {
+          const res = await apiClient.put(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`, data, {
+            headers: { 'Content-Type': 'multipart/form-data' },
+          });
+          return res.data;
+        }
+        const res = await apiClient.put(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`, data);
+        return res.data;
+      } catch (error) {
+        console.error('Failed to update book:', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+    },
+  });
+
+  const deleteBookMutation = useMutation({
+    mutationFn: async (id) => {
+      try {
+        const res = await apiClient.delete(`${API_ENDPOINTS.LIBRARY.BOOKS}${id}/`);
+        return res.data;
+      } catch (error) {
         console.error('Failed to delete book:', error);
-      },
-    }
-  );
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['books'] });
+    },
+  });
 
   /* =========================
      ADMIN MUTATIONS (JSON ONLY)
   ========================== */
+  const createNews = useMutation({
+    mutationFn: (data) => apiClient.post('/api/content/news', data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-news'] });
+      queryClient.invalidateQueries({ queryKey: ['news'] });
+    },
+  });
 
-  // NEWS
-  const createNews = useMutation(
-    (data) => apiClient.post('/dashboard/admin/news/', data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-news');
-        queryClient.invalidateQueries('news');
-      },
-    }
-  );
+  const updateNews = useMutation({
+    mutationFn: ({ id, data }) => apiClient.put(`/api/content/news/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-news'] });
+      queryClient.invalidateQueries({ queryKey: ['news'] });
+    },
+  });
 
-  const updateNews = useMutation(
-    ({ id, data }) => apiClient.put(`/dashboard/admin/news/${id}/`, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-news');
-        queryClient.invalidateQueries('news');
-      },
-    }
-  );
+  const deleteNews = useMutation({
+    mutationFn: (id) => apiClient.delete(`/api/content/news/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-news'] });
+      queryClient.invalidateQueries({ queryKey: ['news'] });
+    },
+  });
 
-  const deleteNews = useMutation(
-    (id) => apiClient.delete(`/dashboard/admin/news/${id}/`),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-news');
-        queryClient.invalidateQueries('news');
-      },
-    }
-  );
+  const createEvent = useMutation({
+    mutationFn: (data) => apiClient.post('/api/content/events', data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+    },
+  });
 
-  // EVENTS
-  const createEvent = useMutation(
-    (data) => apiClient.post('/dashboard/admin/events/', data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-events');
-        queryClient.invalidateQueries('events');
-      },
-    }
-  );
+  const updateEvent = useMutation({
+    mutationFn: ({ id, data }) => apiClient.put(`/api/content/events/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+    },
+  });
 
-  const updateEvent = useMutation(
-    ({ id, data }) => apiClient.put(`/dashboard/admin/events/${id}/`, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-events');
-        queryClient.invalidateQueries('events');
-      },
-    }
-  );
+  const deleteEvent = useMutation({
+    mutationFn: (id) => apiClient.delete(`/api/content/events/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-events'] });
+      queryClient.invalidateQueries({ queryKey: ['events'] });
+    },
+  });
 
-  const deleteEvent = useMutation(
-    (id) => apiClient.delete(`/dashboard/admin/events/${id}/`),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-events');
-        queryClient.invalidateQueries('events');
-      },
-    }
-  );
+  const createTestimonial = useMutation({
+    mutationFn: (data) => apiClient.post('/api/content/testimonials', data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
+      queryClient.invalidateQueries({ queryKey: ['testimonials'] });
+    },
+  });
 
-  // TESTIMONIALS
-  const createTestimonial = useMutation(
-    (data) => apiClient.post('/dashboard/admin/testimonials/', data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-testimonials');
-        queryClient.invalidateQueries('testimonials');
-      },
-    }
-  );
+  const updateTestimonial = useMutation({
+    mutationFn: ({ id, data }) => apiClient.put(`/api/content/testimonials/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
+      queryClient.invalidateQueries({ queryKey: ['testimonials'] });
+    },
+  });
 
-  const updateTestimonial = useMutation(
-    ({ id, data }) => apiClient.put(`/dashboard/admin/testimonials/${id}/`, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-testimonials');
-        queryClient.invalidateQueries('testimonials');
-      },
-    }
-  );
+  const deleteTestimonial = useMutation({
+    mutationFn: (id) => apiClient.delete(`/api/content/testimonials/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
+      queryClient.invalidateQueries({ queryKey: ['testimonials'] });
+    },
+  });
 
-  const deleteTestimonial = useMutation(
-    (id) => apiClient.delete(`/dashboard/admin/testimonials/${id}/`),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-testimonials');
-        queryClient.invalidateQueries('testimonials');
-      },
-    }
-  );
+  const createCampusLife = useMutation({
+    mutationFn: (data) => apiClient.post('/api/content/campus-life', data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-campus-life'] });
+      queryClient.invalidateQueries({ queryKey: ['campus-life'] });
+    },
+  });
 
-  // CAMPUS LIFE
-  const createCampusLife = useMutation(
-    (data) => apiClient.post('/dashboard/admin/campus-life/', data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-campus-life');
-        queryClient.invalidateQueries('campus-life');
-      },
-    }
-  );
+  const updateCampusLife = useMutation({
+    mutationFn: ({ id, data }) => apiClient.put(`/api/content/campus-life/${id}`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-campus-life'] });
+      queryClient.invalidateQueries({ queryKey: ['campus-life'] });
+    },
+  });
 
-  const updateCampusLife = useMutation(
-    ({ id, data }) => apiClient.put(`/dashboard/admin/campus-life/${id}/`, data),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-campus-life');
-        queryClient.invalidateQueries('campus-life');
-      },
-    }
-  );
-
-  const deleteCampusLife = useMutation(
-    (id) => apiClient.delete(`/dashboard/admin/campus-life/${id}/`),
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries('admin-campus-life');
-        queryClient.invalidateQueries('campus-life');
-      },
-    }
-  );
+  const deleteCampusLife = useMutation({
+    mutationFn: (id) => apiClient.delete(`/api/content/campus-life/${id}`),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-campus-life'] });
+      queryClient.invalidateQueries({ queryKey: ['campus-life'] });
+    },
+  });
 
   /* =========================
      CONTEXT VALUE
   ========================== */
+  const safeExtractData = (data, primaryPath, fallbackPaths = []) => {
+    if (!data) return [];
+    let result = primaryPath.split('.').reduce((obj, key) => obj?.[key], data);
+    if (result && Array.isArray(result)) return result;
+    for (const path of fallbackPaths) {
+      result = path.split('.').reduce((obj, key) => obj?.[key], data);
+      if (result && Array.isArray(result)) return result;
+    }
+    if (Array.isArray(data)) return data;
+    return [];
+  };
+
+  const safeExtractStats = (data) => {
+    if (!data) return {};
+    return data?.data?.statistics || data?.statistics || data?.data || data || {};
+  };
+
   const value = {
-    // Data
-    stats,
-    news: newsQuery.data,
-    events: eventsQuery.data,
-    testimonials: testimonialsQuery.data,
-    campusLife: campusLifeQuery.data,
-
-    // Books data
-    books: booksQuery.data?.data?.books || booksQuery.data?.books || booksQuery.data || [],
-
-    adminNews: adminNewsQuery.data,
-    adminEvents: adminEventsQuery.data,
-    adminTestimonials: adminTestimonialsQuery.data,
-    adminCampusLife: adminCampusLifeQuery.data,
-
-    // Loading states
-    statsLoading,
-    newsLoading: newsQuery.isLoading,
-    eventsLoading: eventsQuery.isLoading,
-    testimonialsLoading: testimonialsQuery.isLoading,
-    campusLifeLoading: campusLifeQuery.isLoading,
-
-    // Books loading states
-    booksLoading: booksQuery.isLoading,
-    creatingBook: createBookMutation.isLoading,
-    updatingBook: updateBookMutation.isLoading,
-    deletingBook: deleteBookMutation.isLoading,
-
-    adminNewsLoading: adminNewsQuery.isLoading,
-    adminEventsLoading: adminEventsQuery.isLoading,
-    adminTestimonialsLoading: adminTestimonialsQuery.isLoading,
-    adminCampusLifeLoading: adminCampusLifeQuery.isLoading,
-
-    // Mutations
-    createNews: createNews.mutateAsync,
-    updateNews: updateNews.mutateAsync,
-    deleteNews: deleteNews.mutateAsync,
-
-    createEvent: createEvent.mutateAsync,
-    updateEvent: updateEvent.mutateAsync,
-    deleteEvent: deleteEvent.mutateAsync,
-
-    createTestimonial: createTestimonial.mutateAsync,
-    updateTestimonial: updateTestimonial.mutateAsync,
-    deleteTestimonial: deleteTestimonial.mutateAsync,
-
-    createCampusLife: createCampusLife.mutateAsync,
-    updateCampusLife: updateCampusLife.mutateAsync,
-    deleteCampusLife: deleteCampusLife.mutateAsync,
-
-    // Books mutations
-    createBook: createBookMutation.mutateAsync,
-    updateBook: updateBookMutation.mutateAsync,
-    deleteBook: deleteBookMutation.mutate,
+    stats: safeExtractStats(stats),
+    news: safeExtractData(newsQuery.data, 'data.news', ['data.data.news', 'news', 'data']),
+    events: safeExtractData(eventsQuery.data, 'data.events', ['data.data.events', 'events', 'data']),
+    testimonials: safeExtractData(testimonialsQuery.data, 'data.testimonials', ['data.data.testimonials', 'testimonials', 'data']),
+    campusLife: safeExtractData(campusLifeQuery.data, 'data.campus_life', ['data.data.campus_life', 'campus_life', 'data']),
+    books: safeExtractData(booksQuery.data, 'data.books', ['data.data.books', 'data', 'books']),
+    adminNews: safeExtractData(adminNewsQuery.data, 'data.news', ['data.data.news', 'news']),
+    adminEvents: safeExtractData(adminEventsQuery.data, 'data.events', ['data.data.events', 'events']),
+    adminTestimonials: safeExtractData(adminTestimonialsQuery.data, 'data.testimonials', ['data.data.testimonials', 'testimonials']),
+    adminCampusLife: safeExtractData(adminCampusLifeQuery.data, 'data.campus_life', ['data.data.campus_life', 'campus_life']),
+    students: safeExtractData(adminStudentsQuery.data, 'data.students', ['data.data.students', 'students']),
+    tutors: safeExtractData(adminTutorsQuery.data, 'data.tutors', ['data.data.tutors', 'tutors']),
+    contactMessages: safeExtractData(adminContactMessagesQuery.data, 'data.contact_messages', ['data.data.contact_messages', 'contact_messages']),
+    library: safeExtractData(adminLibraryQuery.data, 'data.library', ['data.data.library', 'library']),
+    pendingTestimonials: (() => {
+      try {
+        const testimonials = safeExtractData(adminTestimonialsQuery.data, 'data.testimonials', ['data.data.testimonials', 'testimonials']);
+        return testimonials.filter(t => t && t.status === 'pending') || [];
+      } catch (error) {
+        console.warn('Error filtering pending testimonials:', error);
+        return [];
+      }
+    })(),
+    unreadMessages: (() => {
+      try {
+        const messages = safeExtractData(adminContactMessagesQuery.data, 'data.contact_messages', ['data.data.contact_messages', 'contact_messages']);
+        return messages.filter(m => m && !m.is_read) || [];
+      } catch (error) {
+        console.warn('Error filtering unread messages:', error);
+        return [];
+      }
+    })(),
+    statsLoading: statsLoading || false,
+    newsLoading: newsQuery.isLoading || false,
+    eventsLoading: eventsQuery.isLoading || false,
+    testimonialsLoading: testimonialsQuery.isLoading || false,
+    campusLifeLoading: campusLifeQuery.isLoading || false,
+    booksLoading: booksQuery.isLoading || false,
+    creatingBook: createBookMutation.isLoading || false,
+    updatingBook: updateBookMutation.isLoading || false,
+    deletingBook: deleteBookMutation.isLoading || false,
+    adminNewsLoading: adminNewsQuery.isLoading || false,
+    adminEventsLoading: adminEventsQuery.isLoading || false,
+    adminTestimonialsLoading: adminTestimonialsQuery.isLoading || false,
+    adminCampusLifeLoading: adminCampusLifeQuery.isLoading || false,
+    studentProfilesLoading: adminStudentsQuery.isLoading || false,
+    tutorProfilesLoading: adminTutorsQuery.isLoading || false,
+    contactMessagesLoading: adminContactMessagesQuery.isLoading || false,
+    libraryLoading: adminLibraryQuery.isLoading || false,
+    createNews: async (...args) => {
+      try { return await createNews.mutateAsync(...args); } catch (error) { console.error('Create news failed:', error); throw error; }
+    },
+    updateNews: async (...args) => {
+      try { return await updateNews.mutateAsync(...args); } catch (error) { console.error('Update news failed:', error); throw error; }
+    },
+    deleteNews: async (...args) => {
+      try { return await deleteNews.mutateAsync(...args); } catch (error) { console.error('Delete news failed:', error); throw error; }
+    },
+    createEvent: async (...args) => {
+      try { return await createEvent.mutateAsync(...args); } catch (error) { console.error('Create event failed:', error); throw error; }
+    },
+    updateEvent: async (...args) => {
+      try { return await updateEvent.mutateAsync(...args); } catch (error) { console.error('Update event failed:', error); throw error; }
+    },
+    deleteEvent: async (...args) => {
+      try { return await deleteEvent.mutateAsync(...args); } catch (error) { console.error('Delete event failed:', error); throw error; }
+    },
+    createTestimonial: async (...args) => {
+      try { return await createTestimonial.mutateAsync(...args); } catch (error) { console.error('Create testimonial failed:', error); throw error; }
+    },
+    updateTestimonial: async (...args) => {
+      try { return await updateTestimonial.mutateAsync(...args); } catch (error) { console.error('Update testimonial failed:', error); throw error; }
+    },
+    deleteTestimonial: async (...args) => {
+      try { return await deleteTestimonial.mutateAsync(...args); } catch (error) { console.error('Delete testimonial failed:', error); throw error; }
+    },
+    createCampusLife: async (...args) => {
+      try { return await createCampusLife.mutateAsync(...args); } catch (error) { console.error('Create campus life failed:', error); throw error; }
+    },
+    updateCampusLife: async (...args) => {
+      try { return await updateCampusLife.mutateAsync(...args); } catch (error) { console.error('Update campus life failed:', error); throw error; }
+    },
+    deleteCampusLife: async (...args) => {
+      try { return await deleteCampusLife.mutateAsync(...args); } catch (error) { console.error('Delete campus life failed:', error); throw error; }
+    },
+    createBook: async (...args) => {
+      try { return await createBookMutation.mutateAsync(...args); } catch (error) { console.error('Create book failed:', error); throw error; }
+    },
+    updateBook: async (...args) => {
+      try { return await updateBookMutation.mutateAsync(...args); } catch (error) { console.error('Update book failed:', error); throw error; }
+    },
+    deleteBook: (...args) => {
+      try { return deleteBookMutation.mutate(...args); } catch (error) { console.error('Delete book failed:', error); throw error; }
+    },
   };
 
   return (
@@ -349,9 +569,6 @@ export const DashboardProvider = ({ children }) => {
 };
 
 export const useDashboard = () => {
-  const context = useContext(DashboardContext);
-  if (!context) {
-    throw new Error('useDashboard must be used within DashboardProvider');
-  }
-  return context;
+  return useContext(DashboardContext) || {};
 };
+

@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import apiClient from "../services/apiClient";
+import { API_ENDPOINTS } from "../config";
 
 const AuthContext = createContext();
 
@@ -17,15 +18,22 @@ export const AuthProvider = ({ children }) => {
             }
             
             // Set up apiClient with the token (handled by interceptor)
-            // Fetch current user data
-            const userResponse = await apiClient.get('/auth/user');
+            // Fetch current user data - using proper endpoint from config
+            const userResponse = await apiClient.get(API_ENDPOINTS.AUTH.USER);
             console.log('Fetched user data:', userResponse.data);
-            setUser({ token, ...userResponse.data.user });
+            
+            // Safely extract user data with fallbacks
+            const userData = userResponse.data?.user || userResponse.data || {};
+            setUser({ token, ...userData });
         } catch (error) {
             // If fetching user data fails, clear the auth state
             console.error('Failed to fetch user data:', error);
-            localStorage.removeItem('access_token');
-            localStorage.removeItem('refresh_token');
+            
+            // Clear tokens on auth failure
+            if (typeof window !== 'undefined') {
+                localStorage.removeItem('access_token');
+                localStorage.removeItem('refresh_token');
+            }
             setUser(null);
         } finally {
             setLoading(false);

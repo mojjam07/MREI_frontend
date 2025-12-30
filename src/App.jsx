@@ -4,7 +4,7 @@ import Landing from "./pages/Landing";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import StudentDashboard from "./pages/StudentDashboard";
-import AdminDashboard from "./pages/AdminDashboard";
+import AdminDashboard from "./pages/adminDashboard/AdminDashboard";
 import TutorDashboard from "./pages/TutorDashboard";
 import AlumniDashboard from "./pages/AlumniDashboard";
 import AlumniAdminDashboard from "./pages/AlumniAdminDashboard";
@@ -14,7 +14,7 @@ import AboutUs from "./pages/AboutUs";
 import Academics from "./pages/Academics";
 import Admissions from "./pages/Admissions";
 import DigitalBookshelf from "./pages/DigitalBookshelf";
-import Library from "./pages/Library";
+// import Library from "./pages/Library";
 import Calendar from "./pages/Calendar";
 import ProtectedRoute from "./route/ProtectedRoute";
 
@@ -25,6 +25,9 @@ import Testimonials from "./pages/mainNavPages/Testimonials";
 import NewsEvents from "./pages/mainNavPages/NewsEvents";
 import SchoolLife from "./pages/mainNavPages/SchoolLife";
 import ContactUs from "./pages/mainNavPages/ContactUs";
+
+
+console.log('App mounted');
 
 // Helper function to get dashboard path based on user role
 const getDashboardPath = (userRole) => {
@@ -72,7 +75,7 @@ export default function App() {
       
       <Route
         path="/library"
-        element={<Library />}
+        element={<DigitalBookshelf />}
       />
       <Route path="/calendar" element={<Calendar />} />
       <Route path="/login" element={<LoginPage />} />
