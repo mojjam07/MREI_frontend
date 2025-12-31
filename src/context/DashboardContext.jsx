@@ -194,7 +194,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['admin-students'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get('/admin/students');
+        const res = await apiClient.get('/dashboard/admin/students');
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch admin students:', error);
@@ -213,7 +213,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['admin-tutors'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get('/admin/tutors');
+        const res = await apiClient.get('/dashboard/admin/tutors');
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch admin tutors:', error);
@@ -349,7 +349,7 @@ export const DashboardProvider = ({ children }) => {
      ADMIN MUTATIONS (JSON ONLY)
   ========================== */
   const createNews = useMutation({
-    mutationFn: (data) => apiClient.post('/api/content/news', data),
+    mutationFn: (data) => apiClient.post('/content/news', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-news'] });
       queryClient.invalidateQueries({ queryKey: ['news'] });
@@ -357,7 +357,7 @@ export const DashboardProvider = ({ children }) => {
   });
 
   const updateNews = useMutation({
-    mutationFn: ({ id, data }) => apiClient.put(`/api/content/news/${id}`, data),
+    mutationFn: ({ id, data }) => apiClient.put(`/content/news/${id}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-news'] });
       queryClient.invalidateQueries({ queryKey: ['news'] });
@@ -373,7 +373,7 @@ export const DashboardProvider = ({ children }) => {
   });
 
   const createEvent = useMutation({
-    mutationFn: (data) => apiClient.post('/api/content/events', data),
+    mutationFn: (data) => apiClient.post('/content/events', data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       queryClient.invalidateQueries({ queryKey: ['events'] });

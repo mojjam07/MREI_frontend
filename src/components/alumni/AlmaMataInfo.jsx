@@ -41,7 +41,7 @@ const AlmaMataInfo = () => {
     try {
       setLoading(true);
       const [newsRes, eventsRes, achievementsRes, statsRes] = await Promise.all([
-        apiClient.get('/api/content/institute-news'),
+        apiClient.get('/content/news'),
         apiClient.get('/api/content/institute-events'),
         apiClient.get('/api/content/achievements'),
         apiClient.get('/api/content/institute-statistics')

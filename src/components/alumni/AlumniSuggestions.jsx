@@ -49,7 +49,7 @@ const AlumniSuggestions = () => {
     try {
       setLoading(true);
       const [suggestionsRes, categoriesRes] = await Promise.all([
-        apiClient.get('/admin/suggestions'),
+        apiClient.get('/content/suggestions'),
         apiClient.get('/admin/suggestion-categories')
       ]);
 

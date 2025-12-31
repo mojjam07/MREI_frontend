@@ -106,7 +106,7 @@ export const AuthProvider = ({ children }) => {
 
     const signup = async (userData) => {
         try {
-            await apiClient.post('/auth/register', userData);
+            await apiClient.post('/api/auth/register', userData);
             return { success: true };
         } catch (error) {
             return { success: false, error: error.response?.data?.message || error.response?.data?.detail || 'Signup failed' };

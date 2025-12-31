@@ -1026,6 +1026,25 @@ const translations = {
       save: 'Save',
       cancel: 'Cancel',
       update: 'Update',
+
+      // Additional dashboard keys
+      userEngagement: 'User Engagement',
+      userEngagementDesc: 'Track and manage user interactions',
+      contentManagement: 'Content Management',
+      contentManagementDesc: 'Manage all content types',
+      communicationHub: 'Communication Hub',
+      communicationHubDesc: 'Manage communications',
+      communicationStats: 'Communication Statistics',
+      dashboardStats: 'Dashboard Statistics',
+      contentStats: 'Content Statistics',
+      location: 'Location',
+      addTestimonial: 'Add Testimonial',
+      submitted: 'Submitted',
+      approve: 'Approve',
+      reject: 'Reject',
+      view: 'View',
+      createNews: 'Create News',
+      addNewBook: 'Add New Book',
     },
 
     statValues: {
@@ -1034,7 +1053,25 @@ const translations = {
       totalTutors: 'Total Tutors',
       totalNews: 'News Articles',
       totalEvents: 'Events',
-      totalTestimonials: 'Testimonials'
+      totalTestimonials: 'Testimonials',
+      activeUsers: 'Active Users',
+      newUsersToday: 'New Users Today',
+      totalAdmins: 'Total Administrators',
+      systemHealth: 'System Health',
+      databaseSize: 'Database Size',
+      uptime: 'Uptime',
+      activeStudents: 'Active Students',
+      totalCourses: 'Total Courses',
+      totalAssignments: 'Total Assignments',
+      pendingSubmissions: 'Pending Submissions',
+      completedSubmissions: 'Completed Submissions',
+      totalEnrollments: 'Total Enrollments',
+      totalMessages: 'Total Messages',
+      unreadMessages: 'Unread Messages',
+      repliedMessages: 'Replied Messages',
+      averageResponseTime: 'Average Response Time',
+      contactForms: 'Contact Forms',
+      supportTickets: 'Support Tickets'
     },
 
     digitalBookshelf: {
@@ -1474,12 +1511,19 @@ const translations = {
     whyUs: {
       title: 'Why Choose Mahdu Rahmah?',
       subtitle: 'Discover what makes our educational institution the preferred choice for students seeking quality learning experiences',
+      featuresGridTitle: 'Our Key Features',
       expertTutorsTitle: 'Expert Tutors',
       expertTutorsDesc: 'Our experienced educators bring years of expertise and passion for teaching to help students achieve their academic goals',
       flexibleLearningTitle: 'Flexible Learning Options',
       flexibleLearningDesc: 'Study at your own pace with our comprehensive online and offline learning programs designed for busy lifestyles',
       provenSuccessTitle: 'Proven Success Stories',
       provenSuccessDesc: 'Join thousands of successful graduates who have transformed their lives through our quality education programs',
+      personalizedLearningTitle: 'Personalized Learning',
+      personalizedLearningFeature: 'Tailored educational experiences that adapt to individual student needs and learning styles',
+      innovativeApproachTitle: 'Innovative Approach',
+      innovativeApproachFeature: 'Cutting-edge teaching methods combined with modern technology for enhanced learning',
+      continuousSupportTitle: 'Continuous Support',
+      continuousSupportFeature: '24/7 academic assistance and mentorship from dedicated educators throughout your journey',
       expertTutorsFeatures: [
         'Highly qualified and certified instructors',
         'Years of teaching experience across diverse subjects',
@@ -1503,6 +1547,8 @@ const translations = {
     ourImpact: {
       title: 'Our Impact on Education',
       subtitle: 'Measuring our success through student achievements and institutional excellence',
+      commitmentTitle: 'Our Commitment',
+      commitmentDesc: 'We are dedicated to providing world-class education that empowers students to achieve their full potential and make meaningful contributions to society',
       studentStatsTitle: 'Student Statistics',
       studentStatsDesc: 'Our student body represents diversity and excellence in academic achievement',
       courseOfferingsTitle: 'Comprehensive Course Offerings',
@@ -1534,12 +1580,19 @@ const translations = {
         subjectExperts: 'Subject Experts',
         industryProfessionals: 'Industry Professionals',
         ongoingTraining: 'Ongoing Training'
+      },
+      stats: {
+        yearsOfExcellence: 'Years of Excellence',
+        industryPartners: 'Industry Partners',
+        successRate: 'Success Rate'
       }
     },
 
     testimonials: {
       title: 'Student Testimonials',
       subtitle: 'Hear from our students and alumni about their transformative educational journey',
+      featuredTestimonialsTitle: 'Featured Testimonials',
+      featuredTestimonialsDesc: 'Inspiring stories from our community of learners and achievers',
       studentTestimonialsTitle: 'Student Testimonials',
       studentTestimonialsDesc: 'Current students share their experiences and learning outcomes',
       alumniStoriesTitle: 'Alumni Success Stories',
@@ -1647,6 +1700,8 @@ const translations = {
       clubsOrganizationsDesc: 'Join interest-based groups that foster community building and skill development',
       sportsRecreationTitle: 'Sports & Recreation',
       sportsRecreationDesc: 'Physical fitness and recreational activities for overall well-being and team building',
+      communityEngagementTitle: 'Community Engagement',
+      communityEngagementDesc: 'Making a positive impact through service projects and social initiatives that connect learning with real-world impact',
       facilities: [
         {
           name: 'Modern Library',
@@ -2663,6 +2718,25 @@ const translations = {
       save: 'حفظ',
       cancel: 'إلغاء',
       update: 'تحديث',
+
+      // Additional dashboard keys
+      userEngagement: 'تفاعل المستخدمين',
+      userEngagementDesc: 'تتبع وإدارة تفاعلات المستخدمين',
+      contentManagement: 'إدارة المحتوى',
+      contentManagementDesc: 'إدارة جميع أنواع المحتوى',
+      communicationHub: 'مركز الاتصالات',
+      communicationHubDesc: 'إدارة الاتصالات',
+      communicationStats: 'إحصائيات الاتصالات',
+      dashboardStats: 'إحصائيات لوحة التحكم',
+      contentStats: 'إحصائيات المحتوى',
+      location: 'الموقع',
+      addTestimonial: 'إضافة شهادة',
+      submitted: 'مُقدم',
+      approve: 'موافقة',
+      reject: 'رفض',
+      view: 'عرض',
+      createNews: 'إنشاء خبر',
+      addNewBook: 'إضافة كتاب جديد',
     },
 
     statValues: {
@@ -2671,7 +2745,25 @@ const translations = {
         totalTutors: 'إجمالي المعلمين',
         totalNews: 'أخبار',
         totalEvents: 'فعاليات',
-        totalTestimonials: 'شهادات'
+        totalTestimonials: 'شهادات',
+        activeUsers: 'المستخدمون النشطون',
+        newUsersToday: 'مستخدمون جدد اليوم',
+        totalAdmins: 'إجمالي المسؤولين',
+        systemHealth: 'صحة النظام',
+        databaseSize: 'حجم قاعدة البيانات',
+        uptime: 'وقت التشغيل',
+        activeStudents: 'الطلاب النشطون',
+        totalCourses: 'إجمالي الدورات',
+        totalAssignments: 'إجمالي الواجبات',
+        pendingSubmissions: 'التسليمات المعلقة',
+        completedSubmissions: 'التسليمات المكتملة',
+        totalEnrollments: 'إجمالي التسجيلات',
+        totalMessages: 'إجمالي الرسائل',
+        unreadMessages: 'الرسائل غير المقروءة',
+        repliedMessages: 'الرسائل التي تم الرد عليها',
+        averageResponseTime: 'متوسط وقت الاستجابة',
+        contactForms: 'نماذج الاتصال',
+        supportTickets: 'تذاكر الدعم'
     },
 
     digitalBookshelf: {
@@ -3098,12 +3190,19 @@ const translations = {
     whyUs: {
       title: 'لماذا تختار معهد الرحمة؟',
       subtitle: 'اكتشف ما يجعل مؤسستنا التعليمية الخيار المفضل للطلاب الذين يسعون لتجارب تعليمية عالية الجودة',
+      featuresGridTitle: 'ميزاتنا الرئيسية',
       expertTutorsTitle: 'مدرسون خبراء',
       expertTutorsDesc: 'مربونا متمرسون يجلبون سنوات من الخبرة والشغف بالتدريس لمساعدة الطلاب على تحقيق أهدافهم الأكاديمية',
       flexibleLearningTitle: 'خيارات التعلم المرنة',
       flexibleLearningDesc: 'ادرس بوتيرتك الخاصة مع برامج التعلم الشاملة عبر الإنترنت وخارج الإنترنت المصممة للأنماط الحياة المزدحمة',
       provenSuccessTitle: 'قصص نجاح مثبتة',
       provenSuccessDesc: 'انضم إلى آلاف الخريجين الناجحين الذين غيروا حياتهم من خلال برامج التعليم عالي الجودة',
+      personalizedLearningTitle: 'التعلم المخصص',
+      personalizedLearningFeature: 'تجارب تعليمية مصممة خصيصاً تتكيف مع احتياجات الطلاب وأساليب التعلم الفردية',
+      innovativeApproachTitle: 'النهج المبتكر',
+      innovativeApproachFeature: 'طرق تدريس متطورة تجمع بين التكنولوجيا الحديثة لتعزيز التعلم',
+      continuousSupportTitle: 'الدعم المستمر',
+      continuousSupportFeature: 'مساعدة أكاديمية وإرشاد على مدار الساعة من مربين متفانين طوال رحلتك',
       expertTutorsFeatures: [
         'مدرسون مؤهلون ومعتمدون بدرجة عالية',
         'سنوات من الخبرة التدريسية عبر مواد متنوعة',
@@ -3127,6 +3226,8 @@ const translations = {
     ourImpact: {
       title: 'تأثيرنا على التعليم',
       subtitle: 'قياس نجاحنا من خلال إنجازات الطلاب وتميز المؤسسة',
+      commitmentTitle: 'التزامنا',
+      commitmentDesc: 'نحن ملتزمون بتوفير تعليم عالمي المستوى يمكّن الطلاب من تحقيق إمكاناتهم الكاملة وإجراء مساهمات ذات معنى للمجتمع',
       studentStatsTitle: 'إحصائيات الطلاب',
       studentStatsDesc: 'هيكل طلابنا يمثل التنوع والتميز في الإنجاز الأكاديمي',
       courseOfferingsTitle: 'عروض دورات شاملة',
@@ -3158,12 +3259,19 @@ const translations = {
         subjectExperts: 'خبراء المواد',
         industryProfessionals: 'مهنيو الصناعة',
         ongoingTraining: 'تدريب مستمر'
+      },
+      stats: {
+        yearsOfExcellence: 'سنوات التميز',
+        industryPartners: 'شركاء الصناعة',
+        successRate: 'معدل النجاح'
       }
     },
 
     testimonials: {
       title: 'شهادات الطلاب',
       subtitle: 'اسمع من طلابنا وخريجينا عن رحلتهم التعليمية التحويلية',
+      featuredTestimonialsTitle: 'شهادات مميزة',
+      featuredTestimonialsDesc: 'قصص ملهمة من مجتمع المتحققين والناجحين',
       studentTestimonialsTitle: 'شهادات الطلاب',
       studentTestimonialsDesc: 'الطلاب الحاليون يشاركون تجاربهم ونتائج التعلم',
       alumniStoriesTitle: 'قصص نجاح الخريجين',
@@ -3271,6 +3379,8 @@ const translations = {
       clubsOrganizationsDesc: 'انضم لمجموعات قائمة على الاهتمامات تعزز بناء المجتمع وتطوير المهارات',
       sportsRecreationTitle: 'الرياضة والترفيه',
       sportsRecreationDesc: 'أنشطة اللياقة البدنية والترفيه للصحة العامة وبناء الفريق',
+      communityEngagementTitle: 'المشاركة المجتمعية',
+      communityEngagementDesc: 'إحداث تأثير إيجابي من خلال مشاريع الخدمة والمبادرات الاجتماعية التي تربط التعلم بالتأثير الحقيقي',
       facilities: [
         {
           name: 'مكتبة حديثة',

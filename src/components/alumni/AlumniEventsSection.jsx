@@ -31,7 +31,7 @@ const AlumniEventsSection = () => {
   const fetchEvents = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get('/api/content/events');
+      const response = await apiClient.get('/content/events');
       const eventsData = response.data.data || [];
       
       // Sort events by date (most recent first)

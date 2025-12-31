@@ -59,7 +59,7 @@ const AlumniGroupChat = () => {
   const fetchChatData = async () => {
     try {
       setLoading(true);
-      const response = await apiClient.get('/api/content/chat-groups');
+      const response = await apiClient.get('/content/chat-groups');
       const groupsData = response.data.data || [];
       
       setData(prev => ({
@@ -212,7 +212,7 @@ const AlumniGroupChat = () => {
     if (!messageText.trim() || !data.activeGroup) return;
 
     try {
-      const response = await apiClient.post(`/api/content/chat-groups/${data.activeGroup.id}/messages`, {
+      const response = await apiClient.post(`/content/chat-groups/${data.activeGroup.id}/messages`, {
         content: messageText.trim(),
         type: 'text'
       });
@@ -251,7 +251,7 @@ const AlumniGroupChat = () => {
 
   const joinGroup = async (groupId) => {
     try {
-      await apiClient.post(`/api/content/chat-groups/${groupId}/join`);
+      await apiClient.post(`/content/chat-groups/${groupId}/join`);
       
       setData(prev => ({
         ...prev,
