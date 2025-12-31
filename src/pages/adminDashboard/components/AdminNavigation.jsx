@@ -16,7 +16,7 @@ const AdminNavigation = ({
     { id: 'students', label: t('dashboard.students') || 'Students' },
     { id: 'tutors', label: t('dashboard.tutors') || 'Tutors' },
     { id: 'books', label: t('dashboard.books') || 'Books' },
-    { id: 'library', label: t('dashboard.library') || 'Library' },
+    { id: 'library', label: t('dashboard.library') || 'Course' },
     { 
       id: 'testimonial-approval', 
       label: t('dashboard.testimonialApproval') || 'Testimonial Approval',
@@ -35,7 +35,14 @@ const AdminNavigation = ({
 
   return (
     <div className="mb-8">
-      <nav className="flex flex-wrap gap-2 p-4 bg-accent-color/20 backdrop-blur-sm rounded-lg border border-white/20">
+      <nav 
+        className="flex flex-wrap gap-2 p-4 rounded-xl border shadow-lg"
+        style={{ 
+          background: 'linear-gradient(145deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+          borderColor: '#e94560',
+          boxShadow: '0 10px 40px rgba(233, 69, 96, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)'
+        }}
+      >
         {tabs.map((tab) => (
           <button
             key={tab.id}
@@ -44,20 +51,33 @@ const AdminNavigation = ({
               handleTabClick(tab.id);
             }}
             className={`
-              relative px-4 py-2 rounded-lg min-w-[120px] text-sm font-medium transition-colors duration-200
+              relative px-5 py-2.5 rounded-lg min-w-[130px] text-sm font-semibold transition-all duration-300
               ${activeTab === tab.id 
-                ? 'bg-primary text-light-text shadow-lg hover-lift animate-pulse-gentle'
-                : 'bg-accent-color/10 text-text-color hover:bg-accent-color/30 hover-scale'
+                ? 'text-white shadow-lg hover-lift'
+                : 'text-gray-300 hover:text-white hover:bg-white/10'
               }
             `}
             style={{
               willChange: 'transform, opacity',
+              backgroundColor: activeTab === tab.id 
+                ? 'linear-gradient(135deg, #e94560 0%, #ff6b6b 100%)' 
+                : 'transparent',
+              border: activeTab === tab.id ? '1px solid #e94560' : '1px solid transparent',
+              boxShadow: activeTab === tab.id 
+                ? '0 4px 15px rgba(233, 69, 96, 0.4), 0 0 20px rgba(233, 69, 96, 0.2)' 
+                : 'none',
             }}
           >
             <span className="inline-flex items-center gap-2">
               {tab.label}
               {tab.badge > 0 && (
-                <span className="inline-flex items-center justify-center bg-error-color text-light-text text-xs rounded-full w-5 h-5 flex-shrink-0 animate-bounce-in">
+                <span 
+                  className="inline-flex items-center justify-center text-white text-xs font-bold rounded-full w-5 h-5 flex-shrink-0 animate-bounce-in"
+                  style={{ 
+                    backgroundColor: '#e94560',
+                    boxShadow: '0 2px 10px rgba(233, 69, 96, 0.5)'
+                  }}
+                >
                   {tab.badge > 99 ? '99+' : tab.badge}
                 </span>
               )}

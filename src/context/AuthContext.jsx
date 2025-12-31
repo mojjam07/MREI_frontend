@@ -52,21 +52,46 @@ export const AuthProvider = ({ children }) => {
             const loginResponse = await apiClient.post('/auth/login', { email, password });
             console.log('Login response:', loginResponse.data);
             
-            const { access, refresh, user } = loginResponse.data;
+            // Handle different response formats
+            const responseData = loginResponse.data?.data || loginResponse.data;
+            const { access, accessToken, refresh, refreshToken, user } = responseData;
+            
+            // Get tokens - handle both formats
+            const accessTokenVal = access || accessToken;
+            const refreshTokenVal = refresh || refreshToken;
 
             // Store tokens
-            localStorage.setItem('access_token', access);
-            localStorage.setItem('refresh_token', refresh);
+            localStorage.setItem('access_token', accessTokenVal);
+            localStorage.setItem('refresh_token', refreshTokenVal);
 
-            // Set user data with role
-            setUser({ token: access, ...user });
+            // Get user data - handle different response structures
+            const userData = user || responseData.user || responseData;
+            
+            // Ensure user has a role
+            if (!userData.role) {
+                console.warn('Login response missing role:', userData);
+            }
+
+            // Set user data with token directly from login response
+            // Don't rely on fetchUserData immediately as it might fail
+            const authUser = { token: accessTokenVal, ...userData };
+            setUser(authUser);
+            
+            console.log('Login successful, user set:', authUser);
+            
             return {
                 success: true,
-                user: user,
-                role: user.role
+                user: authUser,
+                role: userData.role || userData.role
             };
         } catch (error) {
             console.error('Login error:', error);
+            
+            // Clear any existing tokens on login failure
+            localStorage.removeItem('access_token');
+            localStorage.removeItem('refresh_token');
+            setUser(null);
+            
             const errorMessage = error.response?.data?.message || error.response?.data?.error || 'Login failed';
             return { success: false, error: errorMessage };
         }

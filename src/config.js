@@ -4,10 +4,37 @@
    - Safe fallback to prevent UI crash
    - Vite-compatible env loading
    - Django REST friendly
+   - Production-ready with environment-aware configuration
 ============================================================================ */
 
-export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/';
+// Determine the environment
+const isProduction = import.meta.env.PROD;
+const isDevelopment = import.meta.env.DEV;
+
+// Configure API base URL based on environment
+// Production: Use environment variable or deploy-specific URL
+// Development: Use localhost by default
+let apiBaseUrl;
+
+if (isProduction) {
+  // In production, use the VITE_API_BASE_URL environment variable
+  // If not set, try to use a known production URL
+  apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://your-production-api.com/api/';
+} else {
+  // In development, default to localhost
+  apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/';
+}
+
+export const API_BASE_URL = apiBaseUrl;
+
+// Log configuration in development
+if (isDevelopment) {
+  console.log('🔧 API Configuration:', {
+    API_BASE_URL,
+    isProduction,
+    isDevelopment
+  });
+}
 
 /* ============================================================================
    API ENDPOINTS
@@ -57,7 +84,8 @@ export const API_ENDPOINTS = {
   ========================== */
   CONTENT: {
     OVERVIEW: '/content/',
-    STATISTICS: '/content/stats/',
+    // Statistics endpoint - uses the working /communication/dashboard-stats
+    STATISTICS: '/communication/dashboard-stats/',
     NEWS: '/content/news/',
     EVENTS: '/content/events/',
     TESTIMONIALS: '/content/testimonials/',
@@ -106,11 +134,11 @@ export const API_ENDPOINTS = {
   ========================== */
   COMMUNICATION: {
     STATISTICS: '/content/stats/',
-    NEWS: '/content/news/',
-    EVENTS: '/content/events/',
-    TESTIMONIALS: '/content/testimonials/',
-    CAMPUS_LIFE: '/content/campus-life/',
-    HOME_CONTENT: '/content/home/',
+    NEWS: '/communication/news/',
+    EVENTS: '/communication/events/',
+    TESTIMONIALS: '/communication/testimonials/',
+    CAMPUS_LIFE: '/communication/campus-life/',
+    HOME_CONTENT: '/communication/home-content/',
     CONTACT: '/communication/contact/',
     DASHBOARD_STATS: '/communication/dashboard-stats/',
     BOOKS: '/communication/books/',

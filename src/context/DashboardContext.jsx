@@ -194,7 +194,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['admin-students'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get('/api/admin/students');
+        const res = await apiClient.get('/admin/students');
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch admin students:', error);
@@ -213,7 +213,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['admin-tutors'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get('/api/admin/tutors');
+        const res = await apiClient.get('/admin/tutors');
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch admin tutors:', error);

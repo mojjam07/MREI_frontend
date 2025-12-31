@@ -5,20 +5,34 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 
+// Helper function to generate placeholder SVG data URL
+const generatePlaceholderUrl = (width, height, bgColor, text) => {
+  const svg = `
+    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="${bgColor}"/>
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" 
+            fill="#FFFFFF" font-family="Arial, sans-serif" font-size="16" font-weight="bold">
+        ${encodeURIComponent(text)}
+      </text>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+};
+
 const Footer = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
   const currentYear = new Date().getFullYear();
 
-  // Advert images state
+  // Advert images state - using inline SVG placeholders
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const advertImages = [
-    'https://via.placeholder.com/300x200/FF6B6B/FFFFFF?text=Advert+1',
-    'https://via.placeholder.com/300x200/4ECDC4/FFFFFF?text=Advert+2',
-    'https://via.placeholder.com/300x200/45B7D1/FFFFFF?text=Advert+3',
-    'https://via.placeholder.com/300x200/96CEB4/FFFFFF?text=Advert+4',
-    'https://via.placeholder.com/300x200/FECA57/FFFFFF?text=Advert+5'
+    generatePlaceholderUrl(300, 200, '#FF6B6B', 'Advert 1'),
+    generatePlaceholderUrl(300, 200, '#4ECDC4', 'Advert 2'),
+    generatePlaceholderUrl(300, 200, '#45B7D1', 'Advert 3'),
+    generatePlaceholderUrl(300, 200, '#96CEB4', 'Advert 4'),
+    generatePlaceholderUrl(300, 200, '#FECA57', 'Advert 5')
   ];
 
   // Rotate images every 5 seconds

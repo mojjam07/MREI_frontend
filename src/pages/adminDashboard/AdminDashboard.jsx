@@ -68,12 +68,14 @@ const AdminDashboard = () => {
       case 'news':
         return renderSectionWithErrorBoundary(NewsSection, {
           news: dashboardContext.adminNews || [],
-          newsLoading: dashboardContext.adminNewsLoading
+          newsLoading: dashboardContext.adminNewsLoading,
+          createNews: dashboardContext.createNews
         });
       case 'events':
         return renderSectionWithErrorBoundary(EventsSection, {
           events: dashboardContext.adminEvents || [],
-          eventsLoading: dashboardContext.adminEventsLoading
+          eventsLoading: dashboardContext.adminEventsLoading,
+          createEvent: dashboardContext.createEvent
         });
       case 'testimonials':
         return renderSectionWithErrorBoundary(TestimonialsSection, {
@@ -83,7 +85,8 @@ const AdminDashboard = () => {
       case 'campus-life':
         return renderSectionWithErrorBoundary(CampusLifeSection, {
           campusLife: dashboardContext.adminCampusLife || [],
-          campusLifeLoading: dashboardContext.adminCampusLifeLoading
+          campusLifeLoading: dashboardContext.adminCampusLifeLoading,
+          createCampusLife: dashboardContext.createCampusLife
         });
       case 'students':
         return renderSectionWithErrorBoundary(StudentsSection, {
@@ -98,7 +101,8 @@ const AdminDashboard = () => {
       case 'books':
         return renderSectionWithErrorBoundary(BooksSection, {
           books: dashboardContext.books || [],
-          booksLoading: dashboardContext.booksLoading
+          booksLoading: dashboardContext.booksLoading,
+          createBook: dashboardContext.createBook
         });
       case 'testimonial-approval':
         return renderSectionWithErrorBoundary(TestimonialApprovalSection);

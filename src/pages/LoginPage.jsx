@@ -59,20 +59,31 @@ const LoginPage = () => {
     setLoading(false);
 
     if (!result.success) {
+      // Safely handle error message
+      const errorMsg = result.error || 'Login failed';
+      
       // Use translation for error messages if they match our predefined errors
-      const errorKey = result.error?.toLowerCase().includes('invalid') ? 
-        'auth.login.error.invalidCredentials' :
-        result.error?.toLowerCase().includes('network') ?
-        'auth.login.error.networkError' :
-        result.error?.toLowerCase().includes('server') ?
-        'auth.login.error.serverError' :
-        'auth.login.error.unknown';
+      let errorKey = 'auth.login.error.unknown';
+      if (errorMsg.toLowerCase().includes('invalid')) {
+        errorKey = 'auth.login.error.invalidCredentials';
+      } else if (errorMsg.toLowerCase().includes('network')) {
+        errorKey = 'auth.login.error.networkError';
+      } else if (errorMsg.toLowerCase().includes('server')) {
+        errorKey = 'auth.login.error.serverError';
+      }
       setError(t(errorKey));
       return;
     }
 
-    // Get role from login result or fallback to current user state
-    const role = result.role || result.user?.role || user?.role;
+    // Get role from login result - prioritize result.role, then result.user?.role
+    // Don't rely on user?.role from context as it might not be updated yet
+    const role = result.role || result.user?.role;
+    
+    if (!role) {
+      console.error('Login response missing role:', result);
+      setError('Login successful but role not found. Please contact support.');
+      return;
+    }
     
     console.log('Login successful, role:', role, 'result:', result);
     

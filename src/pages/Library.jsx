@@ -15,13 +15,34 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-// Static fallback data
+// Helper function to generate book cover placeholder SVG data URL
+const generateBookCoverUrl = (title, bgColor = '#4F46E5') => {
+  // Truncate title if too long
+  const displayTitle = title.length > 10 ? title.substring(0, 10) + '...' : title;
+  const svg = `
+    <svg width="150" height="220" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="${bgColor}"/>
+      <rect x="10" y="10" width="130" height="200" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+      <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" 
+            fill="#FFFFFF" font-family="Georgia, serif" font-size="14" font-weight="bold">
+        ${encodeURIComponent(displayTitle)}
+      </text>
+      <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" 
+            fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10">
+        Islamic Book
+      </text>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+};
+
+// Static fallback data with inline SVG placeholders
 const staticBooks = [
   {
     id: 1,
     title: "The Holy Quran",
     author: "Allah (SWT)",
-    cover_url: "https://via.placeholder.com/150x220?text=Quran",
+    cover_url: generateBookCoverUrl("Quran", "#166534"),
     description: "The central religious text of Islam.",
     pdf_url: null
   },
@@ -29,7 +50,7 @@ const staticBooks = [
     id: 2,
     title: "Sahih Al-Bukhari",
     author: "Imam Bukhari",
-    cover_url: "https://via.placeholder.com/150x220?text=Bukhari",
+    cover_url: generateBookCoverUrl("Bukhari", "#7C3AED"),
     description: "One of the most authentic collections of Hadith.",
     pdf_url: null
   },
@@ -37,7 +58,7 @@ const staticBooks = [
     id: 3,
     title: "Riyad as-Salihin",
     author: "Imam An-Nawawi",
-    cover_url: "https://via.placeholder.com/150x220?text=Riyad",
+    cover_url: generateBookCoverUrl("Riyad", "#0891B2"),
     description: "The Gardens of the Righteous.",
     pdf_url: null
   },
@@ -45,7 +66,7 @@ const staticBooks = [
     id: 4,
     title: "Fortress of the Muslim",
     author: "Said bin Ali bin Wahf Al-Qahtani",
-    cover_url: "https://via.placeholder.com/150x220?text=Hisnul+Muslim",
+    cover_url: generateBookCoverUrl("Hisnul", "#EA580C"),
     description: "Invocations from the Quran and Sunnah.",
     pdf_url: null
   }
