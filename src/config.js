@@ -19,7 +19,7 @@ let apiBaseUrl;
 if (isProduction) {
   // In production, use the VITE_API_BASE_URL environment variable
   // If not set, try to use a known production URL
-  apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://your-production-api.com/api/';
+  apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://mrei-backend-api.onrender.com/api/';
 } else {
   // In development, default to localhost
   apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/';
