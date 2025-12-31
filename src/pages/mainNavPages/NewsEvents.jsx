@@ -25,7 +25,7 @@ const NewsEvents = () => {
       ]);
       
       // Transform news data
-      const newsData = newsResponse.data.data.map(item => ({
+      const newsData = (newsResponse.data.data?.news || []).map(item => ({
         title: item.title,
         summary: item.content,
         date: item.created_at,
@@ -34,7 +34,7 @@ const NewsEvents = () => {
       }));
       
       // Transform events data
-      const eventsData = eventsResponse.data.data.map(item => ({
+      const eventsData = (eventsResponse.data.data?.events || []).map(item => ({
         title: item.title,
         summary: item.content,
         date: item.event_date,

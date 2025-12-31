@@ -733,6 +733,7 @@
         "eventsTab": "Events",
         "viewAllNews": "View All News",
         "viewAllEvents": "View All Events",
+        "viewAllTestimonials": "View All Testimonials",
         "loadingNewsEvents": "Loading news and events...",
         "errorLoadingNewsEvents": "Failed to load news and events. Please try again.",
         "tryAgain": "Try Again",
@@ -741,6 +742,86 @@
         "testimonialDesc": "Hear from our accomplished students about their educational journey",
         "loadingTestimonial": "Loading testimonial...",
         "errorLoadingTestimonial": "Failed to load testimonial. Please try again.",
+        "testimonialQuote": "This university transformed my career. The personalized attention from tutors and practical learning approach helped me land my dream job at a top tech company.",
+        "testimonialName": "Ahmed Hassan",
+        "testimonialTitle": "Software Engineering Graduate, 2023",
+        "testimonialImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+
+        "fallbackNews": [
+          {
+            "date": "January 15, 2025",
+            "title": "University Launches New Research Center",
+            "description": "We are excited to announce the opening of our new state-of-the-art research facility, which will advance scientific discovery and provide hands-on learning opportunities for students across all disciplines.",
+            "image": "https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=250&fit=crop"
+          },
+          {
+            "date": "January 10, 2025",
+            "title": "Student Achieves International Recognition",
+            "description": "Our computer science student has won first place in a prestigious international programming competition, showcasing the excellence of our academic programs.",
+            "image": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=250&fit=crop"
+          },
+          {
+            "date": "January 5, 2025",
+            "title": "New Partnership with Industry Leaders",
+            "description": "The university has signed agreements with leading technology companies to provide internship opportunities and collaborative research projects for our students.",
+            "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=250&fit=crop"
+          }
+        ],
+        "fallbackEvents": [
+          {
+            "date": "February 1, 2025",
+            "title": "Annual Science Fair 2025",
+            "description": "Join us for presentations from top student researchers showcasing innovative projects in science, technology, engineering, and mathematics.",
+            "videoId": "dQw4w9WgXcQ"
+          },
+          {
+            "date": "February 15, 2025",
+            "title": "Career Development Workshop",
+            "description": "Learn from industry professionals about resume writing, interview skills, and career planning in this interactive workshop open to all students.",
+            "videoId": "dQw4w9WgXcQ"
+          },
+          {
+            "date": "March 1, 2025",
+            "title": "Alumni Networking Event",
+            "description": "Connect with successful graduates who are making an impact in their fields. This event provides valuable networking opportunities for current students.",
+            "videoId": "dQw4w9WgXcQ"
+          }
+        ],
+
+        "fallbackCampusPhotos": [
+          {
+            "url": "https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop",
+            "caption": "Main Campus Building"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+            "caption": "Modern Library"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&h=300&fit=crop",
+            "caption": "Science Laboratory"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop",
+            "caption": "Student Activities Center"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=400&h=300&fit=crop",
+            "caption": "Sports Complex"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop",
+            "caption": "Conference Hall"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+            "caption": "Student Lounge"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
+            "caption": "Cafeteria"
+          }
+        ],
         
         "stats": "University Statistics",
         "activeStudents": "Active Students",

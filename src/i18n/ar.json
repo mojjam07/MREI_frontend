@@ -1056,6 +1056,7 @@
         "eventsTab": "فعاليات",
         "viewAllNews": "عرض جميع الأخبار",
         "viewAllEvents": "عرض جميع الفعاليات",
+        "viewAllTestimonials": "عرض جميع الشهادات",
         "loadingNewsEvents": "جاري تحميل الأخبار والفعاليات...",
         "errorLoadingNewsEvents": "فشل في تحميل الأخبار والفعاليات. يرجى المحاولة مرة أخرى.",
         "tryAgain": "حاول مرة أخرى",
@@ -1064,6 +1065,86 @@
         "testimonialDesc": "استمع إلى طلابنا المتميزين حول رحلتهم التعليمية",
         "loadingTestimonial": "جاري تحميل الشهادة...",
         "errorLoadingTestimonial": "فشل في تحميل الشهادة. يرجى المحاولة مرة أخرى.",
+        "testimonialQuote": "المعهد غير حياتي تماماً. الاهتمام الشخصي من المدرسين ومنهج التعلم العملي ساعدني في الحصول على وظيفتي الحلم في شركة تقنية رائدة.",
+        "testimonialName": "أحمد حسن",
+        "testimonialTitle": "خريج هندسة البرمجيات 2023",
+        "testimonialImage": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
+
+        "fallbackNews": [
+          {
+            "date": "2025-01-15",
+            "title": "المعهد يطلق مركز بحثي جديد",
+            "description": "يسرنا الإعلان عن افتتاح منشأتنا البحثية المتطورة الجديدة التي ستساهم في تطوير الاكتشاف العلمي وتوفر فرص التعلم العملي للطلاب في جميع التخصصات.",
+            "image": "https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=250&fit=crop"
+          },
+          {
+            "date": "2025-01-10",
+            "title": "طالب يحقق إنجازاً دولياً",
+            "description": "فاز طالب علوم الحاسوب لدينا بالمركز الأول في مسابقة برمجة دولية مرموقة، مما يبرهن على تميز برامجنا الأكاديمية.",
+            "image": "https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=400&h=250&fit=crop"
+          },
+          {
+            "date": "2025-01-05",
+            "title": "شراكة جديدة مع قادة الصناعة",
+            "description": "وقع المعهد اتفاقيات مع شركات تقنية رائدة لتوفير فرص التدريب والمشاريع البحثية المشتركة لطلابنا.",
+            "image": "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=400&h=250&fit=crop"
+          }
+        ],
+        "fallbackEvents": [
+          {
+            "date": "2025-02-01",
+            "title": "معرض العلوم السنوي 2025",
+            "description": "انضموا إلينا لحضور عروض من طلاب باحثين متميزين يعرضون مشاريع مبتكرة في مجالات العلوم والتكنولوجيا والهندسة والرياضيات.",
+            "videoId": "dQw4w9WgXcQ"
+          },
+          {
+            "date": "2025-02-15",
+            "title": "ورشة تطوير المهارات المهنية",
+            "description": "تعلموا من محترفي الصناعة حول كتابة السيرة الذاتية ومهارات المقابلات والتخطيط المهني في هذه الورشة التفاعلية المفتوحة لجميع الطلاب.",
+            "videoId": "dQw4w9WgXcQ"
+          },
+          {
+            "date": "2025-03-01",
+            "title": "فعالية التواصل مع الخريجين",
+            "description": "تواصلوا مع خريجين ناجحين الذين يحدثون فرقاً في مجالاتهم. توفر هذه الفعالية فرصاً ثمينة للتواصل للطلاب الحاليين.",
+            "videoId": "dQw4w9WgXcQ"
+          }
+        ],
+
+        "fallbackCampusPhotos": [
+          {
+            "url": "https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop",
+            "caption": "المبنى الرئيسي للحرم الجامعي"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+            "caption": "المكتبة الحديثة"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&h=300&fit=crop",
+            "caption": "المختبر العلمي"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop",
+            "caption": "مركز الأنشطة الطلابية"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=400&h=300&fit=crop",
+            "caption": "المجمع الرياضي"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop",
+            "caption": "قاعة المؤتمرات"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop",
+            "caption": "صالة الطلاب"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop",
+            "caption": "المطعم"
+          }
+        ],
         
         "stats": "إحصائيات الجامعة",
         "activeStudents": "الطلاب النشطون",

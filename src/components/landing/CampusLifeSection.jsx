@@ -9,6 +9,12 @@ const CampusLifeSection = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Helper function to get fallback campus photos from translations
+  const getFallbackCampusPhotos = () => {
+    const fallbackData = t('home.fallbackCampusPhotos', { returnObjects: true });
+    return Array.isArray(fallbackData) ? fallbackData : [];
+  };
+
   const fetchCampusPhotos = async () => {
     try {
       setLoading(true);
@@ -23,35 +29,25 @@ const CampusLifeSection = () => {
         '/api/placeholder/300/180'
       );
       
-      // If no photos available, use fallback images
-      const fallbackPhotos = photos.length > 0 ? photos : [
-        'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop'
-      ];
+      // Get fallback photos from translations
+      const fallbackData = getFallbackCampusPhotos();
+      const fallbackPhotoUrls = fallbackData.map(photo => photo.url);
+      
+      // If no photos available, use fallback images from translations
+      const fallbackPhotos = photos.length > 0 ? photos : fallbackPhotoUrls;
       
       setCampusPhotos(fallbackPhotos);
     } catch (error) {
       console.error('Error fetching campus photos:', error);
       setError(t('home.errorLoadingCampusPhotos'));
       
-      // Set fallback photos even on error to ensure UI has content
-      const fallbackPhotos = [
-        'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1571260899304-425eee4c7efc?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1523580846011-d3a5bc25702b?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop',
-        'https://images.unsplash.com/photo-1513475382585-d06e58bcb0e0?w=400&h=300&fit=crop'
-      ];
-      setCampusPhotos(fallbackPhotos);
+      // Get fallback photos from translations even on error
+      const fallbackData = getFallbackCampusPhotos();
+      const fallbackPhotoUrls = fallbackData.map(photo => photo.url);
+      
+      // Ensure we have fallback photos even on error
+      const hasValidFallbacks = fallbackPhotoUrls.length > 0;
+      setCampusPhotos(hasValidFallbacks ? fallbackPhotoUrls : []);
     } finally {
       setLoading(false);
     }

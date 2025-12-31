@@ -1,45 +1,54 @@
-
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { contentApi } from '../../services/apiClient';
 
 const TestimonialSection = () => {
-  const { t, language } = useLanguage();
-  const [testimonial, setTestimonial] = useState(null);
+  const { t } = useLanguage();
+  const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const fetchTestimonial = async () => {
+  // Fallback testimonial data (single testimonial for fallback)
+  const fallbackTestimonial = [{
+    quote: t('home.testimonialQuote'),
+    name: t('home.testimonialName'),
+    title: t('home.testimonialTitle'),
+    image: t('home.testimonialImage'),
+    rating: 5
+  }];
+
+  const fetchTestimonials = async () => {
     try {
       setLoading(true);
-      setError(null);
       
-      const response = await contentApi.getHomeContent();
+      // Fetch testimonials from the testimonials endpoint with limit=3
+      const response = await contentApi.getTestimonials({ limit: 3 });
       const data = response.data.data;
-      const testimonials = data.testimonials;
+      const testimonialsData = data.testimonials;
       
-      if (testimonials.length > 0) {
-        const item = testimonials[0];
-        setTestimonial({
+      if (testimonialsData && testimonialsData.length > 0) {
+        const items = testimonialsData.slice(0, 1).map(item => ({
           quote: item.content,
-          name: item.author || 'Anonymous',
-          title: item.author_title || 'Student',
-          image: item.image || '/placeholder/150/150'
-        });
+          name: item.student_name || 'Anonymous',
+          title: item.position || item.company || 'Student',
+          image: item.image || 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+          rating: item.rating || 5
+        }));
+        setTestimonials(items);
       } else {
-        setTestimonial(null);
+        // Use fallback data when no API data available
+        setTestimonials(fallbackTestimonial);
       }
     } catch (error) {
-      console.error('Error fetching testimonial:', error);
-      setError(t('home.errorLoadingTestimonial'));
-      setTestimonial(null);
+      console.error('Error fetching testimonials:', error);
+      // Use fallback data on error
+      setTestimonials(fallbackTestimonial);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchTestimonial();
+    fetchTestimonials();
   }, [t]);
 
 
@@ -55,44 +64,31 @@ const TestimonialSection = () => {
               {t('home.testimonialDesc')}
             </p>
           </div>
-          <div className="text-center">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-            <p className="text-text mt-4">{t('home.loadingTestimonial')}</p>
+          <div className="flex justify-center">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           </div>
         </div>
       </section>
     );
   }
 
-  if (error) {
+  // Render star rating
+  const renderStars = (rating) => {
     return (
-      <section className="py-12 sm:py-16 md:py-20 bg-light-text">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3 sm:mb-4 px-4">
-              {t('home.studentSuccess')}
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-text px-4">
-              {t('home.testimonialDesc')}
-            </p>
-          </div>
-          <div className="text-center">
-            <p className="text-text mb-4">{error}</p>
-            <button
-              onClick={fetchTestimonial}
-              className="bg-primary text-light-text px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
-            >
-              {t('home.tryAgain')}
-            </button>
-          </div>
-        </div>
-      </section>
+      <div className="flex items-center justify-center gap-1 mb-3">
+        {[...Array(5)].map((_, i) => (
+          <svg
+            key={i}
+            className={`w-4 h-4 ${i < rating ? 'text-yellow-400' : 'text-gray-300'}`}
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+          </svg>
+        ))}
+      </div>
     );
-  }
-
-  if (!testimonial) {
-    return null;
-  }
+  };
 
   return (
     <section className="py-12 sm:py-16 md:py-20 bg-light-text">
@@ -106,27 +102,43 @@ const TestimonialSection = () => {
           </p>
         </div>
 
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-accent rounded-lg p-4 sm:p-6 md:p-8 shadow-sm hover-lift animate-scale-in" style={{ animationDelay: '0.4s' }}>
-            <blockquote className="text-base sm:text-lg text-text mb-4 sm:mb-6 leading-relaxed">
-              "{testimonial.quote}"
-            </blockquote>
-            <div className={`flex flex-col sm:flex-row items-center sm:items-center ${language === 'ar' ? 'sm:flex-row-reverse' : ''}`}>
-              <img
-                src={testimonial.image}
-                alt={testimonial.name}
-                className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-primary hover-scale mb-3 sm:mb-0"
-              />
-              <div className={`text-center sm:text-left ${language === 'ar' ? 'sm:mr-4 sm:text-right' : 'sm:ml-4'}`}>
-                <div className="font-semibold text-primary text-sm sm:text-base">
-                  {testimonial.name}
-                </div>
-                <div className="text-text text-xs sm:text-sm">
-                  {testimonial.title}
+        <div className="max-w-2xl mx-auto">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index}
+              className="bg-accent rounded-lg p-4 sm:p-6 shadow-sm hover-lift animate-scale-in"
+            >
+              {renderStars(testimonial.rating)}
+              <blockquote className="text-base sm:text-lg text-text mb-4 leading-relaxed text-center">
+                "{testimonial.quote}"
+              </blockquote>
+              <div className={`flex flex-col items-center`}>
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-14 h-14 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-primary hover-scale mb-3"
+                />
+                <div className="text-center">
+                  <div className="font-semibold text-primary text-sm sm:text-base">
+                    {testimonial.name}
+                  </div>
+                  <div className="text-text text-xs sm:text-sm">
+                    {testimonial.title}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          ))}
+        </div>
+        
+        {/* View All Testimonials Link */}
+        <div className="mt-8 sm:mt-10 text-center">
+          <a 
+            href="/testimonials" 
+            className="inline-block text-sm sm:text-base text-primary hover:text-link-hover font-medium hover:underline transition-all"
+          >
+            {t('home.viewAllTestimonials')}
+          </a>
         </div>
       </div>
     </section>
@@ -134,3 +146,4 @@ const TestimonialSection = () => {
 };
 
 export default TestimonialSection;
+

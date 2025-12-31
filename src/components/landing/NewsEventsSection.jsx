@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { contentApi } from '../../services/apiClient';
 
@@ -9,48 +9,98 @@ const NewsEventsSection = () => {
   const [newsItems, setNewsItems] = useState([]);
   const [eventsItems, setEventsItems] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
 
-  const fetchHomeContent = async () => {
+  // Fallback data from i18n translations
+  const getFallbackNews = () => {
+    const fallbackNews = t('home.fallbackNews', { returnObjects: true });
+    if (Array.isArray(fallbackNews)) {
+      return fallbackNews.map(item => ({
+        date: item.date,
+        title: item.title,
+        description: item.description,
+        image: item.image || '/placeholder/400/250'
+      }));
+    }
+    // Default fallback if translation not found
+    return [
+      {
+        date: 'January 15, 2025',
+        title: 'University Launches New Research Center',
+        description: 'We are excited to announce the opening of our new state-of-the-art research facility.',
+        image: 'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=250&fit=crop'
+      },
+    ];
+  };
+
+  const getFallbackEvents = () => {
+    const fallbackEvents = t('home.fallbackEvents', { returnObjects: true });
+    if (Array.isArray(fallbackEvents)) {
+      return fallbackEvents.map(item => ({
+        date: item.date,
+        title: item.title,
+        details: item.description,
+        videoId: item.videoId || 'dQw4w9WgXcQ'
+      }));
+    }
+    // Default fallback if translation not found
+    return [
+      {
+        date: 'February 1, 2025',
+        title: 'Annual Science Fair 2025',
+        details: 'Join us for presentations from top student researchers.',
+        videoId: 'dQw4w9WgXcQ'
+      },
+    ];
+  };
+
+  const fetchHomeContent = useCallback(async () => {
     try {
       setLoading(true);
-      setError(null);
-      
+
       // Fetch news and events separately
       const [newsResponse, eventsResponse] = await Promise.all([
         contentApi.getNews({ limit: 3 }),
         contentApi.getEvents({ limit: 3 })
       ]);
-      
+
       const newsData = newsResponse.data.data?.news || [];
       const eventsData = eventsResponse.data.data?.events || [];
-      
-      setNewsItems(newsData.map(item => ({
-        date: new Date(item.created_at).toLocaleDateString(),
-        title: item.title,
-        description: item.content,
-        image: item.image || '/placeholder/400/250'
-      })));
-      
-      setEventsItems(eventsData.map(item => ({
-        date: new Date(item.event_date).toLocaleDateString(),
-        title: item.title,
-        details: item.description,
-        videoId: 'dQw4w9WgXcQ' // default YouTube video
-      })));
-    } catch (error) {
-      console.error('Error fetching home content:', error);
-      setError(t('home.errorLoadingNewsEvents'));
-      setNewsItems([]);
-      setEventsItems([]);
+
+      // Use API data if available, otherwise use fallback
+      if (newsData.length > 0) {
+        setNewsItems(newsData.map(item => ({
+          date: new Date(item.created_at).toLocaleDateString(),
+          title: item.title,
+          description: item.content,
+          image: item.image || '/placeholder/400/250'
+        })));
+      } else {
+        setNewsItems(getFallbackNews());
+      }
+
+      if (eventsData.length > 0) {
+        setEventsItems(eventsData.map(item => ({
+          date: new Date(item.event_date).toLocaleDateString(),
+          title: item.title,
+          details: item.description,
+          videoId: item.videoId || 'dQw4w9WgXcQ'
+        })));
+      } else {
+        setEventsItems(getFallbackEvents());
+      }
+    } catch (err) {
+      console.error('Error fetching home content:', err);
+      // Use fallback data on error instead of showing error
+      setNewsItems(getFallbackNews());
+      setEventsItems(getFallbackEvents());
     } finally {
       setLoading(false);
     }
-  };
+  }, [language]);
 
   useEffect(() => {
     fetchHomeContent();
-  }, []);
+  }, [fetchHomeContent]);
 
 
   if (loading) {
@@ -68,32 +118,6 @@ const NewsEventsSection = () => {
           <div className="text-center">
             <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
             <p className="text-text mt-4">{t('home.loadingNewsEvents')}</p>
-          </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (error) {
-    return (
-      <section className="py-12 sm:py-16 md:py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12 md:mb-16">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-primary mb-3 sm:mb-4 px-4">
-              {t('home.newsEventsTitle')}
-            </h2>
-            <p className="text-base sm:text-lg md:text-xl text-text px-4">
-              {t('home.newsEventsDesc')}
-            </p>
-          </div>
-          <div className="text-center">
-            <p className="text-text mb-4">{t('home.errorLoadingNewsEvents')}</p>
-            <button
-              onClick={fetchHomeContent}
-              className="bg-primary text-light-text px-6 py-2 rounded-lg hover:bg-opacity-90 transition-colors"
-            >
-              {t('home.tryAgain')}
-            </button>
           </div>
         </div>
       </section>
