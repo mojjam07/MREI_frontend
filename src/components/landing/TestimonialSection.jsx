@@ -30,7 +30,7 @@ const TestimonialSection = () => {
           quote: item.content,
           name: item.student_name || 'Anonymous',
           title: item.position || item.company || 'Student',
-          image: item.image || 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face',
+          image: item.image || 'https://res.cloudinary.com/doi8mindp/image/upload/v1767270351/logo2_h07cix.png',
           rating: item.rating || 5
         }));
         setTestimonials(items);

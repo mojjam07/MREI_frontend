@@ -27,7 +27,7 @@ const NewsEventsSection = () => {
         date: 'January 10, 2026',
         title: 'Mahdu Rahmah @30',
         description: '- Celebrating 30 years of impactful work in education and community development.',
-        image: 'https://imgur.com/a/f4ZDvYY'
+        image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767270351/IMG-20251210-WA0013_i70axs.jpg'
       },
     ];
   };
@@ -39,16 +39,16 @@ const NewsEventsSection = () => {
         date: item.date,
         title: item.title,
         details: item.description,
-        videoId: item.videoId || 'dQw4w9WgXcQ'
+        videoId: item.videoId || '9R8hKCLfkK0'
       }));
     }
     // Default fallback if translation not found
     return [
       {
-        date: 'February 1, 2025',
-        title: 'Annual Science Fair 2025',
-        details: 'Join us for presentations from top student researchers.',
-        videoId: 'dQw4w9WgXcQ'
+        date: 'February 1, 2003',
+        title: 'Prophet Musa and Ibrahim by Sheikh Ismail A. Raji',
+        details: 'Enjoy one of the moment our beloved Sheikh Ismail A. Raji delivered on the stories of Prophet Musa and Prophet Ibrahim (peace be upon them).',
+        videoId: '9R8hKCLfkK0'
       },
     ];
   };
