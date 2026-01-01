@@ -1231,6 +1231,34 @@
         "noData": "No data"
     },
 
+    "dashboard": {
+        "overview": "Overview",
+        "overviewDescription": "Real-time statistics and insights",
+        "dashboardStats": "Dashboard",
+        "contentStats": "Content",
+        "communicationStats": "Communication",
+        "userEngagement": "User Engagement",
+        "userEngagementDesc": "Track user activity and growth metrics",
+        "contentManagement": "Content Management",
+        "contentManagementDesc": "Monitor content creation and academic progress",
+        "communicationHub": "Communication Hub",
+        "communicationHubDesc": "Manage messages and support interactions",
+        "clearAllData": "Clear All Admin Data",
+        "clearDataWarning": "This action cannot be undone!",
+        "dataToBeDeleted": "The following data will be deleted:",
+        "newsArticles": "All News Articles",
+        "events": "All Events",
+        "testimonials": "All Testimonials",
+        "campusLife": "All Campus Life Content",
+        "books": "All Books",
+        "contactMessages": "All Contact Messages",
+        "statistics": "Statistics (reset to zero)",
+        "preservedData": "User accounts and academic data will be preserved.",
+        "cancel": "Cancel",
+        "clearing": "Clearing...",
+        "confirmClear": "Confirm Clear"
+    },
+
     "notFound": {
         "title": "Page Not Found",
         "subtitle": "Sorry, the page you are looking for does not exist or has been moved to another location.",

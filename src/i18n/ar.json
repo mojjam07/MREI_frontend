@@ -379,7 +379,20 @@
         "deactivate": "إلغاء التفعيل",
         "specialization": "التخصص",
         "isbn": "رقم ISBN",
-        "program": "البرنامج"
+        "program": "البرنامج",
+        "clearAllData": "مسح جميع بيانات الإدارة",
+        "clearDataWarning": "لا يمكن التراجع عن هذا الإجراء!",
+        "dataToBeDeleted": "سيتم حذف البيانات التالية:",
+        "newsArticles": "جميع المقالات الإخبارية",
+        "events": "جميع الفعاليات",
+        "testimonials": "جميع شهادات التقدير",
+        "campusLife": "جميع محتوى الحياة الجامعية",
+        "books": "جميع الكتب",
+        "contactMessages": "جميع رسائل التواصل",
+        "statistics": "الإحصائيات (إعادتها إلى الصفر)",
+        "preservedData": "سيتم الحفاظ على حسابات المستخدمين والبيانات الأكاديمية.",
+        "clearing": "جاري المسح...",
+        "confirmClear": "تأكيد المسح"
     },
 
     "nav": {

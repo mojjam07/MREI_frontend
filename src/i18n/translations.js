@@ -1046,6 +1046,21 @@ const translations = {
       view: 'View',
       createNews: 'Create News',
       addNewBook: 'Add New Book',
+      
+      // Clear All Data section
+      clearAllData: 'Clear All Management Data',
+      clearDataWarning: 'This action cannot be undone!',
+      dataToBeDeleted: 'The following data will be deleted:',
+      newsArticles: 'All news articles',
+      events: 'All events',
+      testimonials: 'All testimonials',
+      campusLife: 'All campus life content',
+      books: 'All books',
+      contactMessages: 'All contact messages',
+      statistics: 'Statistics (reset to zero)',
+      preservedData: 'User accounts and academic data will be preserved.',
+      clearing: 'Clearing...',
+      confirmClear: 'Confirm Clear'
     },
 
     statValues: {
@@ -2739,6 +2754,21 @@ const translations = {
       view: 'عرض',
       createNews: 'إنشاء خبر',
       addNewBook: 'إضافة كتاب جديد',
+      
+      // Clear All Data section
+      clearAllData: 'مسح جميع بيانات الإدارة',
+      clearDataWarning: 'لا يمكن التراجع عن هذا الإجراء!',
+      dataToBeDeleted: 'ستحذف البيانات التالية:',
+      newsArticles: 'جميع الأخبار',
+      events: 'جميع الفعاليات',
+      testimonials: 'جميع الشهادات',
+      campusLife: 'جميع محتوى الحياة المعهدية',
+      books: 'جميع الكتب',
+      contactMessages: 'جميع رسائل التواصل',
+      statistics: 'الإحصائيات (إعادة تعيين إلى صفر)',
+      preservedData: 'سيتم الاحتفاظ بحسابات المستخدمين والبيانات الأكاديمية.',
+      clearing: 'جاري المسح...',
+      confirmClear: 'تأكيد المسح'
     },
 
     statValues: {

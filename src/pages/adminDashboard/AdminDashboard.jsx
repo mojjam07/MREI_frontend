@@ -69,7 +69,9 @@ const AdminDashboard = () => {
         return renderSectionWithErrorBoundary(NewsSection, {
           news: dashboardContext.adminNews || [],
           newsLoading: dashboardContext.adminNewsLoading,
-          createNews: dashboardContext.createNews
+          createNews: dashboardContext.createNews,
+          updateNews: dashboardContext.updateNews,
+          deleteNews: dashboardContext.deleteNews
         });
       case 'events':
         return renderSectionWithErrorBoundary(EventsSection, {
@@ -86,7 +88,9 @@ const AdminDashboard = () => {
         return renderSectionWithErrorBoundary(CampusLifeSection, {
           campusLife: dashboardContext.adminCampusLife || [],
           campusLifeLoading: dashboardContext.adminCampusLifeLoading,
-          createCampusLife: dashboardContext.createCampusLife
+          createCampusLife: dashboardContext.createCampusLife,
+          updateCampusLife: dashboardContext.updateCampusLife,
+          deleteCampusLife: dashboardContext.deleteCampusLife
         });
       case 'students':
         return renderSectionWithErrorBoundary(StudentsSection, {

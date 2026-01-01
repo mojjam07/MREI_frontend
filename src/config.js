@@ -13,7 +13,7 @@ const isDevelopment = import.meta.env.DEV;
 
 // Configure API base URL based on environment
 // Production: Use environment variable or deploy-specific URL
-// Development: Use localhost by default
+// Development: Use Express backend (port 3000) by default for admin features
 let apiBaseUrl;
 
 if (isProduction) {
@@ -21,8 +21,8 @@ if (isProduction) {
   // If not set, try to use a known production URL
   apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'https://mrei-backend-api.onrender.com/api/';
 } else {
-  // In development, default to localhost
-  apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/';
+  // In development, default to Express backend (port 3000) for admin features
+  apiBaseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api';
 }
 
 export const API_BASE_URL = apiBaseUrl;
@@ -112,6 +112,15 @@ export const API_ENDPOINTS = {
     ADMIN_CAMPUS_LIFE: '/dashboard/admin/campus-life/',
     ADMIN_BOOKS: '/dashboard/admin/books/',
     ADMIN_CONTACT_MESSAGES: '/dashboard/admin/contact-messages/',
+    ADMIN_CLEAR_ALL: '/admin/clear-all-data/',
+  },
+
+  /* =========================
+     ADMIN (Clear All Data)
+  ========================== */
+  ADMIN: {
+    CLEAR_ALL: '/admin/clear-all-data/',
+    OVERVIEW: '/admin/overview/',
   },
 
   /* =========================

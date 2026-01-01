@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { safeFormatDate, safeArray, safeString } from '../../../../utils/dateUtils';
 import { Plus, X, Edit2, Trash2 } from 'lucide-react';
 
-const NewsSection = ({ t, news = [], createNews }) => {
+const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
   const safeNews = safeArray(news);
   const [showForm, setShowForm] = useState(false);
+  const [editingId, setEditingId] = useState(null);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
@@ -28,7 +29,11 @@ const NewsSection = ({ t, news = [], createNews }) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      await createNews(formData);
+      if (editingId) {
+        await updateNews({ id: editingId, data: formData });
+      } else {
+        await createNews(formData);
+      }
       setFormData({
         title: '',
         content: '',
@@ -38,10 +43,34 @@ const NewsSection = ({ t, news = [], createNews }) => {
         image_url: ''
       });
       setShowForm(false);
+      setEditingId(null);
     } catch (error) {
-      console.error('Error creating news:', error);
+      console.error('Error submitting news:', error);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleEdit = (newsItem) => {
+    setFormData({
+      title: newsItem.title || '',
+      content: newsItem.content || '',
+      category: newsItem.category || '',
+      author: newsItem.author || '',
+      status: newsItem.status || 'published',
+      image_url: newsItem.image_url || ''
+    });
+    setEditingId(newsItem.id);
+    setShowForm(true);
+  };
+
+  const handleDelete = async (id) => {
+    if (window.confirm(t('dashboard.confirmDelete') || 'Are you sure you want to delete this news item?')) {
+      try {
+        await deleteNews(id);
+      } catch (error) {
+        console.error('Error deleting news:', error);
+      }
     }
   };
 
@@ -88,7 +117,7 @@ const NewsSection = ({ t, news = [], createNews }) => {
           <div className="flex items-center gap-2 sm:gap-3 mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full animate-pulse-gentle flex-shrink-0"></span>
             <h3 className="text-lg sm:text-xl font-semibold text-light-text">
-              {t('dashboard.addNewNews') || 'Add New News'}
+              {editingId ? (t('dashboard.updateNews') || 'Update News') : (t('dashboard.addNewNews') || 'Add New News')}
             </h3>
           </div>
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
@@ -185,17 +214,17 @@ const NewsSection = ({ t, news = [], createNews }) => {
                 disabled={isSubmitting}
                 className="px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg font-medium hover-lift hover-scale transition-all duration-300 disabled:opacity-50 shadow-lg hover:shadow-amber-500/30 glow-amber flex items-center justify-center gap-2 text-sm sm:text-base"
               >
-                {isSubmitting ? (
-                  <>
-                    <span className="animate-spin">⏳</span>
-                    {t('dashboard.creating') || 'Creating...'}
-                  </>
-                ) : (
-                  <>
-                    <Plus className="w-4 h-4 sm:w-5 sm:h-5" />
-                    {t('dashboard.createNews') || 'Create News'}
-                  </>
-                )}
+                    {isSubmitting ? (
+                      <>
+                        <span className="animate-spin">⏳</span>
+                        {editingId ? (t('dashboard.updating') || 'Updating...') : (t('dashboard.creating') || 'Creating...')}
+                      </>
+                    ) : (
+                      <>
+                        {editingId ? <Edit2 className="w-4 h-4 sm:w-5 sm:h-5" /> : <Plus className="w-4 h-4 sm:w-5 sm:h-5" />}
+                        {editingId ? (t('dashboard.updateNews') || 'Update News') : (t('dashboard.createNews') || 'Create News')}
+                      </>
+                    )}
               </button>
               <button
                 type="button"
@@ -285,11 +314,17 @@ const NewsSection = ({ t, news = [], createNews }) => {
                       </>
                     )}
                   </button>
-                  <button className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-300 rounded-lg hover-lift hover-scale transition-all duration-300 border border-blue-500/30 hover:border-blue-500/50 text-xs sm:text-sm flex items-center justify-center gap-1">
+                  <button
+                    onClick={() => handleEdit(article)}
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 text-blue-300 rounded-lg hover-lift hover-scale transition-all duration-300 border border-blue-500/30 hover:border-blue-500/50 text-xs sm:text-sm flex items-center justify-center gap-1"
+                  >
                     <Edit2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">{t('dashboard.edit') || 'Edit'}</span>
                   </button>
-                  <button className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-rose-400 rounded-lg hover-lift hover-scale transition-all duration-300 border border-rose-400/30 hover:border-rose-400/50 hover:text-rose-300 text-xs sm:text-sm flex items-center justify-center gap-1">
+                  <button
+                    onClick={() => handleDelete(article.id)}
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-rose-400 rounded-lg hover-lift hover-scale transition-all duration-300 border border-rose-400/30 hover:border-rose-400/50 hover:text-rose-300 text-xs sm:text-sm flex items-center justify-center gap-1"
+                  >
                     <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">{t('dashboard.delete') || 'Delete'}</span>
                   </button>
