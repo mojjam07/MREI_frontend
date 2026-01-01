@@ -113,11 +113,11 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
 
   if (testimonialsLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="bg-accent-color/20 backdrop-blur-sm rounded-lg p-6 border border-white/20 animate-pulse"
+            className="glass-card p-4 sm:p-6 animate-pulse-gentle"
           >
             <div className="h-4 bg-white/20 rounded w-3/4 mb-2"></div>
             <div className="h-3 bg-white/20 rounded w-full mb-1"></div>
@@ -129,21 +129,21 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div className="animate-fade-in-up">
-          <h2 className="text-3xl font-bold text-light-text mb-2 flex items-center gap-3">
-            <span className="w-1 h-8 bg-gradient-to-b from-primary to-coral rounded-full"></span>
-            {t('dashboard.testimonialsManagement') || 'Testimonials Management'}
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 animate-fade-in-up">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold gradient-text mb-1 sm:mb-2 flex items-center gap-2 sm:gap-3">
+            <span className="w-1 h-6 sm:h-8 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
+            <span className="truncate">{t('dashboard.testimonialsManagement') || 'Testimonials Management'}</span>
           </h2>
-          <p className="text-light-text/80">
+          <p className="text-sm sm:text-base text-light-text/80 hidden sm:block">
             {t('dashboard.testimonialsDescription') || 'Manage student and staff testimonials'}
           </p>
         </div>
         <button
           onClick={() => setShowForm(!showForm)}
-          className="px-6 py-3 bg-gradient-to-r from-primary to-coral text-white rounded-lg font-medium transition-all hover:scale-105 hover-lift animate-bounce-in shadow-lg shadow-primary/30 w-full md:w-auto"
+          className="w-full sm:w-auto px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary to-coral text-white rounded-lg font-medium transition-all hover:scale-105 hover-lift animate-bounce-in shadow-lg shadow-primary/30 text-sm sm:text-base"
         >
           {showForm ? (t('dashboard.cancel') || 'Cancel') : (t('dashboard.addTestimonial') || 'Add Testimonial')}
         </button>
@@ -151,17 +151,17 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
 
       {/* Add/Edit Testimonial Form */}
       {showForm && (
-        <div className="bg-gradient-to-br from-dark-gradient-start to-dark-gradient-end backdrop-blur-sm rounded-lg p-6 border border-white/10 shadow-xl shadow-primary/10 animate-fade-in-up">
-          <div className="flex items-center gap-3 mb-4 pb-2 border-b border-white/10">
-            <span className="w-1 h-6 bg-gradient-to-b from-primary to-coral rounded-full"></span>
-            <h3 className="text-xl font-semibold text-light-text">
+        <div className="glass-card p-4 sm:p-6 border border-white/10 animate-fade-in-up hover-glow-emerald">
+          <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-2 border-b border-white/10">
+            <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
+            <h3 className="text-base sm:text-lg font-semibold text-light-text">
               {editingId ? (t('dashboard.editTestimonial') || 'Edit Testimonial') : (t('dashboard.addNewTestimonial') || 'Add New Testimonial')}
             </h3>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
                   {t('dashboard.name') || 'Name'} *
                 </label>
                 <input
@@ -170,19 +170,19 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterName') || 'Enter name'}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
                   {t('dashboard.rating') || 'Rating'}
                 </label>
                 <select
                   name="rating"
                   value={formData.rating}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-light-text focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="5">5 Stars</option>
                   <option value="4">4 Stars</option>
@@ -192,9 +192,9 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
                   {t('dashboard.position') || 'Position'}
                 </label>
                 <input
@@ -202,12 +202,12 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                   name="position"
                   value={formData.position}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterPosition') || 'Enter position'}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
                   {t('dashboard.company') || 'Company'}
                 </label>
                 <input
@@ -215,13 +215,13 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                   name="company"
                   value={formData.company}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterCompany') || 'Enter company'}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
                 {t('dashboard.content') || 'Content'} *
               </label>
               <textarea
@@ -229,8 +229,8 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                 value={formData.content}
                 onChange={handleInputChange}
                 required
-                rows={4}
-                className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical"
+                rows={3}
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterContent') || 'Enter testimonial content'}
               />
             </div>
@@ -241,24 +241,24 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                 id="approved"
                 checked={formData.approved}
                 onChange={handleInputChange}
-                className="w-4 h-4 rounded border-white/20 bg-white/10 text-primary focus:ring-primary"
+                className="w-4 h-4 rounded border-white/20 bg-white/10 text-primary focus:ring-primary cursor-pointer"
               />
-              <label htmlFor="approved" className="text-sm font-medium text-light-text">
+              <label htmlFor="approved" className="text-xs sm:text-sm font-medium text-light-text cursor-pointer">
                 {t('dashboard.approved') || 'Approved'}
               </label>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="px-4 py-2 bg-gradient-to-r from-primary to-coral text-white rounded-lg font-medium hover:shadow-lg hover:shadow-primary/30 transition-all disabled:opacity-50"
+                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-primary to-coral text-white rounded-lg font-medium hover:shadow-lg hover:shadow-primary/30 transition-all disabled:opacity-50 hover-lift hover-scale text-sm sm:text-base"
               >
                 {isSubmitting ? (t('dashboard.saving') || 'Saving...') : editingId ? (t('dashboard.update') || 'Update') : (t('dashboard.create') || 'Create')}
               </button>
               <button
                 type="button"
                 onClick={handleCancel}
-                className="px-4 py-2 bg-white/10 text-light-text rounded-lg font-medium hover:bg-white/20 transition-colors border border-white/20"
+                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>
@@ -268,59 +268,75 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
       )}
 
       {/* Testimonials Grid */}
-      <div className="grid gap-6">
+      <div className="grid gap-4 sm:gap-6">
         {safeTestimonials.length > 0 ? (
           safeTestimonials.map((testimonial, index) => (
             <div
               key={testimonial.id || index}
-              className="bg-gradient-to-br from-dark-gradient-start to-dark-gradient-end backdrop-blur-sm rounded-lg p-6 border border-white/10 shadow-lg shadow-primary/5 hover:shadow-xl hover:shadow-primary/10 hover:border-primary/30 transition-all duration-300 hover-lift group"
+              className="glass-card p-4 sm:p-6 hover-lift hover-glow-emerald animate-scale-in glow-emerald border border-white/20 hover:border-white/40 transition-all duration-300"
+              style={{ animationDelay: `${index * 75}ms` }}
             >
-              <div className="flex flex-col lg:flex-row justify-between items-start mb-4 gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <div className="w-1 h-6 bg-gradient-to-b from-primary to-coral rounded-full group-hover:scale-y-110 transition-transform"></div>
-                    <h3 className="text-xl font-semibold text-light-text">
+              <div className="flex flex-col">
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2 sm:mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
+                    <h3 className="text-base sm:text-lg font-semibold text-light-text truncate">
                       {safeString(testimonial.name || testimonial.student_name, 'Anonymous')}
                     </h3>
-                    {renderStars(testimonial.rating || 5)}
+                    <div className="hidden sm:block">{renderStars(testimonial.rating || 5)}</div>
                   </div>
-                  <p className="text-light-text/80 text-sm mb-3 italic">
-                    "{safeString(testimonial.content, 'No content')}"
-                  </p>
-                  <div className="flex flex-wrap items-center gap-4 text-sm text-light-text/60">
-                    {(testimonial.position || testimonial.role) && (
-                      <span className="flex items-center gap-1">
-                        <span className="w-4 h-4 rounded-full bg-primary/20 flex items-center justify-center text-primary text-xs">💼</span>
-                        {t('dashboard.role') || 'Role'}: {safeString(testimonial.position || testimonial.role, 'Student')}
-                      </span>
-                    )}
-                    {testimonial.company && (
-                      <span className="flex items-center gap-1">
-                        <span className="w-4 h-4 rounded-full bg-secondary-color/20 flex items-center justify-center text-secondary-color text-xs">🏢</span>
-                        {t('dashboard.company') || 'Company'}: {safeString(testimonial.company)}
-                      </span>
-                    )}
-                    <span className="flex items-center gap-1">
-                      <span className="w-4 h-4 rounded-full bg-coral/20 flex items-center justify-center text-coral text-xs">📅</span>
-                      {t('dashboard.date') || 'Date'}: {safeFormatDate(testimonial.created_at)}
-                    </span>
-                    <span
-                      className={`px-2 py-1 rounded text-xs ${getStatusColor(testimonial)}`}
-                    >
-                      {getStatusText(testimonial)}
-                    </span>
-                  </div>
+                  <span
+                    className={`px-1.5 sm:px-2 py-0.5 rounded text-xs ${getStatusColor(testimonial)} flex-shrink-0`}
+                  >
+                    {getStatusText(testimonial)}
+                  </span>
                 </div>
-                <div className="flex gap-2 w-full lg:w-auto lg:ml-4">
+
+                {/* Rating on mobile */}
+                <div className="sm:hidden mb-2">
+                  {renderStars(testimonial.rating || 5)}
+                </div>
+
+                {/* Content */}
+                <p className="text-xs sm:text-sm text-light-text/80 mb-2 sm:mb-3 italic line-clamp-2">
+                  "{safeString(testimonial.content, 'No content')}"
+                </p>
+
+                {/* Meta Info */}
+                <div className="flex flex-wrap gap-2 text-xs text-light-text/60 mb-2 sm:mb-3">
+                  {(testimonial.position || testimonial.role) && (
+                    <span className="flex items-center gap-1">
+                      <span className="hidden sm:inline">{t('dashboard.role') || 'Role'}:</span>
+                      <span className="sm:hidden">💼:</span>
+                      {safeString(testimonial.position || testimonial.role, 'Student')}
+                    </span>
+                  )}
+                  {testimonial.company && (
+                    <span className="flex items-center gap-1">
+                      <span className="hidden sm:inline">{t('dashboard.company') || 'Company'}:</span>
+                      <span className="sm:hidden">🏢:</span>
+                      {safeString(testimonial.company)}
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1">
+                    <span className="hidden sm:inline">{t('dashboard.date') || 'Date'}:</span>
+                    <span className="sm:hidden">📅:</span>
+                    {safeFormatDate(testimonial.created_at)}
+                  </span>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 w-full pt-2 border-t border-white/10">
                   <button
                     onClick={() => handleEdit(testimonial)}
-                    className="flex-1 lg:flex-none px-3 py-1 bg-gradient-to-r from-primary/20 to-coral/20 text-light-text rounded hover:from-primary/30 hover:to-coral/30 transition-all border border-primary/20 group-hover:border-primary/40"
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-light-text rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 text-xs sm:text-sm"
                   >
                     {t('dashboard.edit') || 'Edit'}
                   </button>
                   <button
                     onClick={() => handleDelete(testimonial.id)}
-                    className="flex-1 lg:flex-none px-3 py-1 bg-error-color/20 text-error-color rounded hover:bg-error-color/30 transition-colors border border-error-color/20"
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-error-color rounded-lg hover-lift hover-scale transition-all duration-300 border border-error-color/30 hover:border-error-color/50 hover:text-error-color/80 text-xs sm:text-sm"
                   >
                     {t('dashboard.delete') || 'Delete'}
                   </button>
@@ -329,8 +345,8 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
             </div>
           ))
         ) : (
-          <div className="text-center py-12 animate-fade-in-up">
-            <p className="text-light-text/60 text-lg">
+          <div className="glass-card p-8 sm:p-12 text-center animate-fade-in-up">
+            <p className="text-base sm:text-lg text-light-text/60">
               {t('dashboard.noTestimonials') || 'No testimonials yet'}
             </p>
           </div>

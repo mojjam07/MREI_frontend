@@ -24,10 +24,10 @@ const NewsEventsSection = () => {
     // Default fallback if translation not found
     return [
       {
-        date: 'January 15, 2025',
-        title: 'University Launches New Research Center',
-        description: 'We are excited to announce the opening of our new state-of-the-art research facility.',
-        image: 'https://images.unsplash.com/photo-1562774053-701939374585?w=400&h=250&fit=crop'
+        date: 'January 10, 2026',
+        title: 'Mahdu Rahmah @30',
+        description: '- Celebrating 30 years of impactful work in education and community development.',
+        image: 'https://imgur.com/a/f4ZDvYY'
       },
     ];
   };

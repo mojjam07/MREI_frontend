@@ -62,11 +62,11 @@ const ContactMessagesSection = ({
 
   if (contactMessagesLoading) {
     return (
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {[1, 2, 3].map((i) => (
           <div
             key={i}
-            className="bg-accent-color/20 backdrop-blur-sm rounded-lg p-6 border border-white/20 animate-pulse-gentle"
+            className="glass-card p-4 sm:p-6 animate-pulse-gentle"
           >
             <div className="h-4 bg-white/20 rounded w-3/4 mb-2"></div>
             <div className="h-3 bg-white/20 rounded w-full mb-1"></div>
@@ -78,38 +78,42 @@ const ContactMessagesSection = ({
   }
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-4 sm:space-y-6 lg:space-y-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-        <div>
-          <h2 className="text-3xl font-bold text-light-text mb-2 animate-fade-in-up">
-            {t('dashboard.contactMessages') || 'Contact Messages'}
+      <div className="flex flex-col sm:flex-row justify-between items-start gap-3 animate-fade-in-up">
+        <div className="flex-1 min-w-0">
+          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold gradient-text mb-1 sm:mb-2 flex items-center gap-2 sm:gap-3">
+            <span className="w-1 h-6 sm:h-8 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
+            <span className="truncate">{t('dashboard.contactMessages') || 'Contact Messages'}</span>
           </h2>
-          <p className="text-light-text/80 animate-fade-in-up delay-100">
+          <p className="text-sm sm:text-base text-light-text/80 hidden sm:block">
             {t('dashboard.contactMessagesDescription') || 'Review and respond to contact form submissions'}
           </p>
         </div>
-        <div className="text-sm text-light-text/60 animate-fade-in-up delay-200">
-          {safeUnreadMessages.length} {t('dashboard.unread') || 'unread'}
+        <div className="flex items-center gap-2 text-xs sm:text-sm text-light-text/60">
+          <span className="glass-card px-2 sm:px-3 py-1 rounded-full">
+            {safeUnreadMessages.length} {t('dashboard.unread') || 'unread'}
+          </span>
         </div>
       </div>
 
       {/* Messages Grid */}
-      <div className="grid gap-6">
+      <div className="grid gap-4 sm:gap-6">
         {safeContactMessages.length > 0 ? (
           safeContactMessages.map((message, index) => (
             <div
               key={message.id || index}
-              className={`bg-gradient-to-br from-dark-gradient-start to-dark-gradient-end backdrop-blur-sm rounded-lg p-6 border transition-all duration-300 hover-lift animate-fade-in-left shadow-xl shadow-primary/10 ${
-                message.is_read ? 'border-white/10 hover:bg-gradient-to-br hover:from-dark-gradient-start/80 hover:to-dark-gradient-end/80' : 'border-coral/30 bg-gradient-to-br from-warning-color/10 to-coral/5'
+              className={`glass-card p-4 sm:p-6 transition-all duration-300 hover-lift animate-scale-in ${
+                message.is_read ? 'glow-blue border-white/20 hover:border-white/40' : 'glow-coral border-coral/30'
               }`}
+              style={{ animationDelay: `${index * 75}ms` }}
             >
               {/* Reply Form */}
               {replyingTo === message.id && (
-                <div className="mb-4 p-4 bg-gradient-to-br from-dark-gradient-start to-dark-gradient-end backdrop-blur-sm rounded-lg border border-coral/30 shadow-xl shadow-primary/10 animate-fade-in-up">
-                  <div className="flex items-center gap-3 mb-2 pb-2 border-b border-white/10">
-                    <span className="w-1 h-4 bg-gradient-to-b from-primary to-coral rounded-full"></span>
-                    <h4 className="text-sm font-medium text-light-text">
+                <div className="mb-3 sm:mb-4 p-3 sm:p-4 glass-card border border-coral/30 animate-fade-in-up hover-glow-coral">
+                  <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 pb-2 border-b border-white/10">
+                    <span className="w-1 h-4 sm:h-5 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
+                    <h4 className="text-xs sm:text-sm font-medium text-light-text">
                       {t('dashboard.replyTo') || 'Replying to'} {message.name}
                     </h4>
                   </div>
@@ -118,23 +122,23 @@ const ContactMessagesSection = ({
                       name="reply"
                       value={replyData.reply}
                       onChange={handleInputChange}
-                      rows={3}
-                      className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical"
+                      rows={2}
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                       placeholder={t('dashboard.enterReply') || 'Enter your reply...'}
                       required
                     />
-                    <div className="flex gap-2 mt-2">
+                    <div className="flex flex-col sm:flex-row gap-2 mt-2 sm:mt-3">
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="px-4 py-2 bg-success-color text-white rounded-lg font-medium hover:bg-success-color/80 transition-colors disabled:opacity-50"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-success-color to-green-600 text-white rounded-lg font-medium hover-lift hover-scale transition-all disabled:opacity-50 text-xs sm:text-sm"
                       >
                         {isSubmitting ? (t('dashboard.sending') || 'Sending...') : (t('dashboard.sendReply') || 'Send Reply')}
                       </button>
                       <button
                         type="button"
                         onClick={cancelReply}
-                        className="px-4 py-2 bg-gray-500/20 text-gray-300 rounded-lg font-medium hover:bg-gray-500/30 transition-colors"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-xs sm:text-sm"
                       >
                         {t('dashboard.cancel') || 'Cancel'}
                       </button>
@@ -145,43 +149,62 @@ const ContactMessagesSection = ({
 
               {/* Existing Reply Display */}
               {message.reply && (
-                <div className="mb-4 p-3 bg-success-color/10 rounded-lg border border-success-color/30">
+                <div className="mb-3 p-2 sm:p-3 bg-success-color/10 rounded-lg border border-success-color/30">
                   <p className="text-xs font-medium text-success-color mb-1">
                     {t('dashboard.yourReply') || 'Your Reply'} - {safeFormatDate(message.reply_date)}
                   </p>
-                  <p className="text-sm text-light-text">{message.reply}</p>
+                  <p className="text-xs sm:text-sm text-light-text">{message.reply}</p>
                 </div>
               )}
 
-              <div className="flex flex-col md:flex-row justify-between items-start gap-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold text-light-text">{safeString(message.name, 'Anonymous')}</h3>
+              <div className="flex flex-col">
+                {/* Header */}
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2 sm:mb-3">
+                  <div className="flex items-center gap-2">
+                    <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
+                    <h3 className="text-base sm:text-lg font-semibold text-light-text truncate">
+                      {safeString(message.name, 'Anonymous')}
+                    </h3>
                     {!message.is_read && (
-                      <span className="px-2 py-1 rounded text-xs bg-warning-color/20 text-warning-color animate-bounce-in">
+                      <span className="px-1.5 sm:px-2 py-0.5 rounded text-xs bg-warning-color/20 text-warning-color animate-bounce-in flex-shrink-0">
                         {t('dashboard.new') || 'NEW'}
                       </span>
                     )}
                   </div>
-                  <p className="text-light-text/80 text-sm mb-3">{safeString(message.message, 'No message')}</p>
-                  <div className="flex flex-wrap gap-4 text-sm text-light-text/60">
-                    <span>
-                      {t('dashboard.email') || 'Email'}: {safeString(message.email, 'N/A')}
-                    </span>
-                    <span>
-                      {t('dashboard.phone') || 'Phone'}: {safeString(message.phone, 'N/A')}
-                    </span>
-                    <span>
-                      {t('dashboard.received') || 'Received'}: {safeFormatDate(message.created_at)}
-                    </span>
-                  </div>
                 </div>
 
-                <div className="flex gap-2 mt-4 md:mt-0">
+                {/* Message */}
+                <p className="text-xs sm:text-sm text-light-text/80 mb-2 sm:mb-3 line-clamp-2">
+                  {safeString(message.message, 'No message')}
+                </p>
+
+                {/* Meta Info */}
+                <div className="flex flex-wrap gap-2 sm:gap-4 text-xs text-light-text/60 mb-2 sm:mb-3">
+                  <span className="flex items-center gap-1">
+                    <span className="hidden sm:inline">{t('dashboard.email') || 'Email'}:</span>
+                    <span className="sm:hidden">✉:</span>
+                    {safeString(message.email, 'N/A')}
+                  </span>
+                  {message.phone && (
+                    <span className="flex items-center gap-1">
+                      <span className="hidden sm:inline">{t('dashboard.phone') || 'Phone'}:</span>
+                      <span className="sm:hidden">📱:</span>
+                      {safeString(message.phone)}
+                    </span>
+                  )}
+                  <span className="flex items-center gap-1">
+                    <span className="hidden sm:inline">{t('dashboard.received') || 'Received'}:</span>
+                    <span className="sm:hidden">📅:</span>
+                    {safeFormatDate(message.created_at)}
+                  </span>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex gap-2 w-full pt-2 border-t border-white/10">
                   {!message.reply && (
                     <button 
                       onClick={() => startReply(message)}
-                      className="px-3 py-1 bg-success-color/20 text-success-color rounded hover:bg-success-color/30 transition-colors"
+                      className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-success-color/20 to-green-500/20 text-success-color rounded-lg hover-lift hover-scale transition-all duration-300 border border-success-color/30 hover:border-success-color/50 text-xs sm:text-sm flex items-center justify-center gap-1"
                     >
                       {t('dashboard.reply') || 'Reply'}
                     </button>
@@ -189,12 +212,12 @@ const ContactMessagesSection = ({
                   {!message.is_read && (
                     <button 
                       onClick={() => handleMarkAsRead(message.id)}
-                      className="px-3 py-1 bg-primary/20 text-primary rounded hover:bg-primary/30 transition-colors"
+                      className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-primary rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 text-xs sm:text-sm flex items-center justify-center gap-1"
                     >
                       {t('dashboard.markRead') || 'Mark Read'}
                     </button>
                   )}
-                  <button className="px-3 py-1 bg-error-color/20 text-error-color rounded hover:bg-error-color/30 transition-colors">
+                  <button className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-error-color rounded-lg hover-lift hover-scale transition-all duration-300 border border-error-color/30 hover:border-error-color/50 hover:text-error-color/80 text-xs sm:text-sm flex items-center justify-center gap-1">
                     {t('dashboard.delete') || 'Delete'}
                   </button>
                 </div>
@@ -202,8 +225,10 @@ const ContactMessagesSection = ({
             </div>
           ))
         ) : (
-          <div className="text-center py-12 animate-fade-in-up">
-            <p className="text-light-text/60 text-lg">{t('dashboard.noMessages') || 'No contact messages'}</p>
+          <div className="glass-card p-8 sm:p-12 text-center animate-fade-in-up">
+            <p className="text-base sm:text-lg text-light-text/60">
+              {t('dashboard.noMessages') || 'No contact messages'}
+            </p>
           </div>
         )}
       </div>

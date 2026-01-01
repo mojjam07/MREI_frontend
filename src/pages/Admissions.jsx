@@ -48,7 +48,7 @@ const Admissions = () => {
             <p className="text-gray-700 text-sm sm:text-base lg:text-lg max-w-xl sm:max-w-2xl mx-auto mb-4 sm:mb-6 lg:mb-8">
               {t('admissions.applyNowDesc')}
             </p>
-            <button className="bg-accent hover:bg-accent/90 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 animate-pulse-gentle">
+            <button className="bg-primary hover:bg-accent/90 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-all duration-300 transform hover:scale-105 animate-pulse-gentle">
               {t('admissions.startApplication')}
             </button>
           </div>
@@ -181,7 +181,7 @@ const Admissions = () => {
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
             <div className="text-center p-3 sm:p-4 lg:p-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-tertiary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                 <span className="text-white text-lg sm:text-xl lg:text-2xl">💰</span>
               </div>
               <h3 className="text-base sm:text-lg lg:text-xl font-bold text-primary mb-2">
@@ -192,7 +192,7 @@ const Admissions = () => {
               </p>
             </div>
             <div className="text-center p-3 sm:p-4 lg:p-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-tertiary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                 <span className="text-white text-lg sm:text-xl lg:text-2xl">🎓</span>
               </div>
               <h3 className="text-base sm:text-lg lg:text-xl font-bold text-primary mb-2">
@@ -203,7 +203,7 @@ const Admissions = () => {
               </p>
             </div>
             <div className="text-center p-3 sm:p-4 lg:p-6">
-              <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-accent rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
+              <div className="w-12 h-12 sm:w-16 sm:h-16 lg:w-20 lg:h-20 bg-tertiary rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4">
                 <span className="text-white text-lg sm:text-xl lg:text-2xl">🏦</span>
               </div>
               <h3 className="text-base sm:text-lg lg:text-xl font-bold text-primary mb-2">
@@ -215,7 +215,7 @@ const Admissions = () => {
             </div>
           </div>
           <div className="text-center mt-6 sm:mt-8 lg:mt-12">
-            <button className="bg-accent hover:bg-accent/90 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-colors">
+            <button className="bg-primary hover:bg-accent/90 text-white px-4 sm:px-6 lg:px-8 py-2.5 sm:py-3 lg:py-4 rounded-lg font-semibold text-sm sm:text-base lg:text-lg transition-colors">
               {t('admissions.financialAidCalculator')}
             </button>
           </div>

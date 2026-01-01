@@ -17,10 +17,10 @@ const AboutUs = () => {
   
   // Counter animation for statistics
   const [counters, setCounters] = useState({
-    founded: 0,
-    students: 0,
-    faculty: 0,
-    employment: 0
+    founded: 1996,
+    students: 10000,
+    faculty: 30,
+    employment: 95
   });
   
   const { visibleItems: visibleStats } = useStaggeredAnimation(4, 200);

@@ -251,7 +251,7 @@ const SignupPage = () => {
             </select>
           </div>
 
-          <Button onClick={handleSignup} className="w-full">{t('auth.signup.createAccount')}</Button>
+          <Button onClick={handleSignup} className="w-full disabled">{t('auth.signup.createAccount')}</Button>
 
           <p className="text-center text-sm text-gray-600">
             {t('auth.signup.hasAccount')} <a href="#" onClick={() => navigate('/login')} className="text-blue-600 hover:underline">{t('auth.signup.signIn')}</a>
