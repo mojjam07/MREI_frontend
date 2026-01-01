@@ -1,48 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import apiClient from '../../../../services/apiClient';
 import { API_ENDPOINTS } from '../../../../config';
 
 const StatsSection = ({ t, statValues = {}, onRefresh }) => {
+  const [stats, setStats] = useState({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const safeStats = statValues || {};
   const [activeTab, setActiveTab] = useState('overview');
   const [showClearModal, setShowClearModal] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const [clearResult, setClearResult] = useState(null);
 
+  // Fetch dashboard stats from backend
+  const fetchStats = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const response = await apiClient.get(API_ENDPOINTS.COMMS.DASHBOARD_STATS);
+      if (response.data?.success && response.data?.data?.statistics) {
+        setStats(response.data.data.statistics);
+      }
+    } catch (err) {
+      console.error('Error fetching dashboard stats:', err);
+      setError(err.message);
+      // Fall back to prop values
+      setStats({});
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
+  // Merge fetched stats with prop values (prop values take precedence for backward compatibility)
+  const displayStats = { ...stats, ...safeStats };
+
   const overviewStats = [
-    { label: t('statValues.totalUsers') || 'Total Users', value: safeStats.totalUsers || 0, color: 'text-indigo-400', icon: '👥', glow: 'glow-indigo' },
-    { label: t('statValues.totalStudents') || 'Total Students', value: safeStats.totalStudents || 0, color: 'text-emerald-400', icon: '🎓', glow: 'glow-emerald' },
-    { label: t('statValues.totalTutors') || 'Total Tutors', value: safeStats.totalTutors || 0, color: 'text-purple-400', icon: '👨‍🏫', glow: 'glow-purple' },
-    { label: t('statValues.totalNews') || 'News Articles', value: safeStats.totalNews || 0, color: 'text-amber-400', icon: '📰', glow: 'glow-amber' },
-    { label: t('statValues.totalEvents') || 'Events', value: safeStats.totalEvents || 0, color: 'text-rose-400', icon: '📅', glow: 'glow-rose' },
-    { label: t('statValues.totalTestimonials') || 'Testimonials', value: safeStats.totalTestimonials || 0, color: 'text-cyan-400', icon: '💬', glow: 'glow-blue' },
+    { label: t('statValues.totalUsers') || 'Total Users', value: displayStats.totalUsers || 0, color: 'text-indigo-400', icon: '👥', glow: 'glow-indigo' },
+    { label: t('statValues.totalStudents') || 'Total Students', value: displayStats.totalStudents || 0, color: 'text-emerald-400', icon: '🎓', glow: 'glow-emerald' },
+    { label: t('statValues.totalTutors') || 'Total Tutors', value: displayStats.totalTutors || 0, color: 'text-purple-400', icon: '👨‍🏫', glow: 'glow-purple' },
+    { label: t('statValues.totalNews') || 'News Articles', value: displayStats.totalNews || 0, color: 'text-amber-400', icon: '📰', glow: 'glow-amber' },
+    { label: t('statValues.totalEvents') || 'Events', value: displayStats.totalEvents || 0, color: 'text-rose-400', icon: '📅', glow: 'glow-rose' },
+    { label: t('statValues.totalTestimonials') || 'Testimonials', value: displayStats.totalTestimonials || 0, color: 'text-cyan-400', icon: '💬', glow: 'glow-blue' },
   ];
 
   const dashboardStats = [
-    { label: t('statValues.activeUsers') || 'Active Users', value: safeStats.activeUsers || 0, color: 'text-emerald-400', icon: '🔥', glow: 'glow-emerald' },
-    { label: t('statValues.newUsersToday') || 'New Users Today', value: safeStats.newUsersToday || 0, color: 'text-cyan-400', icon: '🆕', glow: 'glow-blue' },
-    { label: t('statValues.totalAdmins') || 'Total Admins', value: safeStats.totalAdmins || 0, color: 'text-orange-400', icon: '👑', glow: 'glow-amber' },
-    { label: t('statValues.systemHealth') || 'System Health', value: safeStats.systemHealth || 'Good', color: 'text-lime-400', icon: '❤️', glow: 'glow-green' },
-    { label: t('statValues.databaseSize') || 'Database Size', value: `${safeStats.databaseSize || 0} MB`, color: 'text-pink-400', icon: '💾', glow: 'glow-rose' },
-    { label: t('statValues.uptime') || 'Uptime', value: safeStats.uptime || '99.9%', color: 'text-teal-400', icon: '⏱️', glow: 'glow-emerald' },
+    { label: t('statValues.activeUsers') || 'Active Users', value: displayStats.activeUsers || 0, color: 'text-emerald-400', icon: '🔥', glow: 'glow-emerald' },
+    { label: t('statValues.newUsersToday') || 'New Users Today', value: displayStats.newUsersToday || 0, color: 'text-cyan-400', icon: '🆕', glow: 'glow-blue' },
+    { label: t('statValues.totalAdmins') || 'Total Admins', value: displayStats.totalAdmins || 0, color: 'text-orange-400', icon: '👑', glow: 'glow-amber' },
+    { label: t('statValues.systemHealth') || 'System Health', value: displayStats.systemHealth || 'Good', color: 'text-lime-400', icon: '❤️', glow: 'glow-green' },
+    { label: t('statValues.databaseSize') || 'Database Size', value: `${displayStats.databaseSize || 0} MB`, color: 'text-pink-400', icon: '💾', glow: 'glow-rose' },
+    { label: t('statValues.uptime') || 'Uptime', value: displayStats.uptime || '99.9%', color: 'text-teal-400', icon: '⏱️', glow: 'glow-emerald' },
   ];
 
   const contentStats = [
-    { label: t('statValues.activeStudents') || 'Active Students', value: safeStats.activeStudents || 0, color: 'text-green-500', icon: '🎓', glow: 'glow-emerald' },
-    { label: t('statValues.totalCourses') || 'Total Courses', value: safeStats.totalCourses || 0, color: 'text-blue-500', icon: '📚', glow: 'glow-blue' },
-    { label: t('statValues.totalAssignments') || 'Total Assignments', value: safeStats.totalAssignments || 0, color: 'text-purple-500', icon: '📝', glow: 'glow-purple' },
-    { label: t('statValues.pendingSubmissions') || 'Pending Submissions', value: safeStats.pendingSubmissions || 0, color: 'text-orange-500', icon: '⏳', glow: 'glow-amber' },
-    { label: t('statValues.completedSubmissions') || 'Completed Submissions', value: safeStats.completedSubmissions || 0, color: 'text-emerald-500', icon: '✅', glow: 'glow-emerald' },
-    { label: t('statValues.totalEnrollments') || 'Total Enrollments', value: safeStats.totalEnrollments || 0, color: 'text-indigo-500', icon: '📊', glow: 'glow-indigo' },
+    { label: t('statValues.activeStudents') || 'Active Students', value: displayStats.activeStudents || 0, color: 'text-green-500', icon: '🎓', glow: 'glow-emerald' },
+    { label: t('statValues.totalCourses') || 'Total Courses', value: displayStats.totalCourses || 0, color: 'text-blue-500', icon: '📚', glow: 'glow-blue' },
+    { label: t('statValues.totalAssignments') || 'Total Assignments', value: displayStats.totalAssignments || 0, color: 'text-purple-500', icon: '📝', glow: 'glow-purple' },
+    { label: t('statValues.pendingSubmissions') || 'Pending Submissions', value: displayStats.pendingSubmissions || 0, color: 'text-orange-500', icon: '⏳', glow: 'glow-amber' },
+    { label: t('statValues.completedSubmissions') || 'Completed Submissions', value: displayStats.completedSubmissions || 0, color: 'text-emerald-500', icon: '✅', glow: 'glow-emerald' },
+    { label: t('statValues.totalEnrollments') || 'Total Enrollments', value: displayStats.totalEnrollments || 0, color: 'text-indigo-500', icon: '📊', glow: 'glow-indigo' },
   ];
 
   const communicationStats = [
-    { label: t('statValues.totalMessages') || 'Total Messages', value: safeStats.totalMessages || 0, color: 'text-blue-400', icon: '💬', glow: 'glow-blue' },
-    { label: t('statValues.unreadMessages') || 'Unread Messages', value: safeStats.unreadMessages || 0, color: 'text-red-400', icon: '📬', glow: 'glow-rose' },
-    { label: t('statValues.repliedMessages') || 'Replied Messages', value: safeStats.repliedMessages || 0, color: 'text-green-400', icon: '📤', glow: 'glow-emerald' },
-    { label: t('statValues.averageResponseTime') || 'Avg Response Time', value: `${safeStats.averageResponseTime || 0}h`, color: 'text-yellow-400', icon: '⏰', glow: 'glow-amber' },
-    { label: t('statValues.contactForms') || 'Contact Forms', value: safeStats.contactForms || 0, color: 'text-purple-400', icon: '📋', glow: 'glow-purple' },
-    { label: t('statValues.supportTickets') || 'Support Tickets', value: safeStats.supportTickets || 0, color: 'text-cyan-400', icon: '🎫', glow: 'glow-blue' },
+    { label: t('statValues.totalMessages') || 'Total Messages', value: displayStats.totalMessages || 0, color: 'text-blue-400', icon: '💬', glow: 'glow-blue' },
+    { label: t('statValues.unreadMessages') || 'Unread Messages', value: displayStats.unreadMessages || 0, color: 'text-red-400', icon: '📬', glow: 'glow-rose' },
+    { label: t('statValues.repliedMessages') || 'Replied Messages', value: displayStats.repliedMessages || 0, color: 'text-green-400', icon: '📤', glow: 'glow-emerald' },
+    { label: t('statValues.averageResponseTime') || 'Avg Response Time', value: `${displayStats.averageResponseTime || 0}h`, color: 'text-yellow-400', icon: '⏰', glow: 'glow-amber' },
+    { label: t('statValues.contactForms') || 'Contact Forms', value: displayStats.contactForms || 0, color: 'text-purple-400', icon: '📋', glow: 'glow-purple' },
+    { label: t('statValues.supportTickets') || 'Support Tickets', value: displayStats.supportTickets || 0, color: 'text-cyan-400', icon: '🎫', glow: 'glow-blue' },
   ];
 
   const getCurrentStats = () => {
@@ -117,6 +146,15 @@ const StatsSection = ({ t, statValues = {}, onRefresh }) => {
         </p>
       </div>
 
+      {/* Error Display */}
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
+          <p className="text-red-400 text-sm">
+            {t('dashboard.errorLoadingStats') || 'Error loading stats'}: {error}
+          </p>
+        </div>
+      )}
+
       {/* Tab Navigation */}
       <div className="flex justify-center animate-fade-in-up delay-100">
         <div className="glass-card p-1">
@@ -153,28 +191,47 @@ const StatsSection = ({ t, statValues = {}, onRefresh }) => {
       )}
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-        {getCurrentStats().map((stat, index) => (
-          <div
-            key={index}
-            className={`glass-card p-6 hover-lift hover-glow-indigo animate-scale-in ${stat.glow} border border-white/20 hover:border-white/40 transition-all duration-300`}
-            style={{ animationDelay: `${index * 75}ms` }}
-          >
-            <div className="flex items-center justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-3 mb-2">
-                  <span className="text-2xl animate-float">{stat.icon}</span>
-                  <p className="text-light-text/80 text-sm font-medium">{stat.label}</p>
+      {loading ? (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="glass-card p-6 animate-pulse">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="w-8 h-8 bg-white/10 rounded-full animate-pulse"></div>
+                    <div className="h-4 w-24 bg-white/10 rounded animate-pulse"></div>
+                  </div>
+                  <div className="h-8 w-16 bg-white/10 rounded animate-pulse"></div>
                 </div>
-                <p className={`text-3xl font-bold ${stat.color} animate-count-up`}>{stat.value.toLocaleString()}</p>
-              </div>
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-coral/20 flex items-center justify-center backdrop-blur-sm border border-white/10">
-                <div className={`w-6 h-6 rounded-full ${stat.color.replace('text-', 'bg-')} animate-pulse-gentle`}></div>
+                <div className="w-12 h-12 rounded-full bg-white/10 animate-pulse"></div>
               </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+          {getCurrentStats().map((stat, index) => (
+            <div
+              key={index}
+              className={`glass-card p-6 hover-lift hover-glow-indigo animate-scale-in ${stat.glow} border border-white/20 hover:border-white/40 transition-all duration-300`}
+              style={{ animationDelay: `${index * 75}ms` }}
+            >
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-2xl animate-float">{stat.icon}</span>
+                    <p className="text-light-text/80 text-sm font-medium">{stat.label}</p>
+                  </div>
+                  <p className={`text-3xl font-bold ${stat.color} animate-count-up`}>{stat.value.toLocaleString()}</p>
+                </div>
+                <div className="w-12 h-12 rounded-full bg-gradient-to-br from-primary/20 to-coral/20 flex items-center justify-center backdrop-blur-sm border border-white/10">
+                  <div className={`w-6 h-6 rounded-full ${stat.color.replace('text-', 'bg-')} animate-pulse-gentle`}></div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Summary Cards */}
       {activeTab === 'overview' && (
