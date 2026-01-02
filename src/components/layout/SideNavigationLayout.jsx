@@ -96,7 +96,7 @@ const SideNavigationLayout = ({ children }) => {
         {/* Footer */}
         <div className="p-4 border-t border-gray-200 flex-shrink-0">
           <div className="text-xs text-gray-500 text-center">
-            <div className="mb-2">© 2024 Mahdu Rahmah</div>
+            <div className="mb-2">© {new Date().getFullYear()} Mahdu Rahmah</div>
             <div className="flex justify-center space-x-3">
               <a href="#" className="hover:text-primary transition-colors">
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">

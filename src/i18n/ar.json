@@ -789,7 +789,12 @@
 
     "admin": {
       "dashboard": "لوحة تحكم المدير",
+      "shortTitle": "المدير",
       "welcome": "مرحباً بعودتك",
+      "settings": "الإعدادات",
+      "closeMenu": "إغلاق القائمة",
+      "openMenu": "فتح القائمة",
+      "language": "اللغة",
       "statisticsManagement": "إدارة الإحصائيات",
       "activeStudents": "الطلاب النشطون",
       "courses": "الدورات",

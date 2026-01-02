@@ -168,7 +168,7 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
         <div className="glass-card p-4 sm:p-6 animate-fade-in-up hover-lift hover-glow-rose">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-            <h3 className="text-lg sm:text-xl font-semibold text-light-text">
+            <h3 className="text-lg sm:text-xl font-semibold text-primary-text">
               {editingId ? (t('dashboard.editContent') || 'Edit Content') : (t('dashboard.addNewContent') || 'Add New Content')}
             </h3>
             <button
@@ -182,7 +182,7 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.title') || 'Title'} *
                 </label>
                 <input
@@ -191,19 +191,19 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
                   value={formData.title}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterTitle') || 'Enter title'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.category') || 'Category'}
                 </label>
                 <select
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="">{t('dashboard.selectCategory') || 'Select Category'}</option>
                   {categories.map(cat => (
@@ -213,7 +213,7 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
               </div>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.content') || 'Content'} *
               </label>
               <textarea
@@ -222,12 +222,12 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
                 onChange={handleInputChange}
                 required
                 rows={3}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterContent') || 'Enter content'}
               />
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.imageUrl') || 'Image URL'}
               </label>
               <input
@@ -235,7 +235,7 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
                 name="image_url"
                 value={formData.image_url}
                 onChange={handleInputChange}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 placeholder={t('dashboard.enterImageUrl') || 'Enter image URL'}
               />
             </div>
@@ -250,7 +250,7 @@ const CampusLifeSection = ({ t, campusLife = [], campusLifeLoading, createCampus
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
+                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>

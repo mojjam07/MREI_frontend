@@ -399,6 +399,8 @@ const translations = {
       users: 'User Management',
       reports: 'Reports',
       settings: 'Settings',
+      shortTitle: 'Admin Dashboard',
+      language: 'Language',
       form: {
         labels: {
           title: 'Title',
@@ -2422,6 +2424,9 @@ const translations = {
       edit: 'تعديل',
       delete: 'حذف',
       save: 'حفظ',
+      shortTitle: 'لوحه تحكم المدير',
+      language: 'اللغة',
+      lang: 'اللغة',
       title: 'العنوان',
       content: 'المحتوى',
       description: 'الوصف',

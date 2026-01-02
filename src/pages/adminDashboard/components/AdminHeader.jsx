@@ -20,7 +20,7 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
   const menuRef = useRef(null);
 
   // Safely get the dashboard section title from translations
-  const dashboardTitle = safeString(t?.('admin.dashboardSection'), 'Dashboard');
+  const dashboardTitle = safeString(t?.('admin.dashboard'), 'Admin Dashboard');
 
   // Check screen size
   useEffect(() => {
@@ -76,7 +76,7 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
               }}
             >
               <span className="hidden xs:inline">{dashboardTitle}</span>
-              <span className="xs:hidden text-sm">Admin</span>
+              <span className="xs:hidden text-sm">{safeString(t?.('admin.shortTitle'), 'Admin')}</span>
             </h1>
           </div>
 
@@ -100,7 +100,7 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
                 e.currentTarget.style.borderColor = 'transparent';
                 e.currentTarget.style.boxShadow = '0 0 0 transparent';
               }}
-              aria-label="Settings"
+              aria-label={safeString(t?.('admin.settings'), 'Settings')}
             >
               {React.createElement(Settings, { className: 'w-5 h-5' })}
             </button>
@@ -115,7 +115,7 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
                 color: '#e94560',
                 border: '1px solid transparent'
               }}
-              aria-label={isMobileMenuOpen ? 'Close menu' : 'Open menu'}
+              aria-label={isMobileMenuOpen ? safeString(t?.('admin.closeMenu'), 'Close menu') : safeString(t?.('admin.openMenu'), 'Open menu')}
             >
               {isMobileMenuOpen ? (
                 <X className="w-5 h-5" />
@@ -135,7 +135,7 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
             <div className="flex flex-col gap-2">
               {/* Language Switcher for Mobile */}
               <div className="flex items-center justify-between p-2 rounded-lg bg-white/5">
-                <span className="text-sm text-gray-300">Language</span>
+                <span className="text-sm text-gray-300">{safeString(t?.('admin.language'), 'Language')}</span>
                 <div className="flex-shrink-0">
                   <LanguageSwitcherComponent />
                 </div>
@@ -144,7 +144,7 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
               {/* Settings Button for Mobile */}
               <button
                 className="flex items-center justify-between p-2 rounded-lg transition-all duration-300 hover:bg-white/10"
-                style={{ 
+                style={{
                   color: '#e94560',
                   border: '1px solid transparent'
                 }}
@@ -156,9 +156,9 @@ const AdminHeader = ({ t, LanguageSwitcher, Settings, LayoutDashboard }) => {
                   e.currentTarget.style.borderColor = 'transparent';
                   e.currentTarget.style.boxShadow = '0 0 0 transparent';
                 }}
-                aria-label="Settings"
+                aria-label={safeString(t?.('admin.settings'), 'Settings')}
               >
-                <span className="text-sm text-gray-300">Settings</span>
+                <span className="text-sm text-gray-300">{safeString(t?.('admin.settings'), 'Settings')}</span>
                 {React.createElement(Settings, { className: 'w-5 h-5' })}
               </button>
             </div>

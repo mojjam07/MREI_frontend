@@ -116,14 +116,14 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
         <div className="glass-card p-4 sm:p-6 animate-scale-in hover-lift hover-glow-amber">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-amber-400 to-orange-500 rounded-full animate-pulse-gentle flex-shrink-0"></span>
-            <h3 className="text-lg sm:text-xl font-semibold text-light-text">
+            <h3 className="text-lg sm:text-xl font-semibold text-primary-text">
               {editingId ? (t('dashboard.updateNews') || 'Update News') : (t('dashboard.addNewNews') || 'Add New News')}
             </h3>
           </div>
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.title') || 'Title'} *
                 </label>
                 <input
@@ -132,12 +132,12 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
                   value={formData.title}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all duration-300 text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all duration-300 text-sm sm:text-base"
                   placeholder={t('dashboard.enterTitle') || 'Enter news title'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.category') || 'Category'}
                 </label>
                 <input
@@ -145,14 +145,14 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 text-sm sm:text-base"
                   placeholder={t('dashboard.enterCategory') || 'Enter category'}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.author') || 'Author'}
                 </label>
                 <input
@@ -160,12 +160,12 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
                   name="author"
                   value={formData.author}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all duration-300 text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all duration-300 text-sm sm:text-base"
                   placeholder={t('dashboard.enterAuthor') || 'Enter author name'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.imageUrl') || 'Image URL'}
                 </label>
                 <input
@@ -173,13 +173,13 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
                   name="image_url"
                   value={formData.image_url}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 text-sm sm:text-base"
                   placeholder={t('dashboard.enterImageUrl') || 'Enter image URL'}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.content') || 'Content'} *
               </label>
               <textarea
@@ -188,20 +188,20 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
                 onChange={handleInputChange}
                 required
                 rows={3}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all duration-300 resize-vertical text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-amber-400/50 focus:border-amber-400/50 transition-all duration-300 resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterContent') || 'Enter news content'}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.status') || 'Status'}
                 </label>
                 <select
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary/50 transition-all duration-300 text-sm sm:text-base"
                 >
                   <option value="published">{t('dashboard.published') || 'Published'}</option>
                   <option value="draft">{t('dashboard.draft') || 'Draft'}</option>
@@ -229,7 +229,7 @@ const NewsSection = ({ t, news = [], createNews, updateNews, deleteNews }) => {
               <button
                 type="button"
                 onClick={() => setShowForm(false)}
-                className="px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all duration-300 border border-white/20 hover:border-white/40 flex items-center justify-center text-sm sm:text-base"
+                className="px-4 sm:px-6 py-2 sm:py-3 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all duration-300 border border-white/20 hover:border-white/40 flex items-center justify-center text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>

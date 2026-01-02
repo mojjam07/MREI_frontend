@@ -164,7 +164,7 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
         <div className="glass-card p-4 sm:p-6 animate-fade-in-up hover-lift hover-glow-rose">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-            <h3 className="text-lg sm:text-xl font-semibold text-light-text">
+            <h3 className="text-lg sm:text-xl font-semibold text-primary-text">
               {editingId ? (t('dashboard.editEvent') || 'Edit Event') : (t('dashboard.addNewEvent') || 'Add New Event')}
             </h3>
             <button
@@ -178,7 +178,7 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.title') || 'Title'} *
                 </label>
                 <input
@@ -187,12 +187,12 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                   value={formData.title}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterTitle') || 'Enter event title'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.location') || 'Location'} *
                 </label>
                 <input
@@ -201,14 +201,14 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                   value={formData.location}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterLocation') || 'Enter event location'}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.date') || 'Date'} *
                 </label>
                 <input
@@ -217,11 +217,11 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                   value={formatDateForInput(formData.event_date)}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.organizer') || 'Organizer'}
                 </label>
                 <input
@@ -229,13 +229,13 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                   name="organizer"
                   value={formData.organizer}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterOrganizer') || 'Enter organizer name'}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.description') || 'Description'} *
               </label>
               <textarea
@@ -244,13 +244,13 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                 onChange={handleInputChange}
                 required
                 rows={3}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterDescription') || 'Enter event description'}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.videoUrl') || 'Video URL'}
                 </label>
                 <input
@@ -258,19 +258,19 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                   name="video_url"
                   value={formData.video_url}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterVideoUrl') || 'Enter YouTube video URL'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.status') || 'Status'}
                 </label>
                 <select
                   name="status"
                   value={formData.status}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="upcoming">{t('dashboard.upcoming') || 'Upcoming'}</option>
                   <option value="ongoing">{t('dashboard.ongoing') || 'Ongoing'}</option>
@@ -289,7 +289,7 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
+                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>

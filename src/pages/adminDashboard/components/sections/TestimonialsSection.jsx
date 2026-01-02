@@ -154,14 +154,14 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
         <div className="glass-card p-4 sm:p-6 border border-white/10 animate-fade-in-up hover-glow-emerald">
           <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-            <h3 className="text-base sm:text-lg font-semibold text-light-text">
+            <h3 className="text-base sm:text-lg font-semibold text-primary-text">
               {editingId ? (t('dashboard.editTestimonial') || 'Edit Testimonial') : (t('dashboard.addNewTestimonial') || 'Add New Testimonial')}
             </h3>
           </div>
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.name') || 'Name'} *
                 </label>
                 <input
@@ -170,19 +170,19 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                   value={formData.name}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterName') || 'Enter name'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.rating') || 'Rating'}
                 </label>
                 <select
                   name="rating"
                   value={formData.rating}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="5">5 Stars</option>
                   <option value="4">4 Stars</option>
@@ -194,7 +194,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.position') || 'Position'}
                 </label>
                 <input
@@ -202,12 +202,12 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                   name="position"
                   value={formData.position}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterPosition') || 'Enter position'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.company') || 'Company'}
                 </label>
                 <input
@@ -215,13 +215,13 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                   name="company"
                   value={formData.company}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterCompany') || 'Enter company'}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.content') || 'Content'} *
               </label>
               <textarea
@@ -230,7 +230,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                 onChange={handleInputChange}
                 required
                 rows={3}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterContent') || 'Enter testimonial content'}
               />
             </div>
@@ -243,7 +243,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                 onChange={handleInputChange}
                 className="w-4 h-4 rounded border-white/20 bg-white/10 text-primary focus:ring-primary cursor-pointer"
               />
-              <label htmlFor="approved" className="text-xs sm:text-sm font-medium text-light-text cursor-pointer">
+              <label htmlFor="approved" className="text-xs sm:text-sm font-medium text-primary-text cursor-pointer">
                 {t('dashboard.approved') || 'Approved'}
               </label>
             </div>
@@ -258,7 +258,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
+                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>

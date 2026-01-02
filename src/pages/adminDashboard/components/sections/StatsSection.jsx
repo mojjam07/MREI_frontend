@@ -156,23 +156,29 @@ const StatsSection = ({ t, statValues = {}, onRefresh }) => {
       )}
 
       {/* Tab Navigation */}
-      <div className="flex justify-center animate-fade-in-up delay-100">
-        <div className="glass-card p-1">
-          <div className="flex space-x-1">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 hover-lift ${
-                  activeTab === tab.id
-                    ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg glow-indigo'
-                    : 'text-gray-300 hover:text-white hover:bg-white/10'
-                }`}
-              >
-                <span>{tab.icon}</span>
-                {tab.label}
-              </button>
-            ))}
+      <div className="animate-fade-in-up delay-100">
+        <div className="glass-card p-1 relative">
+          {/* Gradient fade indicators for scrollable content */}
+          <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-dark-bg to-transparent z-10 pointer-events-none md:hidden" />
+          <div className="absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-dark-bg to-transparent z-10 pointer-events-none md:hidden" />
+          
+          <div className="overflow-x-auto scrollbar-hide px-2">
+            <div className="flex space-x-1 min-w-max">
+              {tabs.map((tab) => (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`px-5 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 flex items-center gap-2 hover-lift flex-shrink-0 ${
+                    activeTab === tab.id
+                      ? 'text-white bg-gradient-to-r from-indigo-600 to-purple-600 shadow-lg glow-indigo'
+                      : 'text-primary-300 hover:text-indigo-400 hover:bg-white/10'
+                  }`}
+                >
+                  <span>{tab.icon}</span>
+                  {tab.label}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -239,7 +245,7 @@ const StatsSection = ({ t, statValues = {}, onRefresh }) => {
           <div className="glass-card p-6 hover-lift hover-glow-blue">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-2xl animate-float">👥</span>
-              <h3 className="text-lg font-semibold text-light-text">
+              <h3 className="text-lg font-semibold text-primary-text">
                 {t('dashboard.userEngagement') || 'User Engagement'}
               </h3>
             </div>
@@ -251,7 +257,7 @@ const StatsSection = ({ t, statValues = {}, onRefresh }) => {
           <div className="glass-card p-6 hover-lift hover-glow-emerald">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-2xl animate-float">📚</span>
-              <h3 className="text-lg font-semibold text-light-text">
+              <h3 className="text-lg font-semibold text-primary-text">
                 {t('dashboard.contentManagement') || 'Content Management'}
               </h3>
             </div>
@@ -263,7 +269,7 @@ const StatsSection = ({ t, statValues = {}, onRefresh }) => {
           <div className="glass-card p-6 hover-lift hover-glow-rose">
             <div className="flex items-center gap-3 mb-3">
               <span className="text-2xl animate-float">💬</span>
-              <h3 className="text-lg font-semibold text-light-text">
+              <h3 className="text-lg font-semibold text-primary-text">
                 {t('dashboard.communicationHub') || 'Communication Hub'}
               </h3>
             </div>

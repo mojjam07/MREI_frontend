@@ -177,7 +177,7 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
         <div className="glass-card p-4 sm:p-6 animate-fade-in-up hover-lift hover-glow-amber">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-            <h3 className="text-lg sm:text-xl font-semibold text-light-text">
+            <h3 className="text-lg sm:text-xl font-semibold text-primary-text">
               {editingId ? (t('dashboard.editBook') || 'Edit Book') : (t('dashboard.addNewBook') || 'Add New Book')}
             </h3>
             <button
@@ -191,7 +191,7 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.title') || 'Title'} *
                 </label>
                 <input
@@ -200,12 +200,12 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   value={formData.title}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterTitle') || 'Enter book title'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.author') || 'Author'} *
                 </label>
                 <input
@@ -214,14 +214,14 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   value={formData.author}
                   onChange={handleInputChange}
                   required
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterAuthor') || 'Enter author name'}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.isbn') || 'ISBN'}
                 </label>
                 <input
@@ -229,12 +229,12 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="isbn"
                   value={formData.isbn}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterISBN') || 'Enter ISBN'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.category') || 'Category'}
                 </label>
                 <input
@@ -242,13 +242,13 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterCategory') || 'Enter category'}
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.description') || 'Description'}
               </label>
               <textarea
@@ -256,13 +256,13 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                 value={formData.description}
                 onChange={handleInputChange}
                 rows={3}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterDescription') || 'Enter book description'}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.genre') || 'Genre'}
                 </label>
                 <input
@@ -270,12 +270,12 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="genre"
                   value={formData.genre}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterGenre') || 'Enter genre'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.publicationYear') || 'Publication Year'}
                 </label>
                 <input
@@ -283,14 +283,14 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="publication_year"
                   value={formData.publication_year}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterPublicationYear') || 'Enter publication year'}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.coverImage') || 'Cover Image URL'}
                 </label>
                 <input
@@ -298,12 +298,12 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="cover_image"
                   value={formData.cover_image}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterCoverImage') || 'Enter cover image URL'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.pdfFile') || 'PDF File URL'}
                 </label>
                 <input
@@ -311,21 +311,21 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="pdf_file"
                   value={formData.pdf_file}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterPdfFile') || 'Enter PDF file URL'}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.fileType') || 'File Type'}
                 </label>
                 <select
                   name="file_type"
                   value={formData.file_type}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="">{t('dashboard.selectFileType') || 'Select type'}</option>
                   {fileTypes.map(type => (
@@ -334,7 +334,7 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                 </select>
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.fileSize') || 'File Size (MB)'}
                 </label>
                 <input
@@ -342,19 +342,19 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
                   name="file_size"
                   value={formData.file_size}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterFileSize') || 'e.g., 2.5'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.available') || 'Available'}
                 </label>
                 <select
                   name="available"
                   value={formData.available.toString()}
                   onChange={(e) => setFormData(prev => ({ ...prev, available: e.target.value === 'true' }))}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="true">{t('dashboard.yes') || 'Yes'}</option>
                   <option value="false">{t('dashboard.no') || 'No'}</option>
@@ -372,7 +372,7 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
               <button
                 type="button"
                 onClick={handleCancel}
-                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
+                className="flex-1 sm:flex-none px-4 sm:px-6 py-2 sm:py-3 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>
@@ -417,7 +417,7 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
 
                 {/* Description */}
                 {book?.description && (
-                  <p className="text-sm sm:text-base text-light-text/80 mb-3 line-clamp-2">
+                  <p className="text-sm sm:text-base text-primary-text/80 mb-3 line-clamp-2">
                     {safeString(book.description)}
                   </p>
                 )}
@@ -480,7 +480,7 @@ const BooksSection = ({ t, books = [], booksLoading, createBook, updateBook, del
           ))
         ) : (
           <div className="glass-card p-8 sm:p-12 text-center animate-fade-in-up">
-            <BookOpen className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-light-text/20 mb-4" />
+            <BookOpen className="w-12 h-12 sm:w-16 sm:h-16 mx-auto text-primary-text/20 mb-4" />
             <p className="text-base sm:text-lg text-light-text/60">
               {t('dashboard.noBooks') || 'No books found'}
             </p>

@@ -105,7 +105,7 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
         <div className="glass-card p-4 sm:p-6 animate-fade-in-up hover-lift hover-glow-emerald">
           <div className="flex items-center gap-2 sm:gap-3 mb-4 pb-2 border-b border-white/10">
             <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-            <h3 className="text-lg sm:text-xl font-semibold text-light-text">
+            <h3 className="text-lg sm:text-xl font-semibold text-primary-text">
               {t('dashboard.editStudent') || 'Edit Student Profile'}
             </h3>
             <button
@@ -119,7 +119,7 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
           <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.studentId') || 'Student ID'}
                 </label>
                 <input
@@ -127,12 +127,12 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                   name="student_id"
                   value={formData.student_id}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterStudentId') || 'Enter student ID'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.dateOfBirth') || 'Date of Birth'}
                 </label>
                 <input
@@ -140,12 +140,12 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                   name="date_of_birth"
                   value={formData.date_of_birth}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                 {t('dashboard.address') || 'Address'}
               </label>
               <textarea
@@ -153,13 +153,13 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                 value={formData.address}
                 onChange={handleInputChange}
                 rows={2}
-                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterAddress') || 'Enter address'}
               />
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.emergencyContact') || 'Emergency Contact Name'}
                 </label>
                 <input
@@ -167,12 +167,12 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                   name="emergency_contact"
                   value={formData.emergency_contact}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterEmergencyContact') || 'Enter emergency contact name'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.emergencyPhone') || 'Emergency Phone'}
                 </label>
                 <input
@@ -180,14 +180,14 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                   name="emergency_phone"
                   value={formData.emergency_phone}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterEmergencyPhone') || 'Enter emergency phone'}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.program') || 'Program'}
                 </label>
                 <input
@@ -195,19 +195,19 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                   name="program"
                   value={formData.program}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                   placeholder={t('dashboard.enterProgram') || 'Enter program'}
                 />
               </div>
               <div>
-                <label className="block text-xs sm:text-sm font-medium text-light-text mb-1">
+                <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
                   {t('dashboard.year') || 'Year'}
                 </label>
                 <select
                   name="year"
                   value={formData.year}
                   onChange={handleInputChange}
-                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                  className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
                 >
                   <option value="">{t('dashboard.selectYear') || 'Select year'}</option>
                   <option value="1">{t('dashboard.year1') || 'Year 1'}</option>
@@ -239,7 +239,7 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
               <button
                 type="button"
                 onClick={cancelEdit}
-                className="px-4 sm:px-6 py-2 sm:py-3 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all duration-300 border border-white/20 hover:border-white/40 flex items-center justify-center text-sm sm:text-base"
+                className="px-4 sm:px-6 py-2 sm:py-3 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all duration-300 border border-white/20 hover:border-white/40 flex items-center justify-center text-sm sm:text-base"
               >
                 {t('dashboard.cancel') || 'Cancel'}
               </button>
@@ -263,11 +263,11 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-emerald-400 to-teal-500 rounded-full animate-pulse-gentle flex-shrink-0"></span>
-                      <h3 className="text-lg sm:text-xl font-semibold text-light-text truncate">
-                        {student?.name || 'Unknown Student'}
+                      <h3 className="text-lg sm:text-xl font-semibold text-primary-text truncate">
+                        {student?.first_name || 'Unknown Student'}
                       </h3>
                     </div>
-                    <p className="text-sm text-light-text/80">ID: {student?.student_id || 'N/A'}</p>
+                    <p className="text-sm text-primary-text/80">ID: {student?.student_id || 'N/A'}</p>
                   </div>
 
                   {/* Status Badge */}
@@ -283,7 +283,7 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                 </div>
 
                 {/* Quick Info - Always Visible */}
-                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-light-text/60 mb-3">
+                <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-xs sm:text-sm text-primary-text/60 mb-3">
                   <span className="flex items-center gap-1">
                     <span className="hidden sm:inline">{t('dashboard.email') || 'Email'}:</span>
                     <span className="sm:hidden">✉:</span>
@@ -305,17 +305,17 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                 {expandedId === (student.id || index) && (
                   <div className="mb-3 p-3 bg-white/5 rounded-lg animate-fade-in">
                     {student?.address && (
-                      <p className="text-xs sm:text-sm text-light-text/80 mb-2">
+                      <p className="text-xs sm:text-sm text-primary-text/80 mb-2">
                         <span className="font-medium">{t('dashboard.address') || 'Address'}:</span> {student.address}
                       </p>
                     )}
                     {student?.emergency_contact && (
-                      <p className="text-xs sm:text-sm text-light-text/80 mb-1">
+                      <p className="text-xs sm:text-sm text-primary-text/80 mb-1">
                         <span className="font-medium">{t('dashboard.emergencyContact') || 'Emergency Contact'}:</span> {student.emergency_contact}
                       </p>
                     )}
                     {student?.emergency_phone && (
-                      <p className="text-xs sm:text-sm text-light-text/80">
+                      <p className="text-xs sm:text-sm text-primary-text/80">
                         <span className="font-medium">{t('dashboard.emergencyPhone') || 'Emergency Phone'}:</span> {student.emergency_phone}
                       </p>
                     )}
@@ -326,7 +326,7 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
                 <div className="flex gap-2 w-full pt-2 border-t border-white/10">
                   <button 
                     onClick={() => toggleExpand(student.id || index)}
-                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-light-text rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 hover:bg-primary/30 text-xs sm:text-sm flex items-center justify-center gap-1"
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-primary-text rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 hover:bg-primary/30 text-xs sm:text-sm flex items-center justify-center gap-1"
                   >
                     {expandedId === (student.id || index) ? (
                       <>
@@ -367,7 +367,7 @@ const StudentsSection = ({ t, students = [], studentProfilesLoading, updateStude
           ))
         ) : (
           <div className="glass-card p-8 sm:p-12 text-center animate-fade-in-up">
-            <p className="text-base sm:text-lg text-light-text/60">
+            <p className="text-base sm:text-lg text-primary-text/60">
               {t('dashboard.noStudents') || 'No students found'}
             </p>
           </div>
