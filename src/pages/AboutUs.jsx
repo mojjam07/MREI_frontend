@@ -161,7 +161,7 @@ const AboutUs = () => {
               <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'} items-center gap-4`}>
                 <div className="flex-shrink-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" 
+                    src="https://res.cloudinary.com/doi8mindp/image/upload/v1767333034/FB_IMG_1762014536592_y34z5u.jpg" 
                     alt={t('about.presidentName')}
                     className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded object-cover transition-transform duration-300 hover-scale shadow-md"
                   />
@@ -181,7 +181,7 @@ const AboutUs = () => {
               <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'} items-center gap-4`}>
                 <div className="flex-shrink-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" 
+                    src="https://res.cloudinary.com/doi8mindp/image/upload/v1767270351/logo2_h07cix.png" 
                     alt={t('about.vpName')}
                     className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded object-cover transition-transform duration-300 hover-scale shadow-md"
                   />
@@ -201,7 +201,7 @@ const AboutUs = () => {
               <div className={`flex ${language === 'ar' ? 'flex-row-reverse' : 'flex-row'} items-center gap-4`}>
                 <div className="flex-shrink-0">
                   <img 
-                    src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face" 
+                    src="https://res.cloudinary.com/doi8mindp/image/upload/v1767270351/logo2_h07cix.png" 
                     alt={t('about.deanName')}
                     className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded object-cover transition-transform duration-300 hover-scale shadow-md"
                   />
