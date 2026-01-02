@@ -1060,7 +1060,23 @@ const translations = {
       statistics: 'Statistics (reset to zero)',
       preservedData: 'User accounts and academic data will be preserved.',
       clearing: 'Clearing...',
-      confirmClear: 'Confirm Clear'
+      confirmClear: 'Confirm Clear',
+
+      // Additional dashboard labels
+      title: 'Dashboard',
+      status: 'Status',
+      addNewNews: 'Add New News',
+      noNews: 'No news found. Add your first news!',
+      createFirstNews: 'Create your first news article to get started',
+      createFirstEvent: 'Create your first event to get started',
+      addNewEvent: 'Add New Event',
+      enterVideoUrl: 'Enter video URL',
+      enterLocation: 'Enter location',
+      enterOrganizer: 'Enter organizer',
+      noTestimonials: 'No testimonials found. Add your first testimonial!',
+      createFirstContent: 'Create your first content to get started',
+      moreInfo: 'More Info',
+      addFirstBook: 'Add your first book'
     },
 
     statValues: {
@@ -1630,27 +1646,24 @@ const translations = {
       alumniStoriesDesc: 'Graduates reflect on how our education impacted their careers and lives',
       successCasesTitle: 'Success Cases',
       successCasesDesc: 'Real examples of how our programs have changed lives and opened new opportunities',
+      impactInNumbersTitle: 'Our Impact in Numbers',
+      impactInNumbersDesc: 'Real results from real students who transformed their lives through our programs',
+      successMetricsTitle: 'Success Metrics',
+      successMetricsDesc: 'Quantifiable outcomes that demonstrate the effectiveness of our education',
+      metrics: {
+        studentSatisfaction: 'Student Satisfaction',
+        career: 'Career Advancement',
+        would: 'Would Recommend',
+        higherEarnings: 'Higher Earnings'
+      },
       featuredTestimonials: [
         {
           name: 'Ahmad Muhammad',
           role: 'Software Engineer',
           company: 'Tech Solutions Ltd.',
           quote: 'The practical approach and expert guidance I received at Mahdu Rahmah completely transformed my career prospects. I landed my dream job within 3 months of graduation.',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
-        },
-        {
-          name: 'Fatima Al-Zahra',
-          role: 'Business Analyst',
-          company: 'Global Consulting Group',
-          quote: 'The flexibility of the program allowed me to balance my studies with my professional commitments. The quality of education exceeded my expectations.',
-          image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
-        },
-        {
-          name: 'Omar Hassan',
-          role: 'Marketing Director',
-          company: 'Creative Agency Inc.',
-          quote: 'The industry connections and real-world projects prepared me for the challenges of modern business. I am grateful for the foundation built here.',
-          image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+          rating: 5
         }
       ],
       loadMore: 'Load More Testimonials',
@@ -2783,7 +2796,23 @@ const translations = {
       statistics: 'الإحصائيات (إعادة تعيين إلى صفر)',
       preservedData: 'سيتم الاحتفاظ بحسابات المستخدمين والبيانات الأكاديمية.',
       clearing: 'جاري المسح...',
-      confirmClear: 'تأكيد المسح'
+      confirmClear: 'تأكيد المسح',
+
+      // Additional dashboard labels
+      title: 'لوحة التحكم',
+      status: 'الحالة',
+      addNewNews: 'إضافة خبر جديد',
+      noNews: 'لم يتم العثور على أخبار. أضف أول خبر!',
+      createFirstNews: 'أنشئ مقالتك الإخبارية الأولى للبدء',
+      createFirstEvent: 'أنشئ فعاليتك الأولى للبدء',
+      addNewEvent: 'إضافة فعالية جديدة',
+      enterVideoUrl: 'أدخل رابط الفيديو',
+      enterLocation: 'أدخل الموقع',
+      enterOrganizer: 'أدخل المنظم',
+      noTestimonials: 'لم يتم العثور على شهادات. أضف أول شهادة!',
+      createFirstContent: 'أنشئ محتواك الأول للبدء',
+      moreInfo: 'المزيد من المعلومات',
+      addFirstBook: 'أضف كتابك الأول'
     },
 
     statValues: {
@@ -3341,27 +3370,24 @@ const translations = {
       alumniStoriesDesc: 'الخريجون يعكسون على كيف أثر تعليمنا على حياتهم المهنية وحياتهم',
       successCasesTitle: 'حالات النجاح',
       successCasesDesc: 'أمثلة حقيقية على كيف غيرت برامجنا الحياة وافتتحت فرص جديدة',
+      impactInNumbersTitle: 'تأثيرنا بالأرقام',
+      impactInNumbersDesc: 'نتائج حقيقية من طلاب حقيقيين غيروا حياتهم من خلال برامجنا',
+      successMetricsTitle: 'مقاييس النجاح',
+      successMetricsDesc: 'نتائج قابلة للقياس تُظهر فعالية تعليمنا',
+      metrics: {
+        studentSatisfaction: 'رضا الطلاب',
+        career: 'التقدم الوظيفي',
+        would: 'سيوصي',
+        higherEarnings: 'دخل أعلى'
+      },
       featuredTestimonials: [
         {
           name: 'أحمد محمد',
           role: 'مهندس برمجيات',
           company: 'شركة حلول التقنية المحدودة',
           quote: 'النهج العملي والإرشاد الخبير الذي تلقيته في معهد الرحمة غير تماماً توقعاتي المهنية. حصلت على وظيفة أحلامي خلال 3 أشهر من التخرج.',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face'
-        },
-        {
-          name: 'فاطمة الزهراء',
-          role: 'محلل أعمال',
-          company: 'مجموعة الاستشارات العالمية',
-          quote: 'مرونة البرنامج سمحت لي بموازنة دراستي مع التزاماتي المهنية. جودة التعليم تجاوزت توقعاتي.',
-          image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face'
-        },
-        {
-          name: 'عمر حسن',
-          role: 'مدير تسويق',
-          company: 'وكالة الإبداع المحدودة',
-          quote: 'الاتصالات الصناعية والمشاريع الواقعية أعدتني لتحديات الأعمال الحديثة. أنا ممتن للأساس المبني هنا.',
-          image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
+          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face',
+          rating: 5
         }
       ],
       loadMore: 'تحميل المزيد من الشهادات',

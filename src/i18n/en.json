@@ -1034,7 +1034,17 @@
         "successCasesDesc": "Measurable outcomes that demonstrate the effectiveness of our educational approach",
         "joinSuccessStoriesTitle": "Join Our Success Stories",
         "joinSuccessStoriesDesc": "Be part of a community that celebrates achievements and supports your goals",
-        "applyNowButton": "Apply Now"
+        "applyNowButton": "Apply Now",
+        "impactInNumbersTitle": "Our Impact in Numbers",
+        "impactInNumbersDesc": "Success stories from our community speak for themselves. Here's what our students and alumni say about their experience.",
+        "successMetricsTitle": "Join Our Success Stories",
+        "successMetricsDesc": "Be part of our growing community of successful graduates who have transformed their careers and lives through quality education.",
+        "metrics": {
+            "studentSatisfaction": "Student Satisfaction",
+            "career": "Career Advancement",
+            "would": "Would Recommend",
+            "higherEarnings": "Higher Earnings"
+        }
     },
 
     "newsEvents": {

@@ -1,15 +1,78 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import SideNavigationLayout from '../../components/layout/SideNavigationLayout';
+import { contentApi } from '../../services/apiClient';
 
 const Testimonials = () => {
   const { t } = useLanguage();
   const [showAll, setShowAll] = useState(false);
+  const [testimonials, setTestimonials] = useState([]);
+  const [loading, setLoading] = useState(true);
   const { ref: featuredRef, animationClasses: featuredAnimation } = useScrollAnimation();
-  const { ref: categoriesRef, animationClasses: categoriesAnimation } = useScrollAnimation();
 
-  const testimonials = t('testimonials.featuredTestimonials');
+  // Fallback testimonials from translations (used when API fails)
+  const fallbackTestimonials = t('testimonials.featuredTestimonials') || [];
+
+  // Fetch testimonials from backend API
+  const fetchTestimonials = async () => {
+    try {
+      setLoading(true);
+      
+      const response = await contentApi.getTestimonials({ limit: 10 });
+      const data = response.data.data;
+      const testimonialsData = data.testimonials;
+      
+      if (testimonialsData && testimonialsData.length > 0) {
+        // Map API data to component format (matching DB field names)
+        const items = testimonialsData.map(item => ({
+          id: item.id,
+          name: item.name || 'Anonymous',
+          quote: item.content || item.quote || '',
+          role: item.position || item.role || 'Student',
+          company: item.company || '',
+          rating: item.rating || 5,
+          image: item.image || 'https://res.cloudinary.com/doi8mindp/image/upload/v1767270351/logo2_h07cix.png'
+        }));
+        setTestimonials(items);
+      } else {
+        // Use fallback data when no API data available
+        setTestimonials(fallbackTestimonials);
+      }
+    } catch (err) {
+      console.error('Error fetching testimonials:', err);
+      // Use fallback data on error
+      setTestimonials(fallbackTestimonials);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, [t]);
+
+  // Loading state
+  if (loading) {
+    return (
+      <SideNavigationLayout>
+        <div className="bg-white border-b border-gray-200 p-6 lg:p-8">
+          <div className="max-w-4xl">
+            <h1 className="text-2xl lg:text-3xl font-bold text-primary mb-2">
+              {t('testimonials.title')}
+            </h1>
+            <p className="text-gray-600 text-sm lg:text-base">
+              {t('testimonials.subtitle')}
+            </p>
+          </div>
+        </div>
+        <div className="flex justify-center items-center py-20">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+        </div>
+      </SideNavigationLayout>
+    );
+  }
+
   const displayedTestimonials = showAll ? testimonials : testimonials.slice(0, 3);
 
   const categoryStats = [
@@ -47,8 +110,23 @@ const Testimonials = () => {
           </div>
         </div>
 
+        {/* Category Stats Section - moved after header */}
+        <div className="bg-white">
+          <div className="max-w-6xl mx-auto px-4 lg:px-8 py-6">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
+              {categoryStats.map((category, index) => (
+                <div key={index} className="text-center p-4 bg-gray-50 rounded-lg shadow-sm">
+                  <div className="text-3xl lg:text-4xl mb-2">{category.icon}</div>
+                  <div className="text-xl lg:text-2xl font-bold text-accent">{category.count}</div>
+                  <h3 className="text-sm lg:text-base font-bold text-primary">{category.title}</h3>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
         {/* Featured Testimonials Section */}
-        <section ref={featuredRef} className="py-8 lg:py-12">
+        <section ref={featuredRef} className="pb-8 lg:pb-12">
           <div className="max-w-6xl mx-auto px-4 lg:px-8">
             <div className={`text-center mb-8 lg:mb-12 ${featuredAnimation}`}>
               <h2 className="text-xl lg:text-2xl font-bold text-primary mb-4">
@@ -100,31 +178,6 @@ const Testimonials = () => {
                 </button>
               </div>
             )}
-          </div>
-        </section>
-
-        {/* Testimonial Categories Section */}
-        <section ref={categoriesRef} className="py-8 lg:py-12 bg-white">
-          <div className="max-w-6xl mx-auto px-4 lg:px-8">
-            <div className="text-center mb-8 lg:mb-12">
-              <h2 className="text-xl lg:text-2xl font-bold text-primary mb-4">
-                {t('testimonials.impactInNumbersTitle')}
-              </h2>
-              <p className="text-gray-600 text-sm lg:text-base max-w-3xl mx-auto">
-                {t('testimonials.impactInNumbersDesc')}
-              </p>
-            </div>
-
-            <div className={`grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 ${categoriesAnimation}`}>
-              {categoryStats.map((category, index) => (
-                <div key={index} className="text-center p-6 bg-gray-50 rounded-lg shadow-lg hover-lift">
-                  <div className="text-4xl lg:text-5xl mb-4">{category.icon}</div>
-                  <div className="text-2xl lg:text-3xl font-bold text-accent mb-2">{category.count}</div>
-                  <h3 className="text-lg lg:text-xl font-bold text-primary mb-2">{category.title}</h3>
-                  <p className="text-sm lg:text-base text-gray-600">{category.description}</p>
-                </div>
-              ))}
-            </div>
           </div>
         </section>
 

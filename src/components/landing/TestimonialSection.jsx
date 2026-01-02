@@ -27,9 +27,9 @@ const TestimonialSection = () => {
       
       if (testimonialsData && testimonialsData.length > 0) {
         const items = testimonialsData.slice(0, 1).map(item => ({
-          quote: item.content,
-          name: item.student_name || 'Anonymous',
-          title: item.position || item.company || 'Student',
+          quote: item.quote || item.content,
+          name: item.name || 'Anonymous',
+          title: item.role || item.position || item.company || 'Student',
           image: item.image || 'https://res.cloudinary.com/doi8mindp/image/upload/v1767270351/logo2_h07cix.png',
           rating: item.rating || 5
         }));
