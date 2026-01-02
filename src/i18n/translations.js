@@ -886,7 +886,7 @@ const translations = {
 
       // Events section
       eventsManagement: 'Events Management',
-      eventsDescription: 'Manage university events and activities',
+      eventsDescription: 'Manage institute events and activities',
       addEvent: 'Add Event',
       editEvent: 'Edit Event',
       createEvent: 'Create Event',
@@ -901,7 +901,7 @@ const translations = {
 
       // News section
       newsManagement: 'News Management',
-      newsDescription: 'Manage university news and announcements',
+      newsDescription: 'Manage institute news and announcements',
       addNews: 'Add News',
 
       // Contact messages section
@@ -971,11 +971,13 @@ const translations = {
       enterProgram: 'Enter program',
       year: 'Year',
       selectYear: 'Select year',
-      year1: 'Year 1',
-      year2: 'Year 2',
-      year3: 'Year 3',
-      year4: 'Year 4',
-      year5: 'Year 5',
+      year1: 'Awwal I\'hdaadiy',
+      year2: 'Thaani I\'hdaadiy',
+      year3: 'Thaalith I\'hdaadiy',
+      year4: 'Raabii I\'hdaadiy',
+      year5: 'Awwal Thaanawiyy',
+      year6: 'Thaani Thaanawiyy',
+      year7: 'Thaalith Thaanawiyy',
       saving: 'Saving...',
 
       // Testimonials section
@@ -2844,11 +2846,13 @@ const translations = {
       enterProgram: 'أدخل البرنامج',
       year: 'السنة',
       selectYear: 'اختر السنة',
-      year1: 'السنة الأولى',
-      year2: 'السنة الثانية',
-      year3: 'السنة الثالثة',
-      year4: 'السنة الرابعة',
-      year5: 'السنة الخامسة',
+      year1: ' الأول الإعدادي',
+      year2: 'الثاني الإعدادي',
+      year3: 'الثالث الإعدادي',
+      year4: 'الرابع الإعدادي',
+      year5: 'الأول الثانوي',
+      year6: 'الثاني الثانوي',
+      year7: 'الثالث الثانوي',
       saving: 'جاري الحفظ...',
 
       // Testimonials section
