@@ -1242,7 +1242,7 @@ const translations = {
       calendarDesc: "Important Islamic academic dates and schedules"
     },
     admissions: {
-      title: "Admissions",
+      title: "Title",
       subtitle: "Start your journey with us - discover how to join our academic community",
       applyNowTitle: "Apply Now",
       applyNowDesc: "Ready to begin your academic journey? Our admissions team is here to help you every step of the way.",
@@ -1753,7 +1753,7 @@ const translations = {
           image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767352687/islamic-books-syariah-laws-faith-laws-problem-islamic-islamic-books-syariah-laws-faith-laws-problem-149978379_kiwvnh.webp'
         },
         {
-          name: 'Science Laboratories',
+          name: 'Ultra Modern Mosque',
           description: 'State-of-the-art labs equipped with modern equipment for hands-on learning',
           image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767356152/Whats-is-the-Importance-of-Prayer-in-Islam_vvziqt.jpg'
         },
@@ -1832,7 +1832,7 @@ const translations = {
       sendInquiryTitle: 'Send an Inquiry',
       sendInquiryDesc: 'Have a specific question? Send us a message and we\'ll respond promptly',
       contactInfo: {
-        address: '12A Baale Street, Ishagatedo Mushin Road, Lagos 12345, Nigeria',
+        address: '9A Baale Street, Ishagatedo via Isolo-Mushin Road, Lagos 12345, Nigeria',
         phone: '+234 (0) 123-4567',
         email: 'info@mahdurahmah.edu',
         hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
@@ -2548,7 +2548,119 @@ const translations = {
       viewProfile: 'عرض الملف الشخصي',
       achievements: 'الإنجازات',
       currentPosition: 'المنصب الحالي',
-      graduated: 'تخرج في'
+      graduated: 'تخرج في',
+
+      // Dashboard sections
+      dashboard: 'لوحة تحكم الخريجين',
+      welcomeBack: 'مرحباً بعودتك',
+      stayConnected: 'ابقَ على اتصال مع أمك الجامعية ورفاق الخريجين',
+      loadingDashboard: 'جاري تحميل لوحة التحكم...',
+
+      // Present Alumni Excos
+      presentExcos: 'مسؤولو الخريجين الحاليون',
+      executiveMembers: 'الأعضاء التنفيذيون',
+      roles: 'الأدوار',
+      contactInfo: 'معلومات الاتصال',
+      position: 'المنصب',
+      email: 'البريد الإلكتروني',
+      phone: 'الهاتف',
+      executiveTitle: 'لجنة الخريجين التنفيذية',
+      executiveSubtitle: 'تعرف على قيادة الخريجين الحالية',
+
+      // Alumni Events
+      alumniEvents: 'فعاليات الخريجين',
+      upcomingAlumniEvents: 'فعاليات الخريجين القادمة',
+      pastAlumniEvents: 'فعاليات الخريجين السابقة',
+      eventDetails: 'تفاصيل الفعالية',
+      rsvp: 'الرد على الدعوة',
+
+      // Alumni Message
+      alumniMessage: 'رسالة الخريجين',
+      messageFromAdmin: 'رسالة من إدارة الخريجين',
+      unreadMessages: 'رسائل غير مقروءة',
+      markAsRead: 'تحديد كمقروء',
+      composeMessage: 'كتابة رسالة',
+
+      // Alma Mata Info
+      almaMataInfo: 'معلومات الأم الجامعية',
+      instituteNews: 'أخبار المعهد',
+      instituteEvents: 'فعاليات المعهد',
+      recentUpdates: 'التحديثات الأخيرة',
+
+      // Finance
+      finance: 'المالية',
+      financialRecords: 'السجلات المالية',
+      contributions: 'المساهمات',
+      payments: 'المدفوعات',
+      statements: 'البيانات',
+      donationHistory: 'تاريخ التبرعات',
+
+      // Suggestions
+      suggestions: 'الاقتراحات',
+      shareSuggestions: 'شارك اقتراحاتك',
+      feedback: 'التعليقات',
+      submitSuggestion: 'إرسال اقتراح',
+      suggestionHistory: 'تاريخ الاقتراحات',
+      status: 'الحالة',
+      pending: 'معلق',
+      implemented: 'مطبق',
+      underReview: 'قيد المراجعة',
+
+      // Group Chat
+      groupChat: 'الدردشة الجماعية',
+      alumniDiscussion: 'منتدى نقاش الخريجين',
+      sendMessage: 'إرسال رسالة',
+      messagePlaceholder: 'اكتب رسالتك...',
+      onlineMembers: 'الأعضاء المتصلون',
+
+      // Admin Dashboard
+      adminDashboard: 'لوحة تحكم إدارة الخريجين',
+      manageAlumniContent: 'إدارة محتوى الخريجين',
+      manageExecutives: 'إدارة المسؤولين',
+      manageFinance: 'إدارة المالية',
+      manageCommunications: 'إدارة الاتصالات',
+      recentActivity: 'النشاط الأخير',
+
+      // General
+      tabs: {
+        overview: 'نظرة عامة',
+        newsEvents: 'الأخبار والفعاليات',
+        resources: 'الموارد',
+        presentExcos: 'المسؤولون الحاليون',
+        alumniMessage: 'رسالة الخريجين',
+        almaMataInfo: 'معلومات الأم الجامعية',
+        finance: 'المالية',
+        suggestions: 'الاقتراحات',
+        groupChat: 'الدردشة الجماعية'
+      },
+      actions: {
+        viewAll: 'عرض الكل',
+        readMore: 'اقرأ المزيد',
+        edit: 'تعديل',
+        delete: 'حذف',
+        save: 'حفظ',
+        cancel: 'إلغاء',
+        submit: 'إرسال',
+        send: 'إرسال'
+      },
+      placeholders: {
+        noNewsAvailable: 'لا توجد أخبار متاحة في الوقت الحالي',
+        noUpcomingEvents: 'لا توجد فعاليات قادمة',
+        noTestimonials: 'لا توجد شهادات متاحة',
+        noCampusLife: 'لا يوجد محتوى للحياة الجامعية',
+        noEventsAvailable: 'لا توجد فعاليات متاحة',
+        noBooksAvailable: 'لا توجد كتب متاحة',
+        noExecutiveMembers: 'لم يتم العثور على أعضاء تنفيذيين',
+        noMessages: 'لا توجد رسائل',
+        noFinancialRecords: 'لا توجد سجلات مالية',
+        noSuggestions: 'لا توجد اقتراحات بعد'
+      },
+      stats: {
+        thisMonth: 'هذا الشهر',
+        next30Days: 'الـ 30 يوماً القادمة',
+        fromAlumni: 'من الخريجين',
+        available: 'متاح'
+      }
     },
 
     common: {
@@ -2799,7 +2911,7 @@ const translations = {
       confirmClear: 'تأكيد المسح',
 
       // Additional dashboard labels
-      title: 'لوحة التحكم',
+      title: 'عنوان',
       status: 'الحالة',
       addNewNews: 'إضافة خبر جديد',
       noNews: 'لم يتم العثور على أخبار. أضف أول خبر!',

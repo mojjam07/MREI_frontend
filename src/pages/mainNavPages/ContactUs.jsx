@@ -256,8 +256,12 @@ const ContactUs = () => {
               {/* Map Placeholder */}
               <div className="bg-white p-6 rounded-lg shadow-lg">
                 <h3 className="text-lg font-bold text-primary mb-4">Find Us</h3>
-                <div className="bg-gray-200 h-64 rounded-lg flex items-center justify-center">
-                  <p className="text-gray-500">{t('contactUs.mapEmbed')}</p>
+                <div className="embed-map-responsive">
+                  <div className="embed-map-container">
+                    <iframe className="embed-map-frame" frameBorder="0" scrolling="no" marginHeight="0" marginWidth="0" src="https://maps.google.com/maps?width=600&height=400&hl=en&q=baale%20street%20ishagatedo&t=&z=14&ie=UTF8&iwloc=B&output=embed"></iframe>
+                    <a href="https://sprunkiretake.net" style={{fontSize: '2px', color: 'gray', position: 'absolute', bottom: 0, left: 0, zIndex: 1, maxHeight: '1px', overflow: 'hidden'}}>Sprunki</a>
+                  </div>
+                  <style>{`.embed-map-responsive{position:relative;text-align:right;width:100%;height:0;padding-bottom:95%;}.embed-map-container{overflow:hidden;background:none!important;width:100%;height:100%;position:absolute;top:0;left:0;}.embed-map-frame{width:100%!important;height:100%!important;position:absolute;top:0;left:0;}`}</style>
                 </div>
               </div>
 
