@@ -905,7 +905,7 @@ const translations = {
       addNews: 'Add News',
 
       // Contact messages section
-      contactMessages: 'Contact Messages',
+      // contactMessages: 'Contact Messages',
       contactMessagesDescription: 'Review and respond to contact form submissions',
       unread: 'Unread',
       replyTo: 'Replying to',
@@ -981,6 +981,13 @@ const translations = {
       // Testimonials section
       testimonialsManagement: 'Testimonials Management',
       testimonialsDescription: 'Manage student and staff testimonials',
+      name: 'Name',
+      addNewTestimonial: 'Add New Testimonial',
+      rating: 'Rating',
+      position: 'Position',
+      company: 'Company',
+      approved: 'Approved',
+      description: 'Description',
 
       // Campus Life section
       campusLifeManagement: 'Campus Life Management',
@@ -1014,17 +1021,17 @@ const translations = {
       totalCount: 'Total Count',
 
       // Common actions
-      category: 'Category',
+      // category: 'Category',
       date: 'Date',
       edit: 'Edit',
       delete: 'Delete',
       addNew: 'Add New',
-      new: 'New',
+      // new: 'New',
       email: 'Email',
       phone: 'Phone',
       received: 'Received',
       reply: 'Reply',
-      markRead: 'Mark Read',
+      // markRead: 'Mark Read',
       role: 'Role',
       save: 'Save',
       cancel: 'Cancel',
@@ -1065,7 +1072,7 @@ const translations = {
       confirmClear: 'Confirm Clear',
 
       // Additional dashboard labels
-      title: 'Dashboard',
+      title: 'Title',
       status: 'Status',
       addNewNews: 'Add New News',
       noNews: 'No news found. Add your first news!',
@@ -2737,7 +2744,7 @@ const translations = {
 
       // Events section
       eventsManagement: 'إدارة الفعاليات',
-      eventsDescription: 'إدارة فعاليات وأنشطة الجامعة',
+      eventsDescription: 'إدارة فعاليات وأنشطة المعهدة',
       addEvent: 'إضافة فعالية',
       editEvent: 'تعديل الفعالية',
       createEvent: 'إنشاء فعالية',
@@ -2752,8 +2759,9 @@ const translations = {
 
       // News section
       newsManagement: 'إدارة الأخبار',
-      newsDescription: 'إدارة أخبار وإعلانات الجامعة',
+      newsDescription: 'إدارة أخبار وإعلانات المعهدة',
       addNews: 'إضافة خبر',
+
 
       // Contact messages section
       contactMessages: 'رسائل التواصل',
@@ -2796,6 +2804,17 @@ const translations = {
       enterAuthor: 'أدخل اسم المؤلف',
       enterISBN: 'أدخل الرقم المعياري',
       enterCategory: 'أدخل الفئة',
+      description: 'الوصف',
+      published: 'تم النشر',
+      draft: 'مسودة',
+      name: 'الاسم',
+      enterName: 'أدخل الاسم',
+      rating: 'التقييم',
+      position: 'المنصب',
+      enterPosition: 'أدخل المنصب',
+      company: 'الشركة',
+      enterCompany: 'أدخل اسم الشركة',
+      approved: 'معتمد',
       enterDescription: 'أدخل وصف الكتاب',
       enterGenre: 'أدخل النوع',
       enterPublicationYear: 'أدخل سنة النشر',
@@ -2865,17 +2884,17 @@ const translations = {
       totalCount: 'العدد الإجمالي',
 
       // Common actions
-      category: 'الفئة',
+      // category: 'الفئة',
       date: 'التاريخ',
       edit: 'تعديل',
       delete: 'حذف',
       addNew: 'إضافة جديد',
-      new: 'جديد',
+      // new: 'جديد',
       email: 'البريد الإلكتروني',
       phone: 'الهاتف',
       received: 'تم الاستلام',
       reply: 'رد',
-      markRead: 'تعليم كمقروء',
+      // markRead: 'تعليم كمقروء',
       role: 'الدور',
       save: 'حفظ',
       cancel: 'إلغاء',
