@@ -988,6 +988,9 @@ const translations = {
       company: 'Company',
       approved: 'Approved',
       description: 'Description',
+      enterName: 'Enter name',
+      enterPosition: 'Enter position',
+      enterCompany: 'Enter company',
 
       // Campus Life section
       campusLifeManagement: 'Campus Life Management',
