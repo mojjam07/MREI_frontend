@@ -794,7 +794,7 @@
             "caption": "Main Campus Building"
           },
           {
-            "url": "https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=400&h=300&fit=crop",
+            "url": "https://res.cloudinary.com/doi8mindp/image/upload/v1767352687/islamic-books-syariah-laws-faith-laws-problem-islamic-islamic-books-syariah-laws-faith-laws-problem-149978379_kiwvnh.webp",
             "caption": "Modern Library"
           },
           {
@@ -1079,7 +1079,15 @@
         "getInvolvedTitle": "Get Involved",
         "getInvolvedDesc": "Discover endless opportunities to engage, learn, and grow beyond the classroom",
         "joinClubButton": "Join a Club",
-        "learnMoreButton": "Learn More"
+        "learnMoreButton": "Learn More",
+        "campusExperienceTitle": "Experience Campus Life",
+        "campusExperienceDesc": "Join a vibrant community where learning extends beyond the classroom. Make new friends, develop leadership skills, and create memories that last a lifetime.",
+        "stats": {
+            "studentClubs": "Student Clubs",
+            "annualEvents": "Annual Events",
+            "sportsTeams": "Sports Teams"
+        },
+        "joinCommunityButton": "Join Our Community"
     },
 
     "contactUs": {

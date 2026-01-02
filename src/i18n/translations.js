@@ -1750,22 +1750,22 @@ const translations = {
         {
           name: 'Modern Library',
           description: 'Extensive collection of books, journals, and digital resources with quiet study areas',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767352687/islamic-books-syariah-laws-faith-laws-problem-islamic-islamic-books-syariah-laws-faith-laws-problem-149978379_kiwvnh.webp'
         },
         {
           name: 'Science Laboratories',
           description: 'State-of-the-art labs equipped with modern equipment for hands-on learning',
-          image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767356152/Whats-is-the-Importance-of-Prayer-in-Islam_vvziqt.jpg'
         },
         {
           name: 'Computer Centers',
           description: 'High-tech computer labs with latest software and internet connectivity',
-          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767353394/images_hjtpnz.jpg'
         },
         {
           name: 'Student Lounge Areas',
           description: 'Comfortable spaces for relaxation, study groups, and socializing',
-          image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767354235/Gemini_Generated_Image_6mnunm6mnunm6mnu_dge6cs.png'
         }
       ],
       activities: [
@@ -3474,22 +3474,22 @@ const translations = {
         {
           name: 'مكتبة حديثة',
           description: 'مجموعة واسعة من الكتب والمجلات والموارد الرقمية مع مناطق دراسة هادئة',
-          image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767352687/islamic-books-syariah-laws-faith-laws-problem-islamic-islamic-books-syariah-laws-faith-laws-problem-149978379_kiwvnh.webp'
         },
         {
           name: 'مختبرات العلوم',
           description: 'مختبرات حديثة المستوى مجهزة بمعدات حديثة للتعلم العملي',
-          image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767356152/Whats-is-the-Importance-of-Prayer-in-Islam_vvziqt.jpg'
         },
         {
           name: 'مراكز الحاسوب',
           description: 'مختبرات حاسوب عالية التقنية مع أحدث البرامج والاتصال بالإنترنت',
-          image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767353394/images_hjtpnz.jpg'
         },
         {
           name: 'مناطق استراحة الطلاب',
           description: 'مساحات مريحة للاسترخاء ومجموعات الدراسة والتواصل الاجتماعي',
-          image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=300&h=200&fit=crop'
+          image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767354235/Gemini_Generated_Image_6mnunm6mnunm6mnu_dge6cs.png'
         }
       ],
       activities: [
