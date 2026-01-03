@@ -111,7 +111,13 @@ const AdminDashboard = () => {
       case 'testimonial-approval':
         return renderSectionWithErrorBoundary(TestimonialApprovalSection);
       case 'contact-messages':
-        return renderSectionWithErrorBoundary(ContactMessagesSection);
+        return renderSectionWithErrorBoundary(ContactMessagesSection, {
+          contactMessages: dashboardContext.contactMessages || [],
+          contactMessagesLoading: dashboardContext.contactMessagesLoading,
+          markAsRead: dashboardContext.markAsRead,
+          replyContactMessage: dashboardContext.replyContactMessage,
+          deleteContactMessage: dashboardContext.deleteContactMessage
+        });
       default:
         return renderSectionWithErrorBoundary(StatsSection);
     }

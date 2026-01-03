@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { safeFormatDate, safeArray, safeString } from '../../../../utils/dateUtils';
 
-const ContactMessagesSection = ({ 
-  t, 
-  contactMessages = [], 
-  unreadMessages = [], 
+const ContactMessagesSection = ({
+  t,
+  contactMessages = [],
+  unreadMessages = [],
   contactMessagesLoading,
-  updateContactMessage,
-  markAsRead
+  markAsRead,
+  replyContactMessage,
+  deleteContactMessage
 }) => {
   const safeContactMessages = safeArray(contactMessages);
   const safeUnreadMessages = safeArray(unreadMessages);
@@ -39,9 +40,9 @@ const ContactMessagesSection = ({
     
     setIsSubmitting(true);
     try {
-      await updateContactMessage(replyingTo, { 
-        reply: replyData.reply,
-        reply_date: new Date().toISOString()
+      await replyContactMessage({ 
+        id: replyingTo, 
+        reply: replyData.reply 
       });
       setReplyingTo(null);
       setReplyData({ reply: '' });
@@ -57,6 +58,14 @@ const ContactMessagesSection = ({
       await markAsRead(messageId);
     } catch (error) {
       console.error('Error marking as read:', error);
+    }
+  };
+
+  const handleDeleteMessage = async (messageId) => {
+    try {
+      await deleteContactMessage(messageId);
+    } catch (error) {
+      console.error('Error deleting message:', error);
     }
   };
 
@@ -113,7 +122,7 @@ const ContactMessagesSection = ({
                 <div className="mb-3 sm:mb-4 p-3 sm:p-4 glass-card border border-coral/30 animate-fade-in-up hover-glow-coral">
                   <div className="flex items-center gap-2 sm:gap-3 mb-2 sm:mb-3 pb-2 border-b border-white/10">
                     <span className="w-1 h-4 sm:h-5 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-                    <h4 className="text-xs sm:text-sm font-medium text-light-text">
+                    <h4 className="text-xs sm:text-sm font-medium text-primary-text">
                       {t('dashboard.replyTo') || 'Replying to'} {message.name}
                     </h4>
                   </div>
@@ -123,7 +132,7 @@ const ContactMessagesSection = ({
                       value={replyData.reply}
                       onChange={handleInputChange}
                       rows={2}
-                      className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-light-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
+                      className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                       placeholder={t('dashboard.enterReply') || 'Enter your reply...'}
                       required
                     />
@@ -131,14 +140,14 @@ const ContactMessagesSection = ({
                       <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-success-color to-green-600 text-white rounded-lg font-medium hover-lift hover-scale transition-all disabled:opacity-50 text-xs sm:text-sm"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-success-color to-green-600 text-primary rounded-lg font-medium hover-lift hover-scale transition-all disabled:opacity-50 text-xs sm:text-sm"
                       >
                         {isSubmitting ? (t('dashboard.sending') || 'Sending...') : (t('dashboard.sendReply') || 'Send Reply')}
                       </button>
                       <button
                         type="button"
                         onClick={cancelReply}
-                        className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-light-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-xs sm:text-sm"
+                        className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-primary-text rounded-lg font-medium hover-lift hover-scale transition-all border border-white/20 hover:border-white/40 text-xs sm:text-sm"
                       >
                         {t('dashboard.cancel') || 'Cancel'}
                       </button>
@@ -162,7 +171,7 @@ const ContactMessagesSection = ({
                 <div className="flex flex-col sm:flex-row justify-between items-start gap-2 mb-2 sm:mb-3">
                   <div className="flex items-center gap-2">
                     <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-                    <h3 className="text-base sm:text-lg font-semibold text-light-text truncate">
+                    <h3 className="text-base sm:text-lg font-semibold text-primary-text truncate">
                       {safeString(message.name, 'Anonymous')}
                     </h3>
                     {!message.is_read && (
@@ -174,7 +183,7 @@ const ContactMessagesSection = ({
                 </div>
 
                 {/* Message */}
-                <p className="text-xs sm:text-sm text-light-text/80 mb-2 sm:mb-3 line-clamp-2">
+                <p className="text-xs sm:text-sm text-primary-text/80 mb-2 sm:mb-3 line-clamp-2">
                   {safeString(message.message, 'No message')}
                 </p>
 
@@ -210,14 +219,22 @@ const ContactMessagesSection = ({
                     </button>
                   )}
                   {!message.is_read && (
-                    <button 
+                    <button
                       onClick={() => handleMarkAsRead(message.id)}
                       className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-primary rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 text-xs sm:text-sm flex items-center justify-center gap-1"
                     >
                       {t('dashboard.markRead') || 'Mark Read'}
                     </button>
                   )}
-                  <button className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-error-color rounded-lg hover-lift hover-scale transition-all duration-300 border border-error-color/30 hover:border-error-color/50 hover:text-error-color/80 text-xs sm:text-sm flex items-center justify-center gap-1">
+                  {message.is_read && (
+                    <span className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-success-color/20 to-green-500/20 text-success-color rounded-lg border border-success-color/30 text-xs sm:text-sm flex items-center justify-center gap-1">
+                      {t('dashboard.messageRead') || 'Message Read'}
+                    </span>
+                  )}
+                  <button
+                    onClick={() => handleDeleteMessage(message.id)}
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 glass-card text-error-color rounded-lg hover-lift hover-scale transition-all duration-300 border border-error-color/30 hover:border-error-color/50 hover:text-error-color/80 text-xs sm:text-sm flex items-center justify-center gap-1"
+                  >
                     {t('dashboard.delete') || 'Delete'}
                   </button>
                 </div>
@@ -226,7 +243,7 @@ const ContactMessagesSection = ({
           ))
         ) : (
           <div className="glass-card p-8 sm:p-12 text-center animate-fade-in-up">
-            <p className="text-base sm:text-lg text-light-text/60">
+            <p className="text-base sm:text-lg text-primary-text/60">
               {t('dashboard.noMessages') || 'No contact messages'}
             </p>
           </div>

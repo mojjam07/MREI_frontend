@@ -313,7 +313,7 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="w-1 h-5 sm:h-6 bg-gradient-to-b from-primary to-coral rounded-full animate-pulse-gentle flex-shrink-0"></span>
-                      <h3 className="text-lg sm:text-xl font-semibold text-light-text truncate">
+                      <h3 className="text-lg sm:text-xl font-semibold text-primary-text truncate">
                         {safeString(event.title, 'Untitled')}
                       </h3>
                     </div>
@@ -366,7 +366,7 @@ const EventsSection = ({ t, events = [], eventsLoading, createEvent, updateEvent
                 <div className="flex gap-2 w-full pt-2 border-t border-white/10">
                   <button
                     onClick={() => handleEdit(event)}
-                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-light-text rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 text-xs sm:text-sm flex items-center justify-center gap-1"
+                    className="flex-1 sm:flex-none px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-primary/20 to-coral/20 text-primary-text rounded-lg hover-lift hover-scale transition-all duration-300 border border-primary/30 hover:border-primary/50 text-xs sm:text-sm flex items-center justify-center gap-1"
                   >
                     <Edit2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     <span className="hidden sm:inline">{t('dashboard.edit') || 'Edit'}</span>

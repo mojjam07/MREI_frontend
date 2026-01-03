@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
-import { API } from '../../config';
+import { API, API_ENDPOINTS } from '../../config';
 
 const OurContact = () => {
   const { t } = useLanguage();
@@ -30,7 +30,7 @@ const OurContact = () => {
     setSubmitStatus(null);
 
     try {
-      const response = await fetch(`${API}/contact/`, {
+      const response = await fetch(`${API}${API_ENDPOINTS.CONTENT.CONTACT}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

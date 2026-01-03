@@ -11,6 +11,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
     rating: 5,
     position: '',
     company: '',
+    image: '',
     approved: false
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -27,10 +28,17 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
     e.preventDefault();
     setIsSubmitting(true);
     try {
+      // Map 'name' to 'student_name' for backend compatibility
+      const backendData = {
+        ...formData,
+        student_name: formData.name
+      };
+      delete backendData.name;
+      
       if (editingId) {
-        await updateTestimonial({ id: editingId, data: formData });
+        await updateTestimonial({ id: editingId, data: backendData });
       } else {
-        await createTestimonial(formData);
+        await createTestimonial(backendData);
       }
       setFormData({
         name: '',
@@ -38,6 +46,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
         rating: 5,
         position: '',
         company: '',
+        image: '',
         approved: false
       });
       setShowForm(false);
@@ -56,6 +65,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
       rating: item.rating || 5,
       position: item.position || '',
       company: item.company || '',
+      image: item.image || '',
       approved: item.approved || item.status === 'approved' || false
     });
     setEditingId(item.id);
@@ -79,6 +89,7 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
       rating: 5,
       position: '',
       company: '',
+      image: '',
       approved: false
     });
     setShowForm(false);
@@ -232,6 +243,19 @@ const TestimonialsSection = ({ t, testimonials = [], testimonialsLoading, create
                 rows={3}
                 className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary resize-vertical text-sm sm:text-base"
                 placeholder={t('dashboard.enterContent') || 'Enter testimonial content'}
+              />
+            </div>
+            <div>
+              <label className="block text-xs sm:text-sm font-medium text-primary-text mb-1">
+                {t('dashboard.imageUrl') || 'Image URL'}
+              </label>
+              <input
+                type="url"
+                name="image"
+                value={formData.image}
+                onChange={handleInputChange}
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 glass-card text-primary-text placeholder-light-text/50 focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                placeholder={t('dashboard.enterImageUrl') || 'Enter image URL'}
               />
             </div>
             <div className="flex items-center gap-2">

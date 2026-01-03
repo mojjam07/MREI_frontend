@@ -444,6 +444,57 @@ export const DashboardProvider = ({ children }) => {
     },
   });
 
+  const updateContactMessage = useMutation({
+    mutationFn: ({ id, data }) => apiClient.put(`${API_ENDPOINTS.DASHBOARD.ADMIN_CONTACT_MESSAGES}${id}/`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-contact-messages'] });
+    },
+  });
+
+  const markAsRead = useMutation({
+    mutationFn: (id) => apiClient.put(`${API_ENDPOINTS.DASHBOARD.ADMIN_CONTACT_MESSAGES}${id}/`, { is_read: true }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-contact-messages'] });
+    },
+  });
+
+  const replyContactMessage = useMutation({
+    mutationFn: ({ id, reply }) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_CONTACT_MESSAGES}${id}/reply`, { reply }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['admin-contact-messages'] });
+    },
+  });
+
+  const deleteContactMessage = useMutation({
+    mutationFn: async (id) => {
+      try {
+        const res = await apiClient.delete(`${API_ENDPOINTS.DASHBOARD.ADMIN_CONTACT_MESSAGES}${id}/`);
+        return res.data;
+      } catch (error) {
+        // Handle "message not found" gracefully - it may have already been deleted
+        const errorData = error.response?.data;
+        if (errorData?.error_code === 'MESSAGE_NOT_FOUND') {
+          console.warn('Contact message was already deleted or does not exist:', id);
+          // Return a special flag to indicate the message was already gone
+          return {
+            success: true,
+            deleted: false,
+            message: errorData.message,
+            already_deleted: true
+          };
+        }
+        console.error('Failed to delete contact message:', error);
+        throw error;
+      }
+    },
+    onSuccess: (data) => {
+      // Only invalidate queries if actually deleted
+      if (data?.deleted) {
+        queryClient.invalidateQueries({ queryKey: ['admin-contact-messages'] });
+      }
+    },
+  });
+
   /* =========================
      CONTEXT VALUE
   ========================== */
@@ -558,6 +609,18 @@ export const DashboardProvider = ({ children }) => {
     },
     deleteBook: (...args) => {
       try { return deleteBookMutation.mutate(...args); } catch (error) { console.error('Delete book failed:', error); throw error; }
+    },
+    updateContactMessage: async (...args) => {
+      try { return await updateContactMessage.mutateAsync(...args); } catch (error) { console.error('Update contact message failed:', error); throw error; }
+    },
+    markAsRead: async (...args) => {
+      try { return await markAsRead.mutateAsync(...args); } catch (error) { console.error('Mark as read failed:', error); throw error; }
+    },
+    replyContactMessage: async (...args) => {
+      try { return await replyContactMessage.mutateAsync(...args); } catch (error) { console.error('Reply contact message failed:', error); throw error; }
+    },
+    deleteContactMessage: async (...args) => {
+      try { return await deleteContactMessage.mutateAsync(...args); } catch (error) { console.error('Delete contact message failed:', error); throw error; }
     },
   };
 

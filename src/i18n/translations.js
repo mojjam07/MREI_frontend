@@ -101,6 +101,9 @@ const translations = {
       subject: 'Subject',
       message: 'Message',
       send: 'Send',
+      sending: 'Sending...',
+      messageSent: 'Your message has been sent successfully!',
+      messageError: 'There was an error sending your message. Please try again later.',
       footerAboutTitle: 'About Mahdu Rahmah',
       footerAcademicsTitle: 'Academics',
       footerAdmissionsTitle: 'Admissions',
@@ -904,6 +907,8 @@ const translations = {
       newsDescription: 'Manage institute news and announcements',
       addNews: 'Add News',
       updateNews: 'Update News',
+      published: 'Published',
+      draft: 'Draft',
 
       // Contact messages section
       // contactMessages: 'Contact Messages',
@@ -2003,6 +2008,8 @@ const translations = {
       subject: "الموضوع",
       message: "الرسالة",
       send: "إرسال",
+      messageSent: "تم إرسال رسالتك بنجاح. سنعود إليك قريباً!",
+      messageError: "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى.",
       addressValue: "شارع بالي إشاغاتيدو عن طريق إيصولو-موشن، لاغوس 12345",
       phoneValue: "+1 (555) 123-4567",
       emailValue: "info@mahdurahmah.edu",
@@ -2787,6 +2794,7 @@ const translations = {
       testimonialApprovalDescription: 'مراجعة واعتماد الشهادات',
       pending: 'معلق',
       noPendingTestimonials: 'لا توجد شهادات معلقة',
+      addNewTestimonial: 'إضافة شهادة جديدة',
 
       // Books section
       booksManagement: 'إدارة الكتب',
