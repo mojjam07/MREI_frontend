@@ -903,6 +903,7 @@ const translations = {
       newsManagement: 'News Management',
       newsDescription: 'Manage institute news and announcements',
       addNews: 'Add News',
+      updateNews: 'Update News',
 
       // Contact messages section
       // contactMessages: 'Contact Messages',
@@ -2766,6 +2767,7 @@ const translations = {
       newsManagement: 'إدارة الأخبار',
       newsDescription: 'إدارة أخبار وإعلانات المعهدة',
       addNews: 'إضافة خبر',
+      updateNews: 'تحديث الخبر',
 
 
       // Contact messages section

@@ -349,7 +349,7 @@ export const DashboardProvider = ({ children }) => {
      ADMIN MUTATIONS (JSON ONLY)
   ========================== */
   const createNews = useMutation({
-    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_NEWS}create/`, data),
+    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_NEWS}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-news'] });
       queryClient.invalidateQueries({ queryKey: ['news'] });
@@ -373,7 +373,7 @@ export const DashboardProvider = ({ children }) => {
   });
 
   const createEvent = useMutation({
-    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_EVENTS}create/`, data),
+    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_EVENTS}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-events'] });
       queryClient.invalidateQueries({ queryKey: ['events'] });
@@ -397,7 +397,7 @@ export const DashboardProvider = ({ children }) => {
   });
 
   const createTestimonial = useMutation({
-    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_TESTIMONIALS}create/`, data),
+    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_TESTIMONIALS}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-testimonials'] });
       queryClient.invalidateQueries({ queryKey: ['testimonials'] });
@@ -421,7 +421,7 @@ export const DashboardProvider = ({ children }) => {
   });
 
   const createCampusLife = useMutation({
-    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_CAMPUS_LIFE}create/`, data),
+    mutationFn: (data) => apiClient.post(`${API_ENDPOINTS.DASHBOARD.ADMIN_CAMPUS_LIFE}`, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-campus-life'] });
       queryClient.invalidateQueries({ queryKey: ['campus-life'] });
