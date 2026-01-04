@@ -65,7 +65,7 @@ const OurImpact = () => {
             <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${studentStatsAnimation}`}>
               {statsData.studentStats.map((stat, index) => (
                 <div key={index} className="text-center p-6 bg-white rounded-lg shadow-lg hover-lift">
-                  <div className="text-3xl lg:text-4xl font-bold text-accent mb-2">{stat.value}</div>
+                  <div className="text-3xl lg:text-4xl font-bold text-primary mb-2">{stat.value}</div>
                   <div className="text-sm lg:text-base text-gray-600">{stat.label}</div>
                 </div>
               ))}
@@ -131,7 +131,7 @@ const OurImpact = () => {
             <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 ${tutorNetworkAnimation}`}>
               {statsData.tutorNetwork.map((stat, index) => (
                 <div key={index} className="text-center p-6 bg-white border-2 border-accent rounded-lg shadow-lg hover-lift">
-                  <div className="text-3xl lg:text-4xl font-bold text-accent mb-2">{stat.value}</div>
+                  <div className="text-3xl lg:text-4xl font-bold text-primary mb-2">{stat.value}</div>
                   <div className="text-sm lg:text-base text-gray-600">{stat.label}</div>
                 </div>
               ))}

@@ -83,7 +83,7 @@ const NewsEventsSection = () => {
           date: new Date(item.event_date).toLocaleDateString(),
           title: item.title,
           details: item.description,
-          videoId: item.videoId || 'dQw4w9WgXcQ'
+          videoId: item.videoId || '9R8hKCLfkK0'
         })));
       } else {
         setEventsItems(getFallbackEvents());

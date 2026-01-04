@@ -39,7 +39,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['news'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get(API_ENDPOINTS.CONTENT.NEWS);
+        const res = await apiClient.get(API_ENDPOINTS.COMMUNICATION.NEWS);
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch news:', error);
@@ -58,7 +58,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['events'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get(API_ENDPOINTS.CONTENT.EVENTS);
+        const res = await apiClient.get(API_ENDPOINTS.COMMUNICATION.EVENTS);
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch events:', error);
@@ -77,7 +77,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['testimonials'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get(API_ENDPOINTS.CONTENT.TESTIMONIALS);
+        const res = await apiClient.get(API_ENDPOINTS.COMMUNICATION.TESTIMONIALS);
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch testimonials:', error);
@@ -96,7 +96,7 @@ export const DashboardProvider = ({ children }) => {
     queryKey: ['campus-life'],
     queryFn: async () => {
       try {
-        const res = await apiClient.get(API_ENDPOINTS.CONTENT.CAMPUS_LIFE);
+        const res = await apiClient.get(API_ENDPOINTS.COMMUNICATION.CAMPUS_LIFE);
         return res.data;
       } catch (error) {
         console.warn('Failed to fetch campus life:', error);
@@ -451,7 +451,7 @@ export const DashboardProvider = ({ children }) => {
     },
   });
 
-  const markAsRead = useMutation({
+  const markAsReadMutation = useMutation({
     mutationFn: (id) => apiClient.put(`${API_ENDPOINTS.DASHBOARD.ADMIN_CONTACT_MESSAGES}${id}/`, { is_read: true }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['admin-contact-messages'] });
@@ -614,7 +614,7 @@ export const DashboardProvider = ({ children }) => {
       try { return await updateContactMessage.mutateAsync(...args); } catch (error) { console.error('Update contact message failed:', error); throw error; }
     },
     markAsRead: async (...args) => {
-      try { return await markAsRead.mutateAsync(...args); } catch (error) { console.error('Mark as read failed:', error); throw error; }
+      try { return await markAsReadMutation.mutateAsync(...args); } catch (error) { console.error('Mark as read failed:', error); throw error; }
     },
     replyContactMessage: async (...args) => {
       try { return await replyContactMessage.mutateAsync(...args); } catch (error) { console.error('Reply contact message failed:', error); throw error; }

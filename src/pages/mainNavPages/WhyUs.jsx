@@ -95,19 +95,19 @@ const WhyUs = () => {
                 </p>
                 <div className="grid grid-cols-2 gap-4">
                   <div className="text-center p-4 bg-white rounded-lg shadow">
-                    <div className="text-2xl lg:text-3xl font-bold text-accent mb-1">95%</div>
+                    <div className="text-2xl lg:text-3xl font-bold text-primary mb-1">95%</div>
                     <div className="text-xs lg:text-sm text-gray-600">{t('whyUs.provenSuccessFeatures')[0]}</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg shadow">
-                    <div className="text-2xl lg:text-3xl font-bold text-accent mb-1">5000+</div>
+                    <div className="text-2xl lg:text-3xl font-bold text-primary mb-1">5000+</div>
                     <div className="text-xs lg:text-sm text-gray-600">{t('whyUs.provenSuccessFeatures')[1]}</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg shadow">
-                    <div className="text-2xl lg:text-3xl font-bold text-accent mb-1">100+</div>
+                    <div className="text-2xl lg:text-3xl font-bold text-primary mb-1">100+</div>
                     <div className="text-xs lg:text-sm text-gray-600">{t('whyUs.provenSuccessFeatures')[2]}</div>
                   </div>
                   <div className="text-center p-4 bg-white rounded-lg shadow">
-                    <div className="text-2xl lg:text-3xl font-bold text-accent mb-1">15+</div>
+                    <div className="text-2xl lg:text-3xl font-bold text-primary mb-1">15+</div>
                     <div className="text-xs lg:text-sm text-gray-600">{t('whyUs.provenSuccessFeatures')[3]}</div>
                   </div>
                 </div>
