@@ -102,7 +102,7 @@ const translations = {
       message: 'Message',
       send: 'Send',
       sending: 'Sending...',
-      messageSent: 'Your message has been sent successfully!',
+      messageSuccess: 'Your message has been sent successfully!',
       messageError: 'There was an error sending your message. Please try again later.',
       footerAboutTitle: 'About Mahdu Rahmah',
       footerAcademicsTitle: 'Academics',
@@ -132,7 +132,7 @@ const translations = {
       footerScholarships: 'Scholarships',
       footerVisitCampus: 'Visit Our Institution',
       footerApplyNow: 'Apply Now',
-      footerAddress: '12A Baale Street  Ishagatedo Mushin Road, Lagos 12345',
+      footerAddress: '12A Baale Street Ishagatedo Mushin Road, Lagos 12345',
       footerPhone: 'Phone: +(234) 123-4567',
       footerEmail: 'Email: info@mahdurahmah.edu',
       footerFacebook: 'Facebook',
@@ -153,8 +153,8 @@ const translations = {
       errorLoadingStatistics: 'Failed to load statistics. Please try again.',
       loadingNewsEvents: 'Loading news and events...',
       errorLoadingNewsEvents: 'Failed to load news and events. Please try again.',
-      loadingCampusPhotos: 'Loading campus photos...',
-      errorLoadingCampusPhotos: 'Failed to load campus photos. Please try again.',
+      loadingCampusPhotos: 'Loading photos...',
+      errorLoadingCampusPhotos: 'Failed to load photos. Please try again.',
       loadingPendingTestimonials: 'Loading pending testimonials...',
       loadingContactMessages: 'Loading contact messages...',
       loadingStudents: 'Loading students...',
@@ -1212,6 +1212,7 @@ const translations = {
       nahwProgram: "Nahw (Arabic Grammar)",
       sarfProgram: "Sarf (Morphology)",
       balaghaProgram: "Balagha (Rhetoric)",
+      coursesWeOfferedTitle: "Courses We Offered",
 
       // Faculty of Da‘wah & Islamic Communication
       dawahTitle: "Faculty of Da‘wah & Islamic Communication",
@@ -1673,7 +1674,9 @@ const translations = {
       metrics: {
         studentSatisfaction: 'Student Satisfaction',
         career: 'Career Advancement',
+        careerAdvancement: 'Career Advancement',
         would: 'Would Recommend',
+        wouldRecommend: 'Would Recommend',
         higherEarnings: 'Higher Earnings'
       },
       featuredTestimonials: [
@@ -1699,6 +1702,13 @@ const translations = {
       upcomingEventsDesc: 'Join us for exciting events, workshops, seminars, and community gatherings',
       academicAnnouncementsTitle: 'Academic Announcements',
       academicAnnouncementsDesc: 'Important notices regarding academics, admissions, and institutional updates',
+      readMore: 'Read More',
+      past: 'Past',
+      organizer: 'Organizer',
+      viewDetails: 'View Details',
+      newsletterTitle: 'Subscribe to Our Newsletter',
+      newsletterDesc: 'Stay updated with the latest news and events from Mahdu Rahmah',
+      newsletterPlaceholder: 'Enter your email address',
       featuredNews: [
         {
           title: 'Mahdu Rahmah Wins National Education Excellence Award',
@@ -1754,9 +1764,9 @@ const translations = {
     },
 
     schoolLife: {
-      title: 'Vibrant Campus Life',
-      subtitle: 'Experience a rich and diverse campus community that extends beyond academics',
-      campusFacilitiesTitle: 'World-Class Campus Facilities',
+      title: 'Vibrant Life',
+      subtitle: 'Experience a rich and diverse community that extends beyond academics',
+      campusFacilitiesTitle: 'World-Class Facilities',
       campusFacilitiesDesc: 'Modern infrastructure designed to support learning, recreation, and personal development',
       studentActivitiesTitle: 'Engaging Student Activities',
       studentActivitiesDesc: 'Diverse range of activities that promote leadership, creativity, and personal growth',
@@ -1774,7 +1784,7 @@ const translations = {
         },
         {
           name: 'Ultra Modern Mosque',
-          description: 'State-of-the-art labs equipped with modern equipment for hands-on learning',
+          description: 'State-of-the-art masjid with modern facilities and a dedicated prayer room',
           image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767356152/Whats-is-the-Importance-of-Prayer-in-Islam_vvziqt.jpg'
         },
         {
@@ -1837,7 +1847,15 @@ const translations = {
           name: 'Athletics',
           description: 'Track and field activities and competitions'
         }
-      ]
+      ],
+      campusExperienceTitle: 'Campus Experience',
+      campusExperienceDesc: 'Discover what makes our campus unique',
+      stats: {
+        studentClubs: '{count} Student Clubs',
+        annualEvents: '{count} Annual Events',
+        sportsTeams: '{count} Sports Teams'
+      },
+      joinCommunityButton: 'Join Our Community'
     },
 
     contactUs: {
@@ -2008,7 +2026,7 @@ const translations = {
       subject: "الموضوع",
       message: "الرسالة",
       send: "إرسال",
-      messageSent: "تم إرسال رسالتك بنجاح. سنعود إليك قريباً!",
+      messageSuccess: "تم إرسال رسالتك بنجاح. سنعود إليك قريباً!",
       messageError: "حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى.",
       addressValue: "شارع بالي إشاغاتيدو عن طريق إيصولو-موشن، لاغوس 12345",
       phoneValue: "+1 (555) 123-4567",
@@ -3096,7 +3114,7 @@ const translations = {
       islamicCivilizationProgram: "الحضارة الإسلامية",
       islamicHeritageProgram: "الدراسات التراثية الإسلامية",
 
-
+      coursesWeOfferedTitle: "البرامج الأكاديمية التي نقدمها",
       undergraduateTitle: "برامج المرحلة الإعدادية",
       undergraduateDesc: "برامج تأسيسية لتعليم إسلامي متكامل",
       bachelorDegrees: "برامج المرحلة الثانوية",
@@ -3530,7 +3548,9 @@ const translations = {
       metrics: {
         studentSatisfaction: 'رضا الطلاب',
         career: 'التقدم الوظيفي',
+        careerAdvancement: 'التقدم الوظيفي',
         would: 'سيوصي',
+        wouldRecommend: 'سيوصي',
         higherEarnings: 'دخل أعلى'
       },
       featuredTestimonials: [
@@ -3556,6 +3576,13 @@ const translations = {
       upcomingEventsDesc: 'انضم إلينا في فعاليات مثيرة وورش عمل وندوات والتقاء مجتمعي',
       academicAnnouncementsTitle: 'الإعلانات الأكاديمية',
       academicAnnouncementsDesc: 'إشعارات مهمة بخصوص الأكاديميات والقبول والتحديثات المؤسسية',
+      readMore: 'اقرأ المزيد',
+      past: 'السابق',
+      organizer: 'المنظم',
+      viewDetails: 'عرض التفاصيل',
+      newsletterTitle: 'اشترك في النشرة الإخبارية',
+      newsletterDesc: 'ابقَ على اطلاع بأحدث الأخبار والفعاليات من معهد الرحمة',
+      newsletterPlaceholder: 'أدخل عنوان بريدك الإلكتروني',
       featuredNews: [
         {
           title: 'معهد الرحمة يفوز بجائزة التميز التعليمي الوطنية',
@@ -3630,8 +3657,8 @@ const translations = {
           image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767352687/islamic-books-syariah-laws-faith-laws-problem-islamic-islamic-books-syariah-laws-faith-laws-problem-149978379_kiwvnh.webp'
         },
         {
-          name: 'مختبرات العلوم',
-          description: 'مختبرات حديثة المستوى مجهزة بمعدات حديثة للتعلم العملي',
+          name: 'مسجد في الحرم',
+          description: 'مكان للعبادة والتأمل للمجتمع المعهد',
           image: 'https://res.cloudinary.com/doi8mindp/image/upload/v1767356152/Whats-is-the-Importance-of-Prayer-in-Islam_vvziqt.jpg'
         },
         {
@@ -3694,7 +3721,15 @@ const translations = {
           name: 'ألعاب القوى',
           description: 'أنشطة ومباريات ألعاب القوى والمضمار'
         }
-      ]
+      ],
+      campusExperienceTitle: 'تجربة الحرم الجامعي',
+      campusExperienceDesc: 'اكتشف ما يجعل حرمنا الجامعي فريداً',
+      stats: {
+        studentClubs: '{count} نادٍ طلابي',
+        annualEvents: '{count} فعالية سنوية',
+        sportsTeams: '{count} فريق رياضي'
+      },
+      joinCommunityButton: 'انضم إلى مجتمعنا'
     },
 
     contactUs: {
