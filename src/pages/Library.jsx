@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { Document, Page, pdfjs } from 'react-pdf';
-import { ChevronLeft, ChevronRight, X, Upload, Book, Loader2, AlertCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, X, Upload, Book, Loader2, AlertCircle, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import apiClient from '../services/apiClient';
@@ -9,8 +9,35 @@ import { API_ENDPOINTS } from '../config';
 import PageHeader from '../components/layout/PageHeader';
 import Footer from '../components/layout/Footer';
 
-// Configure PDF.js worker for Vite
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
+// Configure PDF.js worker for Vite - use CDN for reliability
+// react-pdf 10.x bundles pdfjs-dist 4.x, use version matching installed pdfjs-dist@4.4.168
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`;
+
+// Helper function to check if URL is a Google Drive PDF link
+const isGoogleDrivePdf = (url) => {
+  if (!url || typeof url !== 'string') return false;
+  return url.includes('drive.google.com') && (
+    url.includes('/file/d/') || 
+    url.includes('?id=') ||
+    url.includes('/open?id=')
+  );
+};
+
+// Helper function to convert Google Drive URL to preview URL
+const getGoogleDrivePreviewUrl = (url) => {
+  if (!url) return '';
+  // Handle /file/d/FILE_ID/view format
+  const fileMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (fileMatch) {
+    return `https://drive.google.com/file/d/${fileMatch[1]}/preview`;
+  }
+  // Handle ?id=FILE_ID or open?id=FILE_ID format
+  const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (idMatch) {
+    return `https://drive.google.com/file/d/${idMatch[1]}/preview`;
+  }
+  return url;
+};
 
 // Helper function to generate book cover placeholder SVG data URL
 const generateBookCoverUrl = (title, bgColor = '#4F46E5') => {
@@ -78,6 +105,20 @@ const Library = () => {
   const [customFile, setCustomFile] = useState(null);
   const [numPages, setNumPages] = useState(null);
   const [pageNumber, setPageNumber] = useState(1);
+  const [scale, setScale] = useState(1.0);
+
+  // Zoom functions
+  const zoomIn = () => {
+    setScale(prev => Math.min(prev + 0.25, 3.0));
+  };
+
+  const zoomOut = () => {
+    setScale(prev => Math.max(prev - 0.25, 0.5));
+  };
+
+  const resetZoom = () => {
+    setScale(1.0);
+  };
 
   // Fetch books from API
   useEffect(() => {
@@ -166,6 +207,7 @@ const Library = () => {
     setSelectedBook(null);
     setPageNumber(1);
     setNumPages(null);
+    setScale(1.0);
   };
 
   return (
@@ -303,46 +345,59 @@ const Library = () => {
                 
                 <div className="flex-1 bg-gray-100 p-4 overflow-auto flex justify-center">
                   {selectedBook.pdf_url ? (
-                    <Document
-                      file={selectedBook.pdf_url}
-                      onLoadSuccess={onDocumentLoadSuccess}
-                      onLoadError={(error) => {
-                        console.error('PDF load error:', error);
-                        setError('Failed to load PDF file. Please try again.');
-                      }}
-                      loading={
-                        <div className="flex items-center justify-center h-64">
-                          <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
-                          <span className="ml-2 text-gray-600">Loading PDF...</span>
-                        </div>
-                      }
-                      error={
-                        <div className="flex flex-col items-center justify-center h-64 text-red-500">
-                          <AlertCircle className="w-8 h-8 mb-2" />
-                          <p>Failed to load PDF file.</p>
-                          <button 
-                            onClick={() => setError(null)}
-                            className="mt-2 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200"
-                          >
-                            Try Again
-                          </button>
-                        </div>
-                      }
-                    >
-                      <Page 
-                        pageNumber={pageNumber} 
-                        renderTextLayer={false}
-                        renderAnnotationLayer={false}
-                        className="shadow-lg"
-                        width={Math.min(window.innerWidth * 0.8, 800)}
+                    isGoogleDrivePdf(selectedBook.pdf_url) ? (
+                      // Render Google Drive PDFs using iframe with preview URL
+                      <iframe
+                        src={getGoogleDrivePreviewUrl(selectedBook.pdf_url)}
+                        className="w-full h-full min-h-[600px] border-0"
+                        title={selectedBook.title}
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                      />
+                    ) : (
+                      // Render regular PDFs using react-pdf
+                      <Document
+                        file={selectedBook.pdf_url}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                        onLoadError={(error) => {
+                          console.error('PDF load error:', error);
+                          setError('Failed to load PDF file. Please try again.');
+                        }}
                         loading={
                           <div className="flex items-center justify-center h-64">
-                            <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
-                            <span className="ml-2 text-gray-600">Loading page...</span>
+                            <Loader2 className="w-8 h-8 animate-spin text-indigo-600" />
+                            <span className="ml-2 text-gray-600">Loading PDF...</span>
                           </div>
                         }
-                      />
-                    </Document>
+                        error={
+                          <div className="flex flex-col items-center justify-center h-64 text-red-500">
+                            <AlertCircle className="w-8 h-8 mb-2" />
+                            <p>Failed to load PDF file.</p>
+                            <button 
+                              onClick={() => setError(null)}
+                              className="mt-2 px-4 py-2 bg-red-100 text-red-700 rounded hover:bg-red-200"
+                            >
+                              Try Again
+                            </button>
+                          </div>
+                        }
+                      >
+                        <Page 
+                          pageNumber={pageNumber} 
+                          renderTextLayer={true}
+                          renderAnnotationLayer={true}
+                          scale={scale}
+                          className="shadow-lg"
+                          width={Math.min(window.innerWidth * 0.8, 800 * scale)}
+                          loading={
+                            <div className="flex items-center justify-center h-64">
+                              <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />
+                              <span className="ml-2 text-gray-600">Loading page...</span>
+                            </div>
+                          }
+                        />
+                      </Document>
+                    )
                   ) : (
                     <div className="text-center flex flex-col items-center justify-center h-full">
                       <Book className="w-16 h-16 text-gray-300 mb-4" />
@@ -352,28 +407,63 @@ const Library = () => {
                   )}
                 </div>
                 
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 flex justify-between items-center border-t">
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none disabled:opacity-50"
-                    onClick={previousPage}
-                    disabled={pageNumber <= 1}
-                  >
-                    <ChevronLeft className="w-5 h-5 mr-1" />
-                    {t('digitalBookshelf.previous')}
-                  </button>
-                  <span className="text-sm text-gray-500 font-medium">
-                    {t('digitalBookshelf.pageIndicator').replace('{current}', pageNumber).replace('{total}', numPages || '--')}
-                  </span>
-                  <button
-                    type="button"
-                    className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none disabled:opacity-50"
-                    onClick={nextPage}
-                    disabled={numPages && pageNumber >= numPages}
-                  >
-                    {t('digitalBookshelf.next')}
-                    <ChevronRight className="w-5 h-5 ml-1" />
-                  </button>
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 flex flex-wrap justify-between items-center border-t gap-4">
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none disabled:opacity-50"
+                      onClick={previousPage}
+                      disabled={pageNumber <= 1}
+                      title={t('digitalBookshelf.previous')}
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                    <span className="text-sm text-gray-500 font-medium whitespace-nowrap">
+                      {t('digitalBookshelf.pageIndicator').replace('{current}', pageNumber).replace('{total}', numPages || '--')}
+                    </span>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none disabled:opacity-50"
+                      onClick={nextPage}
+                      disabled={numPages && pageNumber >= numPages}
+                      title={t('digitalBookshelf.next')}
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                  
+                  {/* Zoom Controls */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-500 font-medium whitespace-nowrap">
+                      {Math.round(scale * 100)}%
+                    </span>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none disabled:opacity-50"
+                      onClick={zoomOut}
+                      disabled={scale <= 0.5}
+                      title="Zoom Out"
+                    >
+                      <ZoomOut className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none"
+                      onClick={resetZoom}
+                      title="Reset Zoom"
+                    >
+                      <RotateCcw className="w-5 h-5" />
+                    </button>
+                    <button
+                      type="button"
+                      className="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-3 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none disabled:opacity-50"
+                      onClick={zoomIn}
+                      disabled={scale >= 3.0}
+                      title="Zoom In"
+                    >
+                      <ZoomIn className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

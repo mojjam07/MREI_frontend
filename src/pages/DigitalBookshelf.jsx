@@ -8,41 +8,38 @@ import Footer from '../components/layout/Footer';
 import { Document, Page } from 'react-pdf';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
-import { Plus, Edit, Save, X, Upload, LogOut, User } from 'lucide-react';
+import { Plus, Edit, Save, X, Upload, LogOut, User, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { pdfjs } from 'react-pdf';
 
-// Configure PDF.js worker with CDN fallback for better reliability
-const configurePdfWorker = () => {
-  try {
-    // Try to use the local worker first (for development)
-    if (import.meta.env.DEV) {
-      pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-        'pdfjs-dist/build/pdf.worker.min.js',
-        import.meta.url,
-      ).toString();
-    } else {
-      // Use CDN for production builds
-      pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-    }
-    console.log('PDF.js worker configured successfully:', pdfjs.GlobalWorkerOptions.workerSrc);
-    return true;
-  } catch (error) {
-    console.error('Failed to configure PDF worker:', error);
-    // Fallback to CDN
-    try {
-      pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
-      console.log('Using CDN worker fallback:', pdfjs.GlobalWorkerOptions.workerSrc);
-      return true;
-    } catch (fallbackError) {
-      console.error('Failed to configure worker fallback:', fallbackError);
-      return false;
-    }
-  }
+// Configure PDF.js worker - use CDN for reliability
+// react-pdf 10.x bundles pdfjs-dist 4.x, use version matching installed pdfjs-dist@4.4.168
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`;
+
+// Helper function to check if URL is a Google Drive PDF link
+const isGoogleDrivePdf = (url) => {
+  if (!url || typeof url !== 'string') return false;
+  return url.includes('drive.google.com') && (
+    url.includes('/file/d/') || 
+    url.includes('?id=') ||
+    url.includes('/open?id=')
+  );
 };
 
-// Initialize worker
-configurePdfWorker();
-console.log('React-PDF version:', pdfjs.version);
+// Helper function to convert Google Drive URL to preview URL
+const getGoogleDrivePreviewUrl = (url) => {
+  if (!url) return '';
+  // Handle /file/d/FILE_ID/view format
+  const fileMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (fileMatch) {
+    return `https://drive.google.com/file/d/${fileMatch[1]}/preview`;
+  }
+  // Handle ?id=FILE_ID or open?id=FILE_ID format
+  const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (idMatch) {
+    return `https://drive.google.com/file/d/${idMatch[1]}/preview`;
+  }
+  return url;
+};
 
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
@@ -64,6 +61,20 @@ const DigitalBookshelf = () => {
   const [pdfLoading, setPdfLoading] = useState(false);
   const [pdfError, setPdfError] = useState(null);
   const [showDebugInfo, setShowDebugInfo] = useState(false);
+  const [scale, setScale] = useState(1.0);
+
+  // Zoom functions
+  const zoomIn = () => {
+    setScale(prev => Math.min(prev + 0.25, 3.0));
+  };
+
+  const zoomOut = () => {
+    setScale(prev => Math.max(prev - 0.25, 0.5));
+  };
+
+  const resetZoom = () => {
+    setScale(1.0);
+  };
 
   // Admin book management states
   const [editingBook, setEditingBook] = useState(null);
@@ -809,28 +820,61 @@ const DigitalBookshelf = () => {
                     </button>
                   </div>
                 )}
-                <div className="flex justify-center mb-4">
+                <div className="flex flex-col items-center gap-4 mb-4">
+                  {/* Page Navigation */}
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={previousPage}
+                      disabled={pageNumber <= 1}
+                      className="bg-gray-200 text-gray-700 px-4 py-2 rounded disabled:opacity-50"
+                      title={t('digitalBookshelf.previous')}
+                    >
+                      {t('digitalBookshelf.previous')}
+                    </button>
 
-                  <button
-                    onClick={previousPage}
-                    disabled={pageNumber <= 1}
-                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded mr-2 disabled:opacity-50"
-                  >
-                    {t('digitalBookshelf.previous')}
-                  </button>
+                    <span className="px-4 py-2">
+                      {t('digitalBookshelf.pageIndicator', { current: pageNumber, total: numPages || 0 })}
+                    </span>
 
+                    <button
+                      onClick={nextPage}
+                      disabled={pageNumber >= numPages}
+                      className="bg-gray-200 text-gray-700 px-4 py-2 rounded disabled:opacity-50"
+                      title={t('digitalBookshelf.next')}
+                    >
+                      {t('digitalBookshelf.next')}
+                    </button>
+                  </div>
 
-                  <span className="px-4 py-2">
-                    {t('digitalBookshelf.pageIndicator', { current: pageNumber, total: numPages || 0 })}
-                  </span>
-
-                  <button
-                    onClick={nextPage}
-                    disabled={pageNumber >= numPages}
-                    className="bg-gray-200 text-gray-700 px-4 py-2 rounded ml-2 disabled:opacity-50"
-                  >
-                    {t('digitalBookshelf.next')}
-                  </button>
+                  {/* Zoom Controls */}
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm text-gray-500 font-medium whitespace-nowrap">
+                      {Math.round(scale * 100)}%
+                    </span>
+                    <button
+                      onClick={zoomOut}
+                      disabled={scale <= 0.5}
+                      className="bg-gray-200 text-gray-700 px-3 py-2 rounded disabled:opacity-50"
+                      title="Zoom Out"
+                    >
+                      <ZoomOut className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={resetZoom}
+                      className="bg-gray-200 text-gray-700 px-3 py-2 rounded"
+                      title="Reset Zoom"
+                    >
+                      <RotateCcw className="w-5 h-5" />
+                    </button>
+                    <button
+                      onClick={zoomIn}
+                      disabled={scale >= 3.0}
+                      className="bg-gray-200 text-gray-700 px-3 py-2 rounded disabled:opacity-50"
+                      title="Zoom In"
+                    >
+                      <ZoomIn className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
 
                 <div className="flex justify-center">
@@ -865,14 +909,33 @@ const DigitalBookshelf = () => {
                   )}
 
                   {!pdfLoading && !pdfError && (
-                    <Document
-                      file={getPdfFile(selectedBook)}
-                      onLoadSuccess={onDocumentLoadSuccess}
-                      onLoadError={onDocumentLoadError}
-                      className="border"
-                    >
-                      <Page pageNumber={pageNumber} />
-                    </Document>
+                    isGoogleDrivePdf(getPdfFile(selectedBook)) ? (
+                      // Render Google Drive PDFs using iframe with preview URL
+                      <iframe
+                        src={getGoogleDrivePreviewUrl(getPdfFile(selectedBook))}
+                        className="w-full h-full min-h-[600px] border-0"
+                        title={selectedBook.title}
+                        allow="autoplay; fullscreen"
+                        allowFullScreen
+                      />
+                    ) : (
+                      // Render regular PDFs using react-pdf
+                      <Document
+                        file={getPdfFile(selectedBook)}
+                        onLoadSuccess={onDocumentLoadSuccess}
+                        onLoadError={onDocumentLoadError}
+                        className="border"
+                      >
+                        <Page 
+                          pageNumber={pageNumber}
+                          renderTextLayer={true}
+                          renderAnnotationLayer={true}
+                          scale={scale}
+                          width={Math.min(window.innerWidth * 0.8, 800)}
+                          className="shadow-lg"
+                        />
+                      </Document>
+                    )
                   )}
                 </div>
               </div>

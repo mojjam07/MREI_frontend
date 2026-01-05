@@ -18,7 +18,8 @@ export default defineConfig({
   },
   define: {
     global: 'globalThis',
-    __PDF_WORKER_CDN__: JSON.stringify(`https://unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`)
+    // Use matching version for installed pdfjs-dist@4.4.168
+    __PDF_WORKER_CDN__: JSON.stringify(`//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`)
   },
   build: {
     rollupOptions: {
