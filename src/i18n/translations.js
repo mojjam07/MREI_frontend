@@ -1263,7 +1263,7 @@ const translations = {
       calendarDesc: "Important Islamic academic dates and schedules"
     },
     admissions: {
-      title: "Title",
+      title: "Admission",
       subtitle: "Start your journey with us - discover how to join our academic community",
       applyNowTitle: "Apply Now",
       applyNowDesc: "Ready to begin your academic journey? Our admissions team is here to help you every step of the way.",
