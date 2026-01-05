@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLanguage } from '../../context/LanguageContext';
 import { useScrollAnimation } from '../../hooks/useScrollAnimation';
 import SideNavigationLayout from '../../components/layout/SideNavigationLayout';
+import apiClient from '../../services/apiClient';
 
 const ContactUs = () => {
   const { t } = useLanguage();
@@ -13,6 +14,8 @@ const ContactUs = () => {
     message: ''
   });
   const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitMessage, setSubmitMessage] = useState('');
   
   const { ref: contactRef, animationClasses: contactAnimation } = useScrollAnimation();
   const { ref: formRef, animationClasses: formAnimation } = useScrollAnimation();
@@ -32,9 +35,9 @@ const ContactUs = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Basic validation
     const newErrors = {};
     if (!formData.name.trim()) newErrors.name = inquiryForm.required;
@@ -45,10 +48,33 @@ const ContactUs = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // Handle form submission
-      console.log('Form submitted:', formData);
-      alert('Thank you for your message! We will get back to you soon.');
-      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+      setIsSubmitting(true);
+      setSubmitMessage('');
+
+      try {
+        // Prepare data for API (backend expects name, email, subject, message)
+        const submitData = {
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          subject: formData.subject.trim() || 'Contact Form Inquiry',
+          message: formData.message.trim()
+        };
+
+        // Make API call to backend
+        const response = await apiClient.post('/communication/contact', submitData);
+
+        if (response.data.success) {
+          setSubmitMessage('Thank you for your message! We will get back to you soon.');
+          setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+        } else {
+          setSubmitMessage('There was an error sending your message. Please try again.');
+        }
+      } catch (error) {
+        console.error('Contact form submission error:', error);
+        setSubmitMessage('There was an error sending your message. Please try again.');
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 

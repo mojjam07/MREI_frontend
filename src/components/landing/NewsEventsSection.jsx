@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../../context/LanguageContext';
 import { contentApi } from '../../services/apiClient';
 
@@ -194,9 +195,9 @@ const NewsEventsSection = () => {
               ))}
             </ul>
             <div className="mt-6 sm:mt-8 text-center">
-              <a href="#" className="text-sm sm:text-base text-primary hover:text-link-hover font-medium">
+              <Link to="/news-events" className="text-sm sm:text-base text-primary hover:text-link-hover font-medium">
                 {t('home.viewAllNews')}
-              </a>
+              </Link>
             </div>
           </div>
         )}
@@ -236,9 +237,9 @@ const NewsEventsSection = () => {
               ))}
             </ul>
             <div className="mt-6 sm:mt-8 text-center">
-              <a href="#" className="text-sm sm:text-base text-primary hover:text-link-hover font-medium">
+              <Link to="/news-events" className="text-sm sm:text-base text-primary hover:text-link-hover font-medium">
                 {t('home.viewAllEvents')}
-              </a>
+              </Link>
             </div>
           </div>
         )}

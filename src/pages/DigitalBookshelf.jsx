@@ -669,11 +669,11 @@ const DigitalBookshelf = () => {
               >
                 <div onClick={() => openModal(book)} className="cursor-pointer">
                   <img
-                    src={book.cover_image}
+                    src={book.cover_image || book.cover}
                     alt={book.title}
                     className="w-full h-48 object-cover"
                     onError={(e) => {
-                      e.target.src = '/images/placeholder-book.jpg';
+                      e.target.src = '/images/placeholder-book.svg';
                     }}
                   />
                   <div className="p-4">
@@ -739,7 +739,7 @@ const DigitalBookshelf = () => {
                     alt={selectedBook.title}
                     className="w-full md:w-48 h-64 object-cover rounded"
                     onError={(e) => {
-                      e.target.src = '/images/placeholder-book.jpg';
+                      e.target.src = '/images/placeholder-book.svg';
                     }}
                   />
                   <div className="flex-1">

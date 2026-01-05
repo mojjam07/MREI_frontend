@@ -19,7 +19,8 @@ const Testimonials = () => {
     try {
       setLoading(true);
       
-      const response = await contentApi.getTestimonials({ limit: 10 });
+      // Fetch all testimonials (limit: 0 or 'all' returns all approved testimonials)
+      const response = await contentApi.getTestimonials({ limit: 0 });
       const data = response.data.data;
       const testimonialsData = data.testimonials;
       

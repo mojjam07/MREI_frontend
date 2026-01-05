@@ -106,7 +106,9 @@ const AdminDashboard = () => {
         return renderSectionWithErrorBoundary(BooksSection, {
           books: dashboardContext.books || [],
           booksLoading: dashboardContext.booksLoading,
-          createBook: dashboardContext.createBook
+          createBook: dashboardContext.createBook,
+          updateBook: dashboardContext.updateBook,
+          deleteBook: dashboardContext.deleteBook
         });
       case 'testimonial-approval':
         return renderSectionWithErrorBoundary(TestimonialApprovalSection);

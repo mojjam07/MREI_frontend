@@ -10,10 +10,7 @@ import PageHeader from '../components/layout/PageHeader';
 import Footer from '../components/layout/Footer';
 
 // Configure PDF.js worker for Vite
-pdfjs.GlobalWorkerOptions.workerSrc = new URL(
-  'pdfjs-dist/build/pdf.worker.min.js',
-  import.meta.url,
-).toString();
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 // Helper function to generate book cover placeholder SVG data URL
 const generateBookCoverUrl = (title, bgColor = '#4F46E5') => {
@@ -241,11 +238,16 @@ const Library = () => {
                         src={book.cover_url} 
                         alt={book.title} 
                         className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.target.src = '/images/placeholder-book.svg';
+                        }}
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center bg-gray-100">
-                        <Book className="w-16 h-16 text-gray-400" />
-                      </div>
+                      <img 
+                        src="/images/placeholder-book.svg" 
+                        alt={book.title}
+                        className="w-full h-full object-cover"
+                      />
                     )}
                     <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity flex items-center justify-center">
                       <span className="opacity-0 group-hover:opacity-100 text-white font-bold px-4 py-2 border-2 border-white rounded">

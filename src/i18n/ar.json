@@ -1472,7 +1472,22 @@
         "readMore": "اقرأ المزيد",
         "registerNow": "سجل الآن",
         "viewDetails": "عرض التفاصيل",
-        "urgent": "عاجل"
+        "viewMore": "عرض المزيد",
+        "viewMoreNews": "عرض المزيد من الأخبار",
+        "viewMoreEvents": "عرض المزيد من الفعاليات",
+        "urgent": "عاجل",
+        "subscribeNewsletter": "اشترك",
+        "noNewsAvailable": "لا توجد أخبار متاحة في الوقت الحالي",
+        "noEventsAvailable": "لا توجد فعاليات متاحة في الوقت الحالي",
+        "newsletterTitle": "ابق على اطلاع",
+        "newsletterDesc": "اشترك في نشرتنا الإخبارية لتصلك أحدث الأخبار والفعاليات والإعلانات مباشرة في بريدك الوارد.",
+        "newsletterPlaceholder": "أدخل بريدك الإلكتروني",
+        "videoAvailable": "فيديو متاح",
+        "organizer": "المنظم",
+        "eventStatus": "حالة الفعالية",
+        "upcoming": "قادم",
+        "past": "ماضي",
+        "viewDetails": "عرض التفاصيل"
     },
 
     "schoolLife": {

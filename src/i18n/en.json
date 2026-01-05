@@ -1067,7 +1067,22 @@
         "readMore": "Read More",
         "registerNow": "Register Now",
         "viewDetails": "View Details",
-        "urgent": "Urgent"
+        "viewMore": "View More",
+        "viewMoreNews": "View More News",
+        "viewMoreEvents": "View More Events",
+        "urgent": "Urgent",
+        "subscribeNewsletter": "Subscribe",
+        "noNewsAvailable": "No news available at the moment",
+        "noEventsAvailable": "No events available at the moment",
+        "newsletterTitle": "Stay Updated",
+        "newsletterDesc": "Subscribe to our newsletter to receive the latest news, events, and announcements directly in your inbox.",
+        "newsletterPlaceholder": "Enter your email",
+        "videoAvailable": "Video Available",
+        "organizer": "Organizer",
+        "eventStatus": "Event Status",
+        "upcoming": "Upcoming",
+        "past": "Past",
+        "viewDetails": "View Details"
     },
 
     "schoolLife": {

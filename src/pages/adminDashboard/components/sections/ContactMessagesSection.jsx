@@ -162,7 +162,7 @@ const ContactMessagesSection = ({
                   <p className="text-xs font-medium text-success-color mb-1">
                     {t('dashboard.yourReply') || 'Your Reply'} - {safeFormatDate(message.reply_date)}
                   </p>
-                  <p className="text-xs sm:text-sm text-light-text">{message.reply}</p>
+                  <p className="text-xs sm:text-sm text-primary-text">{message.reply}</p>
                 </div>
               )}
 
