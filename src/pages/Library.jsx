@@ -275,18 +275,19 @@ const Library = () => {
               books.map((book) => (
                 <div key={book.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col">
                   <div className="h-64 bg-gray-200 relative group cursor-pointer" onClick={() => setSelectedBook(book)}>
-                    {book.cover_url ? (
+                    {book.cover_image ? (
                       <img 
-                        src={book.cover_url} 
+                        src={book.cover_image} 
                         alt={book.title} 
                         className="w-full h-full object-cover"
                         onError={(e) => {
-                          e.target.src = '/images/placeholder-book.svg';
+                          e.target.onerror = null;
+                          e.target.src = generateBookCoverUrl(book.title || 'Book', '#4F46E5');
                         }}
                       />
                     ) : (
                       <img 
-                        src="/images/placeholder-book.svg" 
+                        src={generateBookCoverUrl(book.title || 'Book', '#4F46E5')} 
                         alt={book.title}
                         className="w-full h-full object-cover"
                       />

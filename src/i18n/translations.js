@@ -1081,6 +1081,7 @@ const translations = {
       preservedData: 'User accounts and academic data will be preserved.',
       clearing: 'Clearing...',
       confirmClear: 'Confirm Clear',
+      messageRead: 'Marked as Read',
 
       // Additional dashboard labels
       title: 'Title',
@@ -1268,8 +1269,8 @@ const translations = {
       applyNowTitle: "Apply Now",
       applyNowDesc: "Ready to begin your academic journey? Our admissions team is here to help you every step of the way.",
       startApplication: "Start Application",
-      undergraduateTitle: "Undergraduate Admission",
-      undergraduateDesc: "Join our diverse undergraduate community and prepare for a successful future",
+      undergraduateTitle: "I'\nhdaadiyyah Admission",
+      undergraduateDesc: "Join our diverse Ihdaady programme and prepare for a successful future",
       requirementsTitle: "Admission Requirements",
       highSchoolDiploma: "High school diploma or equivalent",
       satOrAct: "SAT or ACT scores",
@@ -1287,8 +1288,8 @@ const translations = {
       january15: "January 15",
       march1: "March 1",
       undergraduateChecklist: "View Checklist",
-      graduateTitle: "Graduate Admission",
-      graduateDesc: "Pursue advanced study and research opportunities at the graduate level",
+      graduateTitle: "Thaanawiyyah Admission",
+      graduateDesc: "Pursue advanced study and research opportunities at the thaanawy level",
       masterRequirements: "Master's Program Requirements",
       bachelorDegree: "Bachelor's degree from accredited institution",
       greScores: "GRE scores (program specific)",
@@ -1464,10 +1465,10 @@ const translations = {
         laylatAlQadr: 'Laylat al-Qadr'
       },
       academicEvents: {
-        semesterStart: 'Semester Start',
-        semesterEnd: 'Semester End',
-        finalExams: 'Final Examinations',
-        midtermExams: 'Midterm Examinations',
+        semesterStart: 'First Term Start',
+        semesterEnd: 'First Term End',
+        finalExams: 'Promotion Examinations',
+        midtermExams: 'First Term Examinations',
         registrationPeriod: 'Registration Period',
         addDropPeriod: 'Add/Drop Period',
         graduation: 'Graduation Ceremony',
@@ -1563,7 +1564,7 @@ const translations = {
         academicAnnouncements: 'Academic Announcements'
       },
       schoolLife: {
-        campusFacilities: 'Campus Facilities',
+        campusFacilities: 'Institute Facilities',
         studentActivities: 'Student Activities',
         clubsOrganizations: 'Clubs & Organizations',
         sportsRecreation: 'Sports & Recreation'
@@ -1613,7 +1614,7 @@ const translations = {
     },
 
     ourImpact: {
-      title: 'Our Impact on  Education',
+      title: 'Our Impact on Islamic Education',
       subtitle: 'Measuring our success through student achievements and institutional excellence',
       commitmentTitle: 'Our Commitment',
       commitmentDesc: 'We are dedicated to providing world-class education that empowers students to achieve their full potential and make meaningful contributions to society',
@@ -1633,15 +1634,15 @@ const translations = {
       },
       courseStats: {
         totalPrograms: 'Total Programs',
-        certificationCourses: 'Certification Courses',
-        degreePrograms: 'Degree Programs',
+        certificationCourses: 'Certified Courses',
+        degreePrograms: 'Thaanawy Programs',
         specializedTracks: 'Specialized Tracks'
       },
       successMetrics: {
-        employmentRate: 'Employment Rate',
+        employmentRate: 'Success Rate',
         averageSalary: 'Average Salary Increase',
         studentSatisfaction: 'Student Satisfaction',
-        industryPartnerships: 'Industry Partnerships'
+        industryPartnerships: 'Community Relevance'
       },
       tutorNetwork: {
         certifiedTutors: 'Certified Tutors',
@@ -1764,7 +1765,7 @@ const translations = {
     },
 
     schoolLife: {
-      title: 'Vibrant Life',
+      title: 'Vibrant School Life',
       subtitle: 'Experience a rich and diverse community that extends beyond academics',
       campusFacilitiesTitle: 'World-Class Facilities',
       campusFacilitiesDesc: 'Modern infrastructure designed to support learning, recreation, and personal development',
@@ -1851,9 +1852,9 @@ const translations = {
       campusExperienceTitle: 'Campus Experience',
       campusExperienceDesc: 'Discover what makes our campus unique',
       stats: {
-        studentClubs: '{count} Student Clubs',
-        annualEvents: '{count} Annual Events',
-        sportsTeams: '{count} Sports Teams'
+        studentClubs: 'Student Clubs',
+        annualEvents: 'Annual Events',
+        sportsTeams: 'Sports Teams'
       },
       joinCommunityButton: 'Join Our Community'
     },
@@ -1873,7 +1874,7 @@ const translations = {
         address: '9A Baale Street, Ishagatedo via Isolo-Mushin Road, Lagos 12345, Nigeria',
         phone: '+234 (0) 123-4567',
         email: 'info@mahdurahmah.edu',
-        hours: 'Monday - Friday: 8:00 AM - 6:00 PM',
+        hours: 'Saturday - Wednesday: 8:00 AM - 4:00 PM',
         emergency: 'Emergency Contact: +234 (0) 987-6543'
       },
       departments: [
@@ -1912,7 +1913,7 @@ const translations = {
         required: 'This field is required',
         emailInvalid: 'Please enter a valid email address'
       },
-      mapEmbed: 'Google Maps will be embedded here showing the campus location',
+      mapEmbed: 'Google Maps will be embedded here showing the institute location',
       socialMedia: {
         title: 'Follow Us',
         platforms: [
@@ -1950,7 +1951,7 @@ const translations = {
       "undergraduateAdmission": "قبول الدراسات الإعدادية",
       "graduateAdmission": "قبول الدراسات الثانوية",
       "tuition": "الرسوم والمساعدات",
-      "visitCampus": "زيارة الحرم الجامعي",
+      "visitCampus": "زيارة الحرم المعهدي",
       "applyNow": "تقدم الآن",
       "research": "البحث",
       "researchCenters": "مراكز البحث",
@@ -2572,7 +2573,7 @@ const translations = {
         news: 'الأخبار',
         events: 'الفعاليات',
         testimonials: 'الشهادات',
-        campusLife: 'الحياة الجامعية',
+        campusLife: 'الحياة المعهدية',
         students: 'الطلاب',
         tutors: 'المعلمون',
         books: 'الكتب',
@@ -2596,7 +2597,7 @@ const translations = {
       // Dashboard sections
       dashboard: 'لوحة تحكم الخريجين',
       welcomeBack: 'مرحباً بعودتك',
-      stayConnected: 'ابقَ على اتصال مع أمك الجامعية ورفاق الخريجين',
+      stayConnected: 'ابقَ على اتصال مع أمك المعهدية ورفاق الخريجين',
       loadingDashboard: 'جاري تحميل لوحة التحكم...',
 
       // Present Alumni Excos
@@ -2625,7 +2626,7 @@ const translations = {
       composeMessage: 'كتابة رسالة',
 
       // Alma Mata Info
-      almaMataInfo: 'معلومات الأم الجامعية',
+      almaMataInfo: 'معلومات الأم المعهدية',
       instituteNews: 'أخبار المعهد',
       instituteEvents: 'فعاليات المعهد',
       recentUpdates: 'التحديثات الأخيرة',
@@ -2671,7 +2672,7 @@ const translations = {
         resources: 'الموارد',
         presentExcos: 'المسؤولون الحاليون',
         alumniMessage: 'رسالة الخريجين',
-        almaMataInfo: 'معلومات الأم الجامعية',
+        almaMataInfo: 'معلومات الأم المعهدية',
         finance: 'المالية',
         suggestions: 'الاقتراحات',
         groupChat: 'الدردشة الجماعية'
@@ -2690,7 +2691,7 @@ const translations = {
         noNewsAvailable: 'لا توجد أخبار متاحة في الوقت الحالي',
         noUpcomingEvents: 'لا توجد فعاليات قادمة',
         noTestimonials: 'لا توجد شهادات متاحة',
-        noCampusLife: 'لا يوجد محتوى للحياة الجامعية',
+        noCampusLife: 'لا يوجد محتوى للحياة المعهدية',
         noEventsAvailable: 'لا توجد فعاليات متاحة',
         noBooksAvailable: 'لا توجد كتب متاحة',
         noExecutiveMembers: 'لم يتم العثور على أعضاء تنفيذيين',
@@ -2807,6 +2808,7 @@ const translations = {
       new: 'جديد',
       markRead: 'تعليم كمقروء',
       noMessages: 'لا توجد رسائل تواصل',
+      messageRead: 'رسالة مقروءة',
 
       // Testimonial approval section
       testimonialApprovalDescription: 'مراجعة واعتماد الشهادات',
@@ -2888,8 +2890,8 @@ const translations = {
       testimonialsDescription: 'إدارة شهادات الطلاب والموظفين',
 
       // Campus Life section
-      campusLifeManagement: 'إدارة الحياة الجامعية',
-      campusLifeDescription: 'إدارة محتوى وأنشطة الحياة الجامعية',
+      campusLifeManagement: 'إدارة الحياة المعهدية',
+      campusLifeDescription: 'إدارة محتوى وأنشطة الحياة المعهدية',
       addContent: 'إضافة محتوى',
       editContent: 'تعديل المحتوى',
       addNewContent: 'إضافة محتوى جديد',
@@ -2897,15 +2899,15 @@ const translations = {
       sports: 'رياضة',
       clubs: 'الأندية',
       facilities: 'المرافق',
-      events: 'الفعاليات',
+      // events: 'الفعاليات',
       achievements: 'الإنجازات',
       content: 'المحتوى',
       imageUrl: 'رابط الصورة',
       enterImageUrl: 'أدخل رابط الصورة',
-      enterTitle: 'أدخل العنوان',
+      // enterTitle: 'أدخل العنوان',
       enterContent: 'أدخل المحتوى',
       create: 'إنشاء',
-      noCampusLife: 'لا يوجد محتوى للحياة الجامعية بعد',
+      noCampusLife: 'لا يوجد محتوى للحياة المعهدية بعد',
 
       // Library section
       libraryManagement: 'إدارة المكتبة',
@@ -2959,11 +2961,11 @@ const translations = {
       clearDataWarning: 'لا يمكن التراجع عن هذا الإجراء!',
       dataToBeDeleted: 'ستحذف البيانات التالية:',
       newsArticles: 'جميع الأخبار',
-      events: 'جميع الفعاليات',
-      testimonials: 'جميع الشهادات',
-      campusLife: 'جميع محتوى الحياة المعهدية',
-      books: 'جميع الكتب',
-      contactMessages: 'جميع رسائل التواصل',
+      // events: 'جميع الفعاليات',
+      // testimonials: 'جميع الشهادات',
+      // campusLife: 'جميع محتوى الحياة المعهدية',
+      // books: 'جميع الكتب',
+      // contactMessages: 'جميع رسائل التواصل',
       statistics: 'الإحصائيات (إعادة تعيين إلى صفر)',
       preservedData: 'سيتم الاحتفاظ بحسابات المستخدمين والبيانات الأكاديمية.',
       clearing: 'جاري المسح...',
@@ -3035,9 +3037,9 @@ const translations = {
       missionTitle: "مهمتنا",
       missionText: "تقديم تعليم عالي استثنائي يمكّن الطلاب من أن يصبحوا قادة مبدعين ومواطنين عالميين مشاركين يقدمون مساهمات ذات معنى للمجتمع.",
       visionTitle: "رؤيتنا",
-      visionText: "أن نكون جامعة معترف بها عالمياً تحول الأرواح من خلال التعليم والبحث والمشاركة المجتمعية، وتعزيز الابتكار والتميز.",
+      visionText: "أن نكون معهد معترف بها عالمياً تحول الأرواح من خلال التعليم والبحث والمشاركة المجتمعية، وتعزيز الابتكار والتميز.",
       historyTitle: "تاريخنا",
-      historyText: "تأسست في عام 1900، كانت جامعتنا في المقدمة في التعليم العالي لأكثر من قرن. لقد تطورنا باستمرار لتلبية الاحتياجات المتغيرة للطلاب والمجتمع مع الحفاظ على التزامنا بالتميز الأكاديمي.",
+      historyText: "تأسست في عام 1900، كانت معهدنا في المقدمة في التعليم العالي لأكثر من قرن. لقد تطورنا باستمرار لتلبية الاحتياجات المتغيرة للطلاب والمجتمع مع الحفاظ على التزامنا بالتميز الأكاديمي.",
       founded: "تأسست",
       students: "الطلاب",
       faculty: "أعضاء هيكل التدريس",
@@ -3199,14 +3201,14 @@ const translations = {
       studentLoansTitle: "قروض الطلاب",
       studentLoansDesc: "خيارات قروض فيدرالية وخاصة متاحة",
       financialAidCalculator: "حاسبة المساعدة المالية",
-      visitCampusTitle: "زيارة الحرم الجامعي",
-      visitCampusDesc: "اختبر مجتمع الحرم الجامعي مباشرة من خلال جولات موجهة وفعاليات",
-      campusToursTitle: "جولات الحرم الجامعي",
+      visitCampusTitle: "زيارة الحرم المعهدي",
+      visitCampusDesc: "اختبر مجتمع الحرم المعهدي مباشرة من خلال جولات موجهة وفعاليات",
+      campusToursTitle: "جولات الحرم المعهدي",
       campusToursDesc: "جولات موجهة يقودها الطلاب الحاليون",
       infoSessionsTitle: "جلسات المعلومات",
       infoSessionsDesc: "تعلم عن البرامج والقبول",
       overnightStaysTitle: "الإقامة الليلية",
-      overnightStaysDesc: "اختبر الحياة الجامعية كطالب",
+      overnightStaysDesc: "اختبر الحياة المعهدية كطالب",
       scheduleVisit: "جدولة زيارتك"
     },
 
@@ -3437,7 +3439,7 @@ const translations = {
         academicAnnouncements: 'الإعلانات الأكاديمية'
       },
       schoolLife: {
-        campusFacilities: 'مرافق الحرم الجامعي',
+        campusFacilities: 'مرافق الحرم المعهدي',
         studentActivities: 'أنشطة الطلاب',
         clubsOrganizations: 'الأندية والمنظمات',
         sportsRecreation: 'الرياضة والترفيه'
@@ -3639,7 +3641,7 @@ const translations = {
 
     schoolLife: {
       title: 'حياة معهدية نابضة بالحياة',
-      subtitle: 'اختبر مجتمع جامعي غني ومتنوع يمتد ما وراء الأكاديميات',
+      subtitle: 'اختبر مجتمع معهدي غني ومتنوع يمتد ما وراء الأكاديميات',
       campusFacilitiesTitle: 'مرافق حرم من الدرجة العالمية',
       campusFacilitiesDesc: 'بنية تحتية حديثة مصممة لدعم التعلم والترفيه والتطوير الشخصي',
       studentActivitiesTitle: 'أنشطة طلابية جذابة',
@@ -3722,12 +3724,12 @@ const translations = {
           description: 'أنشطة ومباريات ألعاب القوى والمضمار'
         }
       ],
-      campusExperienceTitle: 'تجربة الحرم الجامعي',
-      campusExperienceDesc: 'اكتشف ما يجعل حرمنا الجامعي فريداً',
+      campusExperienceTitle: 'تجربة الحرم المعهدي',
+      campusExperienceDesc: 'اكتشف ما يجعل حرمنا المعهدي فريداً',
       stats: {
-        studentClubs: '{count} نادٍ طلابي',
-        annualEvents: '{count} فعالية سنوية',
-        sportsTeams: '{count} فريق رياضي'
+        studentClubs: 'نادٍ طلابي',
+        annualEvents: 'فعالية سنوية',
+        sportsTeams: 'فريق رياضي'
       },
       joinCommunityButton: 'انضم إلى مجتمعنا'
     },
@@ -3747,7 +3749,7 @@ const translations = {
         address: '12A شارع بالي، إشاغاتيدو طريق موشن، لاغوس 12345، نيجيريا',
         phone: '+234 (0) 123-4567',
         email: 'info@mahdurahmah.edu',
-        hours: 'الاثنين - الجمعة: 8:00 ص - 6:00 م',
+        hours: 'السبت - الأربعاء: 8:00 ص - 4:00 م',
         emergency: 'جهة اتصال الطوارئ: +234 (0) 987-6543'
       },
       departments: [

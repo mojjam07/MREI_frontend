@@ -41,6 +41,27 @@ const getGoogleDrivePreviewUrl = (url) => {
   return url;
 };
 
+// Helper function to generate book cover placeholder SVG data URL
+const generateBookCoverUrl = (title, bgColor = '#4F46E5') => {
+  // Truncate title if too long
+  const displayTitle = title.length > 10 ? title.substring(0, 10) + '...' : title;
+  const svg = `
+    <svg width="150" height="220" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="${bgColor}"/>
+      <rect x="10" y="10" width="130" height="200" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+      <text x="50%" y="45%" dominant-baseline="middle" text-anchor="middle" 
+            fill="#FFFFFF" font-family="Georgia, serif" font-size="14" font-weight="bold">
+        ${encodeURIComponent(displayTitle)}
+      </text>
+      <text x="50%" y="60%" dominant-baseline="middle" text-anchor="middle" 
+            fill="rgba(255,255,255,0.8)" font-family="Arial, sans-serif" font-size="10">
+        Islamic Book
+      </text>
+    </svg>
+  `;
+  return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+};
+
 const DigitalBookshelf = () => {
   const { t } = useLanguage();
   const { user, logout } = useAuth();
@@ -50,8 +71,7 @@ const DigitalBookshelf = () => {
     updateBook, 
     deleteBook, 
     creatingBook, 
-    updatingBook, 
-    booksLoading 
+    updatingBook
   } = useDashboard();
   const [selectedBook, setSelectedBook] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -684,7 +704,8 @@ const DigitalBookshelf = () => {
                     alt={book.title}
                     className="w-full h-48 object-cover"
                     onError={(e) => {
-                      e.target.src = '/images/placeholder-book.svg';
+                      e.target.onerror = null;
+                      e.target.src = generateBookCoverUrl(book.title || 'Book', '#4F46E5');
                     }}
                   />
                   <div className="p-4">
@@ -746,11 +767,12 @@ const DigitalBookshelf = () => {
                 <div className="flex flex-col md:flex-row gap-6">
 
                   <img
-                    src={selectedBook.cover_image}
+                    src={selectedBook.cover_image || generateBookCoverUrl(selectedBook.title || 'Book', '#4F46E5')}
                     alt={selectedBook.title}
                     className="w-full md:w-48 h-64 object-cover rounded"
                     onError={(e) => {
-                      e.target.src = '/images/placeholder-book.svg';
+                      e.target.onerror = null;
+                      e.target.src = generateBookCoverUrl(selectedBook.title || 'Book', '#4F46E5');
                     }}
                   />
                   <div className="flex-1">

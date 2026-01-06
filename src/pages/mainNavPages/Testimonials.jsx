@@ -6,7 +6,6 @@ import { contentApi } from '../../services/apiClient';
 
 const Testimonials = () => {
   const { t } = useLanguage();
-  const [showAll, setShowAll] = useState(false);
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
   const { ref: featuredRef, animationClasses: featuredAnimation } = useScrollAnimation();
@@ -74,7 +73,7 @@ const Testimonials = () => {
     );
   }
 
-  const displayedTestimonials = showAll ? testimonials : testimonials.slice(0, 3);
+  const displayedTestimonials = testimonials;
 
   const categoryStats = [
     {
@@ -167,18 +166,6 @@ const Testimonials = () => {
                 </div>
               ))}
             </div>
-
-            {/* Load More Button */}
-            {!showAll && testimonials.length > 3 && (
-              <div className="text-center mt-8">
-                <button 
-                  onClick={() => setShowAll(true)}
-                  className="bg-primary text-white px-6 py-3 rounded-lg hover:bg-primary/90 transition-colors duration-300 font-semibold"
-                >
-                  {t('testimonials.loadMore')}
-                </button>
-              </div>
-            )}
           </div>
         </section>
 
