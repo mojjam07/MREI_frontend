@@ -14,18 +14,16 @@ export default defineConfig({
     }
   },
   optimizeDeps: {
-    include: ['pdfjs-dist']
+    include: ['react-pdf']
   },
   define: {
-    global: 'globalThis',
-    // Use matching version for installed pdfjs-dist@4.4.168
-    __PDF_WORKER_CDN__: JSON.stringify(`//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`)
+    global: 'globalThis'
   },
   build: {
     rollupOptions: {
       output: {
         manualChunks: {
-          pdfjs: ['pdfjs-dist']
+          pdfjs: ['react-pdf']
         }
       }
     },
@@ -33,4 +31,4 @@ export default defineConfig({
     assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 1000
   }
-});
+})

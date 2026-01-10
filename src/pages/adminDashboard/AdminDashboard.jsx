@@ -94,7 +94,7 @@ const AdminDashboard = () => {
         });
       case 'students':
         return renderSectionWithErrorBoundary(StudentsSection, {
-          students: dashboardContext.students || [],
+          students: dashboardContext.adminStudents || [],
           studentProfilesLoading: dashboardContext.studentProfilesLoading
         });
       case 'tutors':

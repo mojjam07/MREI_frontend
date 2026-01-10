@@ -11,9 +11,9 @@ import 'react-pdf/dist/Page/TextLayer.css';
 import { Plus, Edit, Save, X, Upload, LogOut, User, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react';
 import { pdfjs } from 'react-pdf';
 
-// Configure PDF.js worker - use CDN for reliability
-// react-pdf 10.x bundles pdfjs-dist 4.x, use version matching installed pdfjs-dist@4.4.168
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`;
+// Configure PDF.js worker for Vite - use react-pdf bundled worker
+// react-pdf 10.x uses pdfjs-dist 5.x internally, so we use CDN with matching version
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 
 // Helper function to check if URL is a Google Drive PDF link
 const isGoogleDrivePdf = (url) => {
@@ -943,17 +943,16 @@ const DigitalBookshelf = () => {
                     ) : (
                       // Render regular PDFs using react-pdf
                       <Document
-                        file={getPdfFile(selectedBook)}
+                        file={{ url: getPdfFile(selectedBook), withCredentials: false }}
                         onLoadSuccess={onDocumentLoadSuccess}
                         onLoadError={onDocumentLoadError}
                         className="border"
                       >
-                        <Page 
+                        <Page
                           pageNumber={pageNumber}
                           renderTextLayer={true}
                           renderAnnotationLayer={true}
                           scale={scale}
-                          width={Math.min(window.innerWidth * 0.8, 800)}
                           className="shadow-lg"
                         />
                       </Document>

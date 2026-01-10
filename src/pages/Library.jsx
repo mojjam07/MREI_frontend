@@ -9,10 +9,9 @@ import { API_ENDPOINTS } from '../config';
 import PageHeader from '../components/layout/PageHeader';
 import Footer from '../components/layout/Footer';
 
-// Configure PDF.js worker for Vite - use CDN for reliability
-// react-pdf 10.x bundles pdfjs-dist 4.x, use version matching installed pdfjs-dist@4.4.168
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@4.4.168/build/pdf.worker.min.js`;
-
+// Configure PDF.js worker for Vite - use react-pdf bundled worker
+// react-pdf 10.x uses pdfjs-dist 5.x internally, so we use CDN with matching version
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.js`;
 // Helper function to check if URL is a Google Drive PDF link
 const isGoogleDrivePdf = (url) => {
   if (!url || typeof url !== 'string') return false;
@@ -358,7 +357,7 @@ const Library = () => {
                     ) : (
                       // Render regular PDFs using react-pdf
                       <Document
-                        file={selectedBook.pdf_url}
+                        file={{ url: selectedBook.pdf_url, withCredentials: false }}
                         onLoadSuccess={onDocumentLoadSuccess}
                         onLoadError={(error) => {
                           console.error('PDF load error:', error);
@@ -383,13 +382,12 @@ const Library = () => {
                           </div>
                         }
                       >
-                        <Page 
-                          pageNumber={pageNumber} 
+                        <Page
+                          pageNumber={pageNumber}
                           renderTextLayer={true}
                           renderAnnotationLayer={true}
                           scale={scale}
                           className="shadow-lg"
-                          width={Math.min(window.innerWidth * 0.8, 800 * scale)}
                           loading={
                             <div className="flex items-center justify-center h-64">
                               <Loader2 className="w-6 h-6 animate-spin text-indigo-600" />

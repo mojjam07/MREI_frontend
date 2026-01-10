@@ -346,6 +346,106 @@ export const DashboardProvider = ({ children }) => {
   });
 
   /* =========================
+     TUTOR DASHBOARD QUERIES
+  ========================== */
+  const tutorDashboardQuery = useQuery({
+    queryKey: ['tutor-dashboard', user?.id],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(`/tutors/${user.id}/dashboard-stats`);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch tutor dashboard stats:', error);
+        return { data: { statistics: {} } };
+      }
+    },
+    enabled: !!user && user.role === 'tutor',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const tutorCoursesQuery = useQuery({
+    queryKey: ['tutor-courses', user?.id],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(`/tutors/${user.id}/courses`);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch tutor courses:', error);
+        return { data: { courses: [] } };
+      }
+    },
+    enabled: !!user && user.role === 'tutor',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const pendingSubmissionsQuery = useQuery({
+    queryKey: ['pending-submissions', user?.id],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(`/tutors/${user.id}/submissions`, {
+          params: { status: 'pending' }
+        });
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch pending submissions:', error);
+        return { data: { submissions: [] } };
+      }
+    },
+    enabled: !!user && user.role === 'tutor',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const tutorStudentsQuery = useQuery({
+    queryKey: ['tutor-students', user?.id],
+    queryFn: async () => {
+      try {
+        const res = await apiClient.get(`/tutors/${user.id}/students`);
+        return res.data;
+      } catch (error) {
+        console.warn('Failed to fetch tutor students:', error);
+        return { data: { students: [] } };
+      }
+    },
+    enabled: !!user && user.role === 'tutor',
+    retry: (failureCount, error) => {
+      if (error.response?.status === 404 || error.response?.status === 401 || error.response?.status === 500) return false;
+      return failureCount < 2;
+    },
+    retryDelay: 1000
+  });
+
+  const gradeSubmissionMutation = useMutation({
+    mutationFn: async ({ submissionId, grade, feedback }) => {
+      try {
+        const res = await apiClient.put(`/tutors/${user.id}/submissions/${submissionId}/grade`, {
+          grade,
+          feedback
+        });
+        return res.data;
+      } catch (error) {
+        console.error('Failed to grade submission:', error);
+        throw error;
+      }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['pending-submissions', user?.id] });
+      queryClient.invalidateQueries({ queryKey: ['tutor-dashboard', user?.id] });
+    },
+  });
+
+  /* =========================
      ADMIN MUTATIONS (JSON ONLY)
   ========================== */
   const createNews = useMutation({
@@ -526,7 +626,7 @@ export const DashboardProvider = ({ children }) => {
     adminEvents: safeExtractData(adminEventsQuery.data, 'data.events', ['data.data.events', 'events']),
     adminTestimonials: safeExtractData(adminTestimonialsQuery.data, 'data.testimonials', ['data.data.testimonials', 'testimonials']),
     adminCampusLife: safeExtractData(adminCampusLifeQuery.data, 'data.campus_life', ['data.data.campus_life', 'campus_life']),
-    students: safeExtractData(adminStudentsQuery.data, 'data.students', ['data.data.students', 'students']),
+    adminStudents: safeExtractData(adminStudentsQuery.data, 'data.students', ['data.data.students', 'students']),
     tutors: safeExtractData(adminTutorsQuery.data, 'data.tutors', ['data.data.tutors', 'tutors']),
     contactMessages: safeExtractData(adminContactMessagesQuery.data, 'data.contact_messages', ['data.data.contact_messages', 'contact_messages']),
     library: safeExtractData(adminLibraryQuery.data, 'data.library', ['data.data.library', 'library']),
@@ -622,6 +722,19 @@ export const DashboardProvider = ({ children }) => {
     deleteContactMessage: async (...args) => {
       try { return await deleteContactMessage.mutateAsync(...args); } catch (error) { console.error('Delete contact message failed:', error); throw error; }
     },
+    // Tutor Dashboard Values
+    tutorDashboard: safeExtractStats(tutorDashboardQuery.data),
+    courses: safeExtractData(tutorCoursesQuery.data, 'data.courses', ['data.data.courses', 'courses']),
+    pendingSubmissions: safeExtractData(pendingSubmissionsQuery.data, 'data.submissions', ['data.data.submissions', 'submissions']),
+    students: safeExtractData(tutorStudentsQuery.data, 'data.students', ['data.data.students', 'students']),
+    loadingTutorDashboard: tutorDashboardQuery.isLoading || false,
+    loadingTutorCourses: tutorCoursesQuery.isLoading || false,
+    loadingPendingSubmissions: pendingSubmissionsQuery.isLoading || false,
+    loadingTutorStudents: tutorStudentsQuery.isLoading || false,
+    gradeSubmission: async (...args) => {
+      try { return await gradeSubmissionMutation.mutateAsync(...args); } catch (error) { console.error('Grade submission failed:', error); throw error; }
+    },
+    gradingSubmission: gradeSubmissionMutation.isLoading || false,
   };
 
   return (
